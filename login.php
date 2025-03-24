@@ -1,6 +1,10 @@
 <?php 
 include('partial/header.php');
 
+if(isset($_SESSION["session"]) && $_SESSION["session"] != 0){
+  move($panel_link);
+}
+
 $login_email              = (isset($_COOKIE["login_email"])) ? $_COOKIE["login_email"] : "superadmin@insurance.com";
 $login_password           = (isset($_COOKIE["login_password"])) ? $_COOKIE["login_password"] : "12345678";
 

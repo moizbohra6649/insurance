@@ -85,6 +85,7 @@ else {
 //$link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
 $link = "https://$_SERVER[HTTP_HOST]";
 $actual_link = $link . "/" . $panel_folder . "/";
+$panel_link = $link . "/" . $panel_folder . "/index.php";
 // $actual_back_link_prefix = $link . "/" . $panel_folder . "/" . $without_session_page . "?page=";
 // $actual_link_prefix = $link . "/" . $panel_folder . "/" . $session_page . "?page=";
 // $pdf_actual_link_prefix = $link . "/" . $panel_folder . "/" . $pdf_page . "?page=";
