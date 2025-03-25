@@ -20,7 +20,6 @@
 <!-- Plugins JS Ends-->
 <!-- Theme js-->
 <script src="assets/js/script.js"></script>
-<script src="assets/js/theme-customizer/customizer.js"></script>
 
 <script src="assets/js/moment.js"></script>
 <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
