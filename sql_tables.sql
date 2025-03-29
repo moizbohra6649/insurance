@@ -26,7 +26,7 @@ CREATE TABLE `users` (
 
 ALTER TABLE `users` ADD PRIMARY KEY (`id`);
 
-ALTER TABLE `users` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+ALTER TABLE `users` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 INSERT INTO `users` (`user_id`, `prefix_user_id`, `role`, `username`, `name`, `email`, `mobile`, `password`, `hint`, `address`, `pincode`, `country_id`, `state_id`, `city`, `profile_image`, `date_of_birth`, `status`) VALUES
 (1, 'STAFF_1', 'superadmin', 'insurance', 'Insurance SuperAdmin', 'superadmin@insurance.com', '8819945752', '$2y$10$/w2sddYGfaP8cH32IFjXXuRZKf8v6LoZEvr9XvpycKRM5gx6ndL9K', '12345678', 'Indore', 452001, 101, 21, 'Indore', NULL, NULL, 1)

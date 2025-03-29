@@ -1,25 +1,47 @@
 <script>
 
-/* ==================================================START Login JS CODE================================================== */
-$('#login_form').on('submit', (function(e) {
+/* ==================================================START STAFF FORM JS CODE================================================== */
+$('#staff_form').on('submit', (function(e) {
     e.preventDefault();
 
     var error_arr = [];
 
-    if($("#email").val() == ""){
-        error_arr.push("Please enter Email.<br/>");
+    if($("#name").val() == ""){
+        error_arr.push("Please enter Name.<br/>");
     }
 
-    if ($("#email").val() != "" && isEmail($("#email").val()) == false) {
-        error_arr.push("Please enter valid Email.<br/>");
+    if($("#username").val() == ""){
+        error_arr.push("Please enter Username.<br/>");
+    }
+
+    if($("#email").val() == ""){
+        error_arr.push("Please enter Email.<br/>");
+    }else if (isEmail($("#email").val()) == false) {
+        error_arr.push("Please enter a valid Email.<br/>");
+    }
+
+    if($("#mobile_no").val() == ""){
+        error_arr.push("Please enter Mobile No.<br/>");
+    }else if($("#mobile_no").val().length < 12){
+        error_arr.push("Please enter a valid Mobile No.<br/>");
+    }
+
+    if($("#role").val() == 0){
+        error_arr.push("Please select Role.<br/>");
     }
 
     if($("#password").val() == ""){
         error_arr.push("Please enter Password.<br/>");
+    }else if($("#password").val().length < 8){
+        error_arr.push("Please enter a valid Password.<br/>");
     }
 
-    if($("#password").val() != "" && $("#password").val().length < 8){
-        error_arr.push("Please enter valid Password.<br/>");
+    if($("#confirm_password").val() == ""){
+        error_arr.push("Please enter Confirm Password.<br/>");
+    }else if($("#confirm_password").val().length < 8){
+        error_arr.push("Please enter a valid Confirm Password.<br/>");
+    }else if($("#password").val() != $("#confirm_password").val()){
+        error_arr.push("Both Passwords do not match.<br/>");
     }
 
     var error_txt = error_arr.join('');
@@ -29,10 +51,10 @@ $('#login_form').on('submit', (function(e) {
     }
 
     var formData = new FormData(this);
-    formData.append('login_request', 'true');
+    formData.append('form_request', 'true');
     $.ajax({
         type: 'POST',
-        url: 'php/authentication.php',
+        url: '<?=($_SERVER['PHP_SELF'])?>',
         data: formData,
         cache: false,
         dataType: 'json',
@@ -44,7 +66,7 @@ $('#login_form').on('submit', (function(e) {
         },
         success: function(data) {
             //For Alert Popups
-            data.status = (data.status == "error" ? "danger" : "success");
+            data.status = (data.status == "error" ? "danger" : data.status);
             var title = (data.status == "success" ? "Success!" : "Oh Snap!");
             notification(title, data.msg, data.status);
             
@@ -66,6 +88,6 @@ $('#login_form').on('submit', (function(e) {
     });
 }));
 
-/* ==================================================END Login JS CODE================================================== */
+/* ==================================================END STAFF FORM JS CODE================================================== */
 
 </script>

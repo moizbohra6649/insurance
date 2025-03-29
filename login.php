@@ -1,12 +1,15 @@
-<?php 
-include('partial/header.php');
-
-if(isset($_SESSION["session"]) && $_SESSION["session"] != 0){
-  move($panel_link);
+<?php
+/* Include PHP File */
+if (file_exists(dirname(__FILE__) . '/php/authentication_php.php')) {
+  require_once(dirname(__FILE__) . '/php/authentication_php.php');
 }
 
-$login_email              = (isset($_COOKIE["login_email"])) ? $_COOKIE["login_email"] : "superadmin@insurance.com";
-$login_password           = (isset($_COOKIE["login_password"])) ? $_COOKIE["login_password"] : "12345678";
+include('partial/header.php');
+include('partial/loader.php');
+
+if(isset($_SESSION["session"]) && $_SESSION["session"]["id"] != 0){
+  move($panel_link);
+}
 
 ?>
 
@@ -22,13 +25,13 @@ $login_password           = (isset($_COOKIE["login_password"])) ? $_COOKIE["logi
                 <p>Enter your email & password to login</p>
                 <div class="form-group">
                   <label class="col-form-label">Email Address</label>
-                  <input class="form-control" type="email" id="email" name="login[email]" required="" value="<?=$login_email?>" placeholder="Test@gmail.com">
+                  <input class="form-control" type="email" id="email" name="login[email]" required="" value="<?=$login_email?>" placeholder="test@gmail.com">
                   <div class="invalid-feedback">Please provide a valid email.</div>
                 </div>
                 <div class="form-group">
                   <label class="col-form-label">Password</label>
                   <div class="form-input position-relative">
-                    <input class="form-control" type="password" id="password" name="login[password]" required="" value="<?=$login_password?>" placeholder="*********">
+                    <input class="form-control" type="password" id="password" name="login[password]" required="" value="<?=$login_password?>" minlength="8" maxlength="16" placeholder="*********">
                     <div class="show-hide"><span class="show"></span></div>
                     <div class="invalid-feedback">Please provide a valid password.</div>
                   </div>
@@ -51,8 +54,8 @@ $login_password           = (isset($_COOKIE["login_password"])) ? $_COOKIE["logi
   </div>
   <?php include('partial/scripts.php'); 
     /* Include JS File */
-    if (file_exists(dirname(__FILE__) . '/js/authentication.php')) {
-      require_once(dirname(__FILE__) . '/js/authentication.php');
+    if (file_exists(dirname(__FILE__) . '/js/authentication_js.php')) {
+      require_once(dirname(__FILE__) . '/js/authentication_js.php');
     }
   ?>
 </body>

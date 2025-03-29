@@ -395,6 +395,25 @@
             }
         });
     });
+
+    function applyPhoneInputRestriction(inputId) {
+        const inputField = document.getElementById(inputId);
+        
+        if (inputField) {
+            if (!inputField.value.startsWith("+1")) {
+                inputField.value = "+1";
+            }
+
+            inputField.addEventListener("input", function () {
+                if (!inputField.value.startsWith("+1")) {
+                    inputField.value = "+1" + inputField.value.replace(/[^0-9]/g, "");
+                }
+                if (inputField.value.length > 12) {
+                    inputField.value = inputField.value.slice(0, 12);
+                }
+            });
+        }
+    }
     
 </script>
 
