@@ -37,9 +37,9 @@
                                             <div class="invalid-feedback">Please fill a company name.</div>
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="form-label" for="name">Name <span class="text-danger">*</span></label>
+                                            <label class="form-label" for="name">Owner Name <span class="text-danger">*</span></label>
                                             <input class="form-control onlytext" id="name" name="name" type="text" value="" placeholder="Owner Name" required="">
-                                            <div class="invalid-feedback">Please fill a name.</div>
+                                            <div class="invalid-feedback">Please fill a owner name.</div>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="username">Username <span class="text-danger">*</span></label>

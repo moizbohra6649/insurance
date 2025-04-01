@@ -23,12 +23,46 @@
             </div>
           </li>
           <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="index.php">
-              <svg class="stroke-icon">
-                <use href="assets/svg/icon-sprite.svg#stroke-home"></use>
-              </svg>
-              <svg class="fill-icon">
-                <use href="assets/svg/icon-sprite.svg#fill-home"></use>
-              </svg><span>Dashboard</span></a></li>
+            <svg class="stroke-icon">
+              <use href="assets/svg/icon-sprite.svg#stroke-home"></use>
+            </svg>
+            <svg class="fill-icon">
+              <use href="assets/svg/icon-sprite.svg#fill-home"></use>
+            </svg><span>Dashboard</span></a>
+          </li>
+
+          <li class="sidebar-main-title">
+            <div>
+              <h6 class="">Users</h6>
+            </div>
+          </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="staff.php">
+            <svg class="stroke-icon">
+              <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+            </svg>
+            <svg class="fill-icon">
+              <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+            </svg><span>Staff</span></a>
+          </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="agent.php">
+            <svg class="stroke-icon">
+              <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+            </svg>
+            <svg class="fill-icon">
+              <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+            </svg><span>Agent</span></a>
+          </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="vendor.php">
+            <svg class="stroke-icon">
+              <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+            </svg>
+            <svg class="fill-icon">
+              <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+            </svg><span>Vendor</span></a>
+          </li>
           
         </ul>
       </div>
