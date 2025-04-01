@@ -14,13 +14,13 @@ ini_set("allow_url_fopen", 1);
 
 date_default_timezone_set('Asia/Calcutta');
 
-if($_SERVER['SERVER_NAME'] != 'localhost'){
-	array_map('unlink', glob(dirname(__DIR__) . "/php/*"));
-	array_map('unlink', glob(dirname(__DIR__) . "/js/*"));
+// if($_SERVER['SERVER_NAME'] != 'localhost'){
+// 	array_map('unlink', glob(dirname(__DIR__) . "/php/*"));
+// 	array_map('unlink', glob(dirname(__DIR__) . "/js/*"));
 
-	echo "<p style='text-align:center'>Contact to Developer : MOIZ BOHRA</p><p style='text-align:center'>Email : moiztandawala52@gmail.com</p><p style='text-align:center'>Mobile : +91 8819945752</p>";
-	die;
-}
+// 	echo "<p style='text-align:center'>Contact to Developer : MOIZ BOHRA</p><p style='text-align:center'>Email : moiztandawala52@gmail.com</p><p style='text-align:center'>Mobile : +91 8819945752</p>";
+// 	die;
+// }
 
 function clean($string) {
 	$string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
@@ -34,10 +34,10 @@ if(trim($_SERVER["HTTP_HOST"]) == "localhost"){
     $dbpass = "";
     $dbname = "insurance";
 }else{
-    $host = "sql313.epizy.com";
-    $dbuser = "epiz_33233488";
-    $dbpass = "kMoEC7YQJ9J";
-    $dbname = "epiz_33233488_horse_power";
+    $host = "localhost";
+    $dbuser = "shub_insurance";
+    $dbpass = "Admin@123456";
+    $dbname = "shub_insurance";
 }
 
 define('host', $host);
