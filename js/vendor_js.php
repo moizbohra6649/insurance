@@ -1,10 +1,14 @@
 <script>
 
-/* ==================================================START STAFF FORM JS CODE================================================== */
-$('#staff_form').on('submit', (function(e) {
+/* ==================================================START Vendor FORM JS CODE================================================== */
+$('#vendor_form').on('submit', (function(e) {
     e.preventDefault();
 
     var error_arr = [];
+
+    if($("#company_name").val() == ""){
+        error_arr.push("Please enter company name.<br/>");
+    }
 
     if($("#name").val() == ""){
         error_arr.push("Please enter Name.<br/>");
@@ -25,10 +29,7 @@ $('#staff_form').on('submit', (function(e) {
     }else if($("#mobile_no").val().length < 12){
         error_arr.push("Please enter a valid Mobile No.<br/>");
     }
-
-    if($("#role").val() == 0){
-        error_arr.push("Please select Role.<br/>");
-    }
+ 
 
     if($("#password").val() == ""){
         error_arr.push("Please enter Password.<br/>");
@@ -73,7 +74,6 @@ $('#staff_form').on('submit', (function(e) {
             if(data.status == "success"){
                 var url = `index.php`;
                 move(`<?=$actual_link?>${url}`);
-                // setTimeout(function() {  }, 1000);
             }else{
                 $("#submit_btn").html('Submit');
                 $("#submit_btn").removeAttr('disabled');
@@ -94,6 +94,12 @@ function remove_image(){
     $("#delete_image").val('true');
 }
 
-/* ==================================================END STAFF FORM JS CODE================================================== */
+function remove_business_licence_image(){
+    $("#image_preview_div2").css('display', 'none');
+    $("#image_input_div2").css('display', 'block');
+    $("#delete_business_licence_image").val('true');
+}
+
+/* ==================================================END Vendor FORM JS CODE================================================== */
 
 </script>

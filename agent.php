@@ -1,7 +1,7 @@
 <?php 
 /* Include PHP File */
-if (file_exists(dirname(__FILE__) . '/php/staff_php.php')) {
-    require_once(dirname(__FILE__) . '/php/staff_php.php');
+if (file_exists(dirname(__FILE__) . '/php/agent_php.php')) {
+    require_once(dirname(__FILE__) . '/php/agent_php.php');
 }
 
 include('partial/header.php'); 
@@ -27,7 +27,7 @@ include('partial/loader.php'); ?>
                                 <h5><?=$title?></h5>
                             </div>
                             <div class="card-body">
-                                <form id="staff_form" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
+                                <form id="agent_form" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
                                 <input type="hidden" name="id" value="<?=base64_encode($id)?>" />
                                 <input type="hidden" name="mode" value="<?=$local_mode?>" />
                                     <div class="row g-3">
@@ -57,15 +57,7 @@ include('partial/loader.php'); ?>
                                             <input class="form-control allownumber" minlength="12" maxlength="12" id="mobile_no" name="mobile_no" type="text" placeholder="Mobile No." onkeypress="applyPhoneInputRestriction('mobile_no')" required="">
                                             <div class="invalid-feedback">Please provide a valid Mobile No.</div>
                                         </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label class="form-label" for="role">Role <span class="text-danger">*</span></label>
-                                            <select class="form-select" name="role" id="role" required="">
-                                                <option disabled="" value="0">Select Role</option>
-                                                <option value="admin">Admin</option>
-                                                <option value="staff">Staff</option>
-                                            </select>
-                                            <div class="invalid-feedback">Please select a valid state.</div>
-                                        </div>
+                                        
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="password">Password <span class="text-danger">*</span></label>
                                             <div class="form-input">
@@ -89,8 +81,8 @@ include('partial/loader.php'); ?>
                                             </div>
                                             <div id="image_preview_div" style="display:<?= ($local_mode != 'NEW') ? 'block': 'none';?>;">
                                                 <?php
-                                                    if(!empty($profile_image) && file_exists(dirname(__FILE__) . '/' . $upload_folder . '/user_profile_picture/' . $profile_image)){
-                                                        $profile_image_url = $upload_folder . "/user_profile_picture/$profile_image"; 
+                                                    if(!empty($profile_image) && file_exists(dirname(__FILE__) . '/' . $upload_folder . '/agent_profile_picture/' . $profile_image)){
+                                                        $profile_image_url = $upload_folder . "/agent_profile_picture/$profile_image"; 
                                                     ?>
                                                     <div class="input-group">
                                                         <input class="form-control" type="text" value="<?=$profile_image?>" readonly style="cursor:pointer;" onclick="image_preview('image_preview', 'src_path', '<?=$profile_image_url?>', 'image_preview_label', 'Profile Picture Preview');" data-bs-container="#image_preview_div" data-bs-toggle="tooltip" title="Click to preview image">
@@ -121,8 +113,8 @@ include('partial/loader.php'); ?>
 <?php include('partial/footer.php'); ?>
 <?php include('partial/scripts.php');
     /* Include JS File */
-    if (file_exists(dirname(__FILE__) . '/js/staff_js.php')) {
-        require_once(dirname(__FILE__) . '/js/staff_js.php');
+    if (file_exists(dirname(__FILE__) . '/js/agent_js.php')) {
+        require_once(dirname(__FILE__) . '/js/agent_js.php');
     }
 ?>
 </body>

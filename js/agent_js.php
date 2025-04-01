@@ -1,7 +1,7 @@
 <script>
 
 /* ==================================================START STAFF FORM JS CODE================================================== */
-$('#staff_form').on('submit', (function(e) {
+$('#agent_form').on('submit', (function(e) {
     e.preventDefault();
 
     var error_arr = [];
@@ -25,10 +25,7 @@ $('#staff_form').on('submit', (function(e) {
     }else if($("#mobile_no").val().length < 12){
         error_arr.push("Please enter a valid Mobile No.<br/>");
     }
-
-    if($("#role").val() == 0){
-        error_arr.push("Please select Role.<br/>");
-    }
+ 
 
     if($("#password").val() == ""){
         error_arr.push("Please enter Password.<br/>");
@@ -73,7 +70,6 @@ $('#staff_form').on('submit', (function(e) {
             if(data.status == "success"){
                 var url = `index.php`;
                 move(`<?=$actual_link?>${url}`);
-                // setTimeout(function() {  }, 1000);
             }else{
                 $("#submit_btn").html('Submit');
                 $("#submit_btn").removeAttr('disabled');
