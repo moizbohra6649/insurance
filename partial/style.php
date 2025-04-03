@@ -23,4 +23,12 @@
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/vendors/date-picker.css">
+    
+    <style>
+        .table .table-user img {
+            height: 30px;
+            width: 30px;
+        }
+    </style>
  

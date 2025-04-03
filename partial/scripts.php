@@ -24,6 +24,10 @@
 <script src="assets/js/moment.js"></script>
 <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
 
+<script src="assets/js/datepicker/date-picker/datepicker.js"></script>
+<script src="assets/js/datepicker/date-picker/datepicker.en.js"></script>
+<script src="assets/js/datepicker/date-picker/datepicker.custom.js"></script>
+
 <script src="assets/js/notify/bootstrap-notify.min.js"></script>
 <script src="assets/js/notify/notify-script.js"></script>
 

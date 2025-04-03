@@ -143,15 +143,16 @@
             </div>
             <!-- Container-fluid Ends-->
         </div>
+        <!-- footer start-->
+        <?php include('partial/footer.php'); ?>
     </div>
 </div>
-<!-- footer start-->
-<?php include('partial/footer.php'); ?>
+
 <?php include('partial/scripts.php');
-    /* Include JS File */
-    if (file_exists(dirname(__FILE__) . '/js/vendor_js.php')) {
-        require_once(dirname(__FILE__) . '/js/vendor_js.php');
-    }
-    ?>
+/* Include JS File */
+if (file_exists(dirname(__FILE__) . '/js/vendor_js.php')) {
+    require_once(dirname(__FILE__) . '/js/vendor_js.php');
+}
+?>
 </body>
 </html>

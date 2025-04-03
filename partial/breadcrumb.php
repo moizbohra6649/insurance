@@ -6,7 +6,7 @@
     <div class="page-title">
         <div class="row">
             <div class="col-6">
-                <h3><?php echo ucfirst(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME)); ?></h3>
+                <h3><?php echo removeUnderscore(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME)); ?></h3>
             </div>
             <div class="col-6">
                 <ol class="breadcrumb">
@@ -14,7 +14,7 @@
                       <use href="assets/svg/icon-sprite.svg#stroke-home"></use>
                     </svg></a></li>
                     <li class="breadcrumb-item"><?php echo ucfirst($items[sizeof($items) - 2]); ?></li>
-                    <li class="breadcrumb-item active"><?php echo ucfirst(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME)); ?></li>
+                    <li class="breadcrumb-item active"><?php echo removeUnderscore(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME)); ?></li>
                 </ol>
             </div>
         </div>

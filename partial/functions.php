@@ -81,6 +81,14 @@ else {
   $protocol = 'http://';
 }
 
+function removeUnderscore($word){
+
+	$word = str_replace("_", " ", $word); // Replace underscore with space
+	$word = ucwords($word);
+	echo $word; 
+
+}
+
 
 //$link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
 $link = "https://$_SERVER[HTTP_HOST]";

@@ -38,6 +38,47 @@ $to_date            = convert_db_date((isset($_REQUEST["to_date"])) ? $_REQUEST[
 $filter_user_id    = (isset($_REQUEST["filter_user_id"])) ? $_REQUEST["filter_user_id"] : "";
 $only_staff          = (isset($_REQUEST["only_staff"])) ? $_REQUEST["only_staff"] : false;
 
+$query_count = 0;
+if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
+
+    $select_query = "SELECT id, user_id, name, email, mobile, profile_image, created, role FROM users WHERE 1=1";
+
+    if(!empty($from_date)){
+        if(empty($to_date)){
+            $to_date = $from_date;
+        }
+    }
+
+    if(!empty($to_date)){
+        if(empty($to_date)){
+            $from_date = $to_date;
+        }
+    }
+    
+    if(!empty($from_date) && !empty($to_date)){
+        $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
+    }
+
+    if(!empty($filter_user_id)){
+        $select_query .= " AND user_id = $filter_user_id ";
+    }
+
+    if(!empty($full_name)){
+        $select_query .= " AND name LIKE '%$full_name%' ";
+    }
+
+    if(!empty($mobile_no)){
+        $select_query .= " AND mobile LIKE '%$mobile_no%' ";
+    }
+
+    // if( ($only_staff == true) || (strtolower($login_role) != strtolower($super_admin_role)) ){
+    //     $select_query .= " AND role != 1 ";
+    // }
+
+    $query_result = mysqli_query($conn, $select_query);
+    $query_count = mysqli_num_rows($query_result);
+}
+
 switch ($mode) {
     case "NEW":
         $local_mode = "INSERT";
@@ -154,8 +195,7 @@ switch ($mode) {
         $user_id = get_max_id("staff", "user_id");
         $prefix_user_id = "STAFF_" . $user_id;
         
-        $select_query = mysqli_query($conn, "SELECT staff.*,bank_details.account_holder_name,bank_details.account_number,bank_details.bank_ifsc_code,bank_details.account_type,bank_details.branch_name,bank_details.bank_name,bank_details.canceled_cheque_image FROM staff  
-        left join bank_details on bank_details.user_id = staff.id 
+        $select_query = mysqli_query($conn, "SELECT * FROM users 
         where staff.id = '$id' ");
         
         if(mysqli_num_rows($select_query) > 0){

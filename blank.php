@@ -21,10 +21,10 @@
             </div>
             <!-- Container-fluid Ends-->
         </div>
+        <!-- footer start-->
+        <?php include('partial/footer.php') ?>
     </div>
 </div>
-<!-- footer start-->
-<?php include('partial/footer.php') ?>
 <?php include('partial/scripts.php') ?>
 </body>
 </html>
