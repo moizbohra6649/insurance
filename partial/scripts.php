@@ -22,82 +22,67 @@
 <script src="assets/js/script.js"></script>
 
 <script src="assets/js/moment.js"></script>
-<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
-
-<script src="assets/js/datepicker/date-picker/datepicker.js"></script>
-<script src="assets/js/datepicker/date-picker/datepicker.en.js"></script>
-<script src="assets/js/datepicker/date-picker/datepicker.custom.js"></script>
-
 <script src="assets/js/notify/bootstrap-notify.min.js"></script>
 <script src="assets/js/notify/notify-script.js"></script>
-
 <script src="assets/js/form-validation-custom.js"></script>
-
 <script src="assets/js/tooltip-init.js"></script>
+
+<script src="assets/js/material-date-range-picker/duDatepicker.min.js"></script>
 
 <!-- third party js ends -->
 
 <script>
     $(document).ready(function() {
         "use strict";
-       
-        // $("#datatable").DataTable({
-        //     scrollX: true,
-        //     language: {
-        //         paginate: {
-        //             previous: "<i class='mdi mdi-chevron-left'>",
-        //             next: "<i class='mdi mdi-chevron-right'>"
-        //         }
-        //     },
-        //     drawCallback: function() {
-        //         $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
-        //     }
-        // });
-
-        /* Start Input Tags Multiple */
-
-        // $('.multiple_tags').tagsinput({
-        //     trimValue: true,
-        //     confirmKeys: [13, 44, 32],
-        //     focusClass: 'my-focus-class'
-        // });
-
-        // $('.bootstrap-tagsinput input').on('focus', function() {
-        //     $(this).closest('.bootstrap-tagsinput').addClass('has-focus');
-        // }).on('blur', function() {
-        //     $(this).closest('.bootstrap-tagsinput').removeClass('has-focus');
-        // });
-
-        /* End Input Tags Multiple */
 
         var date = new Date();
         var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
         var tomorrow = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
         var filter_from_date = moment().subtract(30, "days").format("DD-MM-YYYY");
 
-        $(".bootstrap_datepicker").datetimepicker({
-            format:'DD-MM-YYYY',
-            showTodayButton:true,
-            showClear:true,
-            showClose:true,
-            useCurrent: false,
-            maxDate:tomorrow,
-            disabledDates: [ tomorrow ],
+        var end = moment();
+        var now = Date.now();
+
+        duDatepicker('#daterange', {
+            range: true, format: 'mmmm d, yyyy', outFormat: 'yyyy-mm-dd', fromTarget: '#range-from', toTarget: '#range-to',
+            clearBtn: false, theme: 'yellow', maxDate: 'today',
+            inline: false,
+            events: {
+                // onRangeFormat: function (from, to) {
+                //     var dateFormat = 'yyyy-mm-dd';
+                //     return from.getTime() === to.getTime()
+                //         ? this.formatDate(from, dateFormat)
+                //         : [this.formatDate(from, dateFormat), this.formatDate(to, dateFormat)].join(' - ');
+                // },
+
+                // ready: function () {
+                //     console.log('duDatepicker', this)
+                // },
+                // dateChanged: function (data) {
+                //     console.log('new date', data)
+                // }
+            }
         });
 
-        $(".allow_future_date").datetimepicker({
-            format:'DD-MM-YYYY',
-            showTodayButton:true,
-            showClear:true,
-            showClose:true,
-            useCurrent: false,
-        });
+        duDatepicker('#datepicker', {
+            format: 'mmmm d, yyyy', outFormat: 'yyyy-mm-dd',
+            clearBtn: false, theme: 'yellow', maxDate: 'today',
+            inline: false,
+            events: {
+                // onRangeFormat: function (from, to) {
+                //     var dateFormat = 'yyyy-mm-dd';
+                //     return from.getTime() === to.getTime()
+                //         ? this.formatDate(from, dateFormat)
+                //         : [this.formatDate(from, dateFormat), this.formatDate(to, dateFormat)].join(' - ');
+                // },
 
-        $(".datetimepicker").datetimepicker({
-            format:'DD-MM-YYYY hh:mm A',
-            showTodayButton:true,
-            showClear:true,
-            showClose:true,
+                // ready: function () {
+                //     console.log('duDatepicker', this)
+                // },
+                // dateChanged: function (data) {
+                //     console.log('new date', data)
+                // }
+            }
         });
 
     });

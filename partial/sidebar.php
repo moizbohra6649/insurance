@@ -37,31 +37,43 @@
             </div>
           </li>
 
-          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="staff.php">
-            <svg class="stroke-icon">
-              <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
-            </svg>
-            <svg class="fill-icon">
-              <use href="assets/svg/icon-sprite.svg#fill-user"></use>
-            </svg><span>Staff</span></a>
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>Staff</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="staff_list.php">Staff List</a></li>
+              <li><a href="staff.php">Staff Add</a></li>
+            </ul>
           </li>
 
-          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="agent.php">
-            <svg class="stroke-icon">
-              <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
-            </svg>
-            <svg class="fill-icon">
-              <use href="assets/svg/icon-sprite.svg#fill-user"></use>
-            </svg><span>Agent</span></a>
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>Agent</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="agent_list.php">Agent List</a></li>
+              <li><a href="agent.php">Agent Add</a></li>
+            </ul>
           </li>
 
-          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="vendor.php">
-            <svg class="stroke-icon">
-              <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
-            </svg>
-            <svg class="fill-icon">
-              <use href="assets/svg/icon-sprite.svg#fill-user"></use>
-            </svg><span>Vendor</span></a>
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>Vendor</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="vendor_list.php">Vendor List</a></li>
+              <li><a href="vendor.php">Vendor Add</a></li>
+            </ul>
           </li>
           
         </ul>

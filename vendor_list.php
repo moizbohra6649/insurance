@@ -1,7 +1,7 @@
 <?php 
 /* Include PHP File */
-if (file_exists(dirname(__FILE__) . '/php/staff_php.php')) {
-    require_once(dirname(__FILE__) . '/php/staff_php.php');
+if (file_exists(dirname(__FILE__) . '/php/vendor_php.php')) {
+    require_once(dirname(__FILE__) . '/php/vendor_php.php');
 }
 
 include('partial/header.php'); 
@@ -30,7 +30,7 @@ include('partial/loader.php'); ?>
                                     </div>
                                     <div class="col-sm-6 col-auto">
                                         <div class="text-sm-end">
-                                            <a href="<?=$actual_link?>staff.php" class="btn btn-primary mb-2"><i class="icon-plus"></i> Add</a>
+                                            <a href="<?=$actual_link?>vendor.php" class="btn btn-primary mb-2"><i class="icon-plus"></i> Add</a>
                                         </div>
                                     </div>
                                 </div>
@@ -38,7 +38,7 @@ include('partial/loader.php'); ?>
                             <div class="card-body">
                                 <div class="tab-content">
                                     <div class="tab-pane show active" id="form-row-preview">
-                                        <form method="POST" id="staff_list">
+                                        <form method="POST" id="vendor_list">
                                             <div class="row g-2">
                                                 <div class="mb-3 col-lg-3">
                                                     <label class="form-label">From Date</label>
@@ -51,15 +51,15 @@ include('partial/loader.php'); ?>
                                                         <input type="text" id="range-to" name="to_date" value="<?=convert_db_date_readable($to_date);?>" data-value="<?=$to_date?>" class="form-control" readonly>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="filter_user_id" class="form-label">Staff ID</label>
-                                                    <input type="text" class="form-control allownumber" id="filter_user_id" name="filter_user_id" placeholder="Staff ID" maxlength="8" value="<?=$filter_user_id?>">
+                                                    <label for="filter_vendor_id" class="form-label">Vendor ID</label>
+                                                    <input type="text" class="form-control allownumber" id="filter_vendor_id" name="filter_vendor_id" placeholder="Vendor ID" maxlength="8" value="<?=$filter_vendor_id?>">
                                                 </div>
                                             </div>
 
                                             <div class="row g-2">
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="name" class="form-label">Staff Name</label>
-                                                    <input type="text" class="form-control" id="name" name="name" placeholder="Staff Name" value="<?=$name?>">
+                                                    <label for="name" class="form-label">Vendor Name</label>
+                                                    <input type="text" class="form-control" id="name" name="name" placeholder="Vendor Name" value="<?=$name?>">
                                                 </div>
                                                 <div class="mb-3 col-md-6">
                                                     <label for="mobile_no" class="form-label">Mobile No.</label>
@@ -93,14 +93,13 @@ include('partial/loader.php'); ?>
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>S.No.</th>
-                                                    <th>Staff ID</th>
-                                                    <th>Staff Name</th>
+                                                    <th>Vendor ID</th>
+                                                    <th>Vendor Name</th>
                                                     <th>Email</th>
                                                     <th>Mobile No.</th>
                                                     <th>Create Date</th> 
                                                     <th>Status</th>
                                                     <th>Action</th>
-                                                    <th>Role</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -110,13 +109,13 @@ include('partial/loader.php'); ?>
 
                                                         $id = $get_data["id"];
                                                         $profile_image_url = $upload_folder . "/profile_picture.jpg";
-                                                        if(!empty($get_data["profile_image"]) && file_exists(dirname(__FILE__) . '/' . $upload_folder . '/staff/' . $get_data["profile_image"])){
-                                                            $profile_image_url = $upload_folder . "/staff/$get_data[profile_image]";
+                                                        if(!empty($get_data["profile_image"]) && file_exists(dirname(__FILE__) . '/' . $upload_folder . '/vendor/' . $get_data["profile_image"])){
+                                                            $profile_image_url = $upload_folder . "/vendor/$get_data[profile_image]";
                                                         }
                                                 ?>
                                                 <tr>
                                                     <td align="center"> <?=$i++?> </td>
-                                                    <td align="center"> <?=$get_data["user_id"]?> </td>
+                                                    <td align="center"> <?=$get_data["vendor_id"]?> </td>
                                                     <td class="table-user">
                                                         <img src="<?=$profile_image_url?>" alt="Profile Picture" class="me-2 rounded-circle" style="cursor:pointer;" onclick="image_preview('image_preview', 'src_path', '<?=$profile_image_url?>', 'image_preview_label', 'Profile Picture Preview');">
                                                         <a href="javascript:void(0);" class="text-body fw-semibold"><?=$get_data["name"]?></a>
@@ -128,14 +127,9 @@ include('partial/loader.php'); ?>
                                                         <button class="btn badge-light-primary">Active</button>
                                                     </td>
                                                     <td align="center">
-                                                        <a href="<?=$actual_link?>staff.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
-                                                        <a href="<?=$actual_link?>staff.php?id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon"> <i class="icofont icofont-ui-edit"></i></a>
+                                                        <a href="<?=$actual_link?>vendor.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
+                                                        <a href="<?=$actual_link?>vendor.php?id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon"> <i class="icofont icofont-ui-edit"></i></a>
                                                         <!-- <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a> -->
-                                                    </td>
-                                                    <td align="center">
-                                                        <?php if($get_data["role"] != 'superadmin'){ ?>
-                                                        <a href="<?=$actual_link?>role.php?id=<?=base64_encode($id)?>" target="_blank" class="btn btn-outline-primary">Role</a>
-                                                        <?php } ?>
                                                     </td>
                                                 </tr>
                                                 <?php } ?>
@@ -160,8 +154,8 @@ include('partial/loader.php'); ?>
 
 <?php include('partial/scripts.php');
     /* Include JS File */
-    if (file_exists(dirname(__FILE__) . '/js/staff_js.php')) {
-        require_once(dirname(__FILE__) . '/js/staff_js.php');
+    if (file_exists(dirname(__FILE__) . '/js/vendor_js.php')) {
+        require_once(dirname(__FILE__) . '/js/vendor_js.php');
     }
 ?>
 </body>

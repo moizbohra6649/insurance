@@ -33,15 +33,15 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 }
 
 /* Search Filter */
-$from_date          = convert_db_date((isset($_REQUEST["from_date"])) ? $_REQUEST["from_date"] : date('Y-m-d', strtotime('-30 day')));
-$to_date            = convert_db_date((isset($_REQUEST["to_date"])) ? $_REQUEST["to_date"] : date('Y-m-d'));
+$from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
+$to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
 $filter_user_id    = (isset($_REQUEST["filter_user_id"])) ? $_REQUEST["filter_user_id"] : "";
-$only_staff          = (isset($_REQUEST["only_staff"])) ? $_REQUEST["only_staff"] : false;
+$only_staff        = (isset($_REQUEST["only_staff"])) ? $_REQUEST["only_staff"] : false;
 
 $query_count = 0;
 if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
 
-    $select_query = "SELECT id, user_id, name, email, mobile, profile_image, created, role FROM users WHERE 1=1";
+    $select_query = "SELECT id, user_id, name, email, mobile, profile_image, created, role FROM users WHERE 1=1 AND user_id != $login_id AND role != '$super_admin_role' ";
 
     if(!empty($from_date)){
         if(empty($to_date)){
@@ -63,8 +63,8 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
         $select_query .= " AND user_id = $filter_user_id ";
     }
 
-    if(!empty($full_name)){
-        $select_query .= " AND name LIKE '%$full_name%' ";
+    if(!empty($name)){
+        $select_query .= " AND name LIKE '%$name%' ";
     }
 
     if(!empty($mobile_no)){

@@ -41,6 +41,46 @@ $from_date          = convert_db_date((isset($_REQUEST["from_date"])) ? $_REQUES
 $to_date            = convert_db_date((isset($_REQUEST["to_date"])) ? $_REQUEST["to_date"] : date('Y-m-d'));
 $filter_vendor_id    = (isset($_REQUEST["filter_vendor_id"])) ? $_REQUEST["filter_vendor_id"] : "";
 
+$query_count = 0;
+if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
+
+    $select_query = "SELECT id, vendor_id, name, email, mobile, profile_image, created FROM vendor WHERE 1=1 AND vendor_id != $login_id ";
+
+    if(!empty($from_date)){
+        if(empty($to_date)){
+            $to_date = $from_date;
+        }
+    }
+
+    if(!empty($to_date)){
+        if(empty($to_date)){
+            $from_date = $to_date;
+        }
+    }
+    
+    if(!empty($from_date) && !empty($to_date)){
+        $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
+    }
+
+    if(!empty($filter_vendor_id)){
+        $select_query .= " AND vendor_id = $filter_vendor_id ";
+    }
+
+    if(!empty($name)){
+        $select_query .= " AND name LIKE '%$name%' ";
+    }
+
+    if(!empty($mobile_no)){
+        $select_query .= " AND mobile LIKE '%$mobile_no%' ";
+    }
+
+    // if( ($only_staff == true) || (strtolower($login_role) != strtolower($super_admin_role)) ){
+    //     $select_query .= " AND role != 1 ";
+    // }
+
+    $query_result = mysqli_query($conn, $select_query);
+    $query_count = mysqli_num_rows($query_result);
+}
 
 switch ($mode) {
     case "NEW":

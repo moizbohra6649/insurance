@@ -88,6 +88,20 @@ $('#vendor_form').on('submit', (function(e) {
     });
 }));
 
+function fn_search_filter(){
+    var from_date   = $("#range-from").val();
+    var to_date     = $("#range-to").val();
+    var filter_vendor_id = $("#filter_vendor_id").val();
+    var name   = $("#name").val();
+    var mobile_no   = $("#mobile_no").val();
+
+    if(from_date == "" && to_date == "" && filter_vendor_id == "" && name == "" && mobile_no == ""){
+        notification("Oh Snap!", "Please select atleast one searh filter.", "info");
+        return false;
+    }
+    return true;
+}
+
 function remove_image(){
     $("#image_preview_div").css('display', 'none');
     $("#image_input_div").css('display', 'block');

@@ -1,18 +1,14 @@
 <script>
 
-/* ==================================================START STAFF FORM JS CODE================================================== */
-$('#staff_form').on('submit', (function(e) {
+/* ==================================================START Vendor FORM JS CODE================================================== */
+$('#customer_form').on('submit', (function(e) {
     e.preventDefault();
 
     var error_arr = [];
-
+  
     if($("#name").val() == ""){
         error_arr.push("Please enter Name.<br/>");
-    }
-
-    if($("#username").val() == ""){
-        error_arr.push("Please enter Username.<br/>");
-    }
+    } 
 
     if($("#email").val() == ""){
         error_arr.push("Please enter Email.<br/>");
@@ -26,23 +22,19 @@ $('#staff_form').on('submit', (function(e) {
         error_arr.push("Please enter a valid Mobile No.<br/>");
     }
 
-    if($("#role").val() == 0){
-        error_arr.push("Please select Role.<br/>");
-    }
+    if($("#birth_date").val() == ""){
+        error_arr.push("Please select DBO.<br/>");
+    } 
 
-    if($("#password").val() == ""){
-        error_arr.push("Please enter Password.<br/>");
-    }else if($("#password").val().length < 8){
-        error_arr.push("Please enter a valid Password.<br/>");
-    }
+    if($("#zip_code").val() == ""){
+        error_arr.push("Please select Zip Code.<br/>");
+    } 
 
-    if($("#confirm_password").val() == ""){
-        error_arr.push("Please enter Confirm Password.<br/>");
-    }else if($("#confirm_password").val().length < 8){
-        error_arr.push("Please enter a valid Confirm Password.<br/>");
-    }else if($("#password").val() != $("#confirm_password").val()){
-        error_arr.push("Both Passwords do not match.<br/>");
-    }
+    if($("#address_one").val() == ""){
+        error_arr.push("Please enter address.<br/>");
+    } 
+
+   
 
     var error_txt = error_arr.join('');
     if(error_txt != ""){
@@ -73,7 +65,6 @@ $('#staff_form').on('submit', (function(e) {
             if(data.status == "success"){
                 var url = `index.php`;
                 move(`<?=$actual_link?>${url}`);
-                // setTimeout(function() {  }, 1000);
             }else{
                 $("#submit_btn").html('Submit');
                 $("#submit_btn").removeAttr('disabled');
@@ -88,26 +79,18 @@ $('#staff_form').on('submit', (function(e) {
     });
 }));
 
-function fn_search_filter(){
-    var from_date   = $("#range-from").val();
-    var to_date     = $("#range-to").val();
-    var filter_user_id = $("#filter_user_id").val();
-    var name   = $("#name").val();
-    var mobile_no   = $("#mobile_no").val();
-
-    if(from_date == "" && to_date == "" && filter_user_id == "" && name == "" && mobile_no == ""){
-        notification("Oh Snap!", "Please select atleast one searh filter.", "info");
-        return false;
-    }
-    return true;
-}
-
 function remove_image(){
     $("#image_preview_div").css('display', 'none');
     $("#image_input_div").css('display', 'block');
     $("#delete_image").val('true');
 }
 
-/* ==================================================END STAFF FORM JS CODE================================================== */
+function remove_business_licence_image(){
+    $("#image_preview_div2").css('display', 'none');
+    $("#image_input_div2").css('display', 'block');
+    $("#delete_business_licence_image").val('true');
+}
+
+/* ==================================================END Vendor FORM JS CODE================================================== */
 
 </script>

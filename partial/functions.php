@@ -82,11 +82,9 @@ else {
 }
 
 function removeUnderscore($word){
-
 	$word = str_replace("_", " ", $word); // Replace underscore with space
 	$word = ucwords($word);
 	echo $word; 
-
 }
 
 
@@ -191,6 +189,28 @@ $panel_link = $link . "/" . $panel_folder . "/index.php";
 	}
 } */
 
+$login_id = 0;
+$login_email = "";
+$login_name = "";
+$login_role = "";
+
+if(isset($_SESSION["session"])){
+	$login_id = $_SESSION["session"]["id"];
+	$admin_level_role = array('superadmin', 'admin', 'staff');
+	if(in_array($_SESSION["session"]["role"], $admin_level_role)){
+		$select_user = mysqli_query($conn, "SELECT users.email, users.name, users.profile_image
+		FROM users 
+		WHERE users.id = '$login_id' ");
+		if(mysqli_num_rows($select_user) > 0){
+			$get_user = mysqli_fetch_array($select_user);
+			$login_email = $get_user["email"];
+			$login_name = $get_user["name"];
+			$login_role = $get_user["role"];
+		}
+	}
+	
+}
+
 function convert_calender_date($select_date){
 	if(!empty($select_date) && $select_date != "0000-00-00"){
 		$formatted_date = date('d-m-Y', strtotime($select_date));
@@ -198,6 +218,26 @@ function convert_calender_date($select_date){
 		$formatted_date = ""; 
 	}
 	return $formatted_date;
+}
+
+function convert_db_date_readable($date){
+	// Create a DateTime object
+	$datetime = new DateTime($date);
+
+	// Format to "mmmm d, yyyy"
+	$formattedDate = $datetime->format('F j, Y');
+
+	return $formattedDate; 
+}
+
+function convert_readable_date_db($date){
+	// Create a DateTime object
+	$datetime = new DateTime($date);
+
+	// Format to "yyyy-mm-dd"
+	$formattedDate = $datetime->format('Y-m-d');
+
+	return $formattedDate; 
 }
 
 function convert_db_date($select_date){

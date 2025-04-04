@@ -23,12 +23,41 @@
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/vendors/date-picker.css">
+    
+    <link rel="stylesheet" type="text/css" href="assets/css/material-date-range-picker/duDatepicker.min.css">
     
     <style>
         .table .table-user img {
             height: 30px;
             width: 30px;
+        }
+
+        /* Tags Input CSS */
+        .bootstrap-tagsinput {
+            margin: 0;
+            width: 100%;
+            padding: 0.5rem 0.75rem 0;
+            font-size: 1rem;
+            line-height: 1.25;
+            transition: border-color 0.15s ease-in-out;
+        }
+        .bootstrap-tagsinput.has-focus {
+            background-color: #fff;
+            border-color: #5cb3fd;
+        }
+        .bootstrap-tagsinput .label-info {
+            display: inline-block;
+            background-color: #636c72;
+            padding: 0 0.4em 0.15em;
+            border-radius: 0.25rem;
+            margin-bottom: 0.4em;
+        }
+        .bootstrap-tagsinput input {
+            margin-bottom: 0.5em;
+        }
+
+        .bootstrap-tagsinput .tag [data-role=remove]:after {
+            content: "×";
         }
     </style>
  

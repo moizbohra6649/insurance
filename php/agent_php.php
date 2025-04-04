@@ -16,7 +16,6 @@ $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 $agent_id                = (isset($_REQUEST["agent_id"])) ? $_REQUEST["agent_id"] : 0;
 $name                   = (isset($_REQUEST["name"])) ? $_REQUEST["name"] : "";
 $username               = (isset($_REQUEST["username"])) ? $_REQUEST["username"] : "";
- 
 $email                  = (isset($_REQUEST["email"])) ? $_REQUEST["email"] : "";
 $mobile_no              = (isset($_REQUEST["mobile_no"])) ? $_REQUEST["mobile_no"] : "";
 $password               = (isset($_REQUEST["password"])) ? $_REQUEST["password"] : "";
@@ -33,10 +32,50 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 }
 
 /* Search Filter */
-$from_date          = convert_db_date((isset($_REQUEST["from_date"])) ? $_REQUEST["from_date"] : date('Y-m-d', strtotime('-30 day')));
-$to_date            = convert_db_date((isset($_REQUEST["to_date"])) ? $_REQUEST["to_date"] : date('Y-m-d'));
+$from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
+$to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
 $filter_agent_id    = (isset($_REQUEST["filter_agent_id"])) ? $_REQUEST["filter_agent_id"] : "";
- 
+
+$query_count = 0;
+if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
+
+    $select_query = "SELECT id, agent_id, name, email, mobile, profile_image, created FROM agent WHERE 1=1 AND agent_id != $login_id ";
+
+    if(!empty($from_date)){
+        if(empty($to_date)){
+            $to_date = $from_date;
+        }
+    }
+
+    if(!empty($to_date)){
+        if(empty($to_date)){
+            $from_date = $to_date;
+        }
+    }
+    
+    if(!empty($from_date) && !empty($to_date)){
+        $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
+    }
+
+    if(!empty($filter_agent_id)){
+        $select_query .= " AND agent_id = $filter_agent_id ";
+    }
+
+    if(!empty($name)){
+        $select_query .= " AND name LIKE '%$name%' ";
+    }
+
+    if(!empty($mobile_no)){
+        $select_query .= " AND mobile LIKE '%$mobile_no%' ";
+    }
+
+    // if( ($only_staff == true) || (strtolower($login_role) != strtolower($super_admin_role)) ){
+    //     $select_query .= " AND role != 1 ";
+    // }
+
+    $query_result = mysqli_query($conn, $select_query);
+    $query_count = mysqli_num_rows($query_result);
+}
 
 switch ($mode) {
     case "NEW":

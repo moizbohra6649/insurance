@@ -1,5 +1,11 @@
-<?php include('partial/header.php') ?>
-<?php include('partial/loader.php') ?>
+<?php 
+/* Include PHP File */
+if (file_exists(dirname(__FILE__) . '/php/staff_php.php')) {
+    require_once(dirname(__FILE__) . '/php/staff_php.php');
+}
+
+include('partial/header.php');
+include('partial/loader.php'); ?>
 <!-- page-wrapper Start-->
 <div class="page-wrapper compact-wrapper" id="pageWrapper">
     <!-- Page Header Start-->
