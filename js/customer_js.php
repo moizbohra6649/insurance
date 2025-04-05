@@ -34,8 +34,6 @@ $('#customer_form').on('submit', (function(e) {
         error_arr.push("Please enter address.<br/>");
     } 
 
-   
-
     var error_txt = error_arr.join('');
     if(error_txt != ""){
         notification("Oh Snap!", error_txt, "danger");
@@ -79,17 +77,20 @@ $('#customer_form').on('submit', (function(e) {
     });
 }));
 
-function remove_image(){
-    $("#image_preview_div").css('display', 'none');
-    $("#image_input_div").css('display', 'block');
-    $("#delete_image").val('true');
+function fn_search_filter(){
+    var from_date   = $("#range-from").val();
+    var to_date     = $("#range-to").val();
+    var filter_user_id = $("#filter_user_id").val();
+    var name   = $("#name").val();
+    var mobile_no   = $("#mobile_no").val();
+
+    if(from_date == "" && to_date == "" && filter_user_id == "" && name == "" && mobile_no == ""){
+        notification("Oh Snap!", "Please select atleast one searh filter.", "info");
+        return false;
+    }
+    return true;
 }
 
-function remove_business_licence_image(){
-    $("#image_preview_div2").css('display', 'none');
-    $("#image_input_div2").css('display', 'block');
-    $("#delete_business_licence_image").val('true');
-}
 
 /* ==================================================END Vendor FORM JS CODE================================================== */
 

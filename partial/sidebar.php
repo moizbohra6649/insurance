@@ -75,6 +75,19 @@
               <li><a href="vendor.php">Vendor Add</a></li>
             </ul>
           </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>Customer</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="customer_list.php">Customer List</a></li>
+              <li><a href="customer.php">Customer Add</a></li>
+            </ul>
+          </li>
           
         </ul>
       </div>

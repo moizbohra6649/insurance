@@ -34,7 +34,7 @@ include('partial/loader.php'); ?>
                                         
                                         <div class="col-md-4">
                                             <label class="form-label" for="name">Name <span class="text-danger">*</span></label>
-                                            <input class="form-control onlytext" id="name" name="name" type="text" value="" placeholder="Owner Name" required="">
+                                            <input class="form-control onlytext" id="name" name="name" type="text" value="" placeholder="Name" required="">
                                             <div class="invalid-feedback">Please fill a name.</div>
                                         </div>
                                         
@@ -55,30 +55,30 @@ include('partial/loader.php'); ?>
                                     </div>
                                     <div class="row g-3">
                                     <div class="col-md-4 mb-3">
-                                            <label class="form-label" for="birth_date">DOB  <span class="text-danger">*</span></label>
-                                            <input type="text" id="datepicker" name="birth_date"  data-theme="dark" class="form-control" value="" readonly>
+                                            <label class="form-label" for="date_of_bith">DOB <span class="text-danger">*</span></label>
+                                            <input type="text" id="datepicker" name="date_of_bith" data-theme="dark" class="form-control" value="" readonly>
                                             <div class="invalid-feedback">Please provide a valid DOB</div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <label class="form-label" for="zip_code">Zip Code <span class="text-danger">*</span></label>
-                                            <input class="form-control allownumber" id="zip_code" maxlength="50" name="zip_code" type="text" value="" placeholder="zip code" required="">
+                                            <input class="form-control allownumber" id="zip_code" maxlength="50" name="zip_code" type="text" value="" placeholder="Zip Code" required="">
                                             <div class="invalid-feedback">Please fill a zip code.</div>
                                         </div>
                                       
                                     </div>
                                     <div class="row g-3">
                                         <div class="col-md-12 mb-3">
-                                            <label class="form-label" for="address_one">Address 1 <span class="text-danger">*</span></label>
+                                            <label class="form-label" for="address_1">Address 1 <span class="text-danger">*</span></label>
                                             <div class="input-group">
-                                                <textarea class="form-control alpha_num" id="address_one" name="address_one" placeholder="" required="address_one"></textarea>
+                                                <textarea class="form-control alpha_num" id="address_1" name="address_1" placeholder="" required="address_1"></textarea>
                                             </div>
                                         </div>
 
                                         <div class="col-md-12 mb-3">
-                                            <label class="form-label" for="address_two">Address 2</label>
+                                            <label class="form-label" for="address_2">Address 2</label>
                                             <div class="input-group">
-                                                <textarea class="form-control alpha_num" id="address_two" name="address_two" placeholder="" required="address_two"></textarea>
+                                                <textarea class="form-control alpha_num" id="address_2" name="address_2" placeholder="" required="address_2"></textarea>
                                             </div>
                                         </div>
                                     </div>

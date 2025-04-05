@@ -19,10 +19,10 @@ $customer_id                = (isset($_REQUEST["customer_id"])) ? $_REQUEST["cus
 $name                   = (isset($_REQUEST["name"])) ? $_REQUEST["name"] : "";
 $email                  = (isset($_REQUEST["email"])) ? $_REQUEST["email"] : "";
 $mobile_no              = (isset($_REQUEST["mobile_no"])) ? $_REQUEST["mobile_no"] : "";
-$birth_date              = (isset($_REQUEST["birth_date"])) ? $_REQUEST["birth_date"] : "";
+$date_of_bith              = (isset($_REQUEST["date_of_bith"])) ? $_REQUEST["date_of_bith"] : "";
 $zip_code              = (isset($_REQUEST["zip_code"])) ? $_REQUEST["zip_code"] : "";
-$address_one                   = (isset($_REQUEST["address_one"])) ? $_REQUEST["address_one"] : "";
-$address_two                   = (isset($_REQUEST["address_two"])) ? $_REQUEST["address_two"] : "";
+$address_1                   = (isset($_REQUEST["address_1"])) ? $_REQUEST["address_1"] : "";
+$address_2                   = (isset($_REQUEST["address_2"])) ? $_REQUEST["address_2"] : "";
 
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
@@ -38,6 +38,46 @@ $from_date          = convert_db_date((isset($_REQUEST["from_date"])) ? $_REQUES
 $to_date            = convert_db_date((isset($_REQUEST["to_date"])) ? $_REQUEST["to_date"] : date('Y-m-d'));
 $filter_customer_id    = (isset($_REQUEST["filter_customer_id"])) ? $_REQUEST["filter_customer_id"] : "";
 
+$query_count = 0;
+if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
+
+    $select_query = "SELECT id, customer_id, name, email, mobile, date_of_birth, zip_code, created FROM customer WHERE 1=1 AND customer_id != $login_id ";
+
+    if(!empty($from_date)){
+        if(empty($to_date)){
+            $to_date = $from_date;
+        }
+    }
+
+    if(!empty($to_date)){
+        if(empty($to_date)){
+            $from_date = $to_date;
+        }
+    }
+    
+    if(!empty($from_date) && !empty($to_date)){
+        $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
+    }
+
+    if(!empty($filter_customer_id)){
+        $select_query .= " AND customer = $filter_customer_id ";
+    }
+
+    if(!empty($name)){
+        $select_query .= " AND name LIKE '%$name%' ";
+    }
+
+    if(!empty($mobile_no)){
+        $select_query .= " AND mobile LIKE '%$mobile_no%' ";
+    }
+
+    // if( ($only_staff == true) || (strtolower($login_role) != strtolower($super_admin_role)) ){
+    //     $select_query .= " AND role != 1 ";
+    // }
+
+    $query_result = mysqli_query($conn, $select_query);
+    $query_count = mysqli_num_rows($query_result);
+}
 
 switch ($mode) {
     case "NEW":
@@ -77,15 +117,15 @@ switch ($mode) {
             $error_arr[] = "Please enter a valid Mobile No.<br/>";
         }
 
-        if (empty($birth_date)) {
-            $error_arr[] = "Please enter DBO.<br/>";
+        if (empty($date_of_bith)) {
+            $error_arr[] = "Please enter DOB.<br/>";
         }
 
         if (empty($zip_code)) {
             $error_arr[] = "Please enter zip code.<br/>";
         }
         
-        if (empty($address_one)) {
+        if (empty($address_1)) {
             $error_arr[] = "Please enter address.<br/>";
         }
 
@@ -109,7 +149,7 @@ switch ($mode) {
         mysqli_autocommit($conn,FALSE);
  
 
-        $insert_query = mysqli_query($conn, "INSERT INTO customer (customer_id, prefix_customer_id, name, email,mobile,date_of_birth,zip_code, address_one,address_two) VALUES ('$customer_id', '$prefix_customer_id', '$name',  '$email','$mobile_no','$birth_date','$zip_code', '$address_one','$address_two' ) ");
+        $insert_query = mysqli_query($conn, "INSERT INTO customer (customer_id, prefix_customer_id, name, email, mobile, date_of_birth, zip_code, address_1, address_2) VALUES ('$customer_id', '$prefix_customer_id', '$name',  '$email','$mobile_no','$date_of_bith','$zip_code', '$address_1','$address_2' ) ");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
@@ -148,8 +188,8 @@ switch ($mode) {
             $full_name           = $get_data["name"];
             $email               = $get_data["email"];
             $mobile_no           = $get_data["mobile"];
-            $address_one             = $get_data["address_one"];
-            $address_two             = $get_data["address_two"];
+            $address_1             = $get_data["address_1"];
+            $address_2             = $get_data["address_2"];
             $created             = $get_data["created"]; 
          
             $local_mode = "UPDATE";
@@ -188,10 +228,10 @@ switch ($mode) {
               name = '$name' 
             , email = '$email'
             , mobile = '$mobile_no'
-            , date_of_birth = '$birth_date'
+            , date_of_birth = '$date_of_bith'
             , zip_code = '$zip_code'
-            , address_one = '$address_one'
-            , address_two = '$address_two'  
+            , address_1 = '$address_1'
+            , address_2 = '$address_2'  
             , updated = now() WHERE id = $id");
 
  
