@@ -71,7 +71,7 @@ $('#staff_form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                var url = `index.php`;
+                var url = `staff_list.php`;
                 move(`<?=$actual_link?>${url}`);
                 // setTimeout(function() {  }, 1000);
             }else{

@@ -31,7 +31,7 @@ if(isset($_SESSION["session"]) && $_SESSION["session"]["id"] != 0){
                 <div class="form-group">
                   <label class="col-form-label">Password</label>
                   <div class="form-input position-relative">
-                    <input class="form-control" type="password" id="password" name="login[password]" required="" value="<?=$login_password?>" minlength="8" maxlength="16" placeholder="*********">
+                    <input class="form-control password" type="password" id="password" name="login[password]" required="" value="<?=$login_password?>" minlength="8" maxlength="16" placeholder="*********">
                     <div class="show-hide"><span class="show"></span></div>
                     <div class="invalid-feedback">Please provide a valid password.</div>
                   </div>

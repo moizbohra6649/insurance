@@ -33,20 +33,20 @@ include('partial/loader.php'); ?>
                                     <div class="row g-3">
                                         <div class="col-md-4">
                                             <label class="form-label" for="name">Name <span class="text-danger">*</span></label>
-                                            <input class="form-control onlytext" id="name" name="name" type="text" value="" placeholder="Name" required="">
+                                            <input class="form-control onlytext" id="name" name="name" type="text" value="<?=$name?>" placeholder="Name" required="">
                                             <div class="invalid-feedback">Please fill a name.</div>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="username">Username <span class="text-danger">*</span></label>
                                             <div class="input-group"><span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input class="form-control alpha_num" id="username" name="username" type="text" placeholder="Username" aria-describedby="inputGroupPrepend" required="">
+                                                <input class="form-control alpha_num" id="username" name="username" type="text" value="<?=$username?>" placeholder="Username" aria-describedby="inputGroupPrepend" required="">
                                                 <div class="invalid-feedback">Please choose a username.</div>
                                             </div>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="email">Email <span class="text-danger">*</span></label>
                                             <div class="input-group"><span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input class="form-control" id="email" name="email" type="email" placeholder="Email" aria-describedby="inputGroupPrepend" required="">
+                                                <input class="form-control" id="email" name="email" type="email" value="<?=$email?>" placeholder="Email" aria-describedby="inputGroupPrepend" required="">
                                                 <div class="invalid-feedback">Please provide a valid email.</div>
                                             </div>
                                         </div>
@@ -54,14 +54,14 @@ include('partial/loader.php'); ?>
                                     <div class="row g-3">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="mobile_no">Mobile No. <span class="text-danger">*</span></label>
-                                            <input class="form-control allownumber" minlength="12" maxlength="12" id="mobile_no" name="mobile_no" type="text" placeholder="Mobile No." onkeypress="applyPhoneInputRestriction('mobile_no')" required="">
+                                            <input class="form-control allownumber" minlength="12" maxlength="12" id="mobile_no" name="mobile_no" type="text" value="<?=$mobile_no?>" placeholder="Mobile No." onkeypress="applyPhoneInputRestriction('mobile_no')" required="">
                                             <div class="invalid-feedback">Please provide a valid Mobile No.</div>
                                         </div>
                                         
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="password">Password <span class="text-danger">*</span></label>
                                             <div class="form-input">
-                                                <input class="form-control" type="password" id="password" name="password" required="" value="" minlength="8" maxlength="16" placeholder="*********">
+                                                <input class="form-control password" type="password" id="password" name="password" required="" value="<?=$password?>" minlength="8" maxlength="16" placeholder="*********">
                                                 <div class="show-hide"><span class="show"></span></div>
                                                 <div class="invalid-feedback">Please provide a valid password.</div>
                                             </div>
@@ -69,7 +69,7 @@ include('partial/loader.php'); ?>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="confirm_password">Confirm Password <span class="text-danger">*</span></label>
                                             <div class="form-input">
-                                                <input class="form-control" type="password" id="confirm_password" name="confirm_password" required="" value="" minlength="8" maxlength="16" placeholder="*********">
+                                                <input class="form-control password" type="password" id="confirm_password" name="confirm_password" required="" value="<?=$password?>" minlength="8" maxlength="16" placeholder="*********">
                                                 <div class="show-hide"><span class="show"></span></div>
                                                 <div class="invalid-feedback">Please provide a valid confirm password.</div>
                                             </div>
@@ -96,8 +96,9 @@ include('partial/loader.php'); ?>
                                         </div>
 
                                     </div>
-                                    
+                                    <?php if($mode != "VIEW"){ ?>
                                     <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                    <?php } ?>  
                                 </form>
                             </div>
                         </div>

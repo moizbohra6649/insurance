@@ -72,7 +72,7 @@ $('#vendor_form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                var url = `index.php`;
+                var url = `vendor_list.php`;
                 move(`<?=$actual_link?>${url}`);
             }else{
                 $("#submit_btn").html('Submit');

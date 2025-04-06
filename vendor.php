@@ -78,7 +78,7 @@
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label" for="password">Password <span class="text-danger">*</span></label>
                                             <div class="form-input">
-                                                <input class="form-control" type="password" id="password" name="password" required="" value="" minlength="8" maxlength="16" placeholder="*********">
+                                                <input class="form-control password" type="password" id="password" name="password" required="" value="" minlength="8" maxlength="16" placeholder="*********">
                                                 <div class="show-hide"><span class="show"></span></div>
                                                 <div class="invalid-feedback">Please provide a valid password.</div>
                                             </div>
@@ -86,7 +86,7 @@
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label" for="confirm_password">Confirm Password <span class="text-danger">*</span></label>
                                             <div class="form-input">
-                                                <input class="form-control" type="password" id="confirm_password" name="confirm_password" required="" value="" minlength="8" maxlength="16" placeholder="*********">
+                                                <input class="form-control password" type="password" id="confirm_password" name="confirm_password" required="" value="" minlength="8" maxlength="16" placeholder="*********">
                                                 <div class="show-hide"><span class="show"></span></div>
                                                 <div class="invalid-feedback">Please provide a valid confirm password.</div>
                                             </div>

@@ -189,9 +189,7 @@ switch ($mode) {
         $agent_id = get_max_id("agent", "agent_id");
         $prefix_agent_id = "AGENT_" . $agent_id;
         
-        $select_query = mysqli_query($conn, "SELECT agent.*,bank_details.account_holder_name,bank_details.account_number,bank_details.bank_ifsc_code,bank_details.account_type,bank_details.branch_name,bank_details.bank_name,bank_details.canceled_cheque_image FROM agent  
-        left join bank_details on bank_details.agent_id = agent.id 
-        where agent.id = '$id' ");
+        $select_query = mysqli_query($conn, "SELECT * FROM agent where id = '$id' ");
         
         if(mysqli_num_rows($select_query) > 0){
             $get_data = mysqli_fetch_array($select_query);
@@ -199,29 +197,14 @@ switch ($mode) {
             $agent_id            = $get_data["agent_id"];
             $prefix_agent_id     = $get_data["prefix_agent_id"];
             
-            $full_name           = $get_data["name"];
+            $name                = $get_data["name"];
+            $username            = $get_data["username"];
             $email               = $get_data["email"];
             $mobile_no           = $get_data["mobile"];
             $password            = $get_data["hint"];
-
-            $address             = $get_data["address"];
-            $pincode             = $get_data["pincode"];
-            $country_id          = $get_data["country_id"];
-            $state_id            = $get_data["state_id"];
-            $city                = $get_data["city"]; 
             $profile_image       = $get_data["profile_image"];
-            $date_of_birth       = $get_data["date_of_birth"];
-            $date_of_anniversary = $get_data["date_of_anniversary"];
             $created             = $get_data["created"];
-
-            $account_holder_name   = $get_data["account_holder_name"];
-            $account_number        = $get_data["account_number"];
-            $bank_ifsc_code        = $get_data["bank_ifsc_code"];
-            $account_type          = $get_data["account_type"];
-            $branch_name           = $get_data["branch_name"];
-            $bank_name             = $get_data["bank_name"];
-            $canceled_cheque_image = $get_data["canceled_cheque_image"];
-            $local_mode = "UPDATE";
+            $local_mode          = "UPDATE";
         }
     break;
 
