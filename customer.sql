@@ -34,7 +34,7 @@ CREATE TABLE `customer` (
   `name` varchar(252) NOT NULL,
   `email` varchar(252) NOT NULL,
   `mobile` varchar(15) NOT NULL,
-  `date_of_birth` timestamp NULL DEFAULT NULL,
+  `date_of_birth` date NULL DEFAULT NULL,
   `zip_code` varchar(50) NOT NULL,
   `address_1` text DEFAULT NULL,
   `address_2` text DEFAULT NULL,

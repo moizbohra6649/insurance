@@ -86,7 +86,7 @@ include('partial/loader.php'); ?>
                                                     ?>
                                                     <div class="input-group">
                                                         <input class="form-control" type="text" value="<?=$profile_image?>" readonly style="cursor:pointer;" onclick="image_preview('image_preview', 'src_path', '<?=$profile_image_url?>', 'image_preview_label', 'Profile Picture Preview');" data-bs-container="#image_preview_div" data-bs-toggle="tooltip" title="Click to preview image">
-                                                        <button type="button" onclick="remove_image();" class="btn btn-primary"><i class="mdi mdi-delete"></i></button>
+                                                        <button type="button" onclick="remove_image();" class="btn btn-primary"><i class="icofont icofont-trash"></i></button>
                                                     </div>
                                                     <?php }else{ ?>
                                                         <input class="form-control" type="file" id="profile_image" name="profile_image" accept="image/*" onchange="return image_validation(this)">

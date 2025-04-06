@@ -213,117 +213,103 @@ switch ($mode) {
 
         $select_agent = mysqli_query($conn, "SELECT * FROM agent WHERE id = '$id' " );
         $select_agent_mobile = mysqli_query($conn, "SELECT id FROM agent WHERE mobile = '$_REQUEST[mobile_no]' AND id != '$id'" );
-        
+        $select_agent_email = mysqli_query($conn, "SELECT id FROM agent WHERE email = '$_REQUEST[email]' AND id != '$id'" );
+
+        // Validation
+        if (empty($name)) {
+            $error_arr[] = "Please enter Name.<br/>";
+        }
+
+        if (empty($username)) {
+            $error_arr[] = "Please enter Username.<br/>";
+        }
+
+        if (empty($email)) {
+            $error_arr[] = "Please enter Email.<br/>";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $error_arr[] = "Please enter a valid Email.<br/>";
+        }
+
+        if (empty($mobile_no)) {
+            $error_arr[] = "Please enter Mobile No.<br/>";
+        } elseif (strlen($mobile_no) < 12) {
+            $error_arr[] = "Please enter a valid Mobile No.<br/>";
+        } 
+
+        if (empty($password)) {
+            $error_arr[] = "Please enter Password.<br/>";
+        } elseif (strlen($password) < 8) {
+            $error_arr[] = "Please enter a valid Password.<br/>";
+        }
+
+        if (empty($confirm_password)) {
+            $error_arr[] = "Please enter Confirm Password.<br/>";
+        } elseif (strlen($confirm_password) < 8) {
+            $error_arr[] = "Please enter a valid Confirm Password.<br/>";
+        } elseif ($password !== $confirm_password) {
+            $error_arr[] = "Both Passwords do not match.<br/>";
+        }
+
         if(mysqli_num_rows($select_agent) == 0){
-
             $data["msg"] = "Something went wrong please try again later.";
+            $data["status"] = "error";            
+        }
+
+        if(mysqli_num_rows($select_agent_email) > 0){
+            $error_arr[] = "This Email address is already exsits.<br/>";
+        }
+        
+        if(mysqli_num_rows($select_agent_mobile) > 0){
+            $error_arr[] = "This Mobile No. is already exsits.<br/>";
+        }
+
+        // Display errors if any
+        if (!empty($error_arr)) {
+            $error_txt = implode('', $error_arr);
+            $data["msg"] = $error_txt;
             $data["status"] = "error";
-            $data["save_with"] = "";
-            $data["agent_id"] = "";
-            
-        }else if(mysqli_num_rows($select_agent_mobile) > 0){
+            echo $json_response = json_encode($data);
+            exit;
+        }
+        
 
-            $data["msg"] = "This mobile is already exists in another agent.";
+        $get_agent = mysqli_fetch_array($select_agent);
+        $db_profile_image = $get_agent["profile_image"];
+        $get_agent_id = $get_agent["id"];
+        
+        if(!empty($profile_image)){
+            list($txt, $ext) = explode(".", $profile_image);
+            $profile_image = $agent_id . "_" . time() . "." . $ext;
+            $tmp = $_FILES['profile_image']['tmp_name'];
+            move_uploaded_file($tmp, dirname(__DIR__) . '/' . $upload_folder . '/agent_profile_picture/' . $profile_image);
+        }
+
+        if(!empty($delete_image) && $delete_image == 'true'){
+            unlink(dirname(__DIR__) . '/' . $upload_folder . '/agent_profile_picture/' . $db_profile_image);
+        }
+
+        if(empty($delete_image) && $delete_image != 'true' && empty($profile_image)){
+            $profile_image = $db_profile_image;
+        }
+
+        // Turn autocommit off
+        mysqli_autocommit($conn,FALSE);
+
+        $password_hash =  password_hash($password, PASSWORD_DEFAULT);
+            
+        $update_agent = mysqli_query($conn, "UPDATE agent SET name = '$name', email = '$email', username = '$username', mobile = '$mobile_no', password = '$password_hash', hint = '$password', profile_image = '$profile_image', updated = now() WHERE id = $id");
+
+        // Commit transaction
+        if (!mysqli_commit($conn)) {
+            $data["msg"] = "Commit transaction failed";
             $data["status"] = "error";
-            $data["save_with"] = "";
-            $data["agent_id"] = "";
-            
-        }else{
-            $get_agent = mysqli_fetch_array($select_agent);
-            $db_profile_image = $get_agent["profile_image"];
-            $get_agent_id = $get_agent["id"];
-            
-            if(!empty($profile_image)){
-                list($txt, $ext) = explode(".", $profile_image);
-                $profile_image = $agent_id . "_" . time() . "." . $ext;
-                $tmp = $_FILES['profile_image']['tmp_name'];
-                move_uploaded_file($tmp, dirname(__DIR__) . '/' . $upload_folder . '/agent/' . $profile_image);
-            }
-
-            if(!empty($delete_image) && $delete_image == 'true'){
-                unlink(dirname(__DIR__) . '/' . $upload_folder . '/agent/' . $db_profile_image);
-            }
-
-            if(empty($delete_image) && $delete_image != 'true' && empty($profile_image)){
-                $profile_image = $db_profile_image;
-            }
-
-            // Turn autocommit off
-            mysqli_autocommit($conn,FALSE);
-                
-            $update_agent = mysqli_query($conn, "UPDATE agent SET name = '$full_name', email = '$email', address = '$address', pincode = '$pincode', country_id = '$country_id', state_id = '$state_id', city = '$city', profile_image = '$profile_image', date_of_birth = '$date_of_birth', date_of_anniversary = '$date_of_anniversary', updated = now() WHERE id = $id");
-
-
-            /* Bank Detail Cheque Image */
-
-            $cheque_image = "";
-            
-            $select_bank_details =  mysqli_query($conn, "SELECT * FROM bank_details WHERE agent_id = $id");
-            if(mysqli_num_rows($select_bank_details) > 0){
-                $get_bank_details = mysqli_fetch_array($select_bank_details);
-                $cheque_image = $get_bank_details["canceled_cheque_image"];
-                $canceled_cheque_image_db = $cheque_image;
-            }
-
-            if(!empty($delete_cheque_image) && $delete_cheque_image == 'true'){
-                $file_path_name = dirname(__FILE__). '/../' . $upload_folder . '/agent/bank_cheque/' . $cheque_image;
-                if(file_exists($file_path_name)) {
-                    unlink(dirname(__DIR__) . '/' . $upload_folder . '/agent/bank_cheque/' . $cheque_image);
-                }
-                $canceled_cheque_image_db = "";
-            }
-
-            if(empty($delete_cheque_image) && $delete_cheque_image != 'true' && empty($canceled_cheque_image)){
-                $canceled_cheque_image_db = $cheque_image;
-            }
-
-            if(!empty($canceled_cheque_image)){
-                list($txt, $ext) = explode(".", $canceled_cheque_image);
-                $bank_details_id = get_max_id("bank_details", "id");
-                $canceled_cheque_image_db = $bank_details_id . "_" . time() . "." . $ext; 
-                $tmp = $_FILES['canceled_cheque_image']['tmp_name'];
-                move_uploaded_file($tmp, dirname(__DIR__) . '/' . $upload_folder . '/agent/bank_cheque/' . $canceled_cheque_image_db);
-            }
-
-            mysqli_query($conn, "DELETE FROM bank_details WHERE agent_id = $id");
-
-            if($account_holder_name !='' && $account_number !='' && $bank_ifsc_code !='' && $branch_name !='' && $bank_name !='')
-            {
-                if (!empty($update_agent)) {
-
-                    mysqli_query($conn, "INSERT INTO bank_details (agent_id, account_holder_name,account_number, bank_ifsc_code, account_type, branch_name,bank_name,canceled_cheque_image) VALUES ('$id', '$account_holder_name', '$account_number', '$bank_ifsc_code', '$account_type', '$branch_name','$bank_name','$canceled_cheque_image_db')");
-                }else{
-                    $data["msg"] = "Query error please try again later.";
-                    $data["status"] = "error"; 
-                }
-                
-            }else{
-                $file_path_name = dirname(__FILE__). '/../' . $upload_folder . '/agent/bank_cheque/' . $cheque_image;
-                if(file_exists($file_path_name)) {
-                    unlink(dirname(__DIR__) . '/' . $upload_folder . '/agent/bank_cheque/' . $cheque_image);
-                }
-            }
-
-            // Commit transaction
-            if (!mysqli_commit($conn)) {
-                $data["msg"] = "Commit transaction failed";
-                $data["status"] = "error";
-                $data["save_with"] = "";
-                $data["agent_id"] = "";
-            }else if (!empty($update_agent)) {
-                $data["msg"] = "agent updated successfully.";
-                $data["status"] = "success";
-                $data["save_with"] = $_REQUEST["save_with"];
-                $data["agent_id"] = base64_encode($id);
-            } else {
-                $data["msg"] = "Query error please try again later.";
-                $data["status"] = "error";
-                $data["save_with"] = "";
-                $data["agent_id"] = "";
-            } 
-
-
-            }
+        }else if (!empty($update_agent)) {
+            $data["msg"] = "Agent updated successfully.";
+            $data["status"] = "success";
+        } else {
+            $data["msg"] = "Query error please try again later.";
+            $data["status"] = "error";
+        } 
 
         echo $json_response = json_encode($data);
         exit();

@@ -34,7 +34,7 @@ include('partial/loader.php'); ?>
                                         
                                         <div class="col-md-4">
                                             <label class="form-label" for="name">Name <span class="text-danger">*</span></label>
-                                            <input class="form-control onlytext" id="name" name="name" type="text" value="" placeholder="Name" required="">
+                                            <input class="form-control onlytext" id="name" name="name" type="text" value="<?=$name?>" placeholder="Name" required="">
                                             <div class="invalid-feedback">Please fill a name.</div>
                                         </div>
                                         
@@ -42,27 +42,27 @@ include('partial/loader.php'); ?>
                                             <label class="form-label" for="email">Email <span class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input class="form-control" id="email" name="email" type="email" placeholder="Email" aria-describedby="inputGroupPrepend" required="">
+                                                <input class="form-control" id="email" name="email" type="email" value="<?=$email?>" placeholder="Email" aria-describedby="inputGroupPrepend" required="">
                                                 <div class="invalid-feedback">Please provide a valid email.</div>
                                             </div>
                                         </div>
 
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="mobile_no">Mobile No. <span class="text-danger">*</span></label>
-                                            <input class="form-control allownumber" minlength="12" maxlength="12" id="mobile_no" name="mobile_no" type="text" placeholder="Mobile No." onkeypress="applyPhoneInputRestriction('mobile_no')" required="">
+                                            <input class="form-control allownumber" minlength="12" maxlength="12" id="mobile_no" name="mobile_no" type="text" value="<?=$mobile_no?>" placeholder="Mobile No." onkeypress="applyPhoneInputRestriction('mobile_no')" required="">
                                             <div class="invalid-feedback">Please provide a valid Mobile No.</div>
                                         </div>
                                     </div>
                                     <div class="row g-3">
                                     <div class="col-md-4 mb-3">
-                                            <label class="form-label" for="date_of_bith">DOB <span class="text-danger">*</span></label>
-                                            <input type="text" id="datepicker" name="date_of_bith" data-theme="dark" class="form-control" value="" readonly>
+                                            <label class="form-label" for="date_of_birth">DOB <span class="text-danger">*</span></label>
+                                            <input type="text" id="datepicker" name="date_of_birth" data-theme="dark" class="form-control" value="<?=$date_of_birth?>" readonly>
                                             <div class="invalid-feedback">Please provide a valid DOB</div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <label class="form-label" for="zip_code">Zip Code <span class="text-danger">*</span></label>
-                                            <input class="form-control allownumber" id="zip_code" maxlength="50" name="zip_code" type="text" value="" placeholder="Zip Code" required="">
+                                            <input class="form-control allownumber" id="zip_code" maxlength="50" name="zip_code" type="text" value="<?=$zip_code?>" placeholder="Zip Code" required="">
                                             <div class="invalid-feedback">Please fill a zip code.</div>
                                         </div>
                                       
@@ -71,20 +71,20 @@ include('partial/loader.php'); ?>
                                         <div class="col-md-12 mb-3">
                                             <label class="form-label" for="address_1">Address 1 <span class="text-danger">*</span></label>
                                             <div class="input-group">
-                                                <textarea class="form-control alpha_num" id="address_1" name="address_1" placeholder="" required="address_1"></textarea>
+                                                <textarea class="form-control" id="address_1" name="address_1" placeholder="" required="address_1"><?=$address_1?></textarea>
                                             </div>
                                         </div>
 
                                         <div class="col-md-12 mb-3">
                                             <label class="form-label" for="address_2">Address 2</label>
                                             <div class="input-group">
-                                                <textarea class="form-control alpha_num" id="address_2" name="address_2" placeholder="" required="address_2"></textarea>
+                                                <textarea class="form-control" id="address_2" name="address_2" placeholder="" required="address_2"><?=$address_2?></textarea>
                                             </div>
                                         </div>
                                     </div>
-                                     
-                                
+                                    <?php if($mode != "VIEW"){ ?>
                                     <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                    <?php } ?> 
                                 </form>
                             </div>
                         </div>

@@ -102,7 +102,6 @@ include('partial/loader.php'); ?>
                                             </div>
                                             <input type="hidden" name="delete_image" id="delete_image" value="<?=$delete_image?>" />
                                         </div>
-
                                     </div>
                                     <?php if($mode != "VIEW"){ ?>
                                     <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
