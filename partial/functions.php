@@ -198,9 +198,7 @@ if(isset($_SESSION["session"])){
 	$login_id = $_SESSION["session"]["id"];
 	$admin_level_role = array('superadmin', 'admin', 'staff');
 	if(in_array($_SESSION["session"]["role"], $admin_level_role)){
-		$select_user = mysqli_query($conn, "SELECT users.email, users.name, users.profile_image
-		FROM users 
-		WHERE users.id = '$login_id' ");
+		$select_user = mysqli_query($conn, "SELECT * FROM users WHERE id = '$login_id' ");
 		if(mysqli_num_rows($select_user) > 0){
 			$get_user = mysqli_fetch_array($select_user);
 			$login_email = $get_user["email"];
