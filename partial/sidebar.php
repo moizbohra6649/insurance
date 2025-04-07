@@ -88,6 +88,53 @@
               <li><a href="customer.php">Customer Add</a></li>
             </ul>
           </li>
+
+          <li class="sidebar-main-title">
+            <div>
+              <h6 class="">Vehicle</h6>
+            </div>
+          </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>Year</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="year.php">Year Add</a></li>
+              <li><a href="year_list.php">Year List</a></li>
+            </ul>
+          </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>Make</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="make.php">Make Add</a></li>
+              <li><a href="make_list.php">Make List</a></li>
+            </ul>
+          </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>Model</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="model.php">Model Add</a></li>
+              <li><a href="model_list.php">Model List</a></li>
+            </ul>
+          </li>
+
+          
           
         </ul>
       </div>
