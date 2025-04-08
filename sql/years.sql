@@ -31,7 +31,7 @@ CREATE TABLE `years` (
   `id` int(11) NOT NULL,
   `years_id` bigint(22) NOT NULL,
   `prefix_years_id` varchar(252) NOT NULL,
-  `years` date DEFAULT NULL,
+  `years` varchar(252) NULL,
   `status` int(12) NOT NULL DEFAULT 0,
   `deleted` int(12) NOT NULL DEFAULT 0,
   `delete_datetime` timestamp NULL DEFAULT NULL,
