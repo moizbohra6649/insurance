@@ -45,7 +45,7 @@ include('partial/loader.php'); ?>
                                                 <tr>
                                                     <th>S.No.</th>
                                                     <th>Year ID</th>
-                                                    <th>Years</th>  
+                                                    <th>Year</th>  
                                                     <th>Create Date</th> 
                                                     <th>Status</th>
                                                     <th>Action</th>
@@ -60,10 +60,10 @@ include('partial/loader.php'); ?>
                                                 ?>
                                                 <tr>
                                                     <td align="center"> <?=$i++?> </td>
-                                                    <td align="center"> <?=$get_data["years_id"]?> </td>
+                                                    <td align="center"> <?=$get_data["year_id"]?> </td>
                                                     
                                                     
-                                                    <td> <?=$get_data["years"]?> </td>
+                                                    <td> <?=$get_data["year"]?> </td>
                                                     
                                                     <td align="center"> <?=convert_calender_date($get_data["created"])?> </td>
                                                     <td>

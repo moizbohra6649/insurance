@@ -40,18 +40,6 @@ CREATE TABLE `make` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `make`
---
-
-INSERT INTO `make` (`id`, `make_id`, `prefix_make_id`, `make_name`, `status`, `deleted`, `delete_datetime`, `created`, `updated`) VALUES
-(1, 1, 'MAKE_1', 'Shu1234', 0, 0, NULL, '2025-04-07 16:32:15', '2025-04-07 16:35:50'),
-(2, 2, 'MAKE_2', 'Asdasdsa', 0, 0, NULL, '2025-04-08 14:54:01', NULL);
-
---
--- Indexes for dumped tables
---
-
---
 -- Indexes for table `make`
 --
 ALTER TABLE `make`
@@ -65,7 +53,7 @@ ALTER TABLE `make`
 -- AUTO_INCREMENT for table `make`
 --
 ALTER TABLE `make`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

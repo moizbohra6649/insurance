@@ -15,9 +15,8 @@ $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 
 
-$years_id            = (isset($_REQUEST["years_id"])) ? $_REQUEST["years_id"] : 0;
- 
-$years          = (isset($_REQUEST["years"])) ? convert_readable_date_db($_REQUEST["years"]) : "";
+$year_id            = (isset($_REQUEST["year_id"])) ? $_REQUEST["year_id"] : 0;
+$year          = (isset($_REQUEST["year"])) ? convert_readable_date_db($_REQUEST["year"]) : "";
  
 
 
@@ -32,44 +31,42 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 /* Search Filter */
 $from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
 $to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
-$filter_years_id    = (isset($_REQUEST["filter_years_id"])) ? $_REQUEST["filter_years_id"] : "";
+$filter_year_id    = (isset($_REQUEST["filter_year_id"])) ? $_REQUEST["filter_year_id"] : "";
 
  
-//if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
 
-    $select_query = "SELECT id, years_id,years, created FROM years WHERE 1=1 AND years_id != $login_id ";
+$select_query = "SELECT * FROM year WHERE 1=1 ";
 
-    if(!empty($from_date)){
-        if(empty($to_date)){
-            $to_date = $from_date;
-        }
+if(!empty($from_date)){
+    if(empty($to_date)){
+        $to_date = $from_date;
     }
+}
 
-    if(!empty($to_date)){
-        if(empty($to_date)){
-            $from_date = $to_date;
-        }
+if(!empty($to_date)){
+    if(empty($to_date)){
+        $from_date = $to_date;
     }
-    
-    if(!empty($from_date) && !empty($to_date)){
-        $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
-    }
+}
 
-    if(!empty($filter_years_id)){
-        $select_query .= " AND year_id = $filter_years_id ";
-    }
- 
-    $query_result = mysqli_query($conn, $select_query);
-     
-//}
+if(!empty($from_date) && !empty($to_date)){
+    $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
+}
+
+if(!empty($filter_year_id)){
+    $select_query .= " AND year_id = $filter_year_id ";
+}
+
+$query_result = mysqli_query($conn, $select_query);
+$query_count = mysqli_num_rows($query_result);
 
 switch ($mode) {
     case "NEW":
         $local_mode = "INSERT";
         $readonly   = "";
         $title      = "Add New Year"; 
-        $years_id = get_max_id("years", "years_id");
-        $prefix_years_id = "YEAR_" . $years_id;
+        $year_id = get_max_id("year", "year_id");
+        $prefix_year_id = "YEAR_" . $year_id;
         $list_title = "Year List";
     break;
 
@@ -77,19 +74,19 @@ switch ($mode) {
         $data = [];
         $error_arr = [];
         
-        $years_id = get_max_id("years", "years_id");
-        $prefix_years_id = "YEAR_" . $years_id;
+        $year_id = get_max_id("year", "year_id");
+        $prefix_year_id = "YEAR_" . $year_id;
  
-        $select_year = mysqli_query($conn, "SELECT id FROM years WHERE years = '$_REQUEST[years]' " );
+        $select_year = mysqli_query($conn, "SELECT id FROM year WHERE year = '$_REQUEST[year]' " );
     
        // Validation 
 
-        if (empty($years)) {
-            $error_arr[] = "Please enter Year<br/>";
+        if (empty($year)) {
+            $error_arr[] = "Please select a Year.<br/>";
         } 
         
         if(mysqli_num_rows($select_year) > 0){
-            $error_arr[] = "This Year is already exsits.<br/>";
+            $error_arr[] = "This Year is already exists.<br/>";
         } 
 
         // Display errors if any
@@ -104,7 +101,7 @@ switch ($mode) {
         mysqli_autocommit($conn,FALSE);
  
 
-        $insert_query = mysqli_query($conn, "INSERT INTO years (years_id, prefix_years_id, years) VALUES ('$years_id', '$prefix_years_id', '$years' ) ");
+        $insert_query = mysqli_query($conn, "INSERT INTO year (year_id, prefix_year_id, year, status) VALUES ('$year_id', '$prefix_year_id', '$year', 1) ");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
@@ -130,17 +127,17 @@ switch ($mode) {
         $readonly   = "readonly";
         $title      = ($mode == "EDIT") ? "Year Edit" : "Year View";
 
-        $years_id = get_max_id("years", "years_id");
-        $prefix_years_id = "YEAR_" . $years_id;
+        $year_id = get_max_id("year", "year_id");
+        $prefix_year_id = "YEAR_" . $year_id;
         
-        $select_query = mysqli_query($conn, "SELECT * FROM years where id = '$id' ");
+        $select_query = mysqli_query($conn, "SELECT * FROM year where id = '$id' ");
         
         if(mysqli_num_rows($select_query) > 0){
             $get_data = mysqli_fetch_array($select_query);
 
-            $years_id            = $get_data["years_id"];
-            $prefix_years_id     = $get_data["prefix_years_id"];
-            $years          = $get_data["years"] == "0000-00-00" ? "" : convert_db_date_readable($get_data["years"]);
+            $year_id            = $get_data["year_id"];
+            $prefix_year_id     = $get_data["prefix_year_id"];
+            $year          = $get_data["year"] == "0000-00-00" ? "" : convert_db_date_readable($get_data["year"]);
             $created                = $get_data["created"]; 
             $local_mode = "UPDATE";
         }
@@ -149,23 +146,22 @@ switch ($mode) {
     case "UPDATE":
         $data = [];
 
-        $select_year_data = mysqli_query($conn, "SELECT * FROM years WHERE id = '$id' " );
-        $select_years = mysqli_query($conn, "SELECT id FROM years WHERE years = '$_REQUEST[years]' AND id != '$id'" );
+        $select_year_data = mysqli_query($conn, "SELECT * FROM year WHERE id = '$id' " );
+        $select_year = mysqli_query($conn, "SELECT id FROM year WHERE year = '$_REQUEST[year]' AND id != '$id'" );
        
 
         // Validation 
-        if (empty($years)) {
-            $error_arr[] = "Please enter DOB.<br/>";
-        }
+        if (empty($year)) {
+            $error_arr[] = "Please select a Year.<br/>";
+        } 
  
 
         if(mysqli_num_rows($select_year_data) == 0){
-            $data["msg"] = "Something went wrong please try again later.";
-            $data["status"] = "error";
+            $error_arr[] = "Something went wrong please try again later.";
         }
  
-        if(mysqli_num_rows($select_years) > 0){
-            $error_arr[] = "This Year is already exsits.<br/>";
+        if(mysqli_num_rows($select_year) > 0){
+            $error_arr[] = "This Year is already exists.<br/>";
         }
 
         // Display errors if any
@@ -180,18 +176,18 @@ switch ($mode) {
 
         $get_year = mysqli_fetch_array($select_year_data);
         
-        $get_years_id = $get_year["id"]; 
+        $get_year_id = $get_year["id"]; 
             
         // Turn autocommit off
         mysqli_autocommit($conn,FALSE);
             
-        $update_years = mysqli_query($conn, "UPDATE years SET years = '$years', updated = now() WHERE id = $id");
+        $update_year = mysqli_query($conn, "UPDATE year SET year = '$year', updated = now() WHERE id = $id");
  
         // Commit transaction
         if (!mysqli_commit($conn)) {
             $data["msg"] = "Commit transaction failed";
             $data["status"] = "error";
-        }else if (!empty($update_years)) {
+        }else if (!empty($update_year)) {
             $data["msg"] = "Year updated successfully.";
             $data["status"] = "success";
         } else {

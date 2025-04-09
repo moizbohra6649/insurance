@@ -6,14 +6,13 @@ $('#model_form').on('submit', (function(e) {
 
     var error_arr = [];
 
-    if($("#name").val() == ""){
-        error_arr.push("Please enter Name.<br/>");
-    } 
-
     if($("#make_id").val() == 0){
-        error_arr.push("Please select Make.<br/>");
+        error_arr.push("Please select a Make.<br/>");
     }
-  
+
+    if($("#model_name").val() == ""){
+        error_arr.push("Please fill a Model name.<br/>");
+    } 
 
     var error_txt = error_arr.join('');
     if(error_txt != ""){
@@ -58,26 +57,6 @@ $('#model_form').on('submit', (function(e) {
         }
     });
 }));
-
-function fn_search_filter(){
-    var from_date   = $("#range-from").val();
-    var to_date     = $("#range-to").val();
-    var filter_user_id = $("#filter_user_id").val();
-    var name   = $("#name").val();
-    var mobile_no   = $("#mobile_no").val();
-
-    if(from_date == "" && to_date == "" && filter_user_id == "" && name == "" && mobile_no == ""){
-        notification("Oh Snap!", "Please select atleast one searh filter.", "info");
-        return false;
-    }
-    return true;
-}
-
-function remove_image(){
-    $("#image_preview_div").css('display', 'none');
-    $("#image_input_div").css('display', 'block');
-    $("#delete_image").val('true');
-}
 
 /* ==================================================END STAFF FORM JS CODE================================================== */
 

@@ -144,11 +144,11 @@ switch ($mode) {
         }
 
         if(mysqli_num_rows($select_vendor_email) > 0){
-            $error_arr[] = "This Email address is already exsits.<br/>";
+            $error_arr[] = "This Email address is already exists.<br/>";
         }
         
         if(mysqli_num_rows($select_vendor_mobile) > 0){
-            $error_arr[] = "This Mobile No. is already exsits.<br/>";
+            $error_arr[] = "This Mobile No. is already exists.<br/>";
         }
 
         // Display errors if any
@@ -280,7 +280,7 @@ switch ($mode) {
         }
 
         if(mysqli_num_rows($select_vendor_email) > 0){
-            $error_arr[] = "This Email address is already exsits.<br/>";
+            $error_arr[] = "This Email address is already exists.<br/>";
         }
         
         if(mysqli_num_rows($select_vendor_mobile) > 0){

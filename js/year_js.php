@@ -6,8 +6,8 @@ $('#year_form').on('submit', (function(e) {
 
     var error_arr = []; 
 
-    if($("#years").val() == ""){
-        error_arr.push("Please select Years.<br/>");
+    if($("#year").val() == ""){
+        error_arr.push("Please select a Year.<br/>");
     } 
  
     var error_txt = error_arr.join('');
@@ -52,20 +52,6 @@ $('#year_form').on('submit', (function(e) {
         }
     });
 }));
-
-function fn_search_filter(){
-    var from_date   = $("#range-from").val();
-    var to_date     = $("#range-to").val();
-    var filter_years_id = $("#filter_years_id").val();
-    
- 
-
-    if(from_date == "" && to_date == "" && filter_years_id == "" ){
-        notification("Oh Snap!", "Please select atleast one searh filter.", "info");
-        return false;
-    }
-    return true;
-}
 
 
 /* ==================================================END Vendor FORM JS CODE================================================== */

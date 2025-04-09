@@ -14,9 +14,9 @@ $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] :
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 
-$model_id            = (isset($_REQUEST["model_id"])) ? $_REQUEST["model_id"] : 0;
-$model_name                   = (isset($_REQUEST["model_name"])) ? $_REQUEST["model_name"] : "";
-$make_id                   = (isset($_REQUEST["make_id"])) ? $_REQUEST["make_id"] : 0;
+$model_id = (isset($_REQUEST["model_id"])) ? $_REQUEST["model_id"] : 0;
+$model_name = (isset($_REQUEST["model_name"])) ? $_REQUEST["model_name"] : "";
+$make_id = (isset($_REQUEST["make_id"])) ? $_REQUEST["make_id"] : 0;
  
 
 
@@ -33,34 +33,31 @@ $from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db(
 $to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
 $filter_model_id    = (isset($_REQUEST["filter_model_id"])) ? $_REQUEST["filter_model_id"] : "";
 
-//$query_count = 0;
-//if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
 
-    $select_query = "SELECT id, model_id,model_name,make_id, created FROM model WHERE 1=1 AND model_id != $login_id ";
+$select_query = "SELECT * FROM model WHERE 1=1 ";
 
-    if(!empty($from_date)){
-        if(empty($to_date)){
-            $to_date = $from_date;
-        }
+if(!empty($from_date)){
+    if(empty($to_date)){
+        $to_date = $from_date;
     }
+}
 
-    if(!empty($to_date)){
-        if(empty($to_date)){
-            $from_date = $to_date;
-        }
+if(!empty($to_date)){
+    if(empty($to_date)){
+        $from_date = $to_date;
     }
-    
-    if(!empty($from_date) && !empty($to_date)){
-        $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
-    }
+}
 
-    if(!empty($filter_model_id)){
-        $select_query .= " AND model_id = $filter_model_id ";
-    }
- 
-    $query_result = mysqli_query($conn, $select_query);
-   // $query_count = mysqli_num_rows($query_result);
-//}
+if(!empty($from_date) && !empty($to_date)){
+    $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
+}
+
+if(!empty($filter_model_id)){
+    $select_query .= " AND model_id = $filter_model_id ";
+}
+
+$query_result = mysqli_query($conn, $select_query);
+$query_count = mysqli_num_rows($query_result);
 
 switch ($mode) {
     case "NEW":
@@ -83,16 +80,16 @@ switch ($mode) {
 
         // Validation 
 
+        if (empty($make_id)) {
+            $error_arr[] = "Please select a Make.<br/>";
+        }
+
         if (empty($model_name)) {
-            $error_arr[] = "Please enter make name<br/>";
+            $error_arr[] = "Please fill a Model name.<br/>";
         } 
         
-        if (empty($make_id)) {
-            $error_arr[] = "Please select make.<br/>";
-        }
-        
         if(mysqli_num_rows($select_model) > 0){
-            $error_arr[] = "This Model is already exsits.<br/>";
+            $error_arr[] = "This Model is already exists.<br/>";
         }
 
         // Display errors if any
@@ -107,7 +104,7 @@ switch ($mode) {
         mysqli_autocommit($conn,FALSE);
  
 
-        $insert_query = mysqli_query($conn, "INSERT INTO model (model_id, prefix_model_id, model_name,make_id)VALUES('$model_id', '$prefix_model_id', '$model_name' ,'$make_id') ");
+        $insert_query = mysqli_query($conn, "INSERT INTO model (model_id, prefix_model_id, model_name,make_id, status)VALUES('$model_id', '$prefix_model_id', '$model_name' ,'$make_id', 1) ");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
@@ -158,21 +155,20 @@ switch ($mode) {
        
 
         // Validation 
-        if (empty($model_name)) {
-            $error_arr[] = "Please enter model name.<br/>";
-        }
- 
         if (empty($make_id)) {
-            $error_arr[] = "Please select make.<br/>";
+            $error_arr[] = "Please select a Make.<br/>";
         }
 
+        if (empty($model_name)) {
+            $error_arr[] = "Please fill a Model name.<br/>";
+        } 
+
         if(mysqli_num_rows($select_model_data) == 0){
-            $data["msg"] = "Something went wrong please try again later.";
-            $data["status"] = "error";
+            $error_arr[] = "Something went wrong please try again later.";
         }
  
         if(mysqli_num_rows($select_model) > 0){
-            $error_arr[] = "This model is already exsits.<br/>";
+            $error_arr[] = "This model is already exists.<br/>";
         }
 
         // Display errors if any

@@ -5754,7 +5754,7 @@ div .action .delete i {
   padding: 0.375rem 0.75rem;
   font-size: 14px;
   border-radius: 0.25rem;
-  color: #fff;
+  /* color: #fff; */
 }
 .dataTables_wrapper + .dataTables_wrapper {
   margin-top: 20px;

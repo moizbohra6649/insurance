@@ -14,8 +14,8 @@ $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] :
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 
-$make_id            = (isset($_REQUEST["make_id"])) ? $_REQUEST["make_id"] : 0;
-$make_name                   = (isset($_REQUEST["make_name"])) ? $_REQUEST["make_name"] : "";
+$make_id = (isset($_REQUEST["make_id"])) ? $_REQUEST["make_id"] : 0;
+$make_name = (isset($_REQUEST["make_name"])) ? $_REQUEST["make_name"] : "";
 
  
 
@@ -33,34 +33,30 @@ $from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db(
 $to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
 $filter_make_id    = (isset($_REQUEST["filter_make_id"])) ? $_REQUEST["filter_make_id"] : "";
 
-//$query_count = 0;
-//if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
+$select_query = "SELECT * FROM make WHERE 1=1 ";
 
-    $select_query = "SELECT id, make_id,make_name, created FROM make WHERE 1=1 AND make_id != $login_id ";
+if(!empty($from_date)){
+    if(empty($to_date)){
+        $to_date = $from_date;
+    }
+}
 
-    if(!empty($from_date)){
-        if(empty($to_date)){
-            $to_date = $from_date;
-        }
+if(!empty($to_date)){
+    if(empty($to_date)){
+        $from_date = $to_date;
     }
+}
 
-    if(!empty($to_date)){
-        if(empty($to_date)){
-            $from_date = $to_date;
-        }
-    }
-    
-    if(!empty($from_date) && !empty($to_date)){
-        $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
-    }
+if(!empty($from_date) && !empty($to_date)){
+    $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
+}
 
-    if(!empty($filter_make_id)){
-        $select_query .= " AND make_id = $filter_make_id ";
-    }
- 
-    $query_result = mysqli_query($conn, $select_query);
-   // $query_count = mysqli_num_rows($query_result);
-//}
+if(!empty($filter_make_id)){
+    $select_query .= " AND make_id = $filter_make_id ";
+}
+
+$query_result = mysqli_query($conn, $select_query);
+$query_count = mysqli_num_rows($query_result);
 
 switch ($mode) {
     case "NEW":
@@ -84,11 +80,11 @@ switch ($mode) {
         // Validation 
 
         if (empty($make_name)) {
-            $error_arr[] = "Please enter make name<br/>";
+            $error_arr[] = "Please fill a Make name.<br/>";
         } 
         
         if(mysqli_num_rows($select_make) > 0){
-            $error_arr[] = "This Make is already exsits.<br/>";
+            $error_arr[] = "This Make is already exists.<br/>";
         }
 
         // Display errors if any
@@ -103,7 +99,7 @@ switch ($mode) {
         mysqli_autocommit($conn,FALSE);
  
 
-        $insert_query = mysqli_query($conn, "INSERT INTO make (make_id, prefix_make_id, make_name) VALUES ('$make_id', '$prefix_make_id', '$make_name' ) ");
+        $insert_query = mysqli_query($conn, "INSERT INTO make (make_id, prefix_make_id, make_name, status) VALUES ('$make_id', '$prefix_make_id', '$make_name', 1) ");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
@@ -140,7 +136,7 @@ switch ($mode) {
             $make_id            = $get_data["make_id"];
             $prefix_make_id     = $get_data["prefix_make_id"];
             $make_name          = $get_data["make_name"];
-            $created                = $get_data["created"]; 
+            $created            = $get_data["created"]; 
             $local_mode = "UPDATE";
         }
     break;
@@ -153,18 +149,16 @@ switch ($mode) {
        
 
         // Validation 
-        if (empty($select_make)) {
-            $error_arr[] = "Please enter make name.<br/>";
-        }
- 
+        if (empty($make_name)) {
+            $error_arr[] = "Please fill a Make name.<br/>";
+        } 
 
         if(mysqli_num_rows($select_make_data) == 0){
-            $data["msg"] = "Something went wrong please try again later.";
-            $data["status"] = "error";
+            $error_arr[] = "Something went wrong please try again later.";
         }
  
         if(mysqli_num_rows($select_make) > 0){
-            $error_arr[] = "This Make is already exsits.<br/>";
+            $error_arr[] = "This Make is already exists.<br/>";
         }
 
         // Display errors if any

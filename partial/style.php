@@ -25,6 +25,9 @@
     <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
     
     <link rel="stylesheet" type="text/css" href="assets/css/material-date-range-picker/duDatepicker.min.css">
+
+    
+<link rel="stylesheet" type="text/css" href="assets/css/vendors/datatables.css">
     
     <style>
         .table .table-user img {

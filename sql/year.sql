@@ -24,14 +24,14 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `years`
+-- Table structure for table `year`
 --
 
-CREATE TABLE `years` (
+CREATE TABLE `year` (
   `id` int(11) NOT NULL,
-  `years_id` bigint(22) NOT NULL,
-  `prefix_years_id` varchar(252) NOT NULL,
-  `years` varchar(252) NULL,
+  `year_id` bigint(22) NOT NULL,
+  `prefix_year_id` varchar(252) NOT NULL,
+  `year` varchar(252) NULL,
   `status` int(12) NOT NULL DEFAULT 0,
   `deleted` int(12) NOT NULL DEFAULT 0,
   `delete_datetime` timestamp NULL DEFAULT NULL,
@@ -40,21 +40,9 @@ CREATE TABLE `years` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `years`
+-- Indexes for table `year`
 --
-
-INSERT INTO `years` (`id`, `years_id`, `prefix_years_id`, `years`, `status`, `deleted`, `delete_datetime`, `created`, `updated`) VALUES
-(1, 1, 'YEAR_1', '2025-04-02', 0, 0, NULL, '2025-04-07 15:32:59', '2025-04-07 15:44:22'),
-(5, 2, 'YEAR_2', '2025-04-03', 0, 0, NULL, '2025-04-08 15:14:43', NULL);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `years`
---
-ALTER TABLE `years`
+ALTER TABLE `year`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -62,10 +50,10 @@ ALTER TABLE `years`
 --
 
 --
--- AUTO_INCREMENT for table `years`
+-- AUTO_INCREMENT for table `year`
 --
-ALTER TABLE `years`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `year`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

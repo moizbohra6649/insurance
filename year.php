@@ -33,9 +33,9 @@ include('partial/loader.php'); ?>
                                      
                                     <div class="row g-3">
                                         <div class="col-md-4 mb-3">
-                                            <label class="form-label" for="years">DOB <span class="text-danger">*</span></label>
-                                            <input type="text" id="datepicker" name="years" data-theme="dark" class="form-control" value="<?=$years?>" readonly>
-                                            <div class="invalid-feedback">Please provide a valid DOB</div>
+                                            <label class="form-label" for="year">Year <span class="text-danger">*</span></label>
+                                            <input type="text" id="datepicker" name="year" data-theme="dark" class="form-control" value="<?=$year?>" readonly>
+                                            <div class="invalid-feedback">Please select a Year.</div>
                                         </div>  
                                     </div>
                                    

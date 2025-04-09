@@ -41,18 +41,6 @@ CREATE TABLE `model` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `model`
---
-
-INSERT INTO `model` (`id`, `model_id`, `prefix_model_id`, `model_name`, `make_id`, `status`, `deleted`, `delete_datetime`, `created`, `updated`) VALUES
-(1, 1, 'MODEL_1', 'Asdsasd', '1', 0, 0, NULL, '2025-04-08 14:56:46', NULL),
-(2, 2, 'MODEL_2', 'Shubhajm', '1', 0, 0, NULL, '2025-04-08 15:17:10', NULL);
-
---
--- Indexes for dumped tables
---
-
---
 -- Indexes for table `model`
 --
 ALTER TABLE `model`
@@ -66,7 +54,7 @@ ALTER TABLE `model`
 -- AUTO_INCREMENT for table `model`
 --
 ALTER TABLE `model`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

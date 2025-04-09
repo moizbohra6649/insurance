@@ -7,7 +7,7 @@ $('#make_form').on('submit', (function(e) {
     var error_arr = []; 
 
     if($("#make_name").val() == ""){
-        error_arr.push("Please select make name.<br/>");
+        error_arr.push("Please fill a Make name.<br/>");
     } 
  
     var error_txt = error_arr.join('');
@@ -52,21 +52,6 @@ $('#make_form').on('submit', (function(e) {
         }
     });
 }));
-
-function fn_search_filter(){
-    var from_date   = $("#range-from").val();
-    var to_date     = $("#range-to").val();
-    var filter_years_id = $("#filter_years_id").val();
-    
- 
-
-    if(from_date == "" && to_date == "" && filter_years_id == "" ){
-        notification("Oh Snap!", "Please select atleast one searh filter.", "info");
-        return false;
-    }
-    return true;
-}
-
 
 /* ==================================================END Vendor FORM JS CODE================================================== */
 

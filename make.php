@@ -30,15 +30,12 @@ include('partial/loader.php'); ?>
                                 <form id="make_form" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
                                     <input type="hidden" name="id" value="<?=base64_encode($id)?>" />
                                     <input type="hidden" name="mode" value="<?=$local_mode?>" />
-                                     
-                                    
-
-
-                                        <div class="row g-3">
+                                
+                                    <div class="row g-3">
                                         <div class="col-md-4 mb-3">
-                                            <label class="form-label" for="years">make name <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="make_name" name="make_name" type="text" value="<?=$make_name?>" placeholder="make name" required="">
-                                            <div class="invalid-feedback">Please fill a make name.</div>
+                                            <label class="form-label" for="make_name">make name <span class="text-danger">*</span></label>
+                                            <input class="form-control" id="make_name" name="make_name" type="text" value="<?=$make_name?>" placeholder="Make Name" required="">
+                                            <div class="invalid-feedback">Please fill a Make name.</div>
                                         </div>  
                                     </div>
                                    

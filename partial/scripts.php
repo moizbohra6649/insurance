@@ -29,6 +29,9 @@
 
 <script src="assets/js/material-date-range-picker/duDatepicker.min.js"></script>
 
+<script src="assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
+<script src="assets/js/datatable/datatables/datatable.custom.js"></script>
+
 <!-- third party js ends -->
 
 <script>
@@ -42,6 +45,13 @@
 
         var end = moment();
         var now = Date.now();
+
+        duDatepicker('#yearPicker', {
+            
+            clearBtn: false, theme: 'yellow',
+            inline: false,
+            
+        });
 
         duDatepicker('#daterange', {
             range: true, format: 'mmmm d, yyyy', outFormat: 'yyyy-mm-dd', fromTarget: '#range-from', toTarget: '#range-to',
