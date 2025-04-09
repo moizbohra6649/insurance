@@ -30,7 +30,7 @@ include('partial/loader.php'); ?>
                                     </div>
                                     <div class="col-sm-6 col-auto">
                                         <div class="text-sm-end">
-                                            <a href="<?=$actual_link?>staff.php" class="btn btn-primary mb-2"><i class="icon-plus"></i> Add</a>
+                                            <a href="<?=$actual_link?>staff.php" class="btn btn-primary mb-2"><i class="icon-plus"></i> Add New Staff</a>
                                         </div>
                                     </div>
                                 </div>
@@ -92,15 +92,15 @@ include('partial/loader.php'); ?>
                                         <table class="table w-100 nowrap" id="basic-1" style="width:100%">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>S.No.</th>
-                                                    <th>Staff ID</th>
+                                                    <th style="text-align: center;">S.No.</th>
+                                                    <th style="text-align: center;">Staff ID</th>
                                                     <th>Staff Name</th>
                                                     <th>Email</th>
                                                     <th>Mobile No.</th>
-                                                    <th>Create Date</th> 
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                    <th>Role</th>
+                                                    <th style="text-align: center;">Create Date</th> 
+                                                    <th style="text-align: center;">Status</th>
+                                                    <th style="text-align: center;">Action</th>
+                                                    <th style="text-align: center;">Role</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -123,8 +123,8 @@ include('partial/loader.php'); ?>
                                                     </td>
                                                     <td> <?=$get_data["email"]?> </td>
                                                     <td> <?=$get_data["mobile"]?> </td>
-                                                    <td align="center"> <?=convert_calender_date($get_data["created"])?> </td>
-                                                    <td>
+                                                    <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
+                                                    <td align="center">
                                                         <button class="btn btn-outline-primary">Active</button>
                                                     </td>
                                                     <td align="center">
