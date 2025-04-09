@@ -33,9 +33,9 @@ include('partial/loader.php'); ?>
                                 
                                     <div class="row g-3">
                                         <div class="col-md-4 mb-3">
-                                            <label class="form-label" for="make_name">make name <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="make_name" name="make_name" type="text" value="<?=$make_name?>" placeholder="Make Name" required="">
-                                            <div class="invalid-feedback">Please fill a Make name.</div>
+                                            <label class="form-label" for="make_name">Make <span class="text-danger">*</span></label>
+                                            <input class="form-control" id="make_name" name="make_name" type="text" value="<?=$make_name?>" placeholder="Make" required="">
+                                            <div class="invalid-feedback">Please fill a Make.</div>
                                         </div>  
                                     </div>
                                    

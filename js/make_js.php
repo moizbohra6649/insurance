@@ -7,7 +7,7 @@ $('#make_form').on('submit', (function(e) {
     var error_arr = []; 
 
     if($("#make_name").val() == ""){
-        error_arr.push("Please fill a Make name.<br/>");
+        error_arr.push("Please fill a Make.<br/>");
     } 
  
     var error_txt = error_arr.join('');

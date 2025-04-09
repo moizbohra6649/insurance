@@ -30,28 +30,24 @@ include('partial/loader.php'); ?>
                                     </div>
                                     <div class="col-sm-6 col-auto">
                                         <div class="text-sm-end">
-                                            <a href="<?=$actual_link?>model.php" class="btn btn-primary mb-2"><i class="icon-plus"></i> Add</a>
+                                            <a href="<?=$actual_link?>model.php" class="btn btn-primary mb-2"><i class="icon-plus"></i> Add New Model</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                             
-                            <!-- End Filter --> 
-                            
-                            <!-- Start Filter Table -->
                             <div class="card">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table w-100 nowrap" id="datatable" style="width:100%">
+                                        <table class="table w-100 nowrap" id="basic-1" style="width:100%">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>S.No.</th>
-                                                    <th>Model ID</th>
-                                                    <th>Model name</th> 
-                                                    <th>Model name</th>  
-                                                    <th>Create Date</th> 
-                                                    <th>Status</th>
-                                                    <th>Action</th>
+                                                    <th style="text-align:center;">S.No.</th>
+                                                    <th style="text-align:center;">Model ID</th>
+                                                    <th style="text-align:center;">Make</th> 
+                                                    <th style="text-align:center;">Model</th>  
+                                                    <th style="text-align:center;">Create Date</th> 
+                                                    <th style="text-align:center;">Status</th>
+                                                    <th style="text-align:center;">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -64,21 +60,16 @@ include('partial/loader.php'); ?>
                                                 <tr>
                                                     <td align="center"> <?=$i++?> </td>
                                                     <td align="center"> <?=$get_data["model_id"]?> </td>
-                                                    <td> <?=$get_data["model_name"]?> </td>
-                                                    <td> 
-                                                 <?php  
-                                                  $select_query = mysqli_query($conn, "SELECT make_name FROM make WHERE id = '$get_data[make_id]' " );
-                                                  $get_make_data = mysqli_fetch_array($select_query);
-                                                 ?>       
-                                                    <?=$get_make_data["make_name"]?> </td>
-                                                    <td align="center"> <?=convert_calender_date($get_data["created"])?> </td>
-                                                    <td>
-                                                        <button class="btn badge-light-primary">Active</button>
+                                                    <td align="center"> <?=$get_data["make_name"]?> </td>
+                                                    <td align="center"> <?=$get_data["model_name"]?> </td>
+                                                    <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
+                                                    <td align="center">
+                                                        <button class="btn btn-outline-primary">Active</button>
                                                     </td>
                                                     <td align="center">
                                                         <a href="<?=$actual_link?>model.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
-                                                        <a href="<?=$actual_link?>model.php?id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon"> <i class="icofont icofont-ui-edit"></i></a>
-                                                        <!-- <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a> -->
+                                                        <a href="<?=$actual_link?>model.php?id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
+                                                        <!-- <a href="javascript:void(0);" class="action-icon m-2"> <i class="mdi mdi-delete"></i></a> -->
                                                     </td>
                                                 </tr>
                                                 <?php } ?>

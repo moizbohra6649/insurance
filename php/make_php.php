@@ -80,7 +80,7 @@ switch ($mode) {
         // Validation 
 
         if (empty($make_name)) {
-            $error_arr[] = "Please fill a Make name.<br/>";
+            $error_arr[] = "Please fill a Make.<br/>";
         } 
         
         if(mysqli_num_rows($select_make) > 0){
@@ -150,7 +150,7 @@ switch ($mode) {
 
         // Validation 
         if (empty($make_name)) {
-            $error_arr[] = "Please fill a Make name.<br/>";
+            $error_arr[] = "Please fill a Make.<br/>";
         } 
 
         if(mysqli_num_rows($select_make_data) == 0){

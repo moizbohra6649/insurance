@@ -34,7 +34,9 @@ $to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_
 $filter_model_id    = (isset($_REQUEST["filter_model_id"])) ? $_REQUEST["filter_model_id"] : "";
 
 
-$select_query = "SELECT * FROM model WHERE 1=1 ";
+$select_query = "SELECT model.*, make.make_name FROM model 
+left join make on make.id = model.make_id 
+WHERE 1=1 ";
 
 if(!empty($from_date)){
     if(empty($to_date)){
@@ -49,11 +51,11 @@ if(!empty($to_date)){
 }
 
 if(!empty($from_date) && !empty($to_date)){
-    $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
+    $select_query .= " AND CAST(model.created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
 }
 
 if(!empty($filter_model_id)){
-    $select_query .= " AND model_id = $filter_model_id ";
+    $select_query .= " AND model.model_id = $filter_model_id ";
 }
 
 $query_result = mysqli_query($conn, $select_query);

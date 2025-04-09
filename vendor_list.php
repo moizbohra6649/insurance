@@ -89,7 +89,7 @@ include('partial/loader.php'); ?>
                             <div class="card">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table w-100 nowrap" id="datatable" style="width:100%">
+                                        <table class="table w-100 nowrap"  id="basic-1" style="width:100%">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>S.No.</th>
@@ -124,12 +124,12 @@ include('partial/loader.php'); ?>
                                                     <td> <?=$get_data["mobile"]?> </td>
                                                     <td align="center"> <?=convert_calender_date($get_data["created"])?> </td>
                                                     <td>
-                                                        <button class="btn badge-light-primary">Active</button>
+                                                        <button class="btn btn-outline-primary">Active</button>
                                                     </td>
                                                     <td align="center">
                                                         <a href="<?=$actual_link?>vendor.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
-                                                        <a href="<?=$actual_link?>vendor.php?id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon"> <i class="icofont icofont-ui-edit"></i></a>
-                                                        <!-- <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a> -->
+                                                        <a href="<?=$actual_link?>vendor.php?id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
+                                                        <!-- <a href="javascript:void(0);" class="action-icon m-2"> <i class="mdi mdi-delete"></i></a> -->
                                                     </td>
                                                 </tr>
                                                 <?php } ?>

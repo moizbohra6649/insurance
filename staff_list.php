@@ -89,7 +89,7 @@ include('partial/loader.php'); ?>
                             <div class="card">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table" id="basic-1" style="width:100%">
+                                        <table class="table w-100 nowrap" id="basic-1" style="width:100%">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>S.No.</th>
