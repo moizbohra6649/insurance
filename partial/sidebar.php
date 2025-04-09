@@ -134,6 +134,64 @@
             </ul>
           </li>
 
+          <li class="sidebar-main-title">
+            <div>
+              <h6 class="">Policy Coverages</h6>
+            </div>
+          </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>BI (Bodily Injury)</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="policy_bi.php">BI (Bodily Injury) Add</a></li>
+              <li><a href="policy_bi_list.php">BI (Bodily Injury) List</a></li>
+            </ul>
+          </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>PD (Property Damage)</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="policy_pd.php">PD (Property Damage) Add</a></li>
+              <li><a href="policy_pd_list.php">PD (Property Damage) List</a></li>
+            </ul>
+          </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>UMB</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="policy_umd.php">UMB Add</a></li>
+              <li><a href="policy_umd_list.php">UMB List</a></li>
+            </ul>
+          </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>Medical</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="policy_medical.php">Medical Add</a></li>
+              <li><a href="policy_medical_list.php">Medical List</a></li>
+            </ul>
+          </li>
+
           
           
         </ul>

@@ -160,7 +160,7 @@ switch ($mode) {
         }
 
         if (empty($model_name)) {
-            $error_arr[] = "Please fill a Model name.<br/>";
+            $error_arr[] = "Please fill a Model.<br/>";
         } 
 
         if(mysqli_num_rows($select_model_data) == 0){

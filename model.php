@@ -37,7 +37,7 @@ include('partial/loader.php'); ?>
                                             <select class="form-select" name="make_id" id="make_id" required="">
                                                 <option value="0">Select Make</option>
                                                 <?php 
-                                                $select_model = mysqli_query($conn, "SELECT id,make_name FROM make" );
+                                                $select_model = mysqli_query($conn, "SELECT id, make_name FROM make" );
                                                 while ($row = mysqli_fetch_assoc($select_model)) { ?>  
                                                     <option <?= ($make_id == $row['id']) ? "selected" : ""; ?> value="<?php echo $row['id'];?>"><?php echo $row['make_name'];?></option>
                                                 <?php }?>
@@ -45,9 +45,9 @@ include('partial/loader.php'); ?>
                                             <div class="invalid-feedback">Please select a Make.</div>
                                         </div>  
                                         <div class="col-md-4 mb-3">
-                                        <label class="form-label" for="years">model name <span class="text-danger">*</span></label>
-                                            <input class="form-control" id="model_name" name="model_name" type="text" value="<?=$model_name?>" placeholder="model name" required="">
-                                            <div class="invalid-feedback">Please fill a Model name.</div>
+                                        <label class="form-label" for="years">Model <span class="text-danger">*</span></label>
+                                            <input class="form-control" id="model_name" name="model_name" type="text" value="<?=$model_name?>" placeholder="Model" required="">
+                                            <div class="invalid-feedback">Please fill a Model.</div>
                                         </div>
                                     </div> 
                                    

@@ -11,7 +11,7 @@ $('#model_form').on('submit', (function(e) {
     }
 
     if($("#model_name").val() == ""){
-        error_arr.push("Please fill a Model name.<br/>");
+        error_arr.push("Please fill a Model.<br/>");
     } 
 
     var error_txt = error_arr.join('');
