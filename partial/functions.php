@@ -194,7 +194,7 @@ $login_id = 0;
 $login_email = "";
 $login_name = "";
 $login_role = "";
-$profile_image = $upload_folder . "/profile_picture.jpg";
+$login_profile_image = $upload_folder . "/profile_picture.jpg";
 
 if(isset($_SESSION["session"])){
 	$login_id = $_SESSION["session"]["id"];
@@ -202,13 +202,14 @@ if(isset($_SESSION["session"])){
 	if(in_array($_SESSION["session"]["role"], $admin_level_role)){
 		$select_user = mysqli_query($conn, "SELECT * FROM users WHERE id = '$login_id' ");
 		if(mysqli_num_rows($select_user) > 0){
-			$get_user = mysqli_fetch_array($select_user);
+			$get_user = mysqli_fetch_assoc($select_user);
 			$login_email = $get_user["email"];
 			$login_name = $get_user["name"];
 			$login_role = $get_user["role"];
-			
-			if(!empty($get_qry["profile_image"]) && file_exists(dirname(__FILE__) . '/' . $upload_folder . '/user_profile_picture/' . $get_qry["profile_image"])){
-				$login_user_profile_image = dirname(__DIR__) . '/' . $upload_folder . "/user_profile_picture/$get_qry[profile_image]";
+
+			if(!empty($get_user["profile_image"]) && file_exists(dirname(__DIR__) . '/' . $upload_folder . '/user_profile_picture/' . $get_user["profile_image"])){
+				$login_profile_image = $upload_folder . "/user_profile_picture/$get_user[profile_image]";
+
 			}
 		}
 	}

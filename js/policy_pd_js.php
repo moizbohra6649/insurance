@@ -7,10 +7,10 @@ $('#policy_pd_form').on('submit', (function(e) {
     var error_arr = []; 
 
     if($("#minimum_amount").val() == ""){
-        error_arr.push("Please fill a minimum amount.<br/>");
+        error_arr.push("Please fill a Minimum Amount<br/>");
     } 
     if($("#maximum_amount").val() == ""){
-        error_arr.push("Please fill a maximum amount.<br/>");
+        error_arr.push("Please fill a Maximum Amount.<br/>");
     } 
  
     var error_txt = error_arr.join('');

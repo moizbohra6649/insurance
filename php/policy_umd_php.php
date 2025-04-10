@@ -82,10 +82,10 @@ switch ($mode) {
         // Validation 
 
         if (empty($minimum_amount)) {
-            $error_arr[] = "Please fill a minimum amount.<br/>";
+            $error_arr[] = "Please fill a Minimum Amount<br/>";
         } 
         if (empty($maximum_amount)) {
-            $error_arr[] = "Please fill a maximum amount.<br/>";
+            $error_arr[] = "Please fill a Maximum Amount.<br/>";
         } 
 
         if ($minimum_amount > $maximum_amount) {
@@ -160,11 +160,11 @@ switch ($mode) {
 
         // Validation 
         if (empty($minimum_amount)) {
-            $error_arr[] = "Please fill a minimum amount.<br/>";
+            $error_arr[] = "Please fill a Minimum Amount<br/>";
         } 
 
         if (empty($maximum_amount)) {
-            $error_arr[] = "Please fill a maximum amount.<br/>";
+            $error_arr[] = "Please fill a Maximum Amount.<br/>";
         } 
 
         if ($minimum_amount > $maximum_amount) {

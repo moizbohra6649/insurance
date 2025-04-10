@@ -55,7 +55,7 @@
                     </div>
                 </li>
                 <li class="profile-nav onhover-dropdown pe-0 py-0">
-                    <div class="media profile-media"><img class="b-r-10" src="<?=$profile_image?>" alt="">
+                    <div class="media profile-media"><img class="b-r-10" style="height: 32px; width: 32px; border-radius: 50% !important;" src="<?=$login_profile_image?>" alt="">
                         <div class="media-body"><span><?=$login_name?></span>
                             <p class="mb-0 font-roboto"><?=ucfirst($login_role)?> <i class="middle fa fa-angle-down"></i></p>
                         </div>
