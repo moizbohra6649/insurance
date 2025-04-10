@@ -6,6 +6,8 @@ if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
 }
 
 $title      = ""; 
+$list_title = "List of Vendor";
+$breadcrumb_title = "Vendor";
 $local_mode = "";
 $readonly   = "";
 $id         = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
@@ -39,7 +41,7 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 /* Search Filter */
 $from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
 $to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
-$filter_vendor_id    = (isset($_REQUEST["filter_vendor_id"])) ? $_REQUEST["filter_vendor_id"] : "";
+$filter_vendor_id  = (isset($_REQUEST["filter_vendor_id"])) ? $_REQUEST["filter_vendor_id"] : "";
 
 $query_count = 0;
 if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
@@ -89,7 +91,6 @@ switch ($mode) {
         $title      = "Add New Vendor"; 
         $vendor_id = get_max_id("vendor", "vendor_id");
         $prefix_vendor_id = "VENDOR_" . $vendor_id;
-        $list_title = "Vendor List";
     break;
 
     case "INSERT":
@@ -202,7 +203,7 @@ switch ($mode) {
     case "EDIT":
         $local_mode = "INSERT";
         $readonly   = "readonly";
-        $title      = ($mode == "EDIT") ? "Vendor Edit" : "Vendor View";
+        $title      = ($mode == "EDIT") ? "Edit Vendor" : "View Vendor";
         
         $select_query = mysqli_query($conn, "SELECT * FROM vendor where id = '$id' ");
         

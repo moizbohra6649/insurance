@@ -18,7 +18,7 @@
         
         <div class="nav-right col-xxl-7 col-xl-6 col-md-7 col-8 pull-right right-header p-0 ms-auto">
             <ul class="nav-menus">
-                <li> <span class="header-search">
+                <!-- <li> <span class="header-search">
                         <svg>
                             <use href="assets/svg/icon-sprite.svg#search"></use>
                         </svg></span></li>
@@ -53,7 +53,7 @@
                             <li><a class="f-w-700" href="#">Check all</a></li>
                         </ul>
                     </div>
-                </li>
+                </li> -->
                 <li class="profile-nav onhover-dropdown pe-0 py-0">
                     <div class="media profile-media"><img class="b-r-10" style="height: 32px; width: 32px; border-radius: 50% !important;" src="<?=$login_profile_image?>" alt="">
                         <div class="media-body"><span><?=$login_name?></span>

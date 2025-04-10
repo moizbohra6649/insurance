@@ -192,6 +192,77 @@
             </ul>
           </li>
 
+          <li class="sidebar-main-title">
+            <div>
+              <h6 class="">Coverages</h6>
+            </div>
+          </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>UMPD</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="coverage_umpd.php">UMPD Add</a></li>
+              <li><a href="coverage_umpd_list.php">UMPD List</a></li>
+            </ul>
+          </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>Comprehensive / Collision</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="coverage_collision.php">Comprehensive / Collision Add</a></li>
+              <li><a href="coverage_collision_list.php">Comprehensive / Collision List</a></li>
+            </ul>
+          </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>Towing Coverage</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="coverage_towing.php">Towing Coverage Add</a></li>
+              <li><a href="coverage_towing_list.php">Towing Coverage List</a></li>
+            </ul>
+          </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>Rental Reimbursement</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="coverage_rental.php">Rental Reimbursement Add</a></li>
+              <li><a href="coverage_rental_list.php">Rental Reimbursement List</a></li>
+            </ul>
+          </li>
+
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+              <svg class="stroke-icon">
+                <use href="assets/svg/icon-sprite.svg#stroke-user"></use>
+              </svg>
+              <svg class="fill-icon">
+                <use href="assets/svg/icon-sprite.svg#fill-user"></use>
+              </svg><span>Coverage Deductible</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="coverage_deductible.php">Coverage Deductible Add</a></li>
+              <li><a href="coverage_deductible_list.php">Coverage Deductible List</a></li>
+            </ul>
+          </li>
+
           
           
         </ul>

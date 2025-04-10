@@ -30,7 +30,7 @@ include('partial/loader.php'); ?>
                                     </div>
                                     <div class="col-sm-6 col-auto">
                                         <div class="text-sm-end">
-                                            <a href="<?=$actual_link?>agent.php" class="btn btn-primary mb-2"><i class="icon-plus"></i> Add</a>
+                                            <a href="<?=$actual_link?>agent.php" class="btn btn-primary mb-2"><i class="icofont icofont-plus"></i> Add New Agent User</a>
                                         </div>
                                     </div>
                                 </div>

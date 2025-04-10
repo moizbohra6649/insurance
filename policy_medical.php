@@ -23,9 +23,6 @@ include('partial/loader.php'); ?>
                 <div class="row starter-main">
                     <div class="col-sm-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h5><?=$title?></h5>
-                            </div>
                             <div class="card-body">
                                 <form id="policy_medical_form" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
                                     <input type="hidden" name="id" value="<?=base64_encode($id)?>" />

@@ -6,6 +6,8 @@ if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
 }
 
 $title      = ""; 
+$list_title = "List of Staff";
+$breadcrumb_title = "Staff";
 $local_mode = "";
 $readonly   = "";
 $id         = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
@@ -86,7 +88,6 @@ switch ($mode) {
         $title      = "Add New Staff User"; 
         $user_id = get_max_id("users", "user_id");
         $prefix_user_id = "STAFF_" . $user_id;
-        $list_title = "Staff List";
     break;
 
     case "INSERT":
@@ -190,7 +191,7 @@ switch ($mode) {
     case "EDIT":
         $local_mode = "INSERT";
         $readonly   = "readonly";
-        $title      = ($mode == "EDIT") ? "Staff Edit" : "Staff View";
+        $title      = ($mode == "EDIT") ? "Edit Staff" : "View Staff";
         
         $select_query = mysqli_query($conn, "SELECT * FROM users where id = '$id' ");
         

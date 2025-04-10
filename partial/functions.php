@@ -227,6 +227,10 @@ if(basename($_SERVER['PHP_SELF']) != "login.php"){
 	userSecure();
 }
 
+function isListInPageName($pageName) {
+	return strpos($pageName, "_list") !== false;
+}
+
 function convert_calender_date($select_date){
 	if(!empty($select_date) && $select_date != "0000-00-00"){
 		$formatted_date = date('d-m-Y', strtotime($select_date));
@@ -543,6 +547,5 @@ function numtowords($num) {
     $points  = ($point) ? "." . $words[$point / 10] . " " . $words[$point   = $point % 10] . " Paise " : '';
     return ucfirst("Rupees " . $result . "" . $points);
 }
-
 
 ?>

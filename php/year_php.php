@@ -6,6 +6,8 @@ if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
 }
 
 $title      = ""; 
+$list_title = "List of Year";
+$breadcrumb_title = "Year";
 $local_mode = "";
 $readonly   = "";
 $id         = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
@@ -13,12 +15,8 @@ $mode       = (isset($_REQUEST["mode"])) ? $_REQUEST["mode"] : "NEW";
 $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] : "false";
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
-
-
-$year_id            = (isset($_REQUEST["year_id"])) ? $_REQUEST["year_id"] : 0;
+$year_id       = (isset($_REQUEST["year_id"])) ? $_REQUEST["year_id"] : 0;
 $year          = (isset($_REQUEST["year"])) ? convert_readable_date_db($_REQUEST["year"]) : "";
- 
-
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -28,37 +26,11 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     exit();
 }
 
-/* Search Filter */
-$from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
-$to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
-$filter_year_id    = (isset($_REQUEST["filter_year_id"])) ? $_REQUEST["filter_year_id"] : "";
-
- 
-
-$select_query = "SELECT * FROM year WHERE 1=1 ";
-
-if(!empty($from_date)){
-    if(empty($to_date)){
-        $to_date = $from_date;
-    }
+if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
+    $select_query = "SELECT * FROM year";
+    $query_result = mysqli_query($conn, $select_query);
+    $query_count = mysqli_num_rows($query_result);
 }
-
-if(!empty($to_date)){
-    if(empty($to_date)){
-        $from_date = $to_date;
-    }
-}
-
-if(!empty($from_date) && !empty($to_date)){
-    $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
-}
-
-if(!empty($filter_year_id)){
-    $select_query .= " AND year_id = $filter_year_id ";
-}
-
-$query_result = mysqli_query($conn, $select_query);
-$query_count = mysqli_num_rows($query_result);
 
 switch ($mode) {
     case "NEW":
@@ -67,7 +39,6 @@ switch ($mode) {
         $title      = "Add New Year"; 
         $year_id = get_max_id("year", "year_id");
         $prefix_year_id = "YEAR_" . $year_id;
-        $list_title = "Year List";
     break;
 
     case "INSERT":
@@ -125,7 +96,7 @@ switch ($mode) {
     case "EDIT":
         $local_mode = "INSERT";
         $readonly   = "readonly";
-        $title      = ($mode == "EDIT") ? "Year Edit" : "Year View";
+        $title      = ($mode == "EDIT") ? "Edit Year" : "View Year";
 
         $year_id = get_max_id("year", "year_id");
         $prefix_year_id = "YEAR_" . $year_id;

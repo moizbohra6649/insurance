@@ -23,9 +23,6 @@ include('partial/loader.php'); ?>
                 <div class="row starter-main">
                     <div class="col-sm-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h5><?=$title?></h5>
-                            </div>
                             <div class="card-body">
                                 <form id="policy_pd_form" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
                                     <input type="hidden" name="id" value="<?=base64_encode($id)?>" />
@@ -43,9 +40,7 @@ include('partial/loader.php'); ?>
                                             <input class="form-control allownumber" id="maximum_amount" name="maximum_amount" type="text" value="<?=$maximum_amount?>" placeholder="Maximum Amount" required="">
                                             <div class="invalid-feedback">Please fill a Maximum Amount.</div>
                                         </div>  
-
                                     </div>
-                                   
                                     <?php if($mode != "VIEW"){ ?>
                                     <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
                                     <?php } ?> 

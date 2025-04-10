@@ -6,14 +6,14 @@ if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
 }
 
 $title      = ""; 
+$list_title = "List of Customer";
+$breadcrumb_title = "Customer";
 $local_mode = "";
 $readonly   = "";
 $id         = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
 $mode       = (isset($_REQUEST["mode"])) ? $_REQUEST["mode"] : "NEW";
 $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] : "false";
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
-
-
 
 $customer_id            = (isset($_REQUEST["customer_id"])) ? $_REQUEST["customer_id"] : 0;
 $name                   = (isset($_REQUEST["name"])) ? $_REQUEST["name"] : "";
@@ -23,7 +23,6 @@ $date_of_birth          = (isset($_REQUEST["date_of_birth"])) ? convert_readable
 $zip_code               = (isset($_REQUEST["zip_code"])) ? $_REQUEST["zip_code"] : "";
 $address_1              = (isset($_REQUEST["address_1"])) ? $_REQUEST["address_1"] : "";
 $address_2              = (isset($_REQUEST["address_2"])) ? $_REQUEST["address_2"] : "";
-
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -86,7 +85,6 @@ switch ($mode) {
         $title      = "Add New Customer"; 
         $customer_id = get_max_id("customer", "customer_id");
         $prefix_customer_id = "CUSTOMER_" . $customer_id;
-        $list_title = "Customer List";
     break;
 
     case "INSERT":
@@ -173,7 +171,7 @@ switch ($mode) {
     case "EDIT":
         $local_mode = "INSERT";
         $readonly   = "readonly";
-        $title      = ($mode == "EDIT") ? "Customer Edit" : "Customer View";
+        $title      = ($mode == "EDIT") ? "Edit Customer" : "View Customer";
 
         $customer_id = get_max_id("customer", "customer_id");
         $prefix_customer_id = "CUSTOMER_" . $customer_id;

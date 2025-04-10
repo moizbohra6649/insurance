@@ -6,6 +6,8 @@ if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
 }
 
 $title      = ""; 
+$list_title = "List of Agent User";
+$breadcrumb_title = "Agent User";
 $local_mode = "";
 $readonly   = "";
 $id         = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
@@ -13,7 +15,7 @@ $mode       = (isset($_REQUEST["mode"])) ? $_REQUEST["mode"] : "NEW";
 $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] : "false";
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
-$agent_id                = (isset($_REQUEST["agent_id"])) ? $_REQUEST["agent_id"] : 0;
+$agent_id               = (isset($_REQUEST["agent_id"])) ? $_REQUEST["agent_id"] : 0;
 $name                   = (isset($_REQUEST["name"])) ? $_REQUEST["name"] : "";
 $username               = (isset($_REQUEST["username"])) ? $_REQUEST["username"] : "";
 $email                  = (isset($_REQUEST["email"])) ? $_REQUEST["email"] : "";
@@ -69,10 +71,6 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
         $select_query .= " AND mobile LIKE '%$mobile_no%' ";
     }
 
-    // if( ($only_staff == true) || (strtolower($login_role) != strtolower($super_admin_role)) ){
-    //     $select_query .= " AND role != 1 ";
-    // }
-
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
 }
@@ -84,7 +82,6 @@ switch ($mode) {
         $title      = "Add New Agent User"; 
         $agent_id = get_max_id("agent", "agent_id");
         $prefix_agent_id = "AGENT_" . $agent_id;
-        $list_title = "Agent List";
     break;
 
     case "INSERT":

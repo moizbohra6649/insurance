@@ -25,12 +25,9 @@ include('partial/loader.php'); ?>
                         <div class="card">
                             <div class="card-header">
                                 <div class="row align-items-center justify-content-center">
-                                    <div class="col-sm-6 col-auto">
-                                        
-                                    </div>
-                                    <div class="col-sm-6 col-auto">
+                                    <div class="col-sm-12 col-auto">
                                         <div class="text-sm-end">
-                                            <a href="<?=$actual_link?>policy_pd.php" class="btn btn-primary mb-2"><i class="icon-plus"></i> Add New Policy umd</a>
+                                            <a href="<?=$actual_link?>policy_pd.php" class="btn btn-primary mb-2"><i class="icofont icofont-plus"></i> Add New Policy PD (Property Damage)</a>
                                         </div>
                                     </div>
                                 </div>
