@@ -92,6 +92,7 @@ function removeUnderscore($word){
 $link = "https://$_SERVER[HTTP_HOST]";
 $actual_link = $link . "/" . $panel_folder . "/";
 $panel_link = $link . "/" . $panel_folder . "/index.php";
+$login_link = $link . "/" . $panel_folder . "/login.php";
 // $actual_back_link_prefix = $link . "/" . $panel_folder . "/" . $without_session_page . "?page=";
 // $actual_link_prefix = $link . "/" . $panel_folder . "/" . $session_page . "?page=";
 // $pdf_actual_link_prefix = $link . "/" . $panel_folder . "/" . $pdf_page . "?page=";
@@ -193,6 +194,7 @@ $login_id = 0;
 $login_email = "";
 $login_name = "";
 $login_role = "";
+$profile_image = $upload_folder . "/profile_picture.jpg";
 
 if(isset($_SESSION["session"])){
 	$login_id = $_SESSION["session"]["id"];
@@ -204,9 +206,24 @@ if(isset($_SESSION["session"])){
 			$login_email = $get_user["email"];
 			$login_name = $get_user["name"];
 			$login_role = $get_user["role"];
+			
+			if(!empty($get_qry["profile_image"]) && file_exists(dirname(__FILE__) . '/' . $upload_folder . '/user_profile_picture/' . $get_qry["profile_image"])){
+				$login_user_profile_image = dirname(__DIR__) . '/' . $upload_folder . "/user_profile_picture/$get_qry[profile_image]";
+			}
 		}
 	}
-	
+}
+
+function userSecure() {
+	global $login_link;
+	if (!isset($_SESSION["session"]) AND empty($_SESSION["session"])) {
+		move($login_link);
+	}
+	return true;
+}
+
+if(basename($_SERVER['PHP_SELF']) != "login.php"){
+	userSecure();
 }
 
 function convert_calender_date($select_date){
