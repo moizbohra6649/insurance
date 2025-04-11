@@ -44,7 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password = mysqli_real_escape_string($conn, $_POST["login"]["password"]);
 
         $select_login = mysqli_query($conn, "SELECT id, password, role FROM users WHERE email = '$email' LIMIT 1");
+        
         if(mysqli_num_rows($select_login) > 0){
+            $get_login_data = mysqli_fetch_assoc($select_login);
 
             if($get_login_data["status"] == 0){
                 $data["msg"] = "User are not active. Please contact to admin.";
@@ -52,8 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo $json_response = json_encode($data);
                 exit;
             }
-
-            $get_login_data = mysqli_fetch_assoc($select_login);
+            
             if(password_verify($password, $get_login_data["password"])){
 
                 if(isset($_REQUEST["checkbox_signin"])){
