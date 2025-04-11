@@ -98,7 +98,7 @@ include('partial/loader.php'); ?>
                                                     <th>Email</th>
                                                     <th>Mobile No.</th>
                                                     <th style="text-align: center;">DOB</th>
-                                                    <th style="text-align: center;">Zip COde</th>
+                                                    <th style="text-align: center;">Zip Code</th>
                                                     <th style="text-align: center;">Create Date</th> 
                                                     <th style="text-align: center;">Status</th>
                                                     <th style="text-align: center;">Action</th>

@@ -41,7 +41,7 @@ $filter_agent_id    = (isset($_REQUEST["filter_agent_id"])) ? $_REQUEST["filter_
 $query_count = 0;
 if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
 
-    $select_query = "SELECT id, agent_id, name, email, mobile, profile_image, created FROM agent WHERE 1=1 AND agent_id != $login_id ";
+    $select_query = "SELECT id, agent_id, name, email, mobile, profile_image, created FROM agent WHERE 1=1 ";
 
     if(!empty($from_date)){
         if(empty($to_date)){

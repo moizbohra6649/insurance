@@ -46,7 +46,7 @@ $filter_vendor_id  = (isset($_REQUEST["filter_vendor_id"])) ? $_REQUEST["filter_
 $query_count = 0;
 if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
 
-    $select_query = "SELECT id, vendor_id, name, email, mobile, profile_image, created FROM vendor WHERE 1=1 AND vendor_id != $login_id ";
+    $select_query = "SELECT id, vendor_id, name, email, mobile, profile_image, created FROM vendor WHERE 1=1 ";
 
     if(!empty($from_date)){
         if(empty($to_date)){
