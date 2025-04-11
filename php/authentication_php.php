@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = mysqli_real_escape_string($conn, $_POST["login"]["email"]);
         $password = mysqli_real_escape_string($conn, $_POST["login"]["password"]);
 
-        $select_login = mysqli_query($conn, "SELECT id, password, role FROM users WHERE email = '$email' LIMIT 1");
+        $select_login = mysqli_query($conn, "SELECT id, password, role, status FROM users WHERE email = '$email' LIMIT 1");
         
         if(mysqli_num_rows($select_login) > 0){
             $get_login_data = mysqli_fetch_assoc($select_login);
