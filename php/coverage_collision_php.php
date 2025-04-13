@@ -6,8 +6,8 @@ if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
 }
 
 $title      = ""; 
-$list_title = "List of Coverage Collision (Uninsured Motorist / Bodily Injury)";
-$breadcrumb_title = "Coverage Collision (Uninsured Motorist / Bodily Injury)";
+$list_title = "List of Coverage Comprehensive / Collision";
+$breadcrumb_title = "Coverage Comprehensive / Collision";
 $local_mode = "";
 $readonly   = "";
 $id         = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
@@ -37,7 +37,7 @@ switch ($mode) {
     case "NEW":
         $local_mode = "INSERT";
         $readonly   = "";
-        $title      = "Add New Coverage Collision (Uninsured Motorist / Bodily Injury)"; 
+        $title      = "Add New Coverage Comprehensive / Collision"; 
         $coverage_collision_id = get_max_id("coverage_collision", "coverage_collision_id");
         $prefix_coverage_collision_id = "COVERAGE_COLLISION_" . $coverage_collision_id;
     break;
@@ -105,7 +105,7 @@ switch ($mode) {
     case "EDIT":
         $local_mode = "INSERT";
         $readonly   = "readonly";
-        $title      = ($mode == "EDIT") ? "Edit Coverage Collision (Uninsured Motorist / Bodily Injury)" : "View Coverage Collision (Uninsured Motorist / Bodily Injury)";
+        $title      = ($mode == "EDIT") ? "Edit Coverage Comprehensive / Collision" : "View Coverage Comprehensive / Collision";
 
         $coverage_collision_id = get_max_id("coverage_collision", "coverage_collision_id");
         $prefix_coverage_collision_id = "COVERAGE_COLLISION_" . $coverage_collision_id;

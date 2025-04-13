@@ -34,52 +34,14 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     exit();
 }
 
-/* Search Filter */
-$from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
-$to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
-$filter_vehicle_id    = (isset($_REQUEST["filter_vehicle_id"])) ? $_REQUEST["filter_vehicle_id"] : "";
-$only_staff        = (isset($_REQUEST["only_staff"])) ? $_REQUEST["only_staff"] : false;
-
-$query_count = 0;
-if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
-
-    $select_query = "SELECT id, vehicle_id, name, email, mobile, profile_image, created, role FROM users WHERE 1=1 AND deleted = 0 AND vehicle_id != $login_id AND role != '$super_admin_role' ";
-
-    if(!empty($from_date)){
-        if(empty($to_date)){
-            $to_date = $from_date;
-        }
-    }
-
-    if(!empty($to_date)){
-        if(empty($to_date)){
-            $from_date = $to_date;
-        }
-    }
-    
-    if(!empty($from_date) && !empty($to_date)){
-        $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
-    }
-
-    if(!empty($filter_vehicle_id)){
-        $select_query .= " AND vehicle_id = $filter_vehicle_id ";
-    }
-
-    if(!empty($name)){
-        $select_query .= " AND name LIKE '%$name%' ";
-    }
-
-    if(!empty($mobile_no)){
-        $select_query .= " AND mobile LIKE '%$mobile_no%' ";
-    }
-
-    // if( ($only_staff == true) || (strtolower($login_role) != strtolower($super_admin_role)) ){
-    //     $select_query .= " AND role != 1 ";
-    // }
-
+if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
+    $select_query = "SELECT vehicle.*, customer.name as customer_name FROM vehicle 
+    left join customer on customer.id = vehicle.customer_id
+    WHERE vehicle.customer_id = '$customer_id'";
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
 }
+
 
 switch ($mode) {
     case "NEW":

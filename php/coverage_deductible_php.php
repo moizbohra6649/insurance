@@ -6,8 +6,8 @@ if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
 }
 
 $title      = ""; 
-$list_title = "List of Coverage Towing";
-$breadcrumb_title = "Coverage Towing";
+$list_title = "List of Coverage Deductible";
+$breadcrumb_title = "Coverage Deductible";
 $local_mode = "";
 $readonly   = "";
 $id         = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
@@ -15,7 +15,7 @@ $mode       = (isset($_REQUEST["mode"])) ? $_REQUEST["mode"] : "NEW";
 $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] : "false";
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
-$coverage_towing_id = (isset($_REQUEST["coverage_towing_id"])) ? $_REQUEST["coverage_towing_id"] : 0;
+$coverage_deductible_id = (isset($_REQUEST["coverage_deductible_id"])) ? $_REQUEST["coverage_deductible_id"] : 0;
 $minimum_amount = (isset($_REQUEST["minimum_amount"])) ? $_REQUEST["minimum_amount"] : 0;
 $maximum_amount = (isset($_REQUEST["maximum_amount"])) ? $_REQUEST["maximum_amount"] : 0;
 
@@ -28,7 +28,7 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 }
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
-    $select_query = "SELECT * FROM coverage_towing";
+    $select_query = "SELECT * FROM coverage_deductible";
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
 }
@@ -37,20 +37,20 @@ switch ($mode) {
     case "NEW":
         $local_mode = "INSERT";
         $readonly   = "";
-        $title      = "Add New Coverage Towing"; 
-        $coverage_towing_id = get_max_id("coverage_towing", "coverage_towing_id");
-        $prefix_coverage_towing_id = "COVERAGE_TOWING_" . $coverage_towing_id;
+        $title      = "Add New Coverage Deductible"; 
+        $coverage_deductible_id = get_max_id("coverage_deductible", "coverage_deductible_id");
+        $prefix_coverage_deductible_id = "COVERAGE_DEDUCTIBLE_" . $coverage_deductible_id;
     break;
 
     case "INSERT":
         $data = [];
         $error_arr = [];
         
-        $coverage_towing_id = get_max_id("coverage_towing", "coverage_towing_id");
-        $prefix_coverage_towing_id = "COVERAGE_TOWING_" . $coverage_towing_id;
+        $coverage_deductible_id = get_max_id("coverage_deductible", "coverage_deductible_id");
+        $prefix_coverage_deductible_id = "COVERAGE_DEDUCTIBLE_" . $coverage_deductible_id;
   
 
-        $select_qry = mysqli_query($conn, "SELECT id FROM coverage_towing WHERE minimum_amount = '$_REQUEST[minimum_amount]' and maximum_amount = '$_REQUEST[maximum_amount]' " );
+        $select_qry = mysqli_query($conn, "SELECT id FROM coverage_deductible WHERE minimum_amount = '$_REQUEST[minimum_amount]' and maximum_amount = '$_REQUEST[maximum_amount]' " );
 
         // Validation 
 
@@ -66,7 +66,7 @@ switch ($mode) {
         } 
         
         if(mysqli_num_rows($select_qry) > 0){
-            $error_arr[] = "This Coverage Towing is already exists.<br/>";
+            $error_arr[] = "This Coverage Rental is already exists.<br/>";
         }
 
         // Display errors if any
@@ -81,7 +81,7 @@ switch ($mode) {
         mysqli_autocommit($conn,FALSE);
  
 
-        $insert_query = mysqli_query($conn, "INSERT INTO coverage_towing (coverage_towing_id, prefix_coverage_towing_id, minimum_amount, maximum_amount, status) VALUES ('$coverage_towing_id', '$prefix_coverage_towing_id', '$minimum_amount', '$maximum_amount', 1) ");
+        $insert_query = mysqli_query($conn, "INSERT INTO coverage_deductible (coverage_deductible_id, prefix_coverage_deductible_id, minimum_amount, maximum_amount, status) VALUES ('$coverage_deductible_id', '$prefix_coverage_deductible_id', '$minimum_amount', '$maximum_amount', 1) ");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
@@ -90,7 +90,7 @@ switch ($mode) {
             $data["msg"] = "Commit transaction failed";
             $data["status"] = "error";
         }else if (!empty($insert_query)) {
-            $data["msg"] = "Coverage Towing inserted successfully.";
+            $data["msg"] = "Coverage Deductible inserted successfully.";
             $data["status"] = "success";
         } else {
             $data["msg"] = "Query error please try again later.";
@@ -105,18 +105,18 @@ switch ($mode) {
     case "EDIT":
         $local_mode = "INSERT";
         $readonly   = "readonly";
-        $title      = ($mode == "EDIT") ? "Edit Coverage Towing" : "View Coverage Towing";
+        $title      = ($mode == "EDIT") ? "Edit Coverage Deductible" : "View Coverage Deductible";
 
-        $coverage_towing_id = get_max_id("coverage_towing", "coverage_towing_id");
-        $prefix_coverage_towing_id = "COVERAGE_TOWING_" . $coverage_towing_id;
+        $coverage_deductible_id = get_max_id("coverage_deductible", "coverage_deductible_id");
+        $prefix_coverage_deductible_id = "COVERAGE_DEDUCTIBLE_" . $coverage_deductible_id;
         
-        $select_query = mysqli_query($conn, "SELECT * FROM coverage_towing where id = '$id' ");
+        $select_query = mysqli_query($conn, "SELECT * FROM coverage_deductible where id = '$id' ");
         
         if(mysqli_num_rows($select_query) > 0){
             $get_data = mysqli_fetch_array($select_query);
 
-            $coverage_towing_id            = $get_data["coverage_towing_id"];
-            $prefix_coverage_towing_id     = $get_data["prefix_coverage_towing_id"];
+            $coverage_deductible_id            = $get_data["coverage_deductible_id"];
+            $prefix_coverage_deductible_id     = $get_data["prefix_coverage_deductible_id"];
             $minimum_amount          = $get_data["minimum_amount"];
             $maximum_amount          = $get_data["maximum_amount"];
             $created                = $get_data["created"]; 
@@ -127,8 +127,8 @@ switch ($mode) {
     case "UPDATE":
         $data = [];
 
-        $select_qry_data = mysqli_query($conn, "SELECT * FROM coverage_towing WHERE id = '$id' " );
-        $select_qry = mysqli_query($conn, "SELECT id FROM coverage_towing WHERE minimum_amount = '$_REQUEST[minimum_amount]' and maximum_amount = '$_REQUEST[maximum_amount]' AND id != '$id'" );
+        $select_qry_data = mysqli_query($conn, "SELECT * FROM coverage_deductible WHERE id = '$id' " );
+        $select_qry = mysqli_query($conn, "SELECT id FROM coverage_deductible WHERE minimum_amount = '$_REQUEST[minimum_amount]' and maximum_amount = '$_REQUEST[maximum_amount]' AND id != '$id'" );
        
 
         // Validation 
@@ -149,7 +149,7 @@ switch ($mode) {
         }
  
         if(mysqli_num_rows($select_qry) > 0){
-            $error_arr[] = "This Coverage Towing is already exists.<br/>";
+            $error_arr[] = "This Coverage Rental is already exists.<br/>";
         }
 
         // Display errors if any
@@ -164,19 +164,19 @@ switch ($mode) {
 
         $get_qry = mysqli_fetch_array($select_qry_data);
         
-        $get_coverage_towing_id = $get_qry["id"]; 
+        $get_coverage_deductible_id = $get_qry["id"]; 
             
         // Turn autocommit off
         mysqli_autocommit($conn,FALSE);
             
-        $update_qry = mysqli_query($conn, "UPDATE coverage_towing SET minimum_amount = '$minimum_amount',maximum_amount = '$maximum_amount', updated = now() WHERE id = $id");
+        $update_qry = mysqli_query($conn, "UPDATE coverage_deductible SET minimum_amount = '$minimum_amount', maximum_amount = '$maximum_amount', updated = now() WHERE id = $id");
  
         // Commit transaction
         if (!mysqli_commit($conn)) {
             $data["msg"] = "Commit transaction failed";
             $data["status"] = "error";
         }else if (!empty($update_qry)) {
-            $data["msg"] = "Coverage Towing updated successfully.";
+            $data["msg"] = "Coverage Rental updated successfully.";
             $data["status"] = "success";
         } else {
             $data["msg"] = "Query error please try again later.";

@@ -6,8 +6,8 @@ if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
 }
 
 $title      = ""; 
-$list_title = "List of Coverage Rental (Uninsured Motorist / Bodily Injury)";
-$breadcrumb_title = "Coverage Rental (Uninsured Motorist / Bodily Injury)";
+$list_title = "List of Coverage Rental Reimbursement";
+$breadcrumb_title = "Coverage Rental Reimbursement";
 $local_mode = "";
 $readonly   = "";
 $id         = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
@@ -37,7 +37,7 @@ switch ($mode) {
     case "NEW":
         $local_mode = "INSERT";
         $readonly   = "";
-        $title      = "Add New Coverage Rental (Uninsured Motorist / Bodily Injury)"; 
+        $title      = "Add New Coverage Rental Reimbursement"; 
         $coverage_rental_id = get_max_id("coverage_rental", "coverage_rental_id");
         $prefix_coverage_rental_id = "COVERAGE_RENTAL_" . $coverage_rental_id;
     break;
@@ -105,7 +105,7 @@ switch ($mode) {
     case "EDIT":
         $local_mode = "INSERT";
         $readonly   = "readonly";
-        $title      = ($mode == "EDIT") ? "Edit Coverage Rental (Uninsured Motorist / Bodily Injury)" : "View Coverage Rental (Uninsured Motorist / Bodily Injury)";
+        $title      = ($mode == "EDIT") ? "Edit Coverage Rental Reimbursement" : "View Coverage Rental Reimbursement";
 
         $coverage_rental_id = get_max_id("coverage_rental", "coverage_rental_id");
         $prefix_coverage_rental_id = "COVERAGE_RENTAL_" . $coverage_rental_id;

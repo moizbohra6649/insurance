@@ -82,7 +82,7 @@ $('#vehicle_form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                var url = `vehicle_list.php`;
+                var url = `vehicle_list.php?<?=$_SERVER['QUERY_STRING'];?>`;
                 move(`<?=$actual_link?>${url}`);
                 // setTimeout(function() {  }, 1000);
             }else{

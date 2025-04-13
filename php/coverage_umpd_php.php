@@ -6,8 +6,8 @@ if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
 }
 
 $title      = ""; 
-$list_title = "List of Coverage UMPD (Uninsured Motorist / Bodily Injury)";
-$breadcrumb_title = "Coverage UMPD (Uninsured Motorist / Bodily Injury)";
+$list_title = "List of Coverage UMPD";
+$breadcrumb_title = "Coverage UMPD";
 $local_mode = "";
 $readonly   = "";
 $id         = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
@@ -37,7 +37,7 @@ switch ($mode) {
     case "NEW":
         $local_mode = "INSERT";
         $readonly   = "";
-        $title      = "Add New Coverage UMPD (Uninsured Motorist / Bodily Injury)"; 
+        $title      = "Add New Coverage UMPD"; 
         $coverage_umpd_id = get_max_id("coverage_umpd", "coverage_umpd_id");
         $prefix_coverage_umpd_id = "COVERAGE_UMPD_" . $coverage_umpd_id;
     break;
@@ -105,7 +105,7 @@ switch ($mode) {
     case "EDIT":
         $local_mode = "INSERT";
         $readonly   = "readonly";
-        $title      = ($mode == "EDIT") ? "Edit Coverage UMPD (Uninsured Motorist / Bodily Injury)" : "View Coverage UMPD (Uninsured Motorist / Bodily Injury)";
+        $title      = ($mode == "EDIT") ? "Edit Coverage UMPD" : "View Coverage UMPD";
 
         $coverage_umpd_id = get_max_id("coverage_umpd", "coverage_umpd_id");
         $prefix_coverage_umpd_id = "COVERAGE_UMPD_" . $coverage_umpd_id;
