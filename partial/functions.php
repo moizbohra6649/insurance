@@ -308,6 +308,17 @@ function get_max_id($table_name, $id){
 	return $return_id;
 }
 
+function get_value($table_name, $column, $where=""){
+	$conn = mysqli_connect(host, dbuser, dbpass, dbname);
+	$return = "";
+	$select_query = mysqli_query($conn, "SELECT $column FROM $table_name $where LIMIT 1");
+	if(mysqli_num_rows($select_query) > 0){
+		$get_query = mysqli_fetch_array($select_query);
+		$return  = (empty($get_query[$column])) ? "" : $get_query[$column];
+	}
+	return $return;
+}
+
 /* CRUD Function */
 
 /* 

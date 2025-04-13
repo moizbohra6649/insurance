@@ -23,11 +23,8 @@
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
-    
     <link rel="stylesheet" type="text/css" href="assets/css/material-date-range-picker/duDatepicker.min.css">
-
-    
-<link rel="stylesheet" type="text/css" href="assets/css/vendors/datatables.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/vendors/datatables.css">
     
     <style>
         .table .table-user img {
@@ -62,5 +59,64 @@
         .bootstrap-tagsinput .tag [data-role=remove]:after {
             content: "×";
         }
+        .dropbtn {
+            border: none;
+            cursor: pointer;
+            background-color: transparent;
+            transition: color 0.3s ease;
+        }
+
+        .dropbtn:hover, .dropbtn:focus {
+            color: #0d6efd; /* Bootstrap primary blue */
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-menu {
+            min-width: 120px; /* Reduced width */
+            padding: 0.25rem 0; /* Reduced padding */
+            font-size: 0.9rem; /* Reduced font size */
+            background-color: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 0.25rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+            z-index: 1000;
+            display: none;
+            position: absolute;
+            right: 0;
+        }
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 0.4rem 1rem;/* Reduced padding */
+            clear: both;
+            font-weight: 400;
+            color: #212529;
+            text-align: inherit;
+            white-space: nowrap;
+            background-color: transparent;
+            border: 0;
+        }
+
+        .dropdown-item:hover, .dropdown-item:focus {
+            color: #1e2125;
+            background-color: #f8f9fa; /* Bootstrap light gray */
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-divider {
+            height: 0;
+            margin: 0.5rem 0;
+            overflow: hidden;
+            border-top: 1px solid #dee2e6; /* Bootstrap light border */
+        }
+
     </style>
  

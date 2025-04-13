@@ -126,6 +126,14 @@ include('partial/loader.php'); ?>
                                                         <button class="btn btn-outline-primary">Active</button>
                                                     </td>
                                                     <td align="center">
+                                                        <div class="dropdown">
+                                                            <a href="javascript:;" class="dropbtn">
+                                                                <i class="icofont icofont-sub-listing m-2"></i>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a href="<?=$actual_link?>vehicle.php?customer_id=<?=base64_encode($id)?>" class="dropdown-item">Vehicle's</a>
+                                                            </div>
+                                                        </div>
                                                         <a href="<?=$actual_link?>customer.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
                                                         <a href="<?=$actual_link?>customer.php?id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
                                                         <!-- <a href="javascript:void(0);" class="action-icon m-2"> <i class="mdi mdi-delete"></i></a> -->

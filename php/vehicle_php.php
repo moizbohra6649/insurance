@@ -16,6 +16,7 @@ $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] :
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 $customer_id         = (isset($_REQUEST["customer_id"]) && !empty($_REQUEST["customer_id"])) ? base64_decode($_REQUEST["customer_id"]) : 0;
+$customer_name                = (isset($_REQUEST["customer_name"])) ? $_REQUEST["customer_name"] : "";
 $vehicle_no                = (isset($_REQUEST["vehicle_no"])) ? $_REQUEST["vehicle_no"] : "";
 $vehicle_type                   = (isset($_REQUEST["vehicle_type"])) ? $_REQUEST["vehicle_type"] : "";
 $licence_plat_no               = (isset($_REQUEST["licence_plat_no"])) ? $_REQUEST["licence_plat_no"] : "";
@@ -87,6 +88,7 @@ switch ($mode) {
         $title      = "Add New Vehicle"; 
         $vehicle_id = get_max_id("vehicle", "vehicle_id");
         $prefix_vehicle_id = "VEHICLE_" . $vehicle_id;
+        $customer_name = get_value("customer", "name", "where customer_id = '$customer_id'");
     break;
 
     case "INSERT":
@@ -188,8 +190,8 @@ switch ($mode) {
         if(mysqli_num_rows($select_query) > 0){
             $get_data = mysqli_fetch_array($select_query);
 
-            $vehicle_id            = $get_data["vehicle_id"];
-            $prefix_vehicle_id     = $get_data["prefix_vehicle_id"];
+            $vehicle_id         = $get_data["vehicle_id"];
+            $prefix_vehicle_id  = $get_data["prefix_vehicle_id"];
             $role               = $get_data["role"];
             $name               = $get_data["name"];
             $username           = $get_data["username"];
