@@ -74,8 +74,8 @@ include('partial/loader.php'); ?>
                                                         <button class="btn btn-outline-primary">Active</button>
                                                     </td>
                                                     <td align="center">
-                                                        <a href="<?=$actual_link?>vehicle.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
-                                                        <a href="<?=$actual_link?>vehicle.php?id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
+                                                        <a href="<?=$actual_link?>vehicle.php?<?=$_SERVER['QUERY_STRING'];?>&id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
+                                                        <a href="<?=$actual_link?>vehicle.php?<?=$_SERVER['QUERY_STRING'];?>&id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
                                                         <!-- <a href="javascript:void(0);" class="action-icon  m-2"> <i class="mdi mdi-delete"></i></a> -->
                                                     </td>
                                                 </tr>

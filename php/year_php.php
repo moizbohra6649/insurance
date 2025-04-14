@@ -16,7 +16,7 @@ $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] :
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 $year_id       = (isset($_REQUEST["year_id"])) ? $_REQUEST["year_id"] : 0;
-$year          = (isset($_REQUEST["year"])) ? convert_readable_date_db($_REQUEST["year"]) : "";
+$year          = (isset($_REQUEST["year"])) ? $_REQUEST["year"] : "";
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -108,8 +108,8 @@ switch ($mode) {
 
             $year_id            = $get_data["year_id"];
             $prefix_year_id     = $get_data["prefix_year_id"];
-            $year          = $get_data["year"] == "0000-00-00" ? "" : convert_db_date_readable($get_data["year"]);
-            $created                = $get_data["created"]; 
+            $year               = $get_data["year"];
+            $created            = $get_data["created"]; 
             $local_mode = "UPDATE";
         }
     break;
@@ -125,7 +125,6 @@ switch ($mode) {
         if (empty($year)) {
             $error_arr[] = "Please select a Year.<br/>";
         } 
- 
 
         if(mysqli_num_rows($select_year_data) == 0){
             $error_arr[] = "Something went wrong please try again later.";

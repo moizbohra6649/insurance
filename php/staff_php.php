@@ -43,7 +43,7 @@ $only_staff        = (isset($_REQUEST["only_staff"])) ? $_REQUEST["only_staff"] 
 $query_count = 0;
 if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
 
-    $select_query = "SELECT id, user_id, name, email, mobile, profile_image, created, role FROM users WHERE 1=1 AND deleted = 0 AND user_id != $login_id AND role != '$super_admin_role' ";
+    $select_query = "SELECT id, user_id, name, email, mobile, profile_image, created, role, status FROM users WHERE 1=1 AND deleted = 0 AND user_id != $login_id AND role != '$super_admin_role' ";
 
     if(!empty($from_date)){
         if(empty($to_date)){

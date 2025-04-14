@@ -64,8 +64,6 @@ switch ($mode) {
         $select_vehicle = mysqli_query($conn, "SELECT id FROM vehicle WHERE customer_id = '$customer_id' " );
         $select_vehicle_no = mysqli_query($conn, "SELECT id FROM vehicle WHERE customer_id = '$customer_id' AND vehicle_no = '$_REQUEST[vehicle_no]'" );
 
-        //AND vehicle_no = '$_REQUEST[vehicle_no]' 
-
         // Validation
 
         if(mysqli_num_rows($select_customer) == 0){
@@ -78,7 +76,7 @@ switch ($mode) {
 
         if (empty($_POST['vehicle_no'])) {
             $error_arr[] = "Please fill a Vehicle No. (VIN).<br/>";
-        }else if(mysqli_num_rows($select_vehicle) > 0){
+        }else if(mysqli_num_rows($select_vehicle_no) > 0){
             $error_arr[] = "Customer have already same Vehicle exists.<br/>";
         }
         
@@ -147,20 +145,28 @@ switch ($mode) {
         $readonly   = "readonly";
         $title      = ($mode == "EDIT") ? "Edit Vehicle" : "View Vehicle";
         
-        $select_query = mysqli_query($conn, "SELECT * FROM users where id = '$id' ");
+        $select_query = mysqli_query($conn, "SELECT vehicle.*, customer.name as customer_name FROM vehicle 
+        left join customer on customer.id = vehicle.customer_id
+        left join year on year.id = vehicle.vehicle_year_id
+        left join make on make.id = vehicle.vehicle_make_id
+        left join model on model.id = vehicle.vehicle_model_id
+        where vehicle.id = '$id' ");
         
         if(mysqli_num_rows($select_query) > 0){
             $get_data = mysqli_fetch_array($select_query);
 
             $vehicle_id         = $get_data["vehicle_id"];
             $prefix_vehicle_id  = $get_data["prefix_vehicle_id"];
-            $role               = $get_data["role"];
-            $name               = $get_data["name"];
-            $username           = $get_data["username"];
-            $email              = $get_data["email"];
-            $mobile_no          = $get_data["mobile"];
-            $password           = $get_data["hint"];
-            $profile_image      = $get_data["profile_image"];
+            $customer_id        = $get_data["customer_id"];
+            $customer_name      = $get_data["customer_name"];
+            $vehicle_no               = $get_data["vehicle_no"];
+            $vehicle_type               = $get_data["vehicle_type"];
+            $licence_plat_no           = $get_data["licence_plat_no"];
+            $vehicle_year              = $get_data["vehicle_year_id"];
+            $vehicle_make          = $get_data["vehicle_make_id"];
+            $vehicle_model           = $get_data["vehicle_model_id"];
+            $reg_state_vehicle      = $get_data["reg_state_vehicle"];
+            $vehicle_value      = $get_data["vehicle_value"];
             $created            = $get_data["created"];
             $local_mode         = "UPDATE";
         }
@@ -168,60 +174,49 @@ switch ($mode) {
 
     case "UPDATE":
         $data = [];
+        $error_arr = [];
 
-        $select_staff = mysqli_query($conn, "SELECT * FROM users WHERE id = '$id' " );
-        $select_staff_mobile = mysqli_query($conn, "SELECT id FROM users WHERE mobile = '$_REQUEST[mobile_no]' AND id != '$id'" );
-        $select_vehicle = mysqli_query($conn, "SELECT id FROM users WHERE email = '$_REQUEST[email]' AND id != '$id'" );
+        $select_customer = mysqli_query($conn, "SELECT id FROM customer WHERE id = '$customer_id' " );
+        $select_vehicle_no = mysqli_query($conn, "SELECT id FROM vehicle WHERE customer_id = '$customer_id' AND vehicle_no = '$_REQUEST[vehicle_no]' AND id != $id" );
 
         // Validation
-        if (empty($name)) {
-            $error_arr[] = "Please enter Name.<br/>";
+
+        if(mysqli_num_rows($select_customer) == 0){
+            $error_arr[] = "Customer does not exists.<br/>";
         }
 
-        if (empty($username)) {
-            $error_arr[] = "Please enter Username.<br/>";
-        }
-
-        if (empty($email)) {
-            $error_arr[] = "Please enter Email.<br/>";
-        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $error_arr[] = "Please enter a valid Email.<br/>";
-        }
-
-        if (empty($mobile_no)) {
-            $error_arr[] = "Please enter Mobile No.<br/>";
-        } elseif (strlen($mobile_no) < 12) {
-            $error_arr[] = "Please enter a valid Mobile No.<br/>";
-        }
-
-        if (empty($role)) {
-            $error_arr[] = "Please select Role.<br/>";
-        }
-
-        if (empty($password)) {
-            $error_arr[] = "Please enter Password.<br/>";
-        } elseif (strlen($password) < 8) {
-            $error_arr[] = "Please enter a valid Password.<br/>";
-        }
-
-        if (empty($confirm_password)) {
-            $error_arr[] = "Please enter Confirm Password.<br/>";
-        } elseif (strlen($confirm_password) < 8) {
-            $error_arr[] = "Please enter a valid Confirm Password.<br/>";
-        } elseif ($password !== $confirm_password) {
-            $error_arr[] = "Both Passwords do not match.<br/>";
-        }
-
-        if(mysqli_num_rows($select_staff) == 0){
-            $error_arr[] = "Something went wrong please try again later.<br/>";
-        }
-
-        if(mysqli_num_rows($select_vehicle) > 0){
-            $error_arr[] = "This Email address is already exists.<br/>";
+        if (empty($_POST['vehicle_no'])) {
+            $error_arr[] = "Please fill a Vehicle No. (VIN).<br/>";
+        }else if(mysqli_num_rows($select_vehicle_no) > 0){
+            $error_arr[] = "Customer have already same Vehicle exists.<br/>";
         }
         
-        if(mysqli_num_rows($select_staff_mobile) > 0){
-            $error_arr[] = "This Mobile No. is already exists.<br/>";
+        if (empty($_POST['vehicle_type'])) {
+            $error_arr[] = "Please select Vehicle Type.<br/>";
+        }
+        
+        if (empty($_POST['licence_plat_no'])) {
+            $error_arr[] = "Please fill a Licence Plat Number (LPN).<br/>";
+        }
+        
+        if (empty($_POST['vehicle_year']) || $_POST['vehicle_year'] == 0) {
+            $error_arr[] = "Please select Vehicle Year.<br/>";
+        }
+        
+        if (empty($_POST['vehicle_make']) || $_POST['vehicle_make'] == 0) {
+            $error_arr[] = "Please select Vehicle Make.<br/>";
+        }
+        
+        if (empty($_POST['vehicle_model']) || $_POST['vehicle_model'] == 0) {
+            $error_arr[] = "Please select Vehicle Model.<br/>";
+        }
+        
+        if (empty($_POST['reg_state_vehicle'])) {
+            $error_arr[] = "Please fill a Registration State Vehicle.<br/>";
+        }
+        
+        if (empty($_POST['vehicle_value'])) {
+            $error_arr[] = "Please fill a Vehicle Value.<br/>";
         }
 
         // Display errors if any
@@ -232,40 +227,18 @@ switch ($mode) {
             echo $json_response = json_encode($data);
             exit;
         }
-        
-        
-        $get_staff = mysqli_fetch_array($select_staff);
-        $db_profile_image = $get_staff["profile_image"];
-        $get_vehicle_id = $get_staff["id"];
-        
-        if(!empty($profile_image)){
-            list($txt, $ext) = explode(".", $profile_image);
-            $profile_image = $vehicle_id . "_" . time() . "." . $ext;
-            $tmp = $_FILES['profile_image']['tmp_name'];
-            move_uploaded_file($tmp, dirname(__DIR__) . '/' . $upload_folder . '/user_profile_picture/' . $profile_image);
-        }
-
-        if(!empty($delete_image) && $delete_image == 'true'){
-            unlink(dirname(__DIR__) . '/' . $upload_folder . '/user_profile_picture/' . $db_profile_image);
-        }
-
-        if(empty($delete_image) && $delete_image != 'true' && empty($profile_image)){
-            $profile_image = $db_profile_image;
-        }
 
         // Turn autocommit off
         mysqli_autocommit($conn,FALSE);
-        
-        $password_hash =  password_hash($password, PASSWORD_DEFAULT);
             
-        $update_staff = mysqli_query($conn, "UPDATE users SET name = '$name', role = '$role', username = '$username', email = '$email', mobile = '$mobile_no', password = '$password_hash', hint = '$password', profile_image = '$profile_image', updated = now() WHERE id = $id");
+        $update_query = mysqli_query($conn, "UPDATE vehicle SET vehicle_no = '$vehicle_no', vehicle_type = '$vehicle_type', licence_plat_no = '$licence_plat_no', vehicle_year_id = '$vehicle_year', vehicle_make_id = '$vehicle_make', vehicle_model_id = '$vehicle_model', reg_state_vehicle = '$reg_state_vehicle', vehicle_value = '$vehicle_value', updated = now() WHERE id = $id");
 
         // Commit transaction
         if (!mysqli_commit($conn)) {
             $data["msg"] = "Commit transaction failed";
             $data["status"] = "error";
-        }else if (!empty($update_staff)) {
-            $data["msg"] = "Staff updated successfully.";
+        }else if (!empty($update_query)) {
+            $data["msg"] = "Vehicle updated successfully.";
             $data["status"] = "success";
         } else {
             $data["msg"] = "Query error please try again later.";

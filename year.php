@@ -31,8 +31,17 @@ include('partial/loader.php'); ?>
                                     <div class="row g-3">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="year">Year <span class="text-danger">*</span></label>
-                                            <input type="text" id="datepicker" name="year" data-theme="dark" class="form-control" value="<?=$year?>" readonly>
-                                            <div class="invalid-feedback">Please select a Year.</div>
+                                            <div class="form-input">
+                                                <select class="form-select" name="year" id="year" required="">
+                                                    <option value="0">Select Year</option>
+                                                    <?php
+                                                        foreach ($yearList as $years) {
+                                                    ?>
+                                                        <option <?= ($year == $years) ? "selected":''; ?> value="<?=$years;?>"><?=$years;?></option>
+                                                    <?php }?>
+                                                </select>
+                                                <div class="invalid-feedback">Please select  a Year.</div>
+                                            </div>
                                         </div>  
                                     </div>
                                    

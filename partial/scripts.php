@@ -34,6 +34,8 @@
 
 <!-- third party js ends -->
 
+<?php include('js/main_js.php'); ?>
+
 <script>
     $(document).ready(function() {
         "use strict";

@@ -113,6 +113,8 @@ function fn_search_filter(){
     return true;
 }
 
+fn_getting_vehicle_model('<?=$vehicle_make?>', '<?=$vehicle_model?>');
+
 function remove_image(){
     $("#image_preview_div").css('display', 'none');
     $("#image_input_div").css('display', 'block');
