@@ -1,5 +1,5 @@
 <?php
-
+$table_name = "vendor";
 /* Include Function's File */
 if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
     require_once(dirname(__DIR__) . '/partial/functions.php');
@@ -15,13 +15,13 @@ $mode       = (isset($_REQUEST["mode"])) ? $_REQUEST["mode"] : "NEW";
 $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] : "false";
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
-$vendor_id                = (isset($_REQUEST["vendor_id"])) ? $_REQUEST["vendor_id"] : 0;
-$company_name                   = (isset($_REQUEST["company_name"])) ? $_REQUEST["company_name"] : "";
+$vendor_id              = (isset($_REQUEST["vendor_id"])) ? $_REQUEST["vendor_id"] : 0;
+$company_name           = (isset($_REQUEST["company_name"])) ? $_REQUEST["company_name"] : "";
 $name                   = (isset($_REQUEST["name"])) ? $_REQUEST["name"] : "";
 $username               = (isset($_REQUEST["username"])) ? $_REQUEST["username"] : "";
-$business_type                   = (isset($_REQUEST["business_type"])) ? $_REQUEST["business_type"] : 0;
+$business_type          = (isset($_REQUEST["business_type"])) ? $_REQUEST["business_type"] : 0;
 $email                  = (isset($_REQUEST["email"])) ? $_REQUEST["email"] : "";
-$address                   = (isset($_REQUEST["address"])) ? $_REQUEST["address"] : "";
+$address                = (isset($_REQUEST["address"])) ? $_REQUEST["address"] : "";
 $mobile_no              = (isset($_REQUEST["mobile_no"])) ? $_REQUEST["mobile_no"] : "";
 $password               = (isset($_REQUEST["password"])) ? $_REQUEST["password"] : "";
 $confirm_password       = (isset($_REQUEST["confirm_password"])) ? $_REQUEST["confirm_password"] : "";
@@ -46,7 +46,7 @@ $filter_vendor_id  = (isset($_REQUEST["filter_vendor_id"])) ? $_REQUEST["filter_
 $query_count = 0;
 if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
 
-    $select_query = "SELECT id, vendor_id, name, email, mobile, profile_image, created FROM vendor WHERE 1=1 ";
+    $select_query = "SELECT id, vendor_id, name, email, mobile, profile_image, created, status FROM vendor WHERE 1=1 ";
 
     if(!empty($from_date)){
         if(empty($to_date)){

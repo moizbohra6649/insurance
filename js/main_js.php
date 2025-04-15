@@ -1,11 +1,11 @@
 <script>
 /* ==================================================PHP AJAX================================================== */
 
-function fn_status_change(id, table_name){
+function fn_status_change(id){
     $.ajax({
         type: 'POST',
         url: '<?=($_SERVER['PHP_SELF'])?>',
-        data: {status_ajax_request: 'true', id: id, table_name: table_name},
+        data: {status_ajax_request: 'true', id: id},
         cache: false,
         dataType: 'json',           
         success: function(data) {

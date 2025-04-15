@@ -580,60 +580,64 @@ if(isset($_REQUEST["status_ajax_request"]) && !empty($_REQUEST["status_ajax_requ
 	$error_arr = [];
 
 	$id         = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
-	$table_name = (isset($_REQUEST["table_name"])) ? $_REQUEST["table_name"] : "";
+
+	if(isset($table_name) && !empty($table_name)){
+		$select_table_row = mysqli_query($conn, "SELECT count(table_name) as table_row FROM information_schema.tables WHERE table_name = '$table_name' ");
+		$get_table_row = mysqli_fetch_assoc($select_table_row);
+
+		// Validation
+
+		if($id == 0){
+			$error_arr[] = "ID does not exists in server. Please try again later.<br/>";
+		}
+
+		if($get_table_row["table_row"] == 0){
+			$error_arr[] = "Table does not exists in server. Please try again later.<br/>";
+		}else {
+			$select_query = mysqli_query($conn, "SELECT id, status FROM $table_name WHERE id = '$id' ");
+
+			if(mysqli_num_rows($select_query) == 0){
+				$error_arr[] = "Record not found in server. Please try again later.<br/>";
+			}
+		}
 
 
-	$select_table_row = mysqli_query($conn, "SELECT count(table_name) as table_row FROM information_schema.tables WHERE table_name = '$table_name' "); //table_schema = 'insurance' and 
-	$get_table_row = mysqli_fetch_assoc($select_table_row);
+		// Display errors if any
+		if (!empty($error_arr)) {
+			$error_txt = implode('', $error_arr);
+			$data["msg"] = $error_txt;
+			$data["status"] = "error";
+			echo $json_response = json_encode($data);
+			exit;
+		}
 
-	// Validation
+		$get_query = mysqli_fetch_array($select_query);
+		$status = $get_query["status"];
 
-	if($id == 0){
-		$error_arr[] = "ID does not exists in server. Please try again later.<br/>";
-	}
+		$status = (empty($status)) ? 1 : 0;
 
-	if($get_table_row["table_row"] == 0){
-		$error_arr[] = "Table does not exists in server. Please try again later.<br/>";
-	}else {
-		$select_query = mysqli_query($conn, "SELECT id, status FROM $table_name WHERE id = '$id' ");
+		// Turn autocommit off
+		mysqli_autocommit($conn,FALSE);
+				
+		$update_query = mysqli_query($conn, "UPDATE $table_name SET status = '$status', updated = now() WHERE id = $id");
 
-		if(mysqli_num_rows($select_query) == 0){
-            $error_arr[] = "Record not found in server. Please try again later.<br/>";
-        }
-	}
-
-
-	// Display errors if any
-	if (!empty($error_arr)) {
-		$error_txt = implode('', $error_arr);
-		$data["msg"] = $error_txt;
+		// Commit transaction
+		if (!mysqli_commit($conn)) {
+			$data["msg"] = "Commit transaction failed";
+			$data["status"] = "error";
+		}else if (!empty($update_query)) {
+			$data["msg"] = "Status updated successfully.";
+			$data["res_data"] = array("id" => $id, "status" => $status);
+			$data["status"] = "success";
+		} else {
+			$data["msg"] = "Query error please try again later.";
+			$data["status"] = "error";
+		} 
+	}else{
+		$data["msg"] = "Table does not exists in server. Please try again later.";
 		$data["status"] = "error";
-		echo $json_response = json_encode($data);
-		exit;
 	}
-
-	$get_query = mysqli_fetch_array($select_query);
-	$status = $get_query["status"];
-
-	$status = (empty($status)) ? 1 : 0;
-
-	// Turn autocommit off
-	mysqli_autocommit($conn,FALSE);
-            
-	$update_query = mysqli_query($conn, "UPDATE $table_name SET status = '$status', updated = now() WHERE id = $id");
-
-	// Commit transaction
-	if (!mysqli_commit($conn)) {
-		$data["msg"] = "Commit transaction failed";
-		$data["status"] = "error";
-	}else if (!empty($update_query)) {
-		$data["msg"] = "Status updated successfully.";
-		$data["res_data"] = array("id" => $id, "status" => $status);
-		$data["status"] = "success";
-	} else {
-		$data["msg"] = "Query error please try again later.";
-		$data["status"] = "error";
-	} 
+	
     
     echo $json_response = json_encode($data);
     exit();

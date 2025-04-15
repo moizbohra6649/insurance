@@ -1,5 +1,5 @@
 <?php
-
+$table_name = "vehicle";
 /* Include Function's File */
 if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
     require_once(dirname(__DIR__) . '/partial/functions.php');
@@ -25,6 +25,7 @@ $vehicle_make                  = (isset($_REQUEST["vehicle_make"])) ? $_REQUEST[
 $vehicle_model              = (isset($_REQUEST["vehicle_model"])) ? $_REQUEST["vehicle_model"] : "";
 $reg_state_vehicle               = (isset($_REQUEST["reg_state_vehicle"])) ? $_REQUEST["reg_state_vehicle"] : "";
 $vehicle_value       = (isset($_REQUEST["vehicle_value"])) ? $_REQUEST["vehicle_value"] : "";
+$vehicle_category       = (isset($_REQUEST["vehicle_category"])) ? $_REQUEST["vehicle_category"] : 2;
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -103,10 +104,6 @@ switch ($mode) {
         if (empty($_POST['reg_state_vehicle'])) {
             $error_arr[] = "Please fill a Registration State Vehicle.<br/>";
         }
-        
-        if (empty($_POST['vehicle_value'])) {
-            $error_arr[] = "Please fill a Vehicle Value.<br/>";
-        }
 
         // Display errors if any
         if (!empty($error_arr)) {
@@ -119,7 +116,7 @@ switch ($mode) {
 
         mysqli_autocommit($conn,FALSE);
 
-        $insert_query = mysqli_query($conn, "INSERT INTO vehicle (vehicle_id, prefix_vehicle_id, customer_id, vehicle_no, vehicle_type, licence_plat_no, vehicle_year_id, vehicle_make_id, vehicle_model_id, reg_state_vehicle, vehicle_value, status) VALUES ('$vehicle_id', '$prefix_vehicle_id', '$customer_id', '$vehicle_no', '$vehicle_type', '$licence_plat_no', '$vehicle_year', '$vehicle_make', '$vehicle_model', '$reg_state_vehicle', '$vehicle_value', 1)");
+        $insert_query = mysqli_query($conn, "INSERT INTO vehicle (vehicle_id, prefix_vehicle_id, customer_id, vehicle_no, vehicle_type, licence_plat_no, vehicle_year_id, vehicle_make_id, vehicle_model_id, reg_state_vehicle, vehicle_value, vehicle_category, status) VALUES ('$vehicle_id', '$prefix_vehicle_id', '$customer_id', '$vehicle_no', '$vehicle_type', '$licence_plat_no', '$vehicle_year', '$vehicle_make', '$vehicle_model', '$reg_state_vehicle', '$vehicle_value', '$vehicle_category', 1)");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
@@ -159,14 +156,15 @@ switch ($mode) {
             $prefix_vehicle_id  = $get_data["prefix_vehicle_id"];
             $customer_id        = $get_data["customer_id"];
             $customer_name      = $get_data["customer_name"];
-            $vehicle_no               = $get_data["vehicle_no"];
-            $vehicle_type               = $get_data["vehicle_type"];
-            $licence_plat_no           = $get_data["licence_plat_no"];
-            $vehicle_year              = $get_data["vehicle_year_id"];
-            $vehicle_make          = $get_data["vehicle_make_id"];
-            $vehicle_model           = $get_data["vehicle_model_id"];
-            $reg_state_vehicle      = $get_data["reg_state_vehicle"];
+            $vehicle_no         = $get_data["vehicle_no"];
+            $vehicle_type       = $get_data["vehicle_type"];
+            $licence_plat_no    = $get_data["licence_plat_no"];
+            $vehicle_year       = $get_data["vehicle_year_id"];
+            $vehicle_make       = $get_data["vehicle_make_id"];
+            $vehicle_model      = $get_data["vehicle_model_id"];
+            $reg_state_vehicle  = $get_data["reg_state_vehicle"];
             $vehicle_value      = $get_data["vehicle_value"];
+            $vehicle_category   = $get_data["vehicle_category"];
             $created            = $get_data["created"];
             $local_mode         = "UPDATE";
         }
@@ -214,10 +212,6 @@ switch ($mode) {
         if (empty($_POST['reg_state_vehicle'])) {
             $error_arr[] = "Please fill a Registration State Vehicle.<br/>";
         }
-        
-        if (empty($_POST['vehicle_value'])) {
-            $error_arr[] = "Please fill a Vehicle Value.<br/>";
-        }
 
         // Display errors if any
         if (!empty($error_arr)) {
@@ -231,7 +225,7 @@ switch ($mode) {
         // Turn autocommit off
         mysqli_autocommit($conn,FALSE);
             
-        $update_query = mysqli_query($conn, "UPDATE vehicle SET vehicle_no = '$vehicle_no', vehicle_type = '$vehicle_type', licence_plat_no = '$licence_plat_no', vehicle_year_id = '$vehicle_year', vehicle_make_id = '$vehicle_make', vehicle_model_id = '$vehicle_model', reg_state_vehicle = '$reg_state_vehicle', vehicle_value = '$vehicle_value', updated = now() WHERE id = $id");
+        $update_query = mysqli_query($conn, "UPDATE vehicle SET vehicle_no = '$vehicle_no', vehicle_type = '$vehicle_type', licence_plat_no = '$licence_plat_no', vehicle_year_id = '$vehicle_year', vehicle_make_id = '$vehicle_make', vehicle_model_id = '$vehicle_model', reg_state_vehicle = '$reg_state_vehicle', vehicle_value = '$vehicle_value', vehicle_category = '$vehicle_category', updated = now() WHERE id = $id");
 
         // Commit transaction
         if (!mysqli_commit($conn)) {

@@ -51,10 +51,6 @@ $('#vehicle_form').on('submit', (function(e) {
         error_arr.push("Please fill a Registration State Vehicle.<br/>");
     }
 
-    if($("#vehicle_value").val() == ""){
-        error_arr.push("Please fill a Vehicle Value.<br/>");
-    }
-
     var error_txt = error_arr.join('');
     if(error_txt != ""){
         notification("Oh Snap!", error_txt, "danger");
@@ -82,7 +78,7 @@ $('#vehicle_form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                var url = `vehicle_list.php?<?=$_SERVER['QUERY_STRING'];?>`;
+                var url = `vehicle_list.php?customer_id=<?=base64_encode($customer_id);?>`;
                 move(`<?=$actual_link?>${url}`);
                 // setTimeout(function() {  }, 1000);
             }else{

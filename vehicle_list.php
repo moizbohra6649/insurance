@@ -31,7 +31,7 @@ include('partial/loader.php'); ?>
                                 <div class="row align-items-center justify-content-center">
                                     <div class="col-sm-12 col-auto">
                                         <div class="text-sm-end">
-                                            <a href="<?=$actual_link?>vehicle.php?<?=$_SERVER['QUERY_STRING'];?>" class="btn btn-primary mb-2"><i class="icofont icofont-plus"></i> Add New Vehicle</a>
+                                            <a href="<?=$actual_link?>vehicle.php?customer_id=<?=base64_encode($customer_id);?>" class="btn btn-primary mb-2"><i class="icofont icofont-plus"></i> Add New Vehicle</a>
                                         </div>
                                     </div>
                                 </div>
@@ -71,11 +71,15 @@ include('partial/loader.php'); ?>
                                                     <td align="center"> </td>
                                                     <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
                                                     <td align="center">
-                                                        <button class="btn btn-outline-primary">Active</button>
+                                                        <div class="media-body text-end icon-state">
+                                                            <label class="switch">
+                                                                <input type="checkbox" <?=(empty($get_data["status"])) ? "checked" : "" ; ?> class="status" id="status_<?=($id)?>" onchange="fn_status_change('<?=base64_encode($id)?>');"><span class="switch-state"></span>
+                                                            </label>
+                                                        </div>
                                                     </td>
                                                     <td align="center">
-                                                        <a href="<?=$actual_link?>vehicle.php?<?=$_SERVER['QUERY_STRING'];?>&id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
-                                                        <a href="<?=$actual_link?>vehicle.php?<?=$_SERVER['QUERY_STRING'];?>&id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
+                                                        <a href="<?=$actual_link?>vehicle.php?customer_id=<?=base64_encode($customer_id);?>&id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
+                                                        <a href="<?=$actual_link?>vehicle.php?customer_id=<?=base64_encode($customer_id);?>&id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
                                                         <!-- <a href="javascript:void(0);" class="action-icon  m-2"> <i class="mdi mdi-delete"></i></a> -->
                                                     </td>
                                                 </tr>

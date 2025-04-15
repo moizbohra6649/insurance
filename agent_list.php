@@ -124,7 +124,11 @@ include('partial/loader.php'); ?>
                                                     <td> <?=$get_data["mobile"]?> </td>
                                                     <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
                                                     <td align="center">
-                                                        <button class="btn btn-outline-primary">Active</button>
+                                                        <div class="media-body text-end icon-state">
+                                                            <label class="switch">
+                                                                <input type="checkbox" <?=(empty($get_data["status"])) ? "checked" : "" ; ?> class="status" id="status_<?=($id)?>" onchange="fn_status_change('<?=base64_encode($id)?>');"><span class="switch-state"></span>
+                                                            </label>
+                                                        </div>
                                                     </td>
                                                     <td align="center">
                                                         <a href="<?=$actual_link?>agent.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>

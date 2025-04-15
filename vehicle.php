@@ -117,13 +117,24 @@ include('partial/loader.php'); ?>
                                             </div>
                                         </div>
                                         <div class="col-md-4 mb-3">
-                                            <label class="form-label" for="vehicle_value">Vehicle Value <span class="text-danger">*</span></label>
+                                            <label class="form-label" for="vehicle_value">Vehicle Value</label>
                                             <div class="form-input">
-                                                <input class="form-control" type="text" id="vehicle_value" name="vehicle_value" value="<?=$vehicle_value?>" required="" placeholder="Vehicle Value">
-                                                <div class="invalid-feedback">Please fill a Vehicle Value.</div>
+                                                <input class="form-control" type="text" id="vehicle_value" name="vehicle_value" value="<?=$vehicle_value?>" placeholder="Vehicle Value">
                                             </div>
                                         </div>
-                                        
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3 m-t-15 custom-radio-ml">
+                                            <?php
+                                                $select_vechile_category = select("vehicle_category","status=1");
+                                                while($get_vechile_category = fetch($select_vechile_category)){
+                                            ?>
+                                            <div class="radio-primary">
+                                                <input class="form-check-input" type="radio" name="vehicle_category" value="<?=$get_vechile_category["id"]?>" <?= ($get_vechile_category["id"] == $vehicle_category) ? "checked": ""; ?>>
+                                                <label class="form-check-label"><?=$get_vechile_category["label"]?></label>
+                                            </div>
+                                            <?php } ?>
+                                        </div>
                                     </div>
                                     
                                     <?php if($mode != "VIEW"){ ?>

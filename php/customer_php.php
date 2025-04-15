@@ -1,5 +1,5 @@
 <?php
-
+$table_name = "customer";
 /* Include Function's File */
 if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
     require_once(dirname(__DIR__) . '/partial/functions.php');
@@ -40,7 +40,7 @@ $filter_customer_id    = (isset($_REQUEST["filter_customer_id"])) ? $_REQUEST["f
 $query_count = 0;
 if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
 
-    $select_query = "SELECT id, customer_id, name, email, mobile, date_of_birth, zip_code, created FROM customer WHERE 1=1 ";
+    $select_query = "SELECT id, customer_id, name, email, mobile, date_of_birth, zip_code, created, status FROM customer WHERE 1=1 ";
 
     if(!empty($from_date)){
         if(empty($to_date)){
