@@ -40,6 +40,7 @@ CREATE TABLE `vehicle` (
   `vehicle_model_id` int(11) DEFAULT NULL,
   `reg_state_vehicle` varchar(252) DEFAULT NULL,
   `vehicle_value` varchar(252) DEFAULT NULL,
+  `vehicle_category` INT(11) NULL DEFAULT NULL,
   `status` int(12) NOT NULL DEFAULT 0,
   `deleted` int(12) NOT NULL DEFAULT 0,
   `delete_datetime` timestamp NULL DEFAULT NULL,
