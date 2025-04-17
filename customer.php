@@ -51,16 +51,16 @@ include('partial/loader.php'); ?>
                                         </div>
                                     </div>
                                     <div class="row g-3">
-                                    <div class="col-md-4 mb-3">
+                                        <div class="col-md-4 mb-3">
                                             <label class="form-label" for="date_of_birth">DOB <span class="text-danger">*</span></label>
-                                            <input type="text" id="datepicker" name="date_of_birth" data-theme="dark" class="form-control" value="<?=$date_of_birth?>" readonly>
+                                            <input type="text" id="datepicker" name="date_of_birth" data-theme="dark" class="form-control" value="<?=$date_of_birth?>" readonly required="">
                                             <div class="invalid-feedback">Please provide a valid DOB</div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <label class="form-label" for="zip_code">Zip Code <span class="text-danger">*</span></label>
-                                            <input class="form-control allownumber" id="zip_code" maxlength="50" name="zip_code" type="text" value="<?=$zip_code?>" placeholder="Zip Code" required="">
-                                            <div class="invalid-feedback">Please fill a zip code.</div>
+                                            <input class="form-control allownumber" id="zip_code" minlength="6" maxlength="8" name="zip_code" type="text" value="<?=$zip_code?>" placeholder="Zip Code" required="">
+                                            <div class="invalid-feedback">Please fill a Zip Code.</div>
                                         </div>
                                       
                                     </div>
@@ -68,14 +68,14 @@ include('partial/loader.php'); ?>
                                         <div class="col-md-12 mb-3">
                                             <label class="form-label" for="address_1">Address 1 <span class="text-danger">*</span></label>
                                             <div class="input-group">
-                                                <textarea class="form-control" id="address_1" name="address_1" placeholder="" required="address_1"><?=$address_1?></textarea>
+                                                <textarea class="form-control" id="address_1" name="address_1" placeholder="Address 1" required=""><?=$address_1?></textarea>
                                             </div>
                                         </div>
 
                                         <div class="col-md-12 mb-3">
                                             <label class="form-label" for="address_2">Address 2</label>
                                             <div class="input-group">
-                                                <textarea class="form-control" id="address_2" name="address_2" placeholder="" required="address_2"><?=$address_2?></textarea>
+                                                <textarea class="form-control" id="address_2" name="address_2" placeholder="Address 2"><?=$address_2?></textarea>
                                             </div>
                                         </div>
                                     </div>

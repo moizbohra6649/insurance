@@ -111,7 +111,7 @@
                                             <input type="hidden" name="delete_image" id="delete_image" value="<?=$delete_image?>" />
                                         </div>
                                         <div class="col-md-4 mb-3">
-                                            <label class="form-label" id="tooltip-container">Business License <i class="dripicons-information" data-bs-container="#tooltip-container" data-bs-html="true" data-bs-toggle="tooltip" title="1. File size of more than 2M is not allowed.<br/>2. Only 1 attachment is allowed.<br/>3. File types allowed are- jpeg, jpg, png, gif, bmp"></i></label>
+                                            <label class="form-label" id="tooltip-container">Business Licence <i class="dripicons-information" data-bs-container="#tooltip-container" data-bs-html="true" data-bs-toggle="tooltip" title="1. File size of more than 2M is not allowed.<br/>2. Only 1 attachment is allowed.<br/>3. File types allowed are- jpeg, jpg, png, gif, bmp"></i></label>
                                             <div id="image_input_div2" style="display:<?= ($local_mode == 'NEW') ? 'block': 'none';?>;">
                                                 <input class="form-control" type="file" id="business_licence_image" name="business_licence_image" accept="image/*" onchange="return image_validation(this)">
                                             </div>

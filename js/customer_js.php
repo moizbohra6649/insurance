@@ -30,7 +30,7 @@ $('#customer_form').on('submit', (function(e) {
         error_arr.push("Please select Zip Code.<br/>");
     } 
 
-    if($("#address_one").val() == ""){
+    if($("#address_1").val() == ""){
         error_arr.push("Please enter address.<br/>");
     } 
 

@@ -1,24 +1,6 @@
 <script>
-/* ==================================================PHP AJAX================================================== */
-
-function fn_getting_vehicle_model(vehicle_make, vehicle_model){
-    $.ajax({
-        type: 'POST',
-        url: '<?=($_SERVER['PHP_SELF'])?>',
-        data: {ajax_request: 'getting_vehicle_model',vehicle_make: vehicle_make, vehicle_model: vehicle_model},
-        cache: false,
-        dataType: 'json',           
-        success: function(data) {
-            $("#vehicle_model").html(data.res_data);
-        },
-        error: function(data) {
-            console.log(data);
-        }      
-    });
-}
-
 /* ==================================================START STAFF FORM JS CODE================================================== */
-$('#vehicle_form').on('submit', (function(e) {
+$('#driver_form').on('submit', (function(e) {
     e.preventDefault();
 
     var error_arr = [];
@@ -95,7 +77,11 @@ $('#vehicle_form').on('submit', (function(e) {
     });
 }));
 
-fn_getting_vehicle_model('<?=$vehicle_make?>', '<?=$vehicle_model?>');
+function remove_driver_licence(){
+    $("#image_preview_div").css('display', 'none');
+    $("#image_input_div").css('display', 'block');
+    $("#delete_driver_licence").val('true');
+}
 
 /* ==================================================END STAFF FORM JS CODE================================================== */
 
