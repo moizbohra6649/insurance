@@ -41,17 +41,6 @@ CREATE TABLE `coverage_collision` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `coverage_collision`
---
-
-INSERT INTO `coverage_collision` (`id`, `coverage_collision_id`, `prefix_coverage_collision_id`, `minimum_amount`, `maximum_amount`, `status`, `deleted`, `delete_datetime`, `created`, `updated`) VALUES
-(5, 1, 'COVERAGE_COLLISION_1', '1', '5000', 1, 0, NULL, '2025-04-11 15:05:40', NULL);
-
---
--- Indexes for dumped tables
---
-
---
 -- Indexes for table `coverage_collision`
 --
 ALTER TABLE `coverage_collision`

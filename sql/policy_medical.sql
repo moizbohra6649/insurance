@@ -41,17 +41,6 @@ CREATE TABLE `policy_medical` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `policy_medical`
---
-
-INSERT INTO `policy_medical` (`id`, `policy_medical_id`, `prefix_policy_medical_id`, `minimum_amount`, `maximum_amount`, `status`, `deleted`, `delete_datetime`, `created`, `updated`) VALUES
-(2, 1, 'POLICY_MEDICAL_1', '1', '50', 1, 0, NULL, '2025-04-10 14:42:44', '2025-04-10 14:43:47');
-
---
--- Indexes for dumped tables
---
-
---
 -- Indexes for table `policy_medical`
 --
 ALTER TABLE `policy_medical`

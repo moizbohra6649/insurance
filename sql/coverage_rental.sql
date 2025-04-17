@@ -41,18 +41,6 @@ CREATE TABLE `coverage_rental` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `coverage_rental`
---
-
-INSERT INTO `coverage_rental` (`id`, `coverage_rental_id`, `prefix_coverage_rental_id`, `minimum_amount`, `maximum_amount`, `status`, `deleted`, `delete_datetime`, `created`, `updated`) VALUES
-(4, 1, 'COVERAGE_RENTAL_1', '1', '1111', 1, 0, NULL, '2025-04-11 17:15:02', NULL),
-(5, 2, 'COVERAGE_RENTAL_2', '5', '55', 1, 0, NULL, '2025-04-11 17:18:08', NULL);
-
---
--- Indexes for dumped tables
---
-
---
 -- Indexes for table `coverage_rental`
 --
 ALTER TABLE `coverage_rental`

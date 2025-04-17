@@ -41,18 +41,6 @@ CREATE TABLE `coverage_umpd` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `coverage_umpd`
---
-
-INSERT INTO `coverage_umpd` (`id`, `coverage_umpd_id`, `prefix_coverage_umpd_id`, `minimum_amount`, `maximum_amount`, `status`, `deleted`, `delete_datetime`, `created`, `updated`) VALUES
-(4, 1, 'COVERAGE_UMPD_1', '1', '100000', 1, 0, NULL, '2025-04-11 14:45:17', '2025-04-11 14:47:10'),
-(5, 2, 'COVERAGE_UMPD_2', '1', '9999', 1, 0, NULL, '2025-04-11 14:56:14', NULL);
-
---
--- Indexes for dumped tables
---
-
---
 -- Indexes for table `coverage_umpd`
 --
 ALTER TABLE `coverage_umpd`

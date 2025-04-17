@@ -41,18 +41,6 @@ CREATE TABLE `coverage_towing` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `coverage_towing`
---
-
-INSERT INTO `coverage_towing` (`id`, `coverage_towing_id`, `prefix_coverage_towing_id`, `minimum_amount`, `maximum_amount`, `status`, `deleted`, `delete_datetime`, `created`, `updated`) VALUES
-(4, 1, 'COVERAGE_TOWING_1', '1', '7788', 1, 0, NULL, '2025-04-11 15:25:18', '2025-04-11 17:07:17'),
-(5, 2, 'COVERAGE_TOWING_2', '5', '12', 1, 0, NULL, '2025-04-11 17:17:51', NULL);
-
---
--- Indexes for dumped tables
---
-
---
 -- Indexes for table `coverage_towing`
 --
 ALTER TABLE `coverage_towing`

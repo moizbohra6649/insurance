@@ -101,7 +101,8 @@
               </svg>
               <svg class="fill-icon">
                 <use href="assets/svg/icon-sprite.svg#fill-user"></use>
-              </svg><span>Year</span></a>
+              </svg><span>Year</span>
+            </a>
             <ul class="sidebar-submenu">
               <li><a href="year.php">Year Add</a></li>
               <li><a href="year_list.php">Year List</a></li>

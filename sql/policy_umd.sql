@@ -41,18 +41,6 @@ CREATE TABLE `policy_umd` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `policy_umd`
---
-
-INSERT INTO `policy_umd` (`id`, `policy_umd_id`, `prefix_policy_umd_id`, `minimum_amount`, `maximum_amount`, `status`, `deleted`, `delete_datetime`, `created`, `updated`) VALUES
-(2, 1, 'POLICY_UMD_1', '1', '500', 1, 0, NULL, '2025-04-10 14:13:10', '2025-04-10 14:15:00'),
-(3, 2, 'POLICY_UMD_2', '1', '300', 1, 0, NULL, '2025-04-10 14:15:11', '2025-04-10 14:15:23');
-
---
--- Indexes for dumped tables
---
-
---
 -- Indexes for table `policy_umd`
 --
 ALTER TABLE `policy_umd`

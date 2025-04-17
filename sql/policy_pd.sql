@@ -41,18 +41,6 @@ CREATE TABLE `policy_pd` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `policy_pd`
---
-
-INSERT INTO `policy_pd` (`id`, `policy_pd_id`, `prefix_policy_pd_id`, `minimum_amount`, `maximum_amount`, `status`, `deleted`, `delete_datetime`, `created`, `updated`) VALUES
-(2, 1, 'POLICY_PD_1', '1', '300', 1, 0, NULL, '2025-04-10 14:22:07', '2025-04-10 14:23:38'),
-(3, 2, 'POLICY_PD_2', '1', '350', 1, 0, NULL, '2025-04-10 14:23:51', NULL);
-
---
--- Indexes for dumped tables
---
-
---
 -- Indexes for table `policy_pd`
 --
 ALTER TABLE `policy_pd`

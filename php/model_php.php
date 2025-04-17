@@ -1,5 +1,5 @@
 <?php
-
+$table_name = "model";
 /* Include Function's File */
 if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
     require_once(dirname(__DIR__) . '/partial/functions.php');

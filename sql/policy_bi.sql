@@ -41,17 +41,6 @@ CREATE TABLE `policy_bi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `policy_bi`
---
-
-INSERT INTO `policy_bi` (`id`, `policy_bi_id`, `prefix_policy_bi_id`, `minimum_amount`, `maximum_amount`, `status`, `deleted`, `delete_datetime`, `created`, `updated`) VALUES
-(1, 1, 'POLICY_BI_1', '1', '1000', 1, 0, NULL, '2025-04-09 19:27:08', '2025-04-10 14:03:25');
-
---
--- Indexes for dumped tables
---
-
---
 -- Indexes for table `policy_bi`
 --
 ALTER TABLE `policy_bi`
