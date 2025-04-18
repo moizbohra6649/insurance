@@ -30,3 +30,56 @@ INSERT INTO `users` (`user_id`, `prefix_user_id`, `role`, `username`, `name`, `e
 //Added Vehicle Category column in Vehicle table.
 
 ALTER TABLE `vehicle` ADD `vehicle_category` INT(11) NULL DEFAULT NULL AFTER `vehicle_value`;
+
+
+CREATE TABLE `insurance`.`driver` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT, 
+  `driver_id` BIGINT(22) NOT NULL, 
+  `prefix_driver_id` VARCHAR(252) NOT NULL, 
+  `customer_id` INT(11) NOT NULL, 
+  `first_name` VARCHAR(252) NOT NULL, 
+  `middle_name` VARCHAR(252) NULL, 
+  `last_name` VARCHAR(252) NOT NULL, 
+  `email` VARCHAR(252) NULL, 
+  `mobile_no` VARCHAR(252) NULL, 
+  `date_of_birth` DATE NOT NULL, 
+  `state_id` INT(11) NULL, 
+  `city` VARCHAR(252) NULL, 
+  `zip_code` INT(52) NULL, 
+  `apt_unit` INT(252) NULL, 
+  `address` TEXT NULL, 
+  `driver_licence_no` VARCHAR(252) NOT NULL, 
+  `driver_licence_image` VARCHAR(252) NULL, 
+  `date_of_issue` DATE NULL, 
+  `date_of_expiry` DATE NULL, 
+  `place_of_issue` VARCHAR(252) NULL, 
+  `marital_status` VARCHAR(252) NOT NULL DEFAULT 'unmarried', 
+  `status` INT(12) NULL DEFAULT '0', 
+  `deleted` INT(12) NULL DEFAULT '0', 
+  `delete_datetime` TIMESTAMP NULL, 
+  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+  `updated` TIMESTAMP NULL, 
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+
+
+CREATE TABLE `insurance`.`spouse_detail` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT, 
+  `driver_id` INT(11) NOT NULL, 
+  `first_name` VARCHAR(252) NOT NULL, 
+  `last_name` VARCHAR(252) NOT NULL, 
+  `email` VARCHAR(252) NULL, 
+  `mobile_no` VARCHAR(252) NULL, 
+  `licence_no` VARCHAR(252) NULL, 
+  `state_id` INT(11) NULL, 
+  `city` VARCHAR(252) NULL, 
+  `zip_code` INT(52) NULL, 
+  `apt_unit` INT(252) NULL, 
+  `address` TEXT NULL, 
+  `status` INT(12) NULL DEFAULT '0', 
+  `deleted` INT(12) NULL DEFAULT '0', 
+  `delete_datetime` TIMESTAMP NULL, 
+  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+  `updated` TIMESTAMP NULL, 
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB;

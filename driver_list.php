@@ -31,7 +31,7 @@ include('partial/loader.php'); ?>
                                 <div class="row align-items-center justify-content-center">
                                     <div class="col-sm-12 col-auto">
                                         <div class="text-sm-end">
-                                            <a href="<?=$actual_link?>driver.php?customer_id=<?=base64_encode($customer_id);?>" class="btn btn-primary mb-2"><i class="icofont icofont-plus"></i> Add New Vehicle</a>
+                                            <a href="<?=$actual_link?>driver.php?customer_id=<?=base64_encode($customer_id);?>" class="btn btn-primary mb-2"><i class="icofont icofont-plus"></i> Add New Driver</a>
                                         </div>
                                     </div>
                                 </div>
@@ -43,12 +43,12 @@ include('partial/loader.php'); ?>
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align:center;">S.No.</th>
-                                                    <th style="text-align:center;">Vehicle ID</th>
+                                                    <th style="text-align:center;">Driver ID</th>
                                                     <th>Customer Name</th> 
-                                                    <th>Vehicle No. (VIN)</th> 
-                                                    <th>Vehicle Type</th>  
-                                                    <th>Licence Plat Number (LPN)</th> 
-                                                    <th>Policy No</th>
+                                                    <th>Driver Name</th> 
+                                                    <th style="text-align:center;">DOB</th> 
+                                                    <th>Driver Licence Number</th>  
+                                                    <th>Marital Status</th>
                                                     <th style="text-align:center;">Create Date</th> 
                                                     <th style="text-align:center;">Status</th>
                                                     <th style="text-align:center;">Action</th>
@@ -65,15 +65,15 @@ include('partial/loader.php'); ?>
                                                     <td align="center"> <?=$i++?> </td>
                                                     <td align="center"> <?=$get_data["driver_id"]?> </td>
                                                     <td> <?=$get_data["customer_name"]?> </td>
-                                                    <td> <?=$get_data["driver_no"]?> </td>
-                                                    <td> <?=$get_data["driver_type"]?> </td>
-                                                    <td> <?=$get_data["licence_plat_no"]?> </td>
-                                                    <td align="center"> </td>
+                                                    <td> <?=$get_data["first_name"].' '. ($get_data["middle_name"] ? $get_data["middle_name"].' ' : '').$get_data["last_name"]?> </td>
+                                                    <td align="center"> <?=convert_db_date_readable($get_data["date_of_birth"])?> </td>
+                                                    <td> <?=$get_data["driver_licence_no"]?> </td>
+                                                    <td> <?= ucfirst($get_data["marital_status"]) ?> </td>
                                                     <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
                                                     <td align="center">
                                                         <div class="media-body text-end icon-state">
                                                             <label class="switch">
-                                                                <input type="checkbox" <?=(empty($get_data["status"])) ? "checked" : "" ; ?> class="status" id="status_<?=($id)?>" onchange="fn_status_change('<?=base64_encode($id)?>');"><span class="switch-state"></span>
+                                                                <input type="checkbox" <?=(!empty($get_data["status"])) ? "checked" : "" ; ?> class="status" id="status_<?=($id)?>" onchange="fn_status_change('<?=base64_encode($id)?>');"><span class="switch-state"></span>
                                                             </label>
                                                         </div>
                                                     </td>

@@ -78,7 +78,7 @@ include('partial/loader.php'); ?>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="date_of_birth">DOB <span class="text-danger">*</span></label>
                                             <input type="text" id="datepicker" name="date_of_birth" data-theme="dark" class="form-control" value="<?=$date_of_birth?>" readonly required="">
-                                            <div class="invalid-feedback">Please provide a valid DOB</div>
+                                            <div class="invalid-feedback">Please provide a valid DOB.</div>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="state">State</label>
@@ -126,19 +126,19 @@ include('partial/loader.php'); ?>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" id="tooltip-container">Upload Driving Licence <i class="dripicons-information" data-bs-container="#tooltip-container" data-bs-html="true" data-bs-toggle="tooltip" title="1. File size of more than 2M is not allowed.<br/>2. Only 1 attachment is allowed.<br/>3. File types allowed are- jpeg, jpg, png, gif, bmp"></i></label>
                                             <div id="image_input_div" style="display:<?= ($local_mode == 'NEW') ? 'block': 'none';?>;">
-                                                <input class="form-control" type="file" id="driver_licence" name="driver_licence" accept="image/*" onchange="return image_validation(this)">
+                                                <input class="form-control" type="file" id="driver_licence_image" name="driver_licence_image" accept="image/*" onchange="return image_validation(this)">
                                             </div>
                                             <div id="image_preview_div" style="display:<?= ($local_mode != 'NEW') ? 'block': 'none';?>;">
                                                 <?php
-                                                    if(!empty($driver_licence) && file_exists(dirname(__FILE__) . '/' . $upload_folder . '/driver_licence/' . $driver_licence)){
-                                                        $driver_licence_url = $upload_folder . "/driver_licence/$driver_licence"; 
+                                                    if(!empty($driver_licence_image) && file_exists(dirname(__FILE__) . '/' . $upload_folder . '/driver_licence/' . $driver_licence_image)){
+                                                        $driver_licence_url = $upload_folder . "/driver_licence/$driver_licence_image"; 
                                                     ?>
                                                 <div class="input-group">
-                                                    <input class="form-control" type="text" value="<?=$driver_licence?>" readonly style="cursor:pointer;" onclick="image_preview('image_preview', 'src_path', '<?=$driver_licence_url?>', 'image_preview_label', 'Driving Licence Preview');" data-bs-container="#image_preview_div" data-bs-toggle="tooltip" title="Click to preview image">
+                                                    <input class="form-control" type="text" value="<?=$driver_licence_image?>" readonly style="cursor:pointer;" onclick="image_preview('image_preview', 'src_path', '<?=$driver_licence_url?>', 'image_preview_label', 'Driving Licence Preview');" data-bs-container="#image_preview_div" data-bs-toggle="tooltip" title="Click to preview image">
                                                     <button type="button" onclick="remove_driver_licence();" class="btn btn-primary"><i class="icofont icofont-trash"></i></button>
                                                 </div>
                                                 <?php }else{ ?>
-                                                <input class="form-control" type="file" id="driver_licence" name="driver_licence" accept="image/*" onchange="return image_validation(this)">
+                                                <input class="form-control" type="file" id="driver_licence_image" name="driver_licence_image" accept="image/*" onchange="return image_validation(this)">
                                                 <?php } ?>
                                             </div>
                                             <input type="hidden" name="delete_driver_licence" id="delete_driver_licence" value="<?=$delete_driver_licence?>" />
@@ -151,7 +151,7 @@ include('partial/loader.php'); ?>
                                     <div class="row g-3">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="date_of_expiry">Date of Expiry</label>
-                                            <input type="text" id="datepicker" name="date_of_expiry" data-theme="dark" class="form-control" value="<?=$date_of_expiry?>" readonly>
+                                            <input type="text" id="min_datepicker" name="date_of_expiry" data-theme="dark" class="form-control" value="<?=$date_of_expiry?>" readonly>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="place_of_issue">Place of Issue</label>
@@ -166,17 +166,17 @@ include('partial/loader.php'); ?>
                                     <div class="col">
                                         <div class="mb-3 m-t-15 custom-radio-ml">
                                             <div class="radio-primary">
-                                                <input class="form-check-input" type="radio" name="marital_status" value="married" <?= ($marital_status == "married") ? "checked": ""; ?>>
+                                                <input class="form-check-input marital_status" type="radio" name="marital_status" value="married" <?= ($marital_status == "married") ? "checked": ""; ?>>
                                                 <label class="form-check-label">Married</label>
                                             </div>
                                             <div class="radio-primary">
-                                                <input class="form-check-input" type="radio" name="marital_status" value="unmarried" <?= ($marital_status == "unmarried") ? "checked": ""; ?>>
+                                                <input class="form-check-input marital_status" type="radio" name="marital_status" value="unmarried" <?= ($marital_status == "unmarried") ? "checked": ""; ?>>
                                                 <label class="form-check-label">Unmarried</label>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="marital_div">
+                                    <div class="marital_div" style="display: <?= ($marital_status == "married") ? "block" : "none"; ?>;">
                                         <div class="col-sm-12">
                                             <h5 class="mb-3">Spouse Detail Form</h5>
                                         </div>

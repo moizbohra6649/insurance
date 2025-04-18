@@ -272,7 +272,7 @@ switch ($mode) {
 
         $get_agent = mysqli_fetch_array($select_agent);
         $db_profile_image = $get_agent["profile_image"];
-        $get_agent_id = $get_agent["id"];
+        $agent_id = $get_agent["agent_id"];
         
         if(!empty($profile_image)){
             list($txt, $ext) = explode(".", $profile_image);

@@ -282,7 +282,7 @@ switch ($mode) {
         
         $get_staff = mysqli_fetch_array($select_staff);
         $db_profile_image = $get_staff["profile_image"];
-        $get_user_id = $get_staff["id"];
+        $user_id = $get_staff["user_id"];
         
         if(!empty($profile_image)){
             list($txt, $ext) = explode(".", $profile_image);

@@ -300,7 +300,7 @@ switch ($mode) {
         $get_vendor = mysqli_fetch_array($select_vendor);
         $db_profile_image = $get_vendor["profile_image"];
         $db_business_license_image = $get_vendor["business_license"];
-        $get_vendor_id = $get_vendor["id"];
+        $vendor_id = $get_vendor["vendor_id"];
         
         if(!empty($profile_image)){
             list($txt, $ext) = explode(".", $profile_image);

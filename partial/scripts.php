@@ -80,21 +80,11 @@
             format: 'mmmm d, yyyy', outFormat: 'yyyy-mm-dd',
             clearBtn: false, theme: 'yellow', maxDate: 'today',
             inline: false,
-            events: {
-                // onRangeFormat: function (from, to) {
-                //     var dateFormat = 'yyyy-mm-dd';
-                //     return from.getTime() === to.getTime()
-                //         ? this.formatDate(from, dateFormat)
-                //         : [this.formatDate(from, dateFormat), this.formatDate(to, dateFormat)].join(' - ');
-                // },
-
-                // ready: function () {
-                //     console.log('duDatepicker', this)
-                // },
-                // dateChanged: function (data) {
-                //     console.log('new date', data)
-                // }
-            }
+        });
+        duDatepicker('#min_datepicker', {
+            format: 'mmmm d, yyyy', outFormat: 'yyyy-mm-dd',
+            clearBtn: false, theme: 'yellow', minDate: 'today',
+            inline: false,
         });
 
     });

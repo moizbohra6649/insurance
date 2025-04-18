@@ -125,7 +125,7 @@ include('partial/loader.php'); ?>
                                                     <td align="center">
                                                         <div class="media-body text-end icon-state">
                                                             <label class="switch">
-                                                                <input type="checkbox" <?=(empty($get_data["status"])) ? "checked" : "" ; ?> class="status" id="status_<?=($id)?>" onchange="fn_status_change('<?=base64_encode($id)?>');"><span class="switch-state"></span>
+                                                                <input type="checkbox" <?=(!empty($get_data["status"])) ? "checked" : "" ; ?> class="status" id="status_<?=($id)?>" onchange="fn_status_change('<?=base64_encode($id)?>');"><span class="switch-state"></span>
                                                             </label>
                                                         </div>
                                                     </td>
@@ -136,7 +136,7 @@ include('partial/loader.php'); ?>
                                                             </a>
                                                             <div class="dropdown-menu dropdown-menu-end">
                                                                 <a href="<?=$actual_link?>vehicle_list.php?customer_id=<?=base64_encode($id)?>" class="dropdown-item">Vehicle's</a>
-                                                                <a href="<?=$actual_link?>driver.php?customer_id=<?=base64_encode($id)?>" class="dropdown-item">Driver's</a>
+                                                                <a href="<?=$actual_link?>driver_list.php?customer_id=<?=base64_encode($id)?>" class="dropdown-item">Driver's</a>
                                                             </div>
                                                         </div>
                                                         <a href="<?=$actual_link?>customer.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>

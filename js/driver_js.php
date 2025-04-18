@@ -5,32 +5,32 @@ $('#driver_form').on('submit', (function(e) {
 
     var error_arr = [];
 
-    if($("#vehicle_no").val() == ""){
-        error_arr.push("Please fill a Vehicle No. (VIN).<br/>");
+    if($("#first_name").val() == ""){
+        error_arr.push("Please fill a First Name.<br/>");
     }
 
-    if($("#vehicle_type").val() == ""){
-        error_arr.push("Please select Vehicle Type.<br/>");
+    if($("#last_name").val() == ""){
+        error_arr.push("Please fill a Last Name.<br/>");
     }
 
-    if($("#licence_plat_no").val() == ""){
-        error_arr.push("Please fill a Licence Plat Number (LPN).<br/>");
+    if($("#date_of_birth").val() == ""){
+        error_arr.push("Please provide a valid DOB.<br/>");
     }
 
-    if($("#vehicle_year").val() == "" || $("#vehicle_year").val() == 0){
-        error_arr.push("Please select Vehicle Year.<br/>");
+    if($("#driver_licence_no").val() == ""){
+        error_arr.push("Please fill a Driver Licence Number.<br/>");
     }
 
-    if($("#vehicle_make").val() == "" || $("#vehicle_make").val() == 0){
-        error_arr.push("Please select Vehicle Make.<br/>");
-    }
-
-    if($("#vehicle_model").val() == "" || $("#vehicle_model").val() == 0){
-        error_arr.push("Please select Vehicle Model.<br/>");
-    }
-
-    if($("#reg_state_vehicle").val() == ""){
-        error_arr.push("Please fill a Registration State Vehicle.<br/>");
+    if(!$('input[name="marital_status"]:checked')){
+        error_arr.push("Please select a Marital Status.<br/>");
+    }else if($('input[name="marital_status"]:checked').val() == "married"){
+        if ($("#spouse_first_name").val() == "") {
+            error_arr.push("Please fill a Spouse First Name.<br/>");
+        }
+        
+        if ($("#spouse_last_name").val() == "") {
+            error_arr.push("Please fill a Spouse Last Name.<br/>");
+        }
     }
 
     var error_txt = error_arr.join('');
@@ -60,7 +60,7 @@ $('#driver_form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                var url = `vehicle_list.php?customer_id=<?=base64_encode($customer_id);?>`;
+                var url = `driver_list.php?customer_id=<?=base64_encode($customer_id);?>`;
                 move(`<?=$actual_link?>${url}`);
                 // setTimeout(function() {  }, 1000);
             }else{
@@ -83,6 +83,13 @@ function remove_driver_licence(){
     $("#delete_driver_licence").val('true');
 }
 
+$(".marital_status").click(function(){
+    if($(this).val() == "married"){
+        $(".marital_div").css('display', 'block');
+    }else{
+        $(".marital_div").css('display', 'none');
+    }
+});
 /* ==================================================END STAFF FORM JS CODE================================================== */
 
 </script>
