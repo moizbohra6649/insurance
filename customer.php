@@ -32,7 +32,7 @@ include('partial/loader.php'); ?>
                                         <div class="col-md-4">
                                             <label class="form-label" for="name">Name <span class="text-danger">*</span></label>
                                             <input class="form-control onlytext" id="name" name="name" type="text" value="<?=$name?>" placeholder="Name" required="">
-                                            <div class="invalid-feedback">Please fill a name.</div>
+                                            <div class="invalid-feedback">Please fill a Name.</div>
                                         </div>
                                         
                                         <div class="col-md-4 mb-3">
@@ -40,7 +40,7 @@ include('partial/loader.php'); ?>
                                             <div class="input-group">
                                                 <span class="input-group-text" id="inputGroupPrepend">@</span>
                                                 <input class="form-control" id="email" name="email" type="email" value="<?=$email?>" placeholder="Email" aria-describedby="inputGroupPrepend" required="">
-                                                <div class="invalid-feedback">Please provide a valid email.</div>
+                                                <div class="invalid-feedback">Please provide a valid Email.</div>
                                             </div>
                                         </div>
 
@@ -53,8 +53,8 @@ include('partial/loader.php'); ?>
                                     <div class="row g-3">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="date_of_birth">DOB <span class="text-danger">*</span></label>
-                                            <input type="text" id="datepicker" name="date_of_birth" data-theme="dark" class="form-control" value="<?=$date_of_birth?>" readonly required="">
-                                            <div class="invalid-feedback">Please provide a valid DOB</div>
+                                            <input type="text" id="datepicker" name="date_of_birth" data-theme="dark" class="form-control" value="<?=($date_of_birth == "0000-00-00") ? "" : $date_of_birth;?>" readonly required="">
+                                            <div class="invalid-feedback">Please provide a valid DOB.</div>
                                         </div>
 
                                         <div class="col-md-4">
@@ -69,6 +69,7 @@ include('partial/loader.php'); ?>
                                             <label class="form-label" for="address_1">Address 1 <span class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <textarea class="form-control" id="address_1" name="address_1" placeholder="Address 1" required=""><?=$address_1?></textarea>
+                                                <div class="invalid-feedback">Please fill a Address.</div>
                                             </div>
                                         </div>
 

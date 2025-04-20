@@ -30,8 +30,8 @@ $apt_unit              = (isset($_REQUEST["apt_unit"])) ? $_REQUEST["apt_unit"] 
 $address               = (isset($_REQUEST["address"])) ? $_REQUEST["address"] : "";
 $driver_licence_image  = (isset($_FILES["driver_licence_image"]['name'])) ? $_FILES["driver_licence_image"]['name'] : "";
 $driver_licence_no     = (isset($_REQUEST["driver_licence_no"])) ? $_REQUEST["driver_licence_no"] : "";
-$date_of_issue         = (isset($_REQUEST["date_of_issue"]) && !empty($_REQUEST["date_of_issue"])) ? convert_readable_date_db($_REQUEST["date_of_issue"]) : "";
-$date_of_expiry        = (isset($_REQUEST["date_of_expiry"]) && !empty($_REQUEST["date_of_expiry"])) ? convert_readable_date_db($_REQUEST["date_of_expiry"]) : "";
+$date_of_issue         = (isset($_REQUEST["date_of_issue"]) && !empty($_REQUEST["date_of_issue"])) ? convert_readable_date_db($_REQUEST["date_of_issue"]) : '0000-00-00';
+$date_of_expiry        = (isset($_REQUEST["date_of_expiry"]) && !empty($_REQUEST["date_of_expiry"])) ? convert_readable_date_db($_REQUEST["date_of_expiry"]) : '0000-00-00';
 $place_of_issue        = (isset($_REQUEST["place_of_issue"])) ? $_REQUEST["place_of_issue"] : "";
 $marital_status        = (isset($_REQUEST["marital_status"])) ? $_REQUEST["marital_status"] : "unmarried";
 $delete_driver_licence = (isset($_REQUEST["delete_driver_licence"])) ? $_REQUEST["delete_driver_licence"] : "";
@@ -101,7 +101,7 @@ switch ($mode) {
             $error_arr[] = "Please fill a Last Name.<br/>";
         }
         
-        if (empty($date_of_birth)) {
+        if (empty($date_of_birth) || $date_of_birth == "0000-00-00") {
             $error_arr[] = "Please provide a valid DOB.<br/>";
         }
         
@@ -186,7 +186,7 @@ switch ($mode) {
             $last_name            = $get_data["last_name"];
             $email                = $get_data["email"];
             $mobile_no            = $get_data["mobile_no"];
-            $date_of_birth        = $get_data["date_of_birth"];
+            $date_of_birth        = convert_db_date_readable($get_data["date_of_birth"]);
             $state                = $get_data["state_id"];
             $city                 = $get_data["city"];
             $zip_code             = $get_data["zip_code"];
@@ -194,8 +194,8 @@ switch ($mode) {
             $address              = $get_data["address"];
             $driver_licence_image = $get_data["driver_licence_image"];
             $driver_licence_no    = $get_data["driver_licence_no"];
-            $date_of_issue        = $get_data["date_of_issue"];
-            $date_of_expiry       = $get_data["date_of_expiry"];
+            $date_of_issue        = convert_db_date_readable($get_data["date_of_issue"]);
+            $date_of_expiry       = convert_db_date_readable($get_data["date_of_expiry"]);
             $place_of_issue       = $get_data["place_of_issue"];
             $marital_status       = $get_data["marital_status"];
 

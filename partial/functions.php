@@ -241,13 +241,18 @@ function convert_calender_date($select_date){
 }
 
 function convert_db_date_readable($date){
-	// Create a DateTime object
-	$datetime = new DateTime($date);
+	if($date != "0000-00-00"){
+		// Create a DateTime object
+		$datetime = new DateTime($date);
 
-	// Format to "mmmm d, yyyy"
-	$formattedDate = $datetime->format('F j, Y');
+		// Format to "mmmm d, yyyy"
+		$formattedDate = $datetime->format('F j, Y');
 
-	return $formattedDate; 
+		return $formattedDate; 
+	}else{
+		return "";
+	}
+	
 }
 
 function convert_readable_date_db($date){

@@ -7,31 +7,31 @@ $('#customer_form').on('submit', (function(e) {
     var error_arr = [];
   
     if($("#name").val() == ""){
-        error_arr.push("Please enter Name.<br/>");
+        error_arr.push("Please fill a Name.<br/>");
     } 
 
     if($("#email").val() == ""){
-        error_arr.push("Please enter Email.<br/>");
+        error_arr.push("Please fill a Email.<br/>");
     }else if (isEmail($("#email").val()) == false) {
-        error_arr.push("Please enter a valid Email.<br/>");
+        error_arr.push("Please provide a valid Email.<br/>");
     }
 
     if($("#mobile_no").val() == ""){
-        error_arr.push("Please enter Mobile No.<br/>");
+        error_arr.push("Please fill a Mobile No.<br/>");
     }else if($("#mobile_no").val().length < 12){
-        error_arr.push("Please enter a valid Mobile No.<br/>");
+        error_arr.push("Please provide a valid Mobile No.<br/>");
     }
 
-    if($("#birth_date").val() == ""){
-        error_arr.push("Please select DBO.<br/>");
+    if($("#birth_date").val() == "" || $("#birth_date").val() == "0000-00-00"){
+        error_arr.push("Please provide a valid DOB<br/>");
     } 
 
     if($("#zip_code").val() == ""){
-        error_arr.push("Please select Zip Code.<br/>");
+        error_arr.push("Please fill a Zip Code.<br/>");
     } 
 
     if($("#address_1").val() == ""){
-        error_arr.push("Please enter address.<br/>");
+        error_arr.push("Please fill a Address.<br/>");
     } 
 
     var error_txt = error_arr.join('');

@@ -15,14 +15,14 @@ $mode       = (isset($_REQUEST["mode"])) ? $_REQUEST["mode"] : "NEW";
 $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] : "false";
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
-$customer_id            = (isset($_REQUEST["customer_id"])) ? $_REQUEST["customer_id"] : 0;
-$name                   = (isset($_REQUEST["name"])) ? $_REQUEST["name"] : "";
-$email                  = (isset($_REQUEST["email"])) ? $_REQUEST["email"] : "";
-$mobile_no              = (isset($_REQUEST["mobile_no"])) ? $_REQUEST["mobile_no"] : "";
-$date_of_birth          = (isset($_REQUEST["date_of_birth"])) ? convert_readable_date_db($_REQUEST["date_of_birth"]) : "";
-$zip_code               = (isset($_REQUEST["zip_code"])) ? $_REQUEST["zip_code"] : "";
-$address_1              = (isset($_REQUEST["address_1"])) ? $_REQUEST["address_1"] : "";
-$address_2              = (isset($_REQUEST["address_2"])) ? $_REQUEST["address_2"] : "";
+$customer_id     = (isset($_REQUEST["customer_id"])) ? $_REQUEST["customer_id"] : 0;
+$name            = (isset($_REQUEST["name"])) ? $_REQUEST["name"] : "";
+$email           = (isset($_REQUEST["email"])) ? $_REQUEST["email"] : "";
+$mobile_no       = (isset($_REQUEST["mobile_no"])) ? $_REQUEST["mobile_no"] : "";
+$date_of_birth   = (isset($_REQUEST["date_of_birth"]) && !empty($_REQUEST["date_of_birth"])) ? convert_readable_date_db($_REQUEST["date_of_birth"]) : "0000-00-00";
+$zip_code        = (isset($_REQUEST["zip_code"])) ? $_REQUEST["zip_code"] : "";
+$address_1       = (isset($_REQUEST["address_1"])) ? $_REQUEST["address_1"] : "";
+$address_2       = (isset($_REQUEST["address_2"])) ? $_REQUEST["address_2"] : "";
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -59,7 +59,7 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
     }
 
     if(!empty($filter_customer_id)){
-        $select_query .= " AND customer = $filter_customer_id ";
+        $select_query .= " AND customer_id = $filter_customer_id ";
     }
 
     if(!empty($name)){
@@ -100,31 +100,31 @@ switch ($mode) {
         // Validation
 
         if (empty($name)) {
-            $error_arr[] = "Please enter Name.<br/>";
+            $error_arr[] = "Please fill a Name.<br/>";
         }
 
         if (empty($email)) {
-            $error_arr[] = "Please enter Email.<br/>";
+            $error_arr[] = "Please fill a Email.<br/>";
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $error_arr[] = "Please enter a valid Email.<br/>";
+            $error_arr[] = "Please provide a valid Email.<br/>";
         }
 
         if (empty($mobile_no)) {
-            $error_arr[] = "Please enter Mobile No.<br/>";
+            $error_arr[] = "Please fill a Mobile No.<br/>";
         } elseif (strlen($mobile_no) < 12) {
-            $error_arr[] = "Please enter a valid Mobile No.<br/>";
+            $error_arr[] = "Please provide a valid Mobile No.<br/>";
         }
 
-        if (empty($date_of_birth)) {
-            $error_arr[] = "Please enter DOB.<br/>";
+        if (empty($date_of_birth) || $date_of_birth == "0000-00-00") {
+            $error_arr[] = "Please provide a valid DOB.<br/>";
         }
 
         if (empty($zip_code)) {
-            $error_arr[] = "Please enter zip code.<br/>";
+            $error_arr[] = "Please fill a Zip Code.<br/>";
         }
         
         if (empty($address_1)) {
-            $error_arr[] = "Please enter address.<br/>";
+            $error_arr[] = "Please fill a Address.<br/>";
         }
 
         if(mysqli_num_rows($select_customer_email) > 0){
@@ -186,7 +186,7 @@ switch ($mode) {
             $name                   = $get_data["name"];
             $email                  = $get_data["email"];
             $mobile_no              = $get_data["mobile"];
-            $date_of_birth          = $get_data["date_of_birth"] == "0000-00-00" ? "" : convert_db_date_readable($get_data["date_of_birth"]);
+            $date_of_birth          = convert_db_date_readable($get_data["date_of_birth"]);
             $zip_code               = $get_data["zip_code"];
             $address_1              = $get_data["address_1"];
             $address_2              = $get_data["address_2"];
