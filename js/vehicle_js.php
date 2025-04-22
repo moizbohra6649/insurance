@@ -25,6 +25,8 @@ $('#vehicle_form').on('submit', (function(e) {
 
     if($("#vehicle_no").val() == ""){
         error_arr.push("Please fill a Vehicle No. (VIN).<br/>");
+    }else if($("#vehicle_no").val().length < 17){
+        error_arr.push("Please fill a Valid Vehicle No. (VIN).<br/>");
     }
 
     if($("#vehicle_type").val() == ""){
@@ -49,6 +51,12 @@ $('#vehicle_form').on('submit', (function(e) {
 
     if($("#reg_state_vehicle").val() == ""){
         error_arr.push("Please fill a Registration State Vehicle.<br/>");
+    }
+
+    if($("#vehicle_category").val() != "2"){
+        if($("#veh_owner_company_name").val() == ""){
+            error_arr.push("Please fill a Vehicle Owner Company Name.<br/>");
+        }
     }
 
     var error_txt = error_arr.join('');
@@ -96,6 +104,15 @@ $('#vehicle_form').on('submit', (function(e) {
 }));
 
 fn_getting_vehicle_model('<?=$vehicle_make?>', '<?=$vehicle_model?>');
+
+function fn_change_vehicle_category(value){
+    if(value == "2"){
+        $(".veh_owner_company_name_div").css('display', 'none');
+    }else{
+        $(".veh_owner_company_name_div").css('display', 'block');
+    }
+
+}
 
 /* ==================================================END STAFF FORM JS CODE================================================== */
 

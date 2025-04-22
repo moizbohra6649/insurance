@@ -33,6 +33,18 @@ $('#driver_form').on('submit', (function(e) {
         }
     }
 
+    if($('input[name="family_friend"]:checked').val() != "none"){
+        if ($("#family_friend_first_name").val() == "") {
+            error_arr.push("Please fill a Family or Friend First Name.<br/>");
+        }
+        
+        if ($("#family_friend_last_name").val() == "") {
+            error_arr.push("Please fill a Family or Friend Last Name.<br/>");
+        }else if($('input[name="family_friend"]:checked').val() == "family" && $("#last_name").val() != $("#family_friend_last_name").val()){
+            error_arr.push("Driver Last name or Family member Last name are not same.<br/>");
+        }
+    }
+
     var error_txt = error_arr.join('');
     if(error_txt != ""){
         notification("Oh Snap!", error_txt, "danger");
@@ -88,6 +100,14 @@ $(".marital_status").click(function(){
         $(".marital_div").css('display', 'block');
     }else{
         $(".marital_div").css('display', 'none');
+    }
+});
+
+$(".family_friend").click(function(){
+    if($(this).val() != "none"){
+        $(".family_friend_div").css('display', 'block');
+    }else{
+        $(".family_friend_div").css('display', 'none');
     }
 });
 /* ==================================================END STAFF FORM JS CODE================================================== */

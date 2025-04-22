@@ -26,6 +26,7 @@ $vehicle_model              = (isset($_REQUEST["vehicle_model"])) ? $_REQUEST["v
 $reg_state_vehicle               = (isset($_REQUEST["reg_state_vehicle"])) ? $_REQUEST["reg_state_vehicle"] : "";
 $vehicle_value       = (isset($_REQUEST["vehicle_value"])) ? $_REQUEST["vehicle_value"] : "";
 $vehicle_category       = (isset($_REQUEST["vehicle_category"])) ? $_REQUEST["vehicle_category"] : 2;
+$veh_owner_company_name       = (isset($_REQUEST["veh_owner_company_name"])) ? $_REQUEST["veh_owner_company_name"] : "";
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -105,6 +106,12 @@ switch ($mode) {
             $error_arr[] = "Please fill a Registration State Vehicle.<br/>";
         }
 
+        if($vehicle_category != 2){
+            if(empty($veh_owner_company_name)){
+                $error_arr[] = "Please fill a Vehicle Owner Company Name.<br/>";
+            }
+        }
+
         // Display errors if any
         if (!empty($error_arr)) {
             $error_txt = implode('', $error_arr);
@@ -116,7 +123,7 @@ switch ($mode) {
 
         mysqli_autocommit($conn,FALSE);
 
-        $insert_query = mysqli_query($conn, "INSERT INTO vehicle (vehicle_id, prefix_vehicle_id, customer_id, vehicle_no, vehicle_type, licence_plat_no, vehicle_year_id, vehicle_make_id, vehicle_model_id, reg_state_vehicle, vehicle_value, vehicle_category, status) VALUES ('$vehicle_id', '$prefix_vehicle_id', '$customer_id', '$vehicle_no', '$vehicle_type', '$licence_plat_no', '$vehicle_year', '$vehicle_make', '$vehicle_model', '$reg_state_vehicle', '$vehicle_value', '$vehicle_category', 1)");
+        $insert_query = mysqli_query($conn, "INSERT INTO vehicle (vehicle_id, prefix_vehicle_id, customer_id, vehicle_no, vehicle_type, licence_plat_no, vehicle_year_id, vehicle_make_id, vehicle_model_id, reg_state_vehicle, vehicle_value, vehicle_category, veh_owner_company_name, status) VALUES ('$vehicle_id', '$prefix_vehicle_id', '$customer_id', '$vehicle_no', '$vehicle_type', '$licence_plat_no', '$vehicle_year', '$vehicle_make', '$vehicle_model', '$reg_state_vehicle', '$vehicle_value', '$vehicle_category', '$veh_owner_company_name', 1)");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
@@ -213,6 +220,12 @@ switch ($mode) {
             $error_arr[] = "Please fill a Registration State Vehicle.<br/>";
         }
 
+        if($vehicle_category != 2){
+            if(empty($veh_owner_company_name)){
+                $error_arr[] = "Please fill a Vehicle Owner Company Name.<br/>";
+            }
+        }
+
         // Display errors if any
         if (!empty($error_arr)) {
             $error_txt = implode('', $error_arr);
@@ -225,7 +238,7 @@ switch ($mode) {
         // Turn autocommit off
         mysqli_autocommit($conn,FALSE);
             
-        $update_query = mysqli_query($conn, "UPDATE vehicle SET vehicle_no = '$vehicle_no', vehicle_type = '$vehicle_type', licence_plat_no = '$licence_plat_no', vehicle_year_id = '$vehicle_year', vehicle_make_id = '$vehicle_make', vehicle_model_id = '$vehicle_model', reg_state_vehicle = '$reg_state_vehicle', vehicle_value = '$vehicle_value', vehicle_category = '$vehicle_category', updated = now() WHERE id = $id");
+        $update_query = mysqli_query($conn, "UPDATE vehicle SET vehicle_no = '$vehicle_no', vehicle_type = '$vehicle_type', licence_plat_no = '$licence_plat_no', vehicle_year_id = '$vehicle_year', vehicle_make_id = '$vehicle_make', vehicle_model_id = '$vehicle_model', reg_state_vehicle = '$reg_state_vehicle', vehicle_value = '$vehicle_value', vehicle_category = '$vehicle_category', veh_owner_company_name = '$veh_owner_company_name', updated = now() WHERE id = $id");
 
         // Commit transaction
         if (!mysqli_commit($conn)) {

@@ -161,7 +161,7 @@ include('partial/loader.php'); ?>
 
 
                                     <div class="col-sm-12">
-                                        <h5 class="mb-0">Marital Status</h5>
+                                        <h6 class="mb-0">Marital Status</h6>
                                     </div>
                                     <div class="col">
                                         <div class="mb-3 m-t-15 custom-radio-ml">
@@ -178,7 +178,7 @@ include('partial/loader.php'); ?>
 
                                     <div class="marital_div" style="display: <?= ($marital_status == "married") ? "block" : "none"; ?>;">
                                         <div class="col-sm-12">
-                                            <h5 class="mb-3">Spouse Detail Form</h5>
+                                            <h6 class="mb-3">Spouse Detail Form</h6>
                                         </div>
                                         <div class="col">
                                         <div class="row g-3">
@@ -247,6 +247,103 @@ include('partial/loader.php'); ?>
                                                     <label class="form-label" for="spouse_address">Address</label>
                                                     <div class="input-group">
                                                         <textarea class="form-control" id="spouse_address" name="spouse_address" placeholder="Address" ><?=$spouse_address?></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12">
+                                        <h6 class="mb-0">Do you want to add a family member or friend?</h6>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3 m-t-15 custom-radio-ml">
+                                            <div class="radio-primary">
+                                                <input class="form-check-input family_friend" type="radio" name="family_friend" value="family" <?= ($family_friend == "family") ? "checked": ""; ?>>
+                                                <label class="form-check-label">Family Member</label>
+                                            </div>
+                                            <div class="radio-primary">
+                                                <input class="form-check-input family_friend" type="radio" name="family_friend" value="friend" <?= ($family_friend == "friend") ? "checked": ""; ?>>
+                                                <label class="form-check-label">Friend</label>
+                                            </div>
+                                            <div class="radio-primary">
+                                                <input class="form-check-input family_friend" type="radio" name="family_friend" value="none" <?= ($family_friend == "none") ? "checked": ""; ?>>
+                                                <label class="form-check-label">None</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="family_friend_div" style="display: <?= ($family_friend != "none") ? "block" : "none"; ?>;">
+                                        <div class="col-sm-12">
+                                            <h6 class="mb-3">Family or Friend Detail Form</h6>
+                                        </div>
+                                        <div class="col">
+                                        <div class="row g-3">
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label" for="family_friend_first_name">First Name <span class="text-danger">*</span></label>
+                                                    <div class="form-input">
+                                                        <input class="form-control" id="family_friend_first_name" name="family_friend_first_name" type="text" value="<?=$family_friend_first_name?>" placeholder="First Name" required="">
+                                                        <div class="invalid-feedback">Please fill a First Name.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label" for="family_friend_last_name">Last Name <span class="text-danger">*</span></label>
+                                                    <div class="form-input">
+                                                        <input class="form-control" id="family_friend_last_name" name="family_friend_last_name" type="text" value="<?=$family_friend_last_name?>" placeholder="Last Name" required="">
+                                                        <div class="invalid-feedback">Please fill a Last Name.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label" for="family_friend_email">Email</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                                        <input class="form-control" id="family_friend_email" name="family_friend_email" type="email" value="<?=$family_friend_email?>" placeholder="Email" aria-describedby="inputGroupPrepend">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row g-3">
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label" for="family_friend_mobile_no">Mobile No.</label>
+                                                    <input class="form-control allownumber" minlength="12" maxlength="12" id="family_friend_mobile_no" name="family_friend_mobile_no" type="text" value="<?=$family_friend_mobile_no?>" placeholder="Mobile No." onkeypress="applyPhoneInputRestriction('family_friend_mobile_no')">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label" for="family_friend_licence_no">Licence Number</label>
+                                                    <input class="form-control allownumber" id="family_friend_licence_no" name="family_friend_licence_no" type="text" value="<?=$family_friend_licence_no?>" placeholder="Licence Number">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label" for="family_friend_state">State</label>
+                                                    <div class="form-input">
+                                                        <select class="form-select" name="family_friend_state" id="family_friend_state">
+                                                            <option value="0">Select State</option>
+                                                            <?php
+                                                                $select_state = select("states","country_id=231");
+                                                                while($get_state = fetch($select_state)){
+                                                            ?>
+                                                                <option <?= ($family_friend_state == $get_state["id"]) ? "selected":''; ?> value="<?=$get_state["id"];?>"><?=$get_state["name"];?></option>
+                                                            <?php }?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row g-3">
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label" for="family_friend_city">City</label>
+                                                    <input class="form-control" id="family_friend_city" name="family_friend_city" type="text" value="<?=$family_friend_city?>" placeholder="City">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label" for="family_friend_zip_code">Zip Code</label>
+                                                    <input class="form-control allownumber" id="family_friend_zip_code" minlength="6" maxlength="8" name="family_friend_zip_code" type="text" value="<?=$family_friend_zip_code?>" placeholder="Zip Code">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label" for="family_friend_apt_unit">APT/Unit</label>
+                                                    <input class="form-control" id="family_friend_apt_unit" name="family_friend_apt_unit" type="text" value="<?=$family_friend_apt_unit?>" placeholder="APT/Unit">
+                                                </div>
+                                            </div>
+                                            <div class="row g-3">
+                                                <div class="col-md-12 mb-3">
+                                                    <label class="form-label" for="family_friend_address">Address</label>
+                                                    <div class="input-group">
+                                                        <textarea class="form-control" id="family_friend_address" name="family_friend_address" placeholder="Address" ><?=$family_friend_address?></textarea>
                                                     </div>
                                                 </div>
                                             </div>

@@ -42,7 +42,7 @@ include('partial/loader.php'); ?>
                                         <div class="col-md-4">
                                             <label class="form-label" for="vehicle_no">Vehicle No. (VIN) <span class="text-danger">*</span></label>
                                             <div class="form-input">
-                                                <input class="form-control" id="vehicle_no" name="vehicle_no" type="text" value="<?=$vehicle_no?>" placeholder="Vehicle No. (VIN)" required="">
+                                                <input class="form-control alpha_num" id="vehicle_no" name="vehicle_no" minlength="17" maxlength="17" type="text" value="<?=$vehicle_no?>" placeholder="Vehicle No. (VIN)" required="">
                                                 <div class="invalid-feedback">Please fill a Vehicle No. (VIN).</div>
                                             </div>
                                         </div>
@@ -119,21 +119,28 @@ include('partial/loader.php'); ?>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="vehicle_value">Vehicle Value</label>
                                             <div class="form-input">
-                                                <input class="form-control" type="text" id="vehicle_value" name="vehicle_value" value="<?=$vehicle_value?>" placeholder="Vehicle Value">
+                                                <input class="form-control allownumber" type="text" id="vehicle_value" name="vehicle_value" value="<?=$vehicle_value?>" placeholder="Vehicle Value">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col">
-                                        <div class="mb-3 m-t-15 custom-radio-ml">
+                                    <div class="col row g-3">
+                                        <div class="col-md-4 mb-3 custom-radio-ml">
                                             <?php
                                                 $select_vechile_category = select("vehicle_category","status=1");
                                                 while($get_vechile_category = fetch($select_vechile_category)){
                                             ?>
                                             <div class="radio-primary">
-                                                <input class="form-check-input" type="radio" name="vehicle_category" value="<?=$get_vechile_category["id"]?>" <?= ($get_vechile_category["id"] == $vehicle_category) ? "checked": ""; ?>>
+                                                <input class="form-check-input" type="radio" name="vehicle_category" value="<?=$get_vechile_category["id"]?>" <?= ($get_vechile_category["id"] == $vehicle_category) ? "checked": ""; ?> onclick="fn_change_vehicle_category(this.value);">
                                                 <label class="form-check-label"><?=$get_vechile_category["label"]?></label>
                                             </div>
                                             <?php } ?>
+                                        </div>
+                                        <div class="col-md-4 mb-3 veh_owner_company_name_div" style="display: <?= ($vehicle_category == 2) ? 'none' : 'block'; ?>;">
+                                            <label class="form-label" for="veh_owner_company_name">Vehicle Owner Company Name <span class="text-danger">*</span></label>
+                                            <div class="form-input">
+                                                <input class="form-control" type="text" id="veh_owner_company_name" name="veh_owner_company_name" value="<?=$veh_owner_company_name?>" placeholder="Vehicle Owner Company Name" required="">
+                                                <div class="invalid-feedback">Please fill a Vehicle Owner Company Name.</div>
+                                            </div>
                                         </div>
                                     </div>
                                     

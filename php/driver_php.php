@@ -45,6 +45,18 @@ $spouse_city           = (isset($_REQUEST["spouse_city"])) ? $_REQUEST["spouse_c
 $spouse_zip_code       = (isset($_REQUEST["spouse_zip_code"])) ? $_REQUEST["spouse_zip_code"] : "";
 $spouse_apt_unit       = (isset($_REQUEST["spouse_apt_unit"])) ? $_REQUEST["spouse_apt_unit"] : "";
 $spouse_address        = (isset($_REQUEST["spouse_address"])) ? $_REQUEST["spouse_address"] : "";
+$family_friend        = (isset($_REQUEST["family_friend"])) ? $_REQUEST["family_friend"] : "none";
+$family_friend_first_name     = (isset($_REQUEST["family_friend_first_name"])) ? $_REQUEST["family_friend_first_name"] : "";
+$family_friend_last_name      = (isset($_REQUEST["family_friend_last_name"])) ? $_REQUEST["family_friend_last_name"] : "";
+$family_friend_email          = (isset($_REQUEST["family_friend_email"])) ? $_REQUEST["family_friend_email"] : "";
+$family_friend_mobile_no      = (isset($_REQUEST["family_friend_mobile_no"])) ? $_REQUEST["family_friend_mobile_no"] : "";
+$family_friend_licence_no     = (isset($_REQUEST["family_friend_licence_no"])) ? $_REQUEST["family_friend_licence_no"] : "";
+$family_friend_state          = (isset($_REQUEST["family_friend_state"])) ? $_REQUEST["family_friend_state"] : "";
+$family_friend_city           = (isset($_REQUEST["family_friend_city"])) ? $_REQUEST["family_friend_city"] : "";
+$family_friend_zip_code       = (isset($_REQUEST["family_friend_zip_code"])) ? $_REQUEST["family_friend_zip_code"] : "";
+$family_friend_apt_unit       = (isset($_REQUEST["family_friend_apt_unit"])) ? $_REQUEST["family_friend_apt_unit"] : "";
+$family_friend_address        = (isset($_REQUEST["family_friend_address"])) ? $_REQUEST["family_friend_address"] : "";
+
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -121,6 +133,18 @@ switch ($mode) {
             }
         }
 
+        if($family_friend != "none"){
+            if (empty($family_friend_first_name)) {
+                $error_arr[] = "Please fill a Family or Friend First Name.<br/>";
+            }
+            
+            if (empty($family_friend_last_name)) {
+                $error_arr[] = "Please fill a Family or Friend Last Name.<br/>";
+            }else if ($family_friend == "family" && $last_name != $family_friend_last_name) {
+                $error_arr[] = "Driver Last name or Family member Last name are not same.<br/>";
+            }
+        }
+
         // Display errors if any
         if (!empty($error_arr)) {
             $error_txt = implode('', $error_arr);
@@ -139,12 +163,16 @@ switch ($mode) {
 
         mysqli_autocommit($conn,FALSE);
 
-        $insert_query = mysqli_query($conn, "INSERT INTO driver (driver_id, prefix_driver_id, customer_id, first_name, middle_name, last_name, email, mobile_no, date_of_birth, state_id, city, zip_code, apt_unit, address, driver_licence_no, driver_licence_image, date_of_issue, date_of_expiry, place_of_issue, marital_status, status) VALUES ('$driver_id', '$prefix_driver_id', '$customer_id', '$first_name', '$middle_name', '$last_name', '$email', '$mobile_no', '$date_of_birth', '$state', '$city', '$zip_code', '$apt_unit', '$address', '$driver_licence_no', '$driver_licence_image', '$date_of_issue', '$date_of_expiry', '$place_of_issue', '$marital_status', 1)");
+        $insert_query = mysqli_query($conn, "INSERT INTO driver (driver_id, prefix_driver_id, customer_id, first_name, middle_name, last_name, email, mobile_no, date_of_birth, state_id, city, zip_code, apt_unit, address, driver_licence_no, driver_licence_image, date_of_issue, date_of_expiry, place_of_issue, marital_status, family_friend, status) VALUES ('$driver_id', '$prefix_driver_id', '$customer_id', '$first_name', '$middle_name', '$last_name', '$email', '$mobile_no', '$date_of_birth', '$state', '$city', '$zip_code', '$apt_unit', '$address', '$driver_licence_no', '$driver_licence_image', '$date_of_issue', '$date_of_expiry', '$place_of_issue', '$marital_status', '$family_friend', 1)");
 
         $last_inserted_id = mysqli_insert_id($conn);
         
         if($marital_status == "married"){
             $insert_spouse_detail_query = mysqli_query($conn, "INSERT INTO spouse_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$last_inserted_id', '$spouse_first_name', '$spouse_last_name', '$spouse_email', '$spouse_mobile_no', '$spouse_licence_no', '$spouse_state', '$spouse_city', '$spouse_zip_code', '$spouse_apt_unit', '$spouse_address', 1)");
+        }
+
+        if($family_friend != "none"){
+            $insert_family_friend_detail_query = mysqli_query($conn, "INSERT INTO family_friend_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$last_inserted_id', '$family_friend_first_name', '$family_friend_last_name', '$family_friend_email', '$family_friend_mobile_no', '$family_friend_licence_no', '$family_friend_state', '$family_friend_city', '$family_friend_zip_code', '$family_friend_apt_unit', '$family_friend_address', 1)");
         }
 
         // Commit transaction
@@ -169,9 +197,11 @@ switch ($mode) {
         $readonly   = "readonly";
         $title      = ($mode == "EDIT") ? "Edit Driver" : "View Driver";
         
-        $select_query = mysqli_query($conn, "SELECT driver.*, customer.name as customer_name, spouse_detail.first_name as spouse_first_name, spouse_detail.last_name as spouse_last_name, spouse_detail.email as spouse_email, spouse_detail.mobile_no as spouse_mobile_no, spouse_detail.licence_no as spouse_licence_no, spouse_detail.state_id as spouse_state, spouse_detail.city as spouse_city, spouse_detail.zip_code as spouse_zip_code, spouse_detail.apt_unit as spouse_apt_unit, spouse_detail.address as spouse_address FROM driver 
+        $select_query = mysqli_query($conn, "SELECT driver.*, customer.name as customer_name, spouse_detail.first_name as spouse_first_name, spouse_detail.last_name as spouse_last_name, spouse_detail.email as spouse_email, spouse_detail.mobile_no as spouse_mobile_no, spouse_detail.licence_no as spouse_licence_no, spouse_detail.state_id as spouse_state, spouse_detail.city as spouse_city, spouse_detail.zip_code as spouse_zip_code, spouse_detail.apt_unit as spouse_apt_unit, spouse_detail.address as spouse_address, family_friend_detail.first_name as family_friend_first_name, family_friend_detail.last_name as family_friend_last_name, family_friend_detail.email as family_friend_email, family_friend_detail.mobile_no as family_friend_mobile_no, family_friend_detail.licence_no as family_friend_licence_no, family_friend_detail.state_id as family_friend_state, family_friend_detail.city as family_friend_city, family_friend_detail.zip_code as family_friend_zip_code, family_friend_detail.apt_unit as family_friend_apt_unit, family_friend_detail.address as family_friend_address
+        FROM driver 
         left join customer on customer.id = driver.customer_id
         left join spouse_detail on spouse_detail.driver_id = driver.id
+        left join family_friend_detail on family_friend_detail.driver_id = driver.id
         where driver.id = '$id' ");
         
         if(mysqli_num_rows($select_query) > 0){
@@ -198,6 +228,7 @@ switch ($mode) {
             $date_of_expiry       = convert_db_date_readable($get_data["date_of_expiry"]);
             $place_of_issue       = $get_data["place_of_issue"];
             $marital_status       = $get_data["marital_status"];
+            $family_friend       = $get_data["family_friend"];
 
             $spouse_first_name    = $get_data["spouse_first_name"];
             $spouse_last_name     = $get_data["spouse_last_name"];
@@ -209,6 +240,18 @@ switch ($mode) {
             $spouse_zip_code      = $get_data["spouse_zip_code"];
             $spouse_apt_unit      = $get_data["spouse_apt_unit"];
             $spouse_address       = $get_data["spouse_address"];
+
+            $family_friend_first_name    = $get_data["family_friend_first_name"];
+            $family_friend_last_name     = $get_data["family_friend_last_name"];
+            $family_friend_email         = $get_data["family_friend_email"];
+            $family_friend_mobile_no     = $get_data["family_friend_mobile_no"];
+            $family_friend_licence_no    = $get_data["family_friend_licence_no"];
+            $family_friend_state         = $get_data["family_friend_state"];
+            $family_friend_city          = $get_data["family_friend_city"];
+            $family_friend_zip_code      = $get_data["family_friend_zip_code"];
+            $family_friend_apt_unit      = $get_data["family_friend_apt_unit"];
+            $family_friend_address       = $get_data["family_friend_address"];
+
             $created              = $get_data["created"];
             $local_mode           = "UPDATE";
         }
@@ -255,6 +298,18 @@ switch ($mode) {
             }
         }
 
+        if($family_friend != "none"){
+            if (empty($family_friend_first_name)) {
+                $error_arr[] = "Please fill a Family or Friend First Name.<br/>";
+            }
+            
+            if (empty($family_friend_last_name)) {
+                $error_arr[] = "Please fill a Family or Friend Last Name.<br/>";
+            }else if ($family_friend == "family" && $last_name != $family_friend_last_name) {
+                $error_arr[] = "Driver Last name or Family member Last name are not same.<br/>";
+            }
+        }
+
         if(mysqli_num_rows($select_driver) == 0){
 
             $data["msg"] = "Something went wrong please try again later.";
@@ -292,13 +347,20 @@ switch ($mode) {
         // Turn autocommit off
         mysqli_autocommit($conn,FALSE);
             
-        $update_query = mysqli_query($conn, "UPDATE driver SET first_name = '$first_name', middle_name = '$middle_name', last_name = '$last_name', email = '$email', mobile_no = '$mobile_no', date_of_birth = '$date_of_birth', state_id = '$state', city = '$city', zip_code = '$zip_code', apt_unit = '$apt_unit', address = '$address', driver_licence_no = '$driver_licence_no', driver_licence_image = '$driver_licence_image', date_of_issue = '$date_of_issue', date_of_expiry = '$date_of_expiry', place_of_issue = '$place_of_issue', marital_status = '$marital_status', updated = now() WHERE id = $id");
+        $update_query = mysqli_query($conn, "UPDATE driver SET first_name = '$first_name', middle_name = '$middle_name', last_name = '$last_name', email = '$email', mobile_no = '$mobile_no', date_of_birth = '$date_of_birth', state_id = '$state', city = '$city', zip_code = '$zip_code', apt_unit = '$apt_unit', address = '$address', driver_licence_no = '$driver_licence_no', driver_licence_image = '$driver_licence_image', date_of_issue = '$date_of_issue', date_of_expiry = '$date_of_expiry', place_of_issue = '$place_of_issue', marital_status = '$marital_status', family_friend = '$family_friend', updated = now() WHERE id = $id");
 
         mysqli_query($conn, "DELETE FROM spouse_detail WHERE driver_id = $id");
 
         if($marital_status == "married"){
-            $update_spouse_detail_query = mysqli_query($conn, "INSERT INTO spouse_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$id', '$spouse_first_name', '$spouse_last_name', '$spouse_email', '$spouse_mobile_no', '$spouse_licence_no', '$spouse_state', '$spouse_city', '$spouse_zip_code', '$spouse_apt_unit', '$spouse_address', 1)");
+            $insert_spouse_detail_query = mysqli_query($conn, "INSERT INTO spouse_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$id', '$spouse_first_name', '$spouse_last_name', '$spouse_email', '$spouse_mobile_no', '$spouse_licence_no', '$spouse_state', '$spouse_city', '$spouse_zip_code', '$spouse_apt_unit', '$spouse_address', 1)");
         }
+
+        mysqli_query($conn, "DELETE FROM family_friend_detail WHERE driver_id = $id");
+
+        if($family_friend != "none"){
+            $insert_family_friend_detail_query = mysqli_query($conn, "INSERT INTO family_friend_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$last_inserted_id', '$family_friend_first_name', '$family_friend_last_name', '$family_friend_email', '$family_friend_mobile_no', '$family_friend_licence_no', '$family_friend_state', '$family_friend_city', '$family_friend_zip_code', '$family_friend_apt_unit', '$family_friend_address', 1)");
+        }
+
 
         // Commit transaction
         if (!mysqli_commit($conn)) {
