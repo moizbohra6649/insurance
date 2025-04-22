@@ -13,7 +13,7 @@ $('#driver_form').on('submit', (function(e) {
         error_arr.push("Please fill a Last Name.<br/>");
     }
 
-    if($("#date_of_birth").val() == ""){
+    if($("#date_of_birth").val() == ""  || $("#birth_date").val() == "0000-00-00"){
         error_arr.push("Please provide a valid DOB.<br/>");
     }
 

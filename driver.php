@@ -77,7 +77,7 @@ include('partial/loader.php'); ?>
                                     <div class="row g-3">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="date_of_birth">DOB <span class="text-danger">*</span></label>
-                                            <input type="text" id="datepicker" name="date_of_birth" data-theme="dark" class="form-control" value="<?=$date_of_birth?>" readonly required="">
+                                            <input type="text" id="datepicker" name="date_of_birth" data-theme="dark" class="form-control" value="<?=($date_of_birth == "0000-00-00") ? "" : $date_of_birth;?>" readonly required="">
                                             <div class="invalid-feedback">Please provide a valid DOB.</div>
                                         </div>
                                         <div class="col-md-4 mb-3">
@@ -145,13 +145,13 @@ include('partial/loader.php'); ?>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="date_of_issue">Date of Issue</label>
-                                            <input type="text" id="datepicker" name="date_of_issue" data-theme="dark" class="form-control" value="<?=$date_of_issue?>" readonly>
+                                            <input type="text" id="datepicker" name="date_of_issue" data-theme="dark" class="form-control" value="<?=($date_of_issue == "0000-00-00") ? "" : $date_of_issue;?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row g-3">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="date_of_expiry">Date of Expiry</label>
-                                            <input type="text" id="min_datepicker" name="date_of_expiry" data-theme="dark" class="form-control" value="<?=$date_of_expiry?>" readonly>
+                                            <input type="text" id="min_datepicker" name="date_of_expiry" data-theme="dark" class="form-control" value="<?=($date_of_expiry == "0000-00-00") ? "" : $date_of_expiry;?>" readonly>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="place_of_issue">Place of Issue</label>

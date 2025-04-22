@@ -1,7 +1,7 @@
 <?php 
 /* Include PHP File */
-if (file_exists(dirname(__FILE__) . '/php/staff_php.php')) {
-    require_once(dirname(__FILE__) . '/php/staff_php.php');
+if (file_exists(dirname(__FILE__) . '/php/dashboard_php.php')) {
+    require_once(dirname(__FILE__) . '/php/dashboard_php.php');
 }
 
 include('partial/header.php');

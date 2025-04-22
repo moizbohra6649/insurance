@@ -38,7 +38,7 @@ include('partial/loader.php'); ?>
                             <div class="card-body">
                                 <div class="tab-content">
                                     <div class="tab-pane show active" id="form-row-preview">
-                                        <form method="POST" id="customer_list">
+                                        <form method="GET" id="customer_list">
                                             <div class="row g-2">
                                                 <div class="mb-3 col-lg-3">
                                                     <label class="form-label">From Date</label>
