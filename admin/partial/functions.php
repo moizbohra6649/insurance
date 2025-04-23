@@ -63,7 +63,7 @@ if (mysqli_connect_errno()) {
 }
 
 /* Getting Master Admin URL */
-$panel_folder = "insurance";
+$panel_folder = "insurance/admin";
 $upload_folder = "uploads";
 $without_session_page = "login.php";
 $pdf_page = "pdf";
