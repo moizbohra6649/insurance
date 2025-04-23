@@ -31547,9 +31547,12 @@ button[data-toggle=dropdown]:hover ~ .dropdown-menu {
   transition: 0.3s;
   box-shadow: 0 0 21px 0 rgba(89, 102, 122, 0.1);
 }
-.page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .logo-wrapper,
+.page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .logo-wrapper {
+  padding: 2px 30px;
+  box-shadow: -9px 0 20px rgba(89, 102, 122, 0.1);
+}
 .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .logo-icon-wrapper {
-  padding: 22px 30px;
+  padding: 12px 10px;
   box-shadow: -9px 0 20px rgba(89, 102, 122, 0.1);
 }
 .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .logo-icon-wrapper {
