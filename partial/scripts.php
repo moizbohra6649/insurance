@@ -19,7 +19,14 @@
 <script src="assets/js/header-slick.js"></script>
 <!-- Plugins JS Ends-->
 <!-- Theme js-->
+
+
 <script src="assets/js/script.js"></script>
+<script src="assets/js/editor/ckeditor/ckeditor.js"></script>
+<script src="assets/js/editor/ckeditor/adapters/jquery.js"></script>
+<script src="assets/js/editor/ckeditor/styles.js"></script>
+
+
 
 <script src="assets/js/moment.js"></script>
 <script src="assets/js/notify/bootstrap-notify.min.js"></script>
@@ -31,6 +38,8 @@
 
 <script src="assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
 <script src="assets/js/datatable/datatables/datatable.custom.js"></script>
+
+
 
 <!-- third party js ends -->
 
@@ -86,6 +95,22 @@
             clearBtn: false, theme: 'yellow', minDate: 'today',
             inline: false,
         });
+
+        // Default ckeditor
+            CKEDITOR.replace( 'description', {
+                on: {
+                    contentDom: function( evt ) {
+                        // Allow custom context menu only with table elemnts.
+                        evt.editor.editable().on( 'contextmenu', function( contextEvent ) {
+                            var path = evt.editor.elementPath();
+
+                            if ( !path.contains( 'table' ) ) {
+                                contextEvent.cancel();
+                            }
+                        }, null, null, 5 );
+                    }
+                }
+            } );
 
     });
 </script>
