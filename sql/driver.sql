@@ -49,6 +49,7 @@ CREATE TABLE `driver` (
   `date_of_expiry` date DEFAULT NULL,
   `place_of_issue` varchar(252) DEFAULT NULL,
   `marital_status` varchar(252) NOT NULL DEFAULT 'unmarried',
+  `family_friend` varchar(252) NOT NULL DEFAULT 'none',
   `status` int(12) DEFAULT 0,
   `deleted` int(12) DEFAULT 0,
   `delete_datetime` timestamp NULL DEFAULT NULL,
