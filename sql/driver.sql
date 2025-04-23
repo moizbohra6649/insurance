@@ -40,7 +40,7 @@ CREATE TABLE `driver` (
   `date_of_birth` date NOT NULL,
   `state_id` int(11) DEFAULT NULL,
   `city` varchar(252) DEFAULT NULL,
-  `zip_code` varchar(50) DEFAULT NULL,
+  `zip_code` varchar(52) DEFAULT NULL,
   `apt_unit` varchar(252) DEFAULT NULL,
   `address` text DEFAULT NULL,
   `driver_licence_no` varchar(252) NOT NULL,

@@ -172,6 +172,7 @@ switch ($mode) {
             $reg_state_vehicle  = $get_data["reg_state_vehicle"];
             $vehicle_value      = $get_data["vehicle_value"];
             $vehicle_category   = $get_data["vehicle_category"];
+            $veh_owner_company_name   = $get_data["veh_owner_company_name"];
             $created            = $get_data["created"];
             $local_mode         = "UPDATE";
         }
