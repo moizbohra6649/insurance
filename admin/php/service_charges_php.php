@@ -5,7 +5,7 @@ if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
 }
 
 $title      = ""; 
-$title      = "Add New Service Charges"; 
+$title      = "Add Service Charges"; 
 $breadcrumb_title = "Service Charges";
 $local_mode = "";
 $readonly   = "";
@@ -13,9 +13,8 @@ $readonly   = "";
 $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] : "false";
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
-$make_id = (isset($_REQUEST["make_id"])) ? $_REQUEST["make_id"] : 0;
 $service_charge = 0;
-$select_qry = mysqli_query($conn, "SELECT service_charge FROM service_charge");
+$select_qry = mysqli_query($conn, "SELECT service_charge FROM service_charge where agent_id = '$login_id' ");
 if(mysqli_num_rows($select_qry) > 0){
     $get_data = mysqli_fetch_array($select_qry);
     $service_charge = $get_data["service_charge"];   
@@ -44,7 +43,7 @@ if($form_request == "true"){
 
     mysqli_autocommit($conn,FALSE);
 
-   $select_qry = mysqli_query($conn, "SELECT id FROM service_charge");
+   $select_qry = mysqli_query($conn, "SELECT id FROM service_charge where agent_id = '$login_id' ");
 
     if(mysqli_num_rows($select_qry) > 0){
         $get_qry = mysqli_fetch_array($select_qry);  
@@ -69,7 +68,7 @@ if($form_request == "true"){
 
     }else{
 
-        $insert_query = mysqli_query($conn, "INSERT INTO service_charge (service_charge_id, service_charge, status) VALUES ('$service_charge_id', '$service_charge', 1) ");
+        $insert_query = mysqli_query($conn, "INSERT INTO service_charge (service_charge_id, agent_id, service_charge, status) VALUES ('$service_charge_id', '$login_id', '$service_charge', 1) ");
 
         // Commit transaction
         if (!mysqli_commit($conn)) {

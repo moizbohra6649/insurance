@@ -5,7 +5,7 @@ if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
 }
 
 $title      = ""; 
-$title      = "Add New Management Charges"; 
+$title      = "Add Management Charges"; 
 $breadcrumb_title = "Management Charges";
 $local_mode = "";
 $readonly   = "";
@@ -13,9 +13,8 @@ $readonly   = "";
 $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] : "false";
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
-$make_id = (isset($_REQUEST["make_id"])) ? $_REQUEST["make_id"] : 0;
 $management_charge = 0;
-$select_qry = mysqli_query($conn, "SELECT management_charge FROM management_charge");
+$select_qry = mysqli_query($conn, "SELECT management_charge FROM management_charge where admin_id = '$login_id' ");
 if(mysqli_num_rows($select_qry) > 0){
     $get_data = mysqli_fetch_array($select_qry);
     $management_charge = $get_data["management_charge"];   
@@ -44,7 +43,7 @@ if($form_request == "true"){
 
     mysqli_autocommit($conn,FALSE);
 
-   $select_qry = mysqli_query($conn, "SELECT id FROM management_charge");
+   $select_qry = mysqli_query($conn, "SELECT id FROM management_charge where admin_id = '$login_id' ");
 
     if(mysqli_num_rows($select_qry) > 0){
         $get_qry = mysqli_fetch_array($select_qry);  
@@ -69,7 +68,7 @@ if($form_request == "true"){
 
     }else{
 
-        $insert_query = mysqli_query($conn, "INSERT INTO management_charge (management_charge_id, management_charge, status) VALUES ('$management_charge_id', '$management_charge', 1) ");
+        $insert_query = mysqli_query($conn, "INSERT INTO management_charge (management_charge_id, admin_id, management_charge, status) VALUES ('$management_charge_id', '$login_id', '$management_charge', 1) ");
 
         // Commit transaction
         if (!mysqli_commit($conn)) {

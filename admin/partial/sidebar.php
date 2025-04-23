@@ -263,7 +263,23 @@
               <li><a href="coverage_deductible_list.php">Coverage Deductible List</a></li>
             </ul>
           </li>
-
+          <li class="sidebar-main-title"></li>
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="service_charges.php">
+            <svg class="stroke-icon">
+              <use href="assets/svg/icon-sprite.svg#stroke-home"></use>
+            </svg>
+            <svg class="fill-icon">
+              <use href="assets/svg/icon-sprite.svg#fill-home"></use>
+            </svg><span>Add Service Charges</span></a>
+          </li>
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="management_charges.php">
+            <svg class="stroke-icon">
+              <use href="assets/svg/icon-sprite.svg#stroke-home"></use>
+            </svg>
+            <svg class="fill-icon">
+              <use href="assets/svg/icon-sprite.svg#fill-home"></use>
+            </svg><span>Add Management Charges</span></a>
+          </li>
           
           
         </ul>
