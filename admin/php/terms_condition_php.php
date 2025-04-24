@@ -16,7 +16,7 @@ $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 $make_id = (isset($_REQUEST["make_id"])) ? $_REQUEST["make_id"] : 0;
 
-$title =''  ; 
+$termtitle =''  ; 
 $sub_title =  ''  ; 
 $card_heading =  ''  ; 
 $description =  ''  ; 
@@ -24,12 +24,12 @@ $description =  ''  ;
 $select_qry = mysqli_query($conn, "SELECT title,sub_title,card_heading,description  FROM terms_condition");
 if(mysqli_num_rows($select_qry) > 0){
     $get_data = mysqli_fetch_array($select_qry);
-    $title = $get_data["title"];  
+    $termtitle = $get_data["title"];  
     $sub_title = $get_data["sub_title"];  
     $card_heading = $get_data["card_heading"];  
     $description = $get_data["description"];   
 }
-$title = (isset($_REQUEST["title"])) ? $_REQUEST["title"] : $title ; 
+$termtitle = (isset($_REQUEST["title"])) ? $_REQUEST["title"] : $termtitle ; 
 $sub_title = (isset($_REQUEST["sub_title"])) ? $_REQUEST["sub_title"] : $sub_title  ; 
 $card_heading = (isset($_REQUEST["card_heading"])) ? $_REQUEST["card_heading"] : $card_heading   ; 
 $description = (isset($_REQUEST["description"])) ? $_REQUEST["description"] : $description   ; 
@@ -72,7 +72,7 @@ if($form_request == "true"){
         $get_qry = mysqli_fetch_array($select_qry);  
         $get_id = $get_qry["id"]; 
  
-            $update_make = mysqli_query($conn, "UPDATE terms_condition SET title = '$title', sub_title = '$sub_title', card_heading = '$card_heading', description = '$description', updated = now() WHERE id = $get_id");
+            $update_make = mysqli_query($conn, "UPDATE terms_condition SET title = '$termtitle', sub_title = '$sub_title', card_heading = '$card_heading', description = '$description', updated = now() WHERE id = $get_id");
         
             // Commit transaction
             if (!mysqli_commit($conn)) {
@@ -91,7 +91,7 @@ if($form_request == "true"){
 
     }else{
 
-        $insert_query = mysqli_query($conn, "INSERT INTO terms_condition (terms_condition_id, title, sub_title , card_heading , description) VALUES ('$terms_condition_id', '$title',  '$sub_title',  '$card_heading', '$description') ");
+        $insert_query = mysqli_query($conn, "INSERT INTO terms_condition (terms_condition_id, title, sub_title , card_heading , description) VALUES ('$terms_condition_id', '$termtitle',  '$sub_title',  '$card_heading', '$description') ");
 
         // Commit transaction
         if (!mysqli_commit($conn)) {

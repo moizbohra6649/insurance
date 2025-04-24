@@ -28,7 +28,7 @@ include('partial/loader.php'); ?>
                                     <div class="row g-3">
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label" for="title">Title<span class="text-danger">*</span></label>
-                                            <input class="form-control" id="title" name="title" type="text" value="<?=$title?>" placeholder="Title" required="">
+                                            <input class="form-control" id="title" name="title" type="text" value="<?=$termtitle?>" placeholder="Title" required="">
                                             <div class="invalid-feedback">Please fill a Title.</div>
                                             
                                         </div>  
