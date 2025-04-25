@@ -137,6 +137,7 @@ include('partial/loader.php'); ?>
                                                             <div class="dropdown-menu dropdown-menu-end">
                                                                 <a href="<?=$actual_link?>vehicle_list.php?customer_id=<?=base64_encode($id)?>" class="dropdown-item">Vehicle's</a>
                                                                 <a href="<?=$actual_link?>driver_list.php?customer_id=<?=base64_encode($id)?>" class="dropdown-item">Driver's</a>
+                                                                <a href="<?=$actual_link?>policy_list.php?customer_id=<?=base64_encode($id)?>" class="dropdown-item">Policy's</a>
                                                             </div>
                                                         </div>
                                                         <a href="<?=$actual_link?>customer.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
