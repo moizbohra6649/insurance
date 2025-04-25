@@ -134,6 +134,44 @@ include('partial/loader.php'); ?>
                                             </div> 
                                     </div> 
 
+                                    <div class="row g-3">
+                                             <div class="col-md-2 mb-3">
+                                             Payment: <span class="f-w-600">1</span>
+                                            </div> 
+                                            <div class="col-md-2 mb-3">
+                                            Premium: <span class="f-w-600">$275.00</span>
+                                            
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Admin Fee: <span class="f-w-600">$25.00</span>
+                                                
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Roadside Assistance: <span class="f-w-600">$0.00</span>
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Due: <span class="f-w-600">$300.00</span>
+
+
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Due Date: <span class="f-w-600">03/22/2025</span>
+
+
+                                                </div> 
+                                    </div> 
+                                    <div class="row g-3">
+                                             <div class="col-md-3 mb-3">
+                                            
+                                            </div> 
+                                            <div class="col-md-4 mb-3">
+                                            Total: <span class="f-w-600">$1425</span>
+                                            
+                                                </div> 
+                                                
+                                               
+                                    </div> 
+
 
 
 
@@ -145,6 +183,174 @@ include('partial/loader.php'); ?>
                                                 <label class="form-check-label" for='q1'>Monthly Premium Payment</label>
                                             </div> 
                                     </div> 
+                                    <div class="row g-3">
+                                             <div class="col-md-2 mb-3">
+                                             Payment: <span class="f-w-600">1</span>
+                                            </div> 
+                                            <div class="col-md-2 mb-3">
+                                            Premium: <span class="f-w-600">$275.00</span>
+                                            
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Admin Fee: <span class="f-w-600">$25.00</span>
+                                                
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Roadside Assistance: <span class="f-w-600">$0.00</span>
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Due: <span class="f-w-600">$300.00</span>
+
+
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Due Date: <span class="f-w-600">03/22/2025</span>
+
+
+                                                </div> 
+                                    </div> 
+                                    <div class="row g-3">
+                                             <div class="col-md-2 mb-3">
+                                             Payment: <span class="f-w-600">2</span>
+                                            </div> 
+                                            <div class="col-md-2 mb-3">
+                                            Premium: <span class="f-w-600">$225.00</span>
+                                            
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Billing Fee: <span class="f-w-600">$12.00</span>
+                                                
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Roadside Assistance: <span class="f-w-600">$0.00</span>
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Due: <span class="f-w-600">$237.00</span>
+
+
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Due Date: <span class="f-w-600">04/22/2025</span>
+
+
+                                                </div> 
+                                    </div> 
+                                    <div class="row g-3">
+                                             <div class="col-md-2 mb-3">
+                                             Payment: <span class="f-w-600">3</span>
+                                            </div> 
+                                            <div class="col-md-2 mb-3">
+                                            Premium: <span class="f-w-600">$225.00</span>
+                                            
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Billing Fee: <span class="f-w-600">$12.00</span>
+                                                
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Roadside Assistance: <span class="f-w-600">$0.00</span>
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Due: <span class="f-w-600">$237.00</span>
+
+
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Due Date: <span class="f-w-600">05/22/2025</span>
+
+
+                                                </div> 
+                                    </div> 
+                                    <div class="row g-3">
+                                             <div class="col-md-2 mb-3">
+                                             Payment: <span class="f-w-600">4</span>
+                                            </div> 
+                                            <div class="col-md-2 mb-3">
+                                            Premium: <span class="f-w-600">$225.00</span>
+                                            
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Billing Fee: <span class="f-w-600">$12.00</span>
+                                                
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Roadside Assistance: <span class="f-w-600">$0.00</span>
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Due: <span class="f-w-600">$237.00</span>
+
+
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Due Date: <span class="f-w-600">06/22/2025</span>
+
+
+                                                </div> 
+                                    </div> 
+                                    <div class="row g-3">
+                                             <div class="col-md-2 mb-3">
+                                             Payment: <span class="f-w-600">5</span>
+                                            </div> 
+                                            <div class="col-md-2 mb-3">
+                                            Premium: <span class="f-w-600">$225.00</span>
+                                            
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Billing Fee: <span class="f-w-600">$12.00</span>
+                                                
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Roadside Assistance: <span class="f-w-600">$0.00</span>
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Due: <span class="f-w-600">$237.00</span>
+
+
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Due Date: <span class="f-w-600">07/22/2025</span>
+
+
+                                                </div> 
+                                    </div> 
+                                    <div class="row g-3">
+                                             <div class="col-md-2 mb-3">
+                                             Payment: <span class="f-w-600">6</span>
+                                            </div> 
+                                            <div class="col-md-2 mb-3">
+                                            Premium: <span class="f-w-600">$225.00</span>
+                                            
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Billing Fee: <span class="f-w-600">$12.00</span>
+                                                
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Roadside Assistance: <span class="f-w-600">$0.00</span>
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Due: <span class="f-w-600">$237.00</span>
+
+
+                                                </div> 
+                                                <div class="col-md-2 mb-3">
+                                                Due Date: <span class="f-w-600">08/22/2025</span>
+
+
+                                                </div> 
+                                    </div>
+                                    <div class="row g-3">
+                                             <div class="col-md-3 mb-3">
+                                            
+                                            </div> 
+                                            <div class="col-md-4 mb-3">
+                                            Total: <span class="f-w-600">$1485</span>
+                                            
+                                                </div> 
+                                                
+                                               
+                                    </div>  
+                                    
                             </div>
                         </div>
                       </form>

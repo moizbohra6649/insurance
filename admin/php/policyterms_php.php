@@ -24,12 +24,10 @@ $description =  ''  ;
 $select_qry = mysqli_query($conn, "SELECT title,sub_title,card_heading,description  FROM terms_condition");
 if(mysqli_num_rows($select_qry) > 0){
     $get_data = mysqli_fetch_array($select_qry);
-    $title = $get_data["title"];  
     $sub_title = $get_data["sub_title"];  
     $card_heading = $get_data["card_heading"];  
     $description = $get_data["description"];   
 }
-$title = (isset($_REQUEST["title"])) ? $_REQUEST["title"] : $title ; 
 $sub_title = (isset($_REQUEST["sub_title"])) ? $_REQUEST["sub_title"] : $sub_title  ; 
 $card_heading = (isset($_REQUEST["card_heading"])) ? $_REQUEST["card_heading"] : $card_heading   ; 
 $description = (isset($_REQUEST["description"])) ? $_REQUEST["description"] : $description   ; 

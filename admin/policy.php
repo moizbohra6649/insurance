@@ -26,7 +26,7 @@ include('partial/loader.php'); ?>
             <div class="container-fluid">
                 <div class="row starter-main">
                     <div class="col-sm-12">
-                    <form id="driver_form" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
+                    <form id="policy_form" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
                         <div class="card">
                             <div class="card-header">
                                 <h5>Liability Quote</h5>
@@ -173,7 +173,12 @@ include('partial/loader.php'); ?>
                                     <hr class="mt-4 mb-4">
                                     <div class="row g-3">
                                         <div class="col-md-4 mb-3">
-                                            <label class="form-label" for="policy_bi">BI (Bodily Injury):<span class="text-danger">*</span></label>
+                                            <label class="form-label" for="policy_bi">BI (Bodily Injury):<span class="text-danger">*</span>
+                                            
+                                        </label>
+                                                <input class="form-check-input" id="inline-1" type="checkbox">
+                                                <label class="form-check-label" for="inline-1">Physical Damage Only<span class="digits"></span></label>
+                                            
                                             <div class="form-input">
                                                  <select class="form-select" name="policy_bi" id="policy_bi">
                                                     <option value="0">Please Select BI</option>
@@ -220,13 +225,6 @@ include('partial/loader.php'); ?>
                                         </div>
                                     </div>
                                     <div class="row g-3">
-                                        <div class="col-md-4 mb-3">
-                                            <div class="form-check form-check-inline checkbox checkbox-dark mb-0">
-                                                <input class="form-check-input" id="inline-1" type="checkbox">
-                                                <label class="form-check-label" for="inline-1">Physical Damage Only<span class="digits"></span></label>
-                                            </div>
-                                        </div>
-
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="policy_medical">Medical<span class="text-danger">*</span></label>
                                             <div class="form-input">
@@ -442,8 +440,8 @@ include('partial/loader.php'); ?>
 
 <?php include('partial/scripts.php');
 /* Include JS File */
-if (file_exists(dirname(__FILE__) . '/js/driver_js.php')) {
-    require_once(dirname(__FILE__) . '/js/driver_js.php');
+if (file_exists(dirname(__FILE__) . '/js/policy_js.php')) {
+    require_once(dirname(__FILE__) . '/js/policy_js.php');
 }
 ?>
 </body>
