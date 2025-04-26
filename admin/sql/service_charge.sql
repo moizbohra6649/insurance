@@ -31,6 +31,7 @@ CREATE TABLE `service_charge` (
   `id` int(11) NOT NULL,
   `service_charge_id` bigint(22) NOT NULL,
   `service_charge` varchar(252) NOT NULL,
+  `agent_id` INT(11) NOT NULL,
   `status` int(12) NOT NULL DEFAULT 0,
   `created` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated` timestamp NULL DEFAULT NULL
