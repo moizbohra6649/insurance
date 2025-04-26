@@ -19,30 +19,19 @@
 <script src="assets/js/header-slick.js"></script>
 <!-- Plugins JS Ends-->
 <!-- Theme js-->
-
-
 <script src="assets/js/script.js"></script>
 <script src="assets/js/editor/ckeditor/ckeditor.js"></script>
 <script src="assets/js/editor/ckeditor/adapters/jquery.js"></script>
 <script src="assets/js/editor/ckeditor/styles.js"></script>
-
-
-
 <script src="assets/js/moment.js"></script>
 <script src="assets/js/notify/bootstrap-notify.min.js"></script>
 <script src="assets/js/notify/notify-script.js"></script>
 <script src="assets/js/form-validation-custom.js"></script>
 <script src="assets/js/tooltip-init.js"></script>
-
 <script src="assets/js/material-date-range-picker/duDatepicker.min.js"></script>
-
 <script src="assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
 <script src="assets/js/datatable/datatables/datatable.custom.js"></script>
-
-
-
 <!-- third party js ends -->
-
 <?php include('js/main_js.php'); ?>
 
 <script>
