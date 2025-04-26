@@ -5,7 +5,7 @@ if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
 }
 
 $title      = ""; 
-$list_title = "List of Service Charges";
+$list_title = "List of Agent Service Charges";
 $breadcrumb_title = "Service Charges List";
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){

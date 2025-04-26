@@ -31,7 +31,7 @@ include('partial/loader.php'); ?>
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align:center;">S.No.</th>
-                                                    <th style="text-align:center;">Agent_ ID</th>
+                                                    <th style="text-align:center;">Agent ID</th>
                                                     <th style="text-align:center;">Agent Amount</th> 
                                                     <th style="text-align:center;">Service Charge</th>  
                                                     
