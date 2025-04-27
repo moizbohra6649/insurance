@@ -1,5 +1,5 @@
 <?php
-$table_name = "driver";
+$table_name = "policy";
 /* Include Function's File */
 if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
     require_once(dirname(__DIR__) . '/partial/functions.php');
@@ -16,47 +16,32 @@ $form_request          = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_re
 $error_msg             = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 $customer_id           = (isset($_REQUEST["customer_id"]) && !empty($_REQUEST["customer_id"])) ? base64_decode($_REQUEST["customer_id"]) : 0;
-$customer_name         = (isset($_REQUEST["customer_name"])) ? $_REQUEST["customer_name"] : "";
-$first_name            = (isset($_REQUEST["first_name"])) ? $_REQUEST["first_name"] : "";
-$middle_name           = (isset($_REQUEST["middle_name"])) ? $_REQUEST["middle_name"] : "";
-$last_name             = (isset($_REQUEST["last_name"])) ? $_REQUEST["last_name"] : "";
-$email                 = (isset($_REQUEST["email"])) ? $_REQUEST["email"] : "";
-$mobile_no             = (isset($_REQUEST["mobile_no"])) ? $_REQUEST["mobile_no"] : "";
-$date_of_birth         = (isset($_REQUEST["date_of_birth"]) && !empty($_REQUEST["date_of_birth"])) ? convert_readable_date_db($_REQUEST["date_of_birth"]) : "";
-$state                 = (isset($_REQUEST["state"])) ? $_REQUEST["state"] : 0;
-$city                  = (isset($_REQUEST["city"])) ? $_REQUEST["city"] : "";
-$zip_code              = (isset($_REQUEST["zip_code"])) ? $_REQUEST["zip_code"] : "";
-$apt_unit              = (isset($_REQUEST["apt_unit"])) ? $_REQUEST["apt_unit"] : "";
-$address               = (isset($_REQUEST["address"])) ? $_REQUEST["address"] : "";
-$driver_licence_image  = (isset($_FILES["driver_licence_image"]['name'])) ? $_FILES["driver_licence_image"]['name'] : "";
-$driver_licence_no     = (isset($_REQUEST["driver_licence_no"])) ? $_REQUEST["driver_licence_no"] : "";
-$date_of_issue         = (isset($_REQUEST["date_of_issue"]) && !empty($_REQUEST["date_of_issue"])) ? convert_readable_date_db($_REQUEST["date_of_issue"]) : '0000-00-00';
-$date_of_expiry        = (isset($_REQUEST["date_of_expiry"]) && !empty($_REQUEST["date_of_expiry"])) ? convert_readable_date_db($_REQUEST["date_of_expiry"]) : '0000-00-00';
-$place_of_issue        = (isset($_REQUEST["place_of_issue"])) ? $_REQUEST["place_of_issue"] : "";
-$marital_status        = (isset($_REQUEST["marital_status"])) ? $_REQUEST["marital_status"] : "unmarried";
-$delete_driver_licence = (isset($_REQUEST["delete_driver_licence"])) ? $_REQUEST["delete_driver_licence"] : "";
-$spouse_first_name     = (isset($_REQUEST["spouse_first_name"])) ? $_REQUEST["spouse_first_name"] : "";
-$spouse_last_name      = (isset($_REQUEST["spouse_last_name"])) ? $_REQUEST["spouse_last_name"] : "";
-$spouse_email          = (isset($_REQUEST["spouse_email"])) ? $_REQUEST["spouse_email"] : "";
-$spouse_mobile_no      = (isset($_REQUEST["spouse_mobile_no"])) ? $_REQUEST["spouse_mobile_no"] : "";
-$spouse_licence_no     = (isset($_REQUEST["spouse_licence_no"])) ? $_REQUEST["spouse_licence_no"] : "";
-$spouse_state          = (isset($_REQUEST["spouse_state"])) ? $_REQUEST["spouse_state"] : "";
-$spouse_city           = (isset($_REQUEST["spouse_city"])) ? $_REQUEST["spouse_city"] : "";
-$spouse_zip_code       = (isset($_REQUEST["spouse_zip_code"])) ? $_REQUEST["spouse_zip_code"] : "";
-$spouse_apt_unit       = (isset($_REQUEST["spouse_apt_unit"])) ? $_REQUEST["spouse_apt_unit"] : "";
-$spouse_address        = (isset($_REQUEST["spouse_address"])) ? $_REQUEST["spouse_address"] : "";
-$family_friend        = (isset($_REQUEST["family_friend"])) ? $_REQUEST["family_friend"] : "none";
-$family_friend_first_name     = (isset($_REQUEST["family_friend_first_name"])) ? $_REQUEST["family_friend_first_name"] : "";
-$family_friend_last_name      = (isset($_REQUEST["family_friend_last_name"])) ? $_REQUEST["family_friend_last_name"] : "";
-$family_friend_email          = (isset($_REQUEST["family_friend_email"])) ? $_REQUEST["family_friend_email"] : "";
-$family_friend_mobile_no      = (isset($_REQUEST["family_friend_mobile_no"])) ? $_REQUEST["family_friend_mobile_no"] : "";
-$family_friend_licence_no     = (isset($_REQUEST["family_friend_licence_no"])) ? $_REQUEST["family_friend_licence_no"] : "";
-$family_friend_state          = (isset($_REQUEST["family_friend_state"])) ? $_REQUEST["family_friend_state"] : "";
-$family_friend_city           = (isset($_REQUEST["family_friend_city"])) ? $_REQUEST["family_friend_city"] : "";
-$family_friend_zip_code       = (isset($_REQUEST["family_friend_zip_code"])) ? $_REQUEST["family_friend_zip_code"] : "";
-$family_friend_apt_unit       = (isset($_REQUEST["family_friend_apt_unit"])) ? $_REQUEST["family_friend_apt_unit"] : "";
-$family_friend_address        = (isset($_REQUEST["family_friend_address"])) ? $_REQUEST["family_friend_address"] : "";
-
+$customer_name  = '' ;
+$customer_email  = '' ;
+$customer_mobile  = '' ;
+$coverage          = (isset($_REQUEST["coverage"])) ? $_REQUEST["coverage"] : "";
+$coverage_collision          = (isset($_REQUEST["coverage_collision"])) ? $_REQUEST["coverage_collision"] : 0;
+$umpd          = (isset($_REQUEST["umpd"])) ? $_REQUEST["umpd"] : 0;
+$towning_coverage          = (isset($_REQUEST["towning_coverage"])) ? $_REQUEST["towning_coverage"] : 0;
+$coverage_rental          = (isset($_REQUEST["coverage_rental"])) ? $_REQUEST["coverage_rental"] : 0;
+$coverage_deductible          = (isset($_REQUEST["coverage_deductible"])) ? $_REQUEST["coverage_deductible"] : 0;
+$is_veh_used_business          = (isset($_REQUEST["is_veh_used_business"])) ? $_REQUEST["is_veh_used_business"] : 0; 
+$policy_bi          = (isset($_REQUEST["policy_bi"])) ? $_REQUEST["policy_bi"] : 0;
+$policy_pd          = (isset($_REQUEST["policy_pd"])) ? $_REQUEST["policy_pd"] : 0;
+$policy_umd          = (isset($_REQUEST["policy_umd"])) ? $_REQUEST["policy_umd"] : 0; 
+$policy_medical          = (isset($_REQUEST["policy_medical"])) ? $_REQUEST["policy_medical"] : 0; 
+$vehicle          = (isset($_REQUEST["vehicle"])) ? $_REQUEST["vehicle"] : 0; 
+$roasass          = (isset($_REQUEST["roasass"])) ? $_REQUEST["roasass"] : 0; 
+$initials          = (isset($_REQUEST["initials"])) ? $_REQUEST["initials"] : ''; 
+$mother_maident_name          = (isset($_REQUEST["mother_maident_name"])) ? $_REQUEST["mother_maident_name"] : ''; 
+$is_vehical_listed          = (isset($_REQUEST["is_vehical_listed"])) ? $_REQUEST["is_vehical_listed"] : 0; 
+$is_applicant_sole_registered          = (isset($_REQUEST["is_applicant_sole_registered"])) ? $_REQUEST["is_applicant_sole_registered"] : 0; 
+$is_veh_used_business_q	          = (isset($_REQUEST["is_veh_used_business_q"])) ? $_REQUEST["is_veh_used_business_q"] : 0; 
+$is_veh_listed_ride          = (isset($_REQUEST["is_veh_listed_ride"])) ? $_REQUEST["is_veh_listed_ride"] : 0; 
+$is_veh_listed_application_used          = (isset($_REQUEST["is_veh_listed_application_used"])) ? $_REQUEST["is_veh_listed_application_used"] : 0; 
+$is_veh_listed_garaged          = (isset($_REQUEST["is_veh_listed_garaged"])) ? $_REQUEST["is_veh_listed_garaged"] : 0; 
+$is_driver_res          = (isset($_REQUEST["is_driver_res"])) ? $_REQUEST["is_driver_res"] : 0; 
+$is_applicant_other_veh          = (isset($_REQUEST["is_applicant_other_veh"])) ? $_REQUEST["is_applicant_other_veh"] : 0; 
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -80,11 +65,8 @@ switch ($mode) {
         $local_mode = "INSERT";
         $readonly   = "";
         $title      = "Add New Policy"; 
-        $driver_id = get_max_id("driver", "driver_id");
-        $prefix_driver_id = "DRIVER_" . $driver_id;
-        $customer_name  = '' ;
-        $customer_email  = '' ;
-        $customer_mobile  = '' ;
+        $policy_id = get_max_id("policy", "policy_id");
+        $prefix_policy_id = "POLICY_" . $policy_id;
         $select_customer = mysqli_query($conn, "SELECT name , email , mobile FROM customer WHERE id = '$customer_id' " );
         if(mysqli_num_rows($select_customer) > 0){
             $get_data = mysqli_fetch_array($select_customer);
@@ -98,63 +80,25 @@ switch ($mode) {
 
     case "INSERT":
         $data = [];
+        print_r($_REQUEST);
+        die;
         $error_arr = [];
         
-        $driver_id = get_max_id("driver", "driver_id");
-        $prefix_driver_id = "DRIVER_" . $driver_id;
+        $policy_id = get_max_id("policy", "policy_id");
+        $prefix_policy_id = "POLICY_" . $policy_id;
 
         $select_customer = mysqli_query($conn, "SELECT id FROM customer WHERE id = '$customer_id' " );
-        $select_driver = mysqli_query($conn, "SELECT id FROM driver WHERE customer_id = '$customer_id' " );
+        $select_policy = mysqli_query($conn, "SELECT id FROM policy WHERE customer_id = '$customer_id' " );
 
         // Validation
 
         if(mysqli_num_rows($select_customer) == 0){
             $error_arr[] = "Customer does not exists.<br/>";
         }
-
-        if(mysqli_num_rows($select_driver) >= 3){
-            $error_arr[] = "Customer have already three Driver exists.<br/>";
-        }
-        
         if (empty($first_name)) {
             $error_arr[] = "Please fill a First Name.<br/>";
         }
         
-        if (empty($last_name)) {
-            $error_arr[] = "Please fill a Last Name.<br/>";
-        }
-        
-        if (empty($date_of_birth) || $date_of_birth == "0000-00-00") {
-            $error_arr[] = "Please provide a valid DOB.<br/>";
-        }
-        
-        if (empty($driver_licence_no)) {
-            $error_arr[] = "Please fill a Driver Licence Number.<br/>";
-        }
-        
-        if (empty($marital_status)) {
-            $error_arr[] = "Please select a Marital Status.<br/>";
-        }elseif($marital_status == "married"){
-            if (empty($spouse_first_name)) {
-                $error_arr[] = "Please fill a Spouse First Name.<br/>";
-            }
-            
-            if (empty($spouse_last_name)) {
-                $error_arr[] = "Please fill a Spouse Last Name.<br/>";
-            }
-        }
-
-        if($family_friend != "none"){
-            if (empty($family_friend_first_name)) {
-                $error_arr[] = "Please fill a Family or Friend First Name.<br/>";
-            }
-            
-            if (empty($family_friend_last_name)) {
-                $error_arr[] = "Please fill a Family or Friend Last Name.<br/>";
-            }else if ($family_friend == "family" && $last_name != $family_friend_last_name) {
-                $error_arr[] = "Driver Last name or Family member Last name are not same.<br/>";
-            }
-        }
 
         // Display errors if any
         if (!empty($error_arr)) {
@@ -164,28 +108,30 @@ switch ($mode) {
             echo $json_response = json_encode($data);
             exit;
         }
-
-        if(!empty($driver_licence_image)){
-            list($txt, $ext) = explode(".", $driver_licence_image);
-            $driver_licence_image = $driver_id . "_" . time() . "." . $ext;
-            $tmp = $_FILES['driver_licence_image']['tmp_name'];
-            move_uploaded_file($tmp, dirname(__DIR__) . '/' . $upload_folder . '/driver_licence/' . $driver_licence_image);
-        }
-
         mysqli_autocommit($conn,FALSE);
+        
+        
+        $policy_bi          = (isset($_REQUEST["policy_bi"])) ? $_REQUEST["policy_bi"] : 0;
+        $policy_pd          = (isset($_REQUEST["policy_pd"])) ? $_REQUEST["policy_pd"] : 0;
+        $policy_umd          = (isset($_REQUEST["policy_umd"])) ? $_REQUEST["policy_umd"] : 0; 
+        $policy_medical          = (isset($_REQUEST["policy_medical"])) ? $_REQUEST["policy_medical"] : 0; 
+        $vehicle          = (isset($_REQUEST["vehicle"])) ? $_REQUEST["vehicle"] : 0; 
+        $roasass          = (isset($_REQUEST["roasass"])) ? $_REQUEST["roasass"] : 0; 
+        $initials          = (isset($_REQUEST["initials"])) ? $_REQUEST["initials"] : ''; 
+        $mother_maident_name          = (isset($_REQUEST["mother_maident_name"])) ? $_REQUEST["mother_maident_name"] : ''; 
+        $is_vehical_listed          = (isset($_REQUEST["is_vehical_listed"])) ? $_REQUEST["is_vehical_listed"] : 0; 
+        $is_applicant_sole_registered          = (isset($_REQUEST["is_applicant_sole_registered"])) ? $_REQUEST["is_applicant_sole_registered"] : 0; 
+        $is_veh_used_business_q	          = (isset($_REQUEST["is_veh_used_business_q"])) ? $_REQUEST["is_veh_used_business_q"] : 0; 
+        $is_veh_listed_ride          = (isset($_REQUEST["is_veh_listed_ride"])) ? $_REQUEST["is_veh_listed_ride"] : 0; 
+        $is_veh_listed_application_used          = (isset($_REQUEST["is_veh_listed_application_used"])) ? $_REQUEST["is_veh_listed_application_used"] : 0; 
+        $is_veh_listed_garaged          = (isset($_REQUEST["is_veh_listed_garaged"])) ? $_REQUEST["is_veh_listed_garaged"] : 0; 
+        $is_driver_res          = (isset($_REQUEST["is_driver_res"])) ? $_REQUEST["is_driver_res"] : 0; 
+        $is_applicant_other_veh          = (isset($_REQUEST["is_applicant_other_veh"])) ? $_REQUEST["is_applicant_other_veh"] : 0; 
 
-        $insert_query = mysqli_query($conn, "INSERT INTO driver (driver_id, prefix_driver_id, customer_id, first_name, middle_name, last_name, email, mobile_no, date_of_birth, state_id, city, zip_code, apt_unit, address, driver_licence_no, driver_licence_image, date_of_issue, date_of_expiry, place_of_issue, marital_status, family_friend, status) VALUES ('$driver_id', '$prefix_driver_id', '$customer_id', '$first_name', '$middle_name', '$last_name', '$email', '$mobile_no', '$date_of_birth', '$state', '$city', '$zip_code', '$apt_unit', '$address', '$driver_licence_no', '$driver_licence_image', '$date_of_issue', '$date_of_expiry', '$place_of_issue', '$marital_status', '$family_friend', 1)");
+        $insert_query = mysqli_query($conn, "INSERT INTO policy (policy_id, prefix_policy_id, customer_id , policy_coverage, policy_coverage_collision_id, policy_coverage_umpd_id, policy_coverage_rental_id, policy_coverage_towing_id, policy_coverage_deductible_id, is_veh_used_business, is_physical_damage, policy_bi_id, policy_umd_id, policy_medical_id, policy_pd_id, policy_vehicle_id, is_roadside_assistance, is_driver_res, is_vehical_listed, is_applicant_sole_registered, is_applicant_other_veh, is_veh_used_business_q, is_veh_listed_ride, is_veh_listed_application_used , is_veh_listed_garaged	,applicant_initials	, applicant_mother_name , policy_status	, status) VALUES ('$policy_id', '$prefix_policy_id', '$customer_id', '$coverage', '$coverage_collision', '$umpd', '$coverage_rental', '$towning_coverage', '$coverage_deductible', '$is_veh_used_business', '$is_physical_damage', '$zip_code', '$apt_unit', '$address', '$driver_licence_no', '$driver_licence_image', '$date_of_issue', '$date_of_expiry', '$place_of_issue', '$marital_status', '$family_friend', 1)");
 
         $last_inserted_id = mysqli_insert_id($conn);
         
-        if($marital_status == "married"){
-            $insert_spouse_detail_query = mysqli_query($conn, "INSERT INTO spouse_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$last_inserted_id', '$spouse_first_name', '$spouse_last_name', '$spouse_email', '$spouse_mobile_no', '$spouse_licence_no', '$spouse_state', '$spouse_city', '$spouse_zip_code', '$spouse_apt_unit', '$spouse_address', 1)");
-        }
-
-        if($family_friend != "none"){
-            $insert_family_friend_detail_query = mysqli_query($conn, "INSERT INTO family_friend_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$last_inserted_id', '$family_friend_first_name', '$family_friend_last_name', '$family_friend_email', '$family_friend_mobile_no', '$family_friend_licence_no', '$family_friend_state', '$family_friend_city', '$family_friend_zip_code', '$family_friend_apt_unit', '$family_friend_address', 1)");
-        }
-
         // Commit transaction
         if (!mysqli_commit($conn)) {
             $data["msg"] = "Commit transaction failed";
