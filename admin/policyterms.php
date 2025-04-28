@@ -23,7 +23,7 @@ include('partial/loader.php'); ?>
                 <div class="row starter-main">
                     <div class="col-sm-12">
                     <form id="terms_condition_form" method="POST" class="needs-validation"  enctype="multipart/form-data"> 
-                        <div class="card">
+                        <!-- <div class="card">
                             <div class="card-header">
                                 <h5>Policy Term: 6 Month</h5>
                             </div>
@@ -79,7 +79,7 @@ include('partial/loader.php'); ?>
                                 <hr class="mt-1 mb-1">
                                 <div class="row g-3">
                                     <div class="col-md-8 mb-3 fw-bold">
-                                    Total Premium
+                                    Total Premium:
                                     </div> 
                                     <div class="col-md-4 mb-3">
                                         $1400.00
@@ -87,7 +87,7 @@ include('partial/loader.php'); ?>
                                 </div> 
                                 <div class="row g-3">
                                     <div class="col-md-8 mb-3 fw-bold">
-                                    Mgmt Fee
+                                    Management Fee:
                                     </div> 
                                     <div class="col-md-4 mb-3 ">
                                     $25.00
@@ -110,13 +110,13 @@ include('partial/loader.php'); ?>
                                     </div> 
                                 </div> 
                             </div>
-                        </div>
+                        </div> -->
                         <div class="card">
                             <div class="card-header">
                                 <h5>6 Months Term Pay Plans Options</h5>
                             </div>
                             <div class="card-body">
-                                    <div class="row">
+                                    <div class="row g-3" style="display:none;">
                                         <div class="col-6 text-md-end border-right">  <input class="form-check-input q1" type="radio" name="q1" value="yes" autocomplete="off" data-bs-original-title="" title="">
                                                 <label class="form-check-label f-w-600" for='q1'>Automatic Recurring Credit Card Payment</label>
                                                
