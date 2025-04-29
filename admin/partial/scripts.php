@@ -25,6 +25,7 @@
 <script src="assets/js/editor/ckeditor/ckeditor.js"></script>
 <script src="assets/js/editor/ckeditor/adapters/jquery.js"></script>
 <script src="assets/js/editor/ckeditor/styles.js"></script>
+<script src="assets/js/select2/select2.full.min.js"></script>
 
 
 

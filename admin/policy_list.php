@@ -1,7 +1,7 @@
 <?php 
 /* Include PHP File */
-if (file_exists(dirname(__FILE__) . '/php/policy_list_php.php')) {
-    require_once(dirname(__FILE__) . '/php/policy_list_php.php');
+if (file_exists(dirname(__FILE__) . '/php/policy_php.php')) {
+    require_once(dirname(__FILE__) . '/php/policy_php.php');
 }
 
 if(empty($customer_id)){
@@ -43,14 +43,11 @@ include('partial/loader.php'); ?>
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align:center;">S.No.</th>
-                                                    <th style="text-align:center;">Driver ID</th>
+                                                    <th style="text-align:center;">Policy ID</th>
                                                     <th>Customer Name</th> 
-                                                    <th>Driver Name</th> 
-                                                    <th style="text-align:center;">DOB</th> 
-                                                    <th>Driver Licence Number</th>  
-                                                    <th>Marital Status</th>
+                                                    <th>Policy Coverage</th> 
+                                                    
                                                     <th style="text-align:center;">Create Date</th> 
-                                                    <th style="text-align:center;">Status</th>
                                                     <th style="text-align:center;">Action</th>
                                                 </tr>
                                             </thead>
@@ -63,23 +60,14 @@ include('partial/loader.php'); ?>
                                                 ?>
                                                 <tr>
                                                     <td align="center"> <?=$i++?> </td>
-                                                    <td align="center"> <?=$get_data["driver_id"]?> </td>
-                                                    <td> <?=$get_data["customer_name"]?> </td>
-                                                    <td> <?=$get_data["first_name"].' '. ($get_data["middle_name"] ? $get_data["middle_name"].' ' : '').$get_data["last_name"]?> </td>
-                                                    <td align="center"> <?=convert_db_date_readable($get_data["date_of_birth"])?> </td>
-                                                    <td> <?=$get_data["driver_licence_no"]?> </td>
-                                                    <td> <?= ucfirst($get_data["marital_status"]) ?> </td>
+                                                    <td align="center"> <?=$get_data["policy_id"]?> </td>
+                                                    <td> <?= $get_data["customer_name"] ?> </td>
+                                                    <td> <?= $get_data["policy_coverage"] ?> </td>
                                                     <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
+                                                    
                                                     <td align="center">
-                                                        <div class="media-body text-end icon-state">
-                                                            <label class="switch">
-                                                                <input type="checkbox" <?=(!empty($get_data["status"])) ? "checked" : "" ; ?> class="status" id="status_<?=($id)?>" onchange="fn_status_change('<?=base64_encode($id)?>');"><span class="switch-state"></span>
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td align="center">
-                                                        <a href="<?=$actual_link?>driver.php?customer_id=<?=base64_encode($customer_id);?>&id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
-                                                        <a href="<?=$actual_link?>driver.php?customer_id=<?=base64_encode($customer_id);?>&id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
+                                                        <a href="<?=$actual_link?>policy.php?customer_id=<?=base64_encode($customer_id);?>&id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
+                                                        <a href="<?=$actual_link?>policy.php?customer_id=<?=base64_encode($customer_id);?>&id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
                                                         <!-- <a href="javascript:void(0);" class="action-icon  m-2"> <i class="mdi mdi-delete"></i></a> -->
                                                     </td>
                                                 </tr>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2025 at 08:25 AM
+-- Generation Time: Apr 30, 2025 at 12:10 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `policy` (
   `id` int(11) NOT NULL,
   `policy_id` int(11) NOT NULL,
-  `prefix_policy_id` int(11) NOT NULL,
+  `prefix_policy_id` varchar(100) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `policy_coverage` varchar(50) NOT NULL,
   `policy_coverage_collision_id` int(11) NOT NULL,
@@ -72,6 +72,31 @@ CREATE TABLE `policy` (
   `created` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `policy`
+--
+
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `policy`
+--
+ALTER TABLE `policy`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `policy`
+--
+ALTER TABLE `policy`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

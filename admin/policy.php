@@ -33,7 +33,7 @@ include('partial/loader.php'); ?>
                             </div>
                             <div class="card-body">
                                 <input type="hidden" name="id" value="<?=base64_encode($id)?>" />
-                                <input type="hidden" name="customer_id" value="<?=base64_encode($customer_id)?>" />
+                                <input type="hidden" name="customer_id" id = "customer_id" value="<?=base64_encode($customer_id)?>" />
                                 <input type="hidden" name="mode" value="<?=$local_mode?>" />
                                     <h6>Customer</h6>
                                     <hr class="mt-4 mb-4">
@@ -65,7 +65,7 @@ include('partial/loader.php'); ?>
                                             <div class="form-input">
                                                 <select class="form-select" name="coverage" id="coverage">
                                                     <option value="">Please Select Coverage</option>
-                                                    <option value="LIBLLITY">Libllity</option>
+                                                    <option value="LIBLLITY" <?= ($coverage == 'LIBLLITY' ) ? 'selected' : '';  ?>>Libllity</option>
                                                     <option value="Full Coverage">Full Coverage</option>
                                                     <option value="Non Owner"> Non Owner</option>
                                                 </select>
@@ -77,10 +77,10 @@ include('partial/loader.php'); ?>
                                                  <select class="form-select" name="coverage_collision" id="coverage_collision">
                                                     <option value="">Please Select Copresnsive / Collision</option>
                                                     <?php
-                                                        $coverage_collision = select("coverage_collision","status=1") ;
-                                                        while($get_collision = fetch($coverage_collision)){
+                                                        $selcoverage_collision = select("coverage_collision","status=1") ;
+                                                        while($get_collision = fetch($selcoverage_collision)){
                                                     ?>
-                                                            <option value="<?= $get_collision["id"] ?>"> 
+                                                            <option value="<?= $get_collision["id"] ?>" <?= ($coverage_collision == $get_collision["id"] ) ? 'selected' : '';  ?> > 
                                                                 <?php echo  $get_collision["minimum_amount"].' / '.$get_collision["maximum_amount"] ; ?></option>
                                                     <?php } ?>
                                                 </select>
@@ -96,7 +96,7 @@ include('partial/loader.php'); ?>
                                                         $coverage_umpd = select("coverage_umpd","status=1") ;
                                                         while($get_coverage_umpd = fetch($coverage_umpd)){
                                                     ?>
-                                                            <option value="<?= $get_coverage_umpd["id"] ?>"> 
+                                                            <option value="<?= $get_coverage_umpd["id"] ?>" <?= ($umpd == $get_coverage_umpd["id"] ) ? 'selected' : '';  ?> > 
                                                                 <?php echo  $get_coverage_umpd["minimum_amount"].' / '.$get_coverage_umpd["maximum_amount"] ; ?></option>
                                                     <?php } ?>
                                                 </select>
@@ -110,10 +110,10 @@ include('partial/loader.php'); ?>
                                                  <select class="form-select" name="towning_coverage" id="towning_coverage">
                                                     <option value="">Please Select Towning coverage</option>
                                                     <?php
-                                                        $towning_coverage = select("coverage_towing","status=1") ;
-                                                        while($get_towning_coverage = fetch($towning_coverage)){
+                                                        $seltowning_coverage = select("coverage_towing","status=1") ;
+                                                        while($get_towning_coverage = fetch($seltowning_coverage)){
                                                     ?>
-                                                            <option value="<?= $get_towning_coverage["id"] ?>"> 
+                                                            <option value="<?= $get_towning_coverage["id"] ?>" <?= ($towning_coverage == $get_towning_coverage["id"] ) ? 'selected' : '';  ?> > 
                                                                 <?php echo  $get_towning_coverage["minimum_amount"].' / '.$get_towning_coverage["maximum_amount"] ; ?></option>
                                                     <?php } ?>
                                                 </select>
@@ -125,10 +125,10 @@ include('partial/loader.php'); ?>
                                                 <select class="form-select" name="coverage_rental" id="coverage_rental">
                                                     <option value="">Please Select Rental Reimbursment</option>
                                                     <?php
-                                                        $coverage_rental = select("coverage_rental","status=1");
-                                                        while($get_coverage_rental = fetch($coverage_rental)){
+                                                        $selcoverage_rental = select("coverage_rental","status=1");
+                                                        while($get_coverage_rental = fetch($selcoverage_rental)){
                                                     ?>
-                                                        <option value="<?=$get_coverage_rental["id"];?>"><?php echo  $get_coverage_rental["minimum_amount"].' / '.$get_coverage_rental["maximum_amount"] ; ?></option>
+                                                        <option value="<?=$get_coverage_rental["id"];?>" <?= ($coverage_rental == $get_coverage_rental["id"] ) ? 'selected' : '';  ?> ><?php echo  $get_coverage_rental["minimum_amount"].' / '.$get_coverage_rental["maximum_amount"] ; ?></option>
                                                     <?php }?>
                                                 </select>
                                             </div>
@@ -138,11 +138,11 @@ include('partial/loader.php'); ?>
                                             <div class="form-input">
                                                  <select class="form-select" name="coverage_deductible" id="coverage_deductible">
                                                     <option value="">Please Select Coverage Deductible</option>
-                                                    <?php
-                                                        $coverage_deductible = select("coverage_deductible","status=1") ;
-                                                        while($get_coverage_deductible = fetch($coverage_deductible)){
+                                                    <?php 
+                                                        $selcoverage_deductible = select("coverage_deductible","status=1") ;
+                                                        while($get_coverage_deductible = fetch($selcoverage_deductible)){
                                                     ?>
-                                                            <option value="<?= $get_coverage_deductible["id"] ?>"> 
+                                                            <option value="<?= $get_coverage_deductible["id"] ?>" <?= ($coverage_deductible == $get_coverage_deductible["id"] ) ? 'selected' : '';  ?> > 
                                                                 <?php echo  $get_coverage_deductible["minimum_amount"].' / '.$get_coverage_deductible["maximum_amount"] ; ?></option>
                                                     <?php } ?>
                                                 </select>
@@ -159,11 +159,11 @@ include('partial/loader.php'); ?>
                                         <div class="col">
                                             <div class="mb-3 m-t-15 custom-radio-ml">
                                                 <div class="radio-primary">
-                                                    <input class="form-check-input vehUsed" type="radio" id =  "is_veh_used_business" name="is_veh_used_business" value="yes">
+                                                    <input class="form-check-input vehUsed" type="radio" id =  "is_veh_used_business" name="is_veh_used_business"  <?= ($is_veh_used_business == 1 ) ? 'checked' : '';  ?>  value="1">
                                                     <label class="form-check-label">Yes</label>
                                                 </div>
                                                 <div class="radio-primary">
-                                                    <input class="form-check-input vehUsed" type="radio"  id =  "is_veh_used_business"  name="is_veh_used_business" value="no" checked>
+                                                    <input class="form-check-input vehUsed" type="radio"  id =  "is_veh_used_business"  name="is_veh_used_business" value="0" <?= ($is_veh_used_business == 0 ) ? 'checked' : '';  ?> >
                                                     <label class="form-check-label">No</label>
                                                 </div>
                                             </div>
@@ -178,17 +178,17 @@ include('partial/loader.php'); ?>
                                                 
                                                 </label>
                             
-                                                <label class="form-check-label" for="is_physical_damage"><input class="form-check-input" id="is_physical_damage" type="checkbox">  Physical Damage Only<span class="digits"></span></label>
+                                                <label class="form-check-label" for="is_physical_damage"><input class="form-check-input" id="is_physical_damage" type="checkbox" <?= ($is_physical_damage == 1 ) ? 'checked' : '';  ?> >  Physical Damage Only<span class="digits"></span></label>
                                             </div>
                                             
                                             <div class="form-input">
                                                  <select class="form-select" name="policy_bi" id="policy_bi">
                                                     <option value="0">Please Select BI</option>
                                                     <?php
-                                                        $coverage_collision = select("policy_bi","status=1") ;
-                                                        while($get_collision = fetch($coverage_collision)){
+                                                        $selpolicy_bi = select("policy_bi","status=1") ;
+                                                        while($get_collision = fetch($selpolicy_bi)){
                                                     ?>
-                                                            <option value="<?= $get_collision["id"] ?>"> 
+                                                            <option value="<?= $get_collision["id"] ?>" <?= ($policy_bi == $get_collision["id"] ) ? 'selected' : '';  ?>  > 
                                                                 <?php echo  $get_collision["minimum_amount"].' / '.$get_collision["maximum_amount"] ; ?></option>
                                                     <?php } ?>
                                                 </select>
@@ -201,10 +201,10 @@ include('partial/loader.php'); ?>
                                                  <select class="form-select" name="policy_pd" id="policy_pd">
                                                     <option value="0">Please Select PD</option>
                                                     <?php
-                                                        $coverage_umpd = select("policy_pd","status=1") ;
-                                                        while($get_coverage_umpd = fetch($coverage_umpd)){
+                                                        $selpolicy_pd = select("policy_pd","status=1") ;
+                                                        while($get_coverage_umpd = fetch($selpolicy_pd)){
                                                     ?>
-                                                            <option value="<?= $get_coverage_umpd["id"] ?>"> 
+                                                            <option value="<?= $get_coverage_umpd["id"] ?>" <?= ($policy_pd == $get_coverage_umpd["id"] ) ? 'selected' : '';  ?> > 
                                                                 <?php echo  $get_coverage_umpd["minimum_amount"].' / '.$get_coverage_umpd["maximum_amount"] ; ?></option>
                                                     <?php } ?>
                                                 </select>
@@ -216,10 +216,10 @@ include('partial/loader.php'); ?>
                                                 <select class="form-select" name="policy_umd" id="policy_umd">
                                                     <option value="0">Please Select UMB</option>
                                                     <?php
-                                                        $coverage_umpd = select("policy_umd","status=1") ;
-                                                        while($get_coverage_umpd = fetch($coverage_umpd)){
+                                                        $selpolicy_umd = select("policy_umd","status=1") ;
+                                                        while($get_coverage_umpd = fetch($selpolicy_umd)){
                                                     ?>
-                                                            <option value="<?= $get_coverage_umpd["id"] ?>"> 
+                                                            <option value="<?= $get_coverage_umpd["id"] ?>"  <?= ($policy_umd == $get_coverage_umpd["id"] ) ? 'selected' : '';  ?> > 
                                                                 <?php echo  $get_coverage_umpd["minimum_amount"].' / '.$get_coverage_umpd["maximum_amount"] ; ?></option>
                                                     <?php } ?>
                                                 </select>
@@ -234,32 +234,58 @@ include('partial/loader.php'); ?>
                                                  <select class="form-select" name="policy_medical" id="policy_medical">
                                                     <option value="0">Please Select Medical</option>
                                                     <?php
-                                                        $coverage_umpd = select("policy_medical","status=1") ;
-                                                        while($get_coverage_umpd = fetch($coverage_umpd)){
+                                                        $selpolicy_medical = select("policy_medical","status=1") ;
+                                                        while($get_coverage_umpd = fetch($selpolicy_medical)){
                                                     ?>
-                                                            <option value="<?= $get_coverage_umpd["id"] ?>"> 
+                                                            <option value="<?= $get_coverage_umpd["id"] ?>"  <?= ($policy_medical == $get_coverage_umpd["id"] ) ? 'selected' : '';  ?> > 
                                                                 <?php echo  $get_coverage_umpd["minimum_amount"].' / '.$get_coverage_umpd["maximum_amount"] ; ?></option>
                                                     <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-4 mb-3">
+                                            <input type="hidden" value="<?= $vehicle  ?>" id="vehical_list"> 
+                                            <input type="hidden" value="<?= $driver  ?>"  id="driver_list"> 
                                             <label class="form-label" for="vehicle">Vehicle's<span class="text-danger">*</span></label>
                                             <div class="form-input">
-                                                 <select class="form-select" name="vehicle" id="vehicle">
-                                                    <option value="0">Please Select Vehicle's</option>
+                                                 <select class="form-select" name="vehicle[]" id="vehicle">
+                                                 
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label class="form-label" for="driver">Driver's<span class="text-danger">*</span></label>
+                                            <div class="form-input">
+                                                 <select class="form-select" name="driver[]" id="driver">
                                                     <?php
-                                                        $coverage_umpd = select("vehicle INNER JOIN make ON make.id = vehicle.vehicle_make_id inner join model on model.id = vehicle.vehicle_model_id","customer_id= ".$customer_id."") ;
+                                                        $coverage_umpd = select("driver","customer_id= ".$customer_id."") ;
                                                         while($get_coverage_umpd = fetch($coverage_umpd)){
                                                     ?>
                                                             <option value="<?= $get_coverage_umpd["id"] ?>"> 
-                                                                <?php echo  $get_coverage_umpd["make_name"].' - '.$get_coverage_umpd["model_name"] . ' - ', $get_coverage_umpd["vehicle_no"] ; ?></option>
+                                                                <?php echo  $get_coverage_umpd["first_name"].' '.$get_coverage_umpd["last_name"]; ?></option>
                                                     <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
                                         
                                     </div>
+                                    <h6 class="mt-4 veh_list" style="display:none;">Vehical's</h6>
+                                    <hr class="mt-4 mb-4 veh_list" style="display:none;">
+                                    <div class="row g-3 veh_list table-responsive signal-table" style="display:none;">
+                                        <table class="table table-hover" id="vehicleTable">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                <th scope="col">Year</th>
+                                                <th scope="col">Make</th>
+                                                <th scope="col">Model</th>
+                                                <th scope="col">VIN Number</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody> 
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>  
                                     <h6 class="mt-4">Roadside Assistance</h6>
                                     <hr class="mt-4 mb-4">
                                     <div class="row g-3">
@@ -269,10 +295,10 @@ include('partial/loader.php'); ?>
                                         <div class="col">
                                             <div class="mb-3 m-t-15 custom-radio-ml">
                                                 
-                                                    <input class="form-check-input roasass" type="radio" name="roasass" value="yes">
+                                                    <input class="form-check-input roasass" <?= ($roasass == 1 ) ? 'checked' : '';  ?>   type="radio" name="roasass" value="1">
                                                     <label class="form-check-label">Yes</label>
                                                
-                                                    <input class="form-check-input roasass" type="radio" name="roasass" value="no">
+                                                    <input class="form-check-input roasass" <?= ($roasass == 0 ) ? 'checked' : '';  ?>  type="radio" name="roasass" value="0">
                                                     <label class="form-check-label">No</label>
                                                 
                                             </div>
@@ -285,10 +311,10 @@ include('partial/loader.php'); ?>
                                                 1. Does any driver have any driving restrictions?
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <input class="form-check-input q1" type="radio" name="is_driver_res" value="yes">
+                                                <input class="form-check-input q1" type="radio" <?= ($is_driver_res == 1) ? 'checked' : '';  ?> name="is_driver_res" value="1">
                                                 <label class="form-check-label">Yes</label>
                                                
-                                                    <input class="form-check-input q1" type="radio" name="is_driver_res" value="no" checked>
+                                                    <input class="form-check-input q1" type="radio" name="is_driver_res" value="0" <?= ($is_driver_res == 0) ? 'checked' : '';  ?>>
                                                 <label class="form-check-label">No</label>
                                                 
                                             </div>
@@ -299,10 +325,10 @@ include('partial/loader.php'); ?>
                                                 2. Are any vehicles listed on this application titled under salvage or flood?
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <input class="form-check-input q2" type="radio" name="is_vehical_listed" value="yes">
+                                                <input class="form-check-input q2" <?= ($is_vehical_listed == 1) ? 'checked' : '';  ?> type="radio" name="is_vehical_listed" value="1">
                                                 <label class="form-check-label">Yes</label>
                                                
-                                                    <input class="form-check-input q2" type="radio" name="is_vehical_listed" value="no" checked>
+                                                    <input class="form-check-input q2" type="radio" name="is_vehical_listed" value="0" <?= ($is_vehical_listed == 0) ? 'checked' : '';  ?>>
                                                 <label class="form-check-label">No</label>
                                                 
                                             </div>
@@ -313,10 +339,10 @@ include('partial/loader.php'); ?>
                                                 3. Does the applicant own any other vehicles not listed on application?
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <input class="form-check-input roasass" type="radio" name="is_applicant_other_veh" value="yes">
+                                                <input class="form-check-input roasass" type="radio" <?= ($is_applicant_other_veh == 1) ? 'checked' : '';  ?> name="is_applicant_other_veh" value="1">
                                                 <label class="form-check-label">Yes</label>
                                                
-                                                    <input class="form-check-input roasass" type="radio" name="is_applicant_other_veh" value="no" checked>
+                                                    <input class="form-check-input roasass" type="radio" name="is_applicant_other_veh" value="0" <?= ($is_applicant_other_veh == 0) ? 'checked' : '';  ?>>
                                                 <label class="form-check-label">No</label>
                                                 
                                             </div>
@@ -327,10 +353,10 @@ include('partial/loader.php'); ?>
                                                 4. Is the applicant the sole registered owner of the vehicle?
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <input class="form-check-input roasass" type="radio" name="is_applicant_sole_registered" value="yes">
+                                                <input class="form-check-input roasass" type="radio" name="is_applicant_sole_registered" value="1" <?= ($is_applicant_sole_registered == 1) ? 'checked' : '';  ?>>
                                                 <label class="form-check-label">Yes</label>
                                                
-                                                    <input class="form-check-input roasass" type="radio" name="is_applicant_sole_registered" value="no" checked>
+                                                    <input class="form-check-input roasass" type="radio" name="is_applicant_sole_registered" value="0" <?= ($is_applicant_sole_registered == 0) ? 'checked' : '';  ?>>
                                                 <label class="form-check-label">No</label>
                                                 
                                             </div>
@@ -341,10 +367,10 @@ include('partial/loader.php'); ?>
                                                 5. Are any vehicles operated by any for commercial business use?
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <input class="form-check-input roasass" type="radio" name="is_veh_used_business " value="yes">
+                                                <input class="form-check-input roasass" type="radio" name="is_veh_used_business " value="1" <?= ($is_veh_used_business == 1) ? 'checked' : '';  ?>>
                                                 <label class="form-check-label">Yes</label>
                                                
-                                                    <input class="form-check-input roasass" type="radio" name="is_veh_used_business " value="no" checked>
+                                                    <input class="form-check-input roasass" type="radio" name="is_veh_used_business " value="0" <?= ($is_veh_used_business == 0) ? 'checked' : '';  ?>>
                                                 <label class="form-check-label">No</label>
                                                 
                                             </div>
@@ -355,10 +381,10 @@ include('partial/loader.php'); ?>
                                                 6. Are any vehicles listed used for ride share at any time?
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <input class="form-check-input roasass" type="radio" name="is_veh_listed_ride" value="yes">
+                                                <input class="form-check-input roasass" type="radio" name="is_veh_listed_ride" value="1" <?= ($is_veh_listed_ride == 1) ? 'checked' : '';  ?>>
                                                 <label class="form-check-label">Yes</label>
                                                
-                                                    <input class="form-check-input roasass" type="radio" name="is_veh_listed_ride" value="no" checked>
+                                                    <input class="form-check-input roasass" type="radio" name="is_veh_listed_ride" value="0" <?= ($is_veh_listed_ride == 0) ? 'checked' : '';  ?>>
                                                 <label class="form-check-label">No</label>
                                                 
                                             </div>
@@ -369,10 +395,10 @@ include('partial/loader.php'); ?>
                                                 7. Are any vehicles listed on this application used for regular frequent trips beyond 50 miles radius of the given address?
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <input class="form-check-input roasass" type="radio" name="is_veh_listed_application_used" value="yes">
+                                                <input class="form-check-input roasass" type="radio" name="is_veh_listed_application_used" value="1"  <?= ($is_veh_listed_application_used == 1) ? 'checked' : '';  ?>>
                                                 <label class="form-check-label">Yes</label>
                                                
-                                                    <input class="form-check-input roasass" type="radio" name="is_veh_listed_application_used" value="no" checked>
+                                                    <input class="form-check-input roasass" type="radio" name="is_veh_listed_application_used" value="0"  <?= ($is_veh_listed_application_used == 0) ? 'checked' : '';  ?>>
                                                 <label class="form-check-label">No</label>
                                                 
                                             </div>
@@ -383,10 +409,10 @@ include('partial/loader.php'); ?>
                                                 8. Are any vehicle listed on this application garaged outside of IL for more than 2 months of the year?
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <input class="form-check-input roasass" type="radio" name="is_veh_listed_garaged" value="yes">
+                                                <input class="form-check-input roasass" type="radio" name="is_veh_listed_garaged" value="1"  <?= ($is_veh_listed_garaged == 1) ? 'checked' : '';  ?> >
                                                 <label class="form-check-label">Yes</label>
                                                
-                                                    <input class="form-check-input roasass" type="radio" name="is_veh_listed_garaged" value="no" checked>
+                                                    <input class="form-check-input roasass" type="radio" name="is_veh_listed_garaged" value="0"  <?= ($is_veh_listed_garaged == 0) ? 'checked' : '';  ?> >
                                                 <label class="form-check-label">No</label>
                                                 
                                             </div>
@@ -413,14 +439,14 @@ include('partial/loader.php'); ?>
                                     <div class="row g-3 mb-4">
                                             <label class="col-sm-7 col-form-label" for="initials">Please sign the application by entering applicant's initials:<span class="text-danger">*</span></label>
                                             <div class="col-sm-5"> 
-                                                <input class="form-control" id="initials" name="initials" type="text" value="" placeholder="Initials" required="">
+                                                <input class="form-control" id="initials" name="initials" type="text" value="<?= $initials ?>" placeholder="Initials" required="">
                                                 <div class="invalid-feedback">Please fill a applicant's initials.</div>
                                             </div>
                                     </div> 
                                     <div class="row g-3 mb-4">
                                             <label class="col-sm-7 col-form-label" for="mother_maident_name">Please sign the application by entering the applicant’s mother’s maiden name:<span class="text-danger">*</span></label>
                                             <div class="col-sm-5"> 
-                                                <input class="form-control" id="mother_maident_name" name="mother_maident_name" type="text" value="" placeholder="Mother’s Maiden Name" required="">
+                                                <input class="form-control" id="mother_maident_name" name="mother_maident_name" type="text" value="<?= $mother_maident_name ?>" placeholder="Mother’s Maiden Name" required="">
                                                 <div class="invalid-feedback">Please fill a applicant's Mother’s Maiden Name.</div>
                                             </div>
                                     </div>   
