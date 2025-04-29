@@ -75,6 +75,10 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
 }
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
+    if($login_role != "superadmin"){
+        $filter_qry .= " AND agent_id = '$login_id' ";
+    }
+
     $select_query = "SELECT id, customer_id, name, email, mobile, date_of_birth, zip_code, created, status FROM customer WHERE 1=1 ".$filter_qry;
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
@@ -149,7 +153,7 @@ switch ($mode) {
         mysqli_autocommit($conn,FALSE);
  
 
-        $insert_query = mysqli_query($conn, "INSERT INTO customer (customer_id, prefix_customer_id, name, email, mobile, date_of_birth, zip_code, address_1, address_2) VALUES ('$customer_id', '$prefix_customer_id', '$name',  '$email','$mobile_no','$date_of_birth','$zip_code', '$address_1','$address_2' ) ");
+        $insert_query = mysqli_query($conn, "INSERT INTO customer (customer_id, prefix_customer_id, agent_id, name, email, mobile, date_of_birth, zip_code, address_1, address_2) VALUES ('$customer_id', '$prefix_customer_id', '$login_id', '$name',  '$email','$mobile_no','$date_of_birth','$zip_code', '$address_1','$address_2' ) ");
 
         $last_inserted_id = mysqli_insert_id($conn);
 

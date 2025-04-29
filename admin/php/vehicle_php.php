@@ -53,6 +53,7 @@ switch ($mode) {
         $vehicle_id = get_max_id("vehicle", "vehicle_id");
         $prefix_vehicle_id = "VEHICLE_" . $vehicle_id;
         $customer_name = get_value("customer", "name", "where customer_id = '$customer_id'");
+        $select_vehicle = mysqli_query($conn, "SELECT id FROM vehicle WHERE customer_id = '$customer_id' " );
     break;
 
     case "INSERT":

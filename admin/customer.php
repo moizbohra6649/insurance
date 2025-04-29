@@ -84,9 +84,11 @@ include('partial/loader.php'); ?>
                                         <div class="card-body btn-showcase" style="text-align: center;">
                                             <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
                                             <button id="submit_btn_customer" class="btn btn-primary submit_btn" type="submit" value="customer" data-btn_text="Submit">Submit</button>
-                                            <button id="submit_btn_vehicle" class="btn btn-primary submit_btn" type="submit" value="vehicle" data-btn_text="Submit & Add Vehicle">Submit & Add Vehicle</button>
-                                            <button id="submit_btn_driver" class="btn btn-primary submit_btn" type="submit" value="driver" data-btn_text="Submit & Add Driver">Submit & Add Driver</button>
-                                            <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="policy" data-btn_text="Submit & Add Policy">Submit & Add Policy</button>
+                                            <?php if($mode != "EDIT"){ ?>
+                                                <button id="submit_btn_vehicle" class="btn btn-primary submit_btn" type="submit" value="vehicle" data-btn_text="Submit & Add Vehicle">Submit & Add Vehicle</button>
+                                                <button id="submit_btn_driver" class="btn btn-primary submit_btn" type="submit" value="driver" data-btn_text="Submit & Add Driver">Submit & Add Driver</button>
+                                                <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="policy" data-btn_text="Submit & Add Policy">Submit & Add Policy</button>
+                                            <?php } ?> 
                                         </div>
                                     <?php } ?> 
                                 </form>

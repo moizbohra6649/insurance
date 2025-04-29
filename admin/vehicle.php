@@ -24,6 +24,12 @@ include('partial/loader.php'); ?>
             <?php include('partial/breadcrumb.php') ?>
             <!-- Container-fluid starts-->
             <div class="container-fluid">
+                <?php if(mysqli_num_rows($select_vehicle) >= 5){ ?>
+                    <div class="alert alert-danger inverse alert-dismissible fade show" role="alert"><i class="icon-thumb-down"></i>
+                        <p>This customer already has 5 vehicles added. You can no longer add vehicles for this customer.</p>
+                        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php } ?>
                 <div class="row starter-main">
                     <div class="col-sm-12">
                         <div class="card">
@@ -148,8 +154,10 @@ include('partial/loader.php'); ?>
                                         <div class="card-body btn-showcase" style="text-align: center;">
                                             <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
                                             <button id="submit_btn_vehicle" class="btn btn-primary submit_btn" type="submit" value="vehicle" data-btn_text="Submit">Submit</button>
-                                            <button id="submit_btn_driver" class="btn btn-primary submit_btn" type="submit" value="driver" data-btn_text="Submit & Add Driver">Submit & Add Driver</button>
-                                            <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="policy" data-btn_text="Submit & Add Policy">Submit & Add Policy</button>
+                                            <?php if($mode != "EDIT"){ ?>
+                                                <button id="submit_btn_driver" class="btn btn-primary submit_btn" type="submit" value="driver" data-btn_text="Submit & Add Driver">Submit & Add Driver</button>
+                                                <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="policy" data-btn_text="Submit & Add Policy">Submit & Add Policy</button>
+                                            <?php } ?>
                                         </div>
                                     <?php } ?>
                                 </form>

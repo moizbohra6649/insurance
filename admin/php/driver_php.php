@@ -83,6 +83,7 @@ switch ($mode) {
         $driver_id = get_max_id("driver", "driver_id");
         $prefix_driver_id = "DRIVER_" . $driver_id;
         $customer_name = get_value("customer", "name", "where customer_id = '$customer_id'");
+        $select_driver = mysqli_query($conn, "SELECT id FROM driver WHERE customer_id = '$customer_id' " );
     break;
 
     case "INSERT":
