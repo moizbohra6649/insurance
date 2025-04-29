@@ -41,9 +41,8 @@ $filter_user_id    = (isset($_REQUEST["filter_user_id"])) ? $_REQUEST["filter_us
 $only_staff        = (isset($_REQUEST["only_staff"])) ? $_REQUEST["only_staff"] : false;
 
 $query_count = 0;
+$filter_qry = "";
 if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
-
-    $select_query = "SELECT id, user_id, name, email, mobile, profile_image, created, role, status FROM users WHERE 1=1 AND deleted = 0 AND user_id != $login_id AND role != '$super_admin_role' ";
 
     if(!empty($from_date)){
         if(empty($to_date)){
@@ -58,25 +57,28 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
     }
     
     if(!empty($from_date) && !empty($to_date)){
-        $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
+        $filter_qry .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
     }
 
     if(!empty($filter_user_id)){
-        $select_query .= " AND user_id = $filter_user_id ";
+        $filter_qry .= " AND user_id = $filter_user_id ";
     }
 
     if(!empty($name)){
-        $select_query .= " AND name LIKE '%$name%' ";
+        $filter_qry .= " AND name LIKE '%$name%' ";
     }
 
     if(!empty($mobile_no)){
-        $select_query .= " AND mobile LIKE '%$mobile_no%' ";
+        $filter_qry .= " AND mobile LIKE '%$mobile_no%' ";
     }
 
     // if( ($only_staff == true) || (strtolower($login_role) != strtolower($super_admin_role)) ){
-    //     $select_query .= " AND role != 1 ";
+    //     $filter_qry .= " AND role != 1 ";
     // }
+}
 
+if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
+    $select_query = "SELECT id, user_id, name, email, mobile, profile_image, created, role, status FROM users WHERE 1=1 AND deleted = 0 AND user_id != $login_id AND role != '$super_admin_role' ".$filter_qry;
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
 }

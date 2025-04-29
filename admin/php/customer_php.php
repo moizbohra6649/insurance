@@ -38,9 +38,8 @@ $to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_
 $filter_customer_id    = (isset($_REQUEST["filter_customer_id"])) ? $_REQUEST["filter_customer_id"] : "";
 
 $query_count = 0;
+$filter_qry = "";
 if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
-
-    $select_query = "SELECT id, customer_id, name, email, mobile, date_of_birth, zip_code, created, status FROM customer WHERE 1=1 ";
 
     if(!empty($from_date)){
         if(empty($to_date)){
@@ -55,25 +54,28 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
     }
     
     if(!empty($from_date) && !empty($to_date)){
-        $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
+        $filter_qry .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
     }
 
     if(!empty($filter_customer_id)){
-        $select_query .= " AND customer_id = $filter_customer_id ";
+        $filter_qry .= " AND customer_id = $filter_customer_id ";
     }
 
     if(!empty($name)){
-        $select_query .= " AND name LIKE '%$name%' ";
+        $filter_qry .= " AND name LIKE '%$name%' ";
     }
 
     if(!empty($mobile_no)){
-        $select_query .= " AND mobile LIKE '%$mobile_no%' ";
+        $filter_qry .= " AND mobile LIKE '%$mobile_no%' ";
     }
 
     // if( ($only_staff == true) || (strtolower($login_role) != strtolower($super_admin_role)) ){
-    //     $select_query .= " AND role != 1 ";
+    //     $filter_qry .= " AND role != 1 ";
     // }
+}
 
+if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
+    $select_query = "SELECT id, customer_id, name, email, mobile, date_of_birth, zip_code, created, status FROM customer WHERE 1=1 ".$filter_qry;
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
 }
@@ -156,8 +158,9 @@ switch ($mode) {
             $data["msg"] = "Commit transaction failed";
             $data["status"] = "error";
         }else if (!empty($insert_query)) {
-            $data["msg"] = "Vendor inserted successfully.";
+            $data["msg"] = "Customer inserted successfully.";
             $data["status"] = "success";
+            $data["id"] = base64_encode($last_inserted_id);
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";
@@ -272,8 +275,9 @@ switch ($mode) {
             $data["msg"] = "Commit transaction failed";
             $data["status"] = "error";
         }else if (!empty($update_vendor)) {
-            $data["msg"] = "Vendor updated successfully.";
+            $data["msg"] = "Customer updated successfully.";
             $data["status"] = "success";
+            $data["id"] = base64_encode($id);
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";

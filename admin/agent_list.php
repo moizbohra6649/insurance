@@ -39,7 +39,7 @@ include('partial/loader.php'); ?>
                                 <div class="tab-content">
                                     <div class="tab-pane show active" id="form-row-preview">
                                         <form method="GET" id="agent_list">
-                                            <div class="row g-2">
+                                            <div class="row">
                                                 <div class="mb-3 col-lg-3">
                                                     <label class="form-label">From Date</label>
                                                     <input type="text" id="daterange" data-theme="dark" class="form-control" value="<?=convert_db_date_readable($from_date)?>-<?=convert_db_date_readable($to_date)?>" data-range-from="<?=$from_date?>" data-range-to="<?=$to_date?>">
@@ -56,7 +56,7 @@ include('partial/loader.php'); ?>
                                                 </div>
                                             </div>
 
-                                            <div class="row g-2">
+                                            <div class="row">
                                                 <div class="mb-3 col-md-6">
                                                     <label for="name" class="form-label">Agent Name</label>
                                                     <input type="text" class="form-control" id="name" name="name" placeholder="Agent Name" value="<?=$name?>">
@@ -67,7 +67,7 @@ include('partial/loader.php'); ?>
                                                 </div>
                                             </div>
 
-                                            <div class="row g-2 justify-content-center">
+                                            <div class="row justify-content-center">
                                                 <div class="col-auto">
                                                     <button type="submit" name="search_list" value="true" onclick="return fn_search_filter();" class="btn btn-primary">Search</button>
                                                 </div>
@@ -75,7 +75,7 @@ include('partial/loader.php'); ?>
                                                     <a href="<?=$actual_link?>" class="btn btn-primary">Cancel</a>
                                                 </div>
                                             </div>
-                                            <?php if(isset($_REQUEST["search_list"]) && $query_count == 0){ ?>
+                                            <?php if($query_count == 0){ //isset($_REQUEST["search_list"]) && ?>
                                                 <p class="text-center mb-0 text-danger" style="margin-top: 20px !important;"><strong>No result found.</strong></p>
                                             <?php } ?>
                                         </form>

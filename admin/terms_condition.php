@@ -25,7 +25,7 @@ include('partial/loader.php'); ?>
                         <div class="card">
                             <div class="card-body">
                                 <form id="terms_condition_form" method="POST" class="needs-validation"  enctype="multipart/form-data"> 
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label" for="title">Title<span class="text-danger">*</span></label>
                                             <input class="form-control" id="title" name="title" type="text" value="<?=$termtitle?>" placeholder="Title" required="">
@@ -38,7 +38,7 @@ include('partial/loader.php'); ?>
                                             <div class="invalid-feedback">Please fill a Sub Title.</div>
                                         </div>  
                                     </div> 
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label" for="card_heading">Card Heading<span class="text-danger">*</span></label>
                                             <input class="form-control" id="card_heading" name="card_heading" type="text" value="<?=$card_heading?>"  placeholder="Card Heading" required="">
@@ -46,7 +46,7 @@ include('partial/loader.php'); ?>
                                             
                                         </div>  
                                     </div> 
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-12 mb-3">
                                             <label class="form-label" for="description">Description<span class="text-danger">*</span></label>
                                             <textarea id="description" name="description" cols="10" rows="2"><?=$description?></textarea>
@@ -54,7 +54,10 @@ include('partial/loader.php'); ?>
                                             
                                         </div>  
                                     </div> 
-                                    <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        <div class="card-body btn-showcase" style="text-align: center;">
+                                            <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
+                                            <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        </div>
                                    
                                 </form>
                             </div>

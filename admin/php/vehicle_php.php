@@ -72,8 +72,8 @@ switch ($mode) {
             $error_arr[] = "Customer does not exists.<br/>";
         }
 
-        if(mysqli_num_rows($select_vehicle) >= 2){
-            $error_arr[] = "Customer have already two Vehicle exists.<br/>";
+        if(mysqli_num_rows($select_vehicle) >= 5){
+            $error_arr[] = "Customer have already five Vehicle exists.<br/>";
         }
 
         if (empty($_POST['vehicle_no'])) {
@@ -134,6 +134,7 @@ switch ($mode) {
         }else if (!empty($insert_query)) {
             $data["msg"] = "Vehicle inserted successfully.";
             $data["status"] = "success";
+            $data["id"] = base64_encode($last_inserted_id);
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";
@@ -248,6 +249,7 @@ switch ($mode) {
         }else if (!empty($update_query)) {
             $data["msg"] = "Vehicle updated successfully.";
             $data["status"] = "success";
+            $data["id"] = base64_encode($id);
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";

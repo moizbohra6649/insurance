@@ -28,7 +28,7 @@ include('partial/loader.php'); ?>
                                     <input type="hidden" name="id" value="<?=base64_encode($id)?>" />
                                     <input type="hidden" name="mode" value="<?=$local_mode?>" />
                                 
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="minimum_amount">Minimum Amount <span class="text-danger">*</span></label>
                                             <input class="form-control allownumber" id="minimum_amount" name="minimum_amount" type="text" value="<?=$minimum_amount?>" placeholder="Minimum Amount" required="">
@@ -42,7 +42,10 @@ include('partial/loader.php'); ?>
                                         </div>  
                                     </div>
                                     <?php if($mode != "VIEW"){ ?>
-                                    <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        <div class="card-body btn-showcase" style="text-align: center;">
+                                            <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
+                                            <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        </div>
                                     <?php } ?> 
                                 </form>
                             </div>

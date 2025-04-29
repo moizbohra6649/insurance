@@ -18,7 +18,11 @@ function fn_getting_vehicle_model(vehicle_make, vehicle_model){
 }
 
 /* ==================================================START STAFF FORM JS CODE================================================== */
-$('#vehicle_form').on('submit', (function(e) {
+$('.submit_btn').on('click', (function(e) {
+
+    var btn_value = $(this).val();
+    var btn_text = $(this).data('btn_text');
+
     e.preventDefault();
 
     var error_arr = [];
@@ -53,7 +57,7 @@ $('#vehicle_form').on('submit', (function(e) {
         error_arr.push("Please fill a Registration State Vehicle.<br/>");
     }
 
-    if($("#vehicle_category").val() != "2"){
+    if($('input[name="vehicle_category"]:checked').val() != "2"){
         if($("#veh_owner_company_name").val() == ""){
             error_arr.push("Please fill a Vehicle Owner Company Name.<br/>");
         }
@@ -65,7 +69,9 @@ $('#vehicle_form').on('submit', (function(e) {
         return false;
     }
 
-    var formData = new FormData(this);
+    var formElement = $("#vehicle_form")[0];
+    var formData = fn_from_data(formElement);
+
     formData.append('form_request', 'true');
     $.ajax({
         type: 'POST',
@@ -76,8 +82,8 @@ $('#vehicle_form').on('submit', (function(e) {
         contentType: false,
         processData: false,
         beforeSend: function() {
-            $("#submit_btn").html('Validating...');
-            $("#submit_btn").attr('disabled', 'disabled');
+            $("#submit_btn_" + btn_value).html('Validating...');
+            $(".submit_btn").attr('disabled', 'disabled');
         },
         success: function(data) {
             //For Alert Popups
@@ -87,16 +93,24 @@ $('#vehicle_form').on('submit', (function(e) {
             
             if(data.status == "success"){
                 var url = `vehicle_list.php?customer_id=<?=base64_encode($customer_id);?>`;
+                if(data.id != ""){
+                    if(btn_value == "driver"){
+                        var url = `driver.php?customer_id=${data.id}`;
+                    }else if(btn_value == "policy"){
+                        var url = `policy.php?customer_id=${data.id}`;
+                    }
+                }
+
                 move(`<?=$actual_link?>${url}`);
                 // setTimeout(function() {  }, 1000);
             }else{
-                $("#submit_btn").html('Submit');
-                $("#submit_btn").removeAttr('disabled');
+                $("#submit_btn_" + btn_value).html(btn_text);
+                $(".submit_btn").removeAttr('disabled');
             }
         },
         error: function(data) {
-            $("#submit_btn").html('Submit');
-            $("#submit_btn").removeAttr('disabled');
+            $("#submit_btn_" + btn_value).html(btn_text);
+            $(".submit_btn").removeAttr('disabled');
             console.log("error");
             console.log(data);
         }

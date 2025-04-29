@@ -37,7 +37,7 @@ include('partial/loader.php'); ?>
                                 <input type="hidden" name="mode" value="<?=$local_mode?>" />
                                     <h6>Customer</h6>
                                     <hr class="mt-4 mb-4">
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="customer_name">Customer Name</label>
                                             <div class="form-input">
@@ -59,7 +59,7 @@ include('partial/loader.php'); ?>
                                     </div>
                                     <h6 class="mt-4">Coverage</h6>
                                     <hr class="mt-4 mb-4">
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="coverage">Coverage<span class="text-danger">*</span></label>
                                             <div class="form-input">
@@ -103,7 +103,7 @@ include('partial/loader.php'); ?>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="towning_coverage">Towning coverage <span class="text-danger">*</span></label>
                                             <div class="form-input">
@@ -152,7 +152,7 @@ include('partial/loader.php'); ?>
                                     
                                     <h6 class="mt-4">Vehicle Usage Information</h6>
                                     <hr class="mt-4 mb-4">
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-sm-12">
                                             <h6 class="mb-0">Is this vehicle used for business / commercial use?</h6>
                                         </div>
@@ -171,7 +171,7 @@ include('partial/loader.php'); ?>
                                     </div>
                                     <h6 class="mt-4">Policy Coverages</h6>
                                     <hr class="mt-4 mb-4">
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <div class="policy-labels" style="display: flex;justify-content: space-between;">
                                                 <label class="form-label" for="policy_bi">BI (Bodily Injury):<span class="text-danger">*</span>
@@ -227,7 +227,7 @@ include('partial/loader.php'); ?>
                                         </div> 
                                         
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="policy_medical">Medical<span class="text-danger">*</span></label>
                                             <div class="form-input">
@@ -262,7 +262,7 @@ include('partial/loader.php'); ?>
                                     </div>
                                     <h6 class="mt-4">Roadside Assistance</h6>
                                     <hr class="mt-4 mb-4">
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-sm-12">
                                             <h6 class="mb-0">Roadside Assistance is serviced by Nation Safe Drivers. The product is limited to 3 services within 15 miles per term. Services include 24-Hour Towing, Roadside Assistance, Delivery of Supplies, Tire Service, Battery Service and Lockout Service Extra Charge.</h6>
                                         </div>
@@ -280,7 +280,7 @@ include('partial/loader.php'); ?>
                                     </div>
                                     <h6 class="mt-4">Questionnaire</h6>
                                     <hr class="mt-4 mb-4">
-                                    <div class="row g-3">
+                                    <div class="row">
                                             <div class="col-md-8 mb-3">
                                                 1. Does any driver have any driving restrictions?
                                             </div>
@@ -294,7 +294,7 @@ include('partial/loader.php'); ?>
                                             </div>
 
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                             <div class="col-md-8 mb-3">
                                                 2. Are any vehicles listed on this application titled under salvage or flood?
                                             </div>
@@ -308,7 +308,7 @@ include('partial/loader.php'); ?>
                                             </div>
 
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                             <div class="col-md-8 mb-3">
                                                 3. Does the applicant own any other vehicles not listed on application?
                                             </div>
@@ -322,7 +322,7 @@ include('partial/loader.php'); ?>
                                             </div>
 
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                             <div class="col-md-8 mb-3">
                                                 4. Is the applicant the sole registered owner of the vehicle?
                                             </div>
@@ -336,7 +336,7 @@ include('partial/loader.php'); ?>
                                             </div>
 
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                             <div class="col-md-8 mb-3">
                                                 5. Are any vehicles operated by any for commercial business use?
                                             </div>
@@ -350,7 +350,7 @@ include('partial/loader.php'); ?>
                                             </div>
 
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                             <div class="col-md-8 mb-3">
                                                 6. Are any vehicles listed used for ride share at any time?
                                             </div>
@@ -364,7 +364,7 @@ include('partial/loader.php'); ?>
                                             </div>
 
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                             <div class="col-md-8 mb-3">
                                                 7. Are any vehicles listed on this application used for regular frequent trips beyond 50 miles radius of the given address?
                                             </div>
@@ -378,7 +378,7 @@ include('partial/loader.php'); ?>
                                             </div>
 
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                             <div class="col-md-8 mb-3">
                                                 8. Are any vehicle listed on this application garaged outside of IL for more than 2 months of the year?
                                             </div>
@@ -395,29 +395,29 @@ include('partial/loader.php'); ?>
                                     
                                     <h6 class="mt-4">Applicant’s Statement – Please Read Before Signing</h6>
                                     <hr class="mt-4 mb-4">
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col mb-3">
                                             The undersigned acknowledges that he has been advised of the availability of uninsured motor vehicle property damage coverage, the premium therefore, and a brief description of the coverage. Under this coverage you would be entitled to recover up to the actual cash value (limited to $15,000), less a $500.00 to $1000.00 deductible, for damage to an owned vehicle for which the operator of an identified, uninsured motor vehicle is legally liable.
                                         </div>  
                                     </div>  
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col  mb-4">
                                             <h6 class="blog-bottom-details">INSURANCE POLICY ISSUED PURSUANT TO THIS APPLICATION IS VALID ONLY IF SIGNED BY THE APPLICANT OR THE AGENT OF THE APPLICANT ACTING ON BEHALF OF THE APPLICANT. APPLICANT WARRANTS THAT IF APPLICATION IS SIGNED BY AGENT, THAT THE APPLICANT HAS FULLY REVIEWED THE APPLICATION AND THAT ALL ANSWERS HAVE BEEN TRUTHFULLY RECORDED.</h6>
                                         </div>
                                     </div>  
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col  mb-3">
                                             The statements or representations in the application made by me or on my behalf are correct, complete, and true, and, if a policy is issued, it is issued in reliance upon these statements or representations. I understand that I will not be covered if this application contains any false statement, omission or misrepresentation that would otherwise materially alter the Company’s evaluation of the applicant. I declare that there are no operators of the vehicle described in this application UNLESS their names are shown above. Management Fee of $40 is charged on every new application for insurance. The fee is acknowledged when signed by you and/or the agent. Roadside serviced by Nation Safe Driver. If purchased, information will be provided to you by your producer.
                                         </div>  
                                     </div>  
-                                    <div class="row g-3 mb-4">
+                                    <div class="row mb-4">
                                             <label class="col-sm-7 col-form-label" for="initials">Please sign the application by entering applicant's initials:<span class="text-danger">*</span></label>
                                             <div class="col-sm-5"> 
                                                 <input class="form-control" id="initials" name="initials" type="text" value="" placeholder="Initials" required="">
                                                 <div class="invalid-feedback">Please fill a applicant's initials.</div>
                                             </div>
                                     </div> 
-                                    <div class="row g-3 mb-4">
+                                    <div class="row mb-4">
                                             <label class="col-sm-7 col-form-label" for="mother_maident_name">Please sign the application by entering the applicant’s mother’s maiden name:<span class="text-danger">*</span></label>
                                             <div class="col-sm-5"> 
                                                 <input class="form-control" id="mother_maident_name" name="mother_maident_name" type="text" value="" placeholder="Mother’s Maiden Name" required="">
@@ -426,11 +426,11 @@ include('partial/loader.php'); ?>
                                     </div>   
                                     <h6 class="mt-4">Policy Term: 6 Month  </h6>
                                     <hr class="mt-4 mb-4">                            
-                                <div class="row g-3">
+                                <div class="row">
                                     <h6 class="col-md-8 mt-4 mb-2">Vehicles</h6>
                                     <h6 class="col-md-4 mt-4 mb-2">Premium</h6>
                                 </div>
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3">
                                                 2011 Honda I20
                                     </div> 
@@ -440,7 +440,7 @@ include('partial/loader.php'); ?>
                                 </div> 
                                
                                 <hr class="mt-2 mb-2  border-1">
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3">
                                     Base Premium	
                                     </div> 
@@ -448,7 +448,7 @@ include('partial/loader.php'); ?>
                                         $1400.00
                                     </div> 
                                 </div> 
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3">
                                     Additional Coverage Premium	
                                     </div> 
@@ -457,7 +457,7 @@ include('partial/loader.php'); ?>
 
                                     </div> 
                                 </div> 
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3">
                                     Custom Discount	
                                     </div> 
@@ -465,7 +465,7 @@ include('partial/loader.php'); ?>
                                     $0.00
                                     </div> 
                                 </div> 
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3">
                                     Total Fees	
                                     </div> 
@@ -475,7 +475,7 @@ include('partial/loader.php'); ?>
                                     </div> 
                                 </div> 
                                 <hr class="mt-1 mb-1">
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3 fw-bold">
                                     Total Premium:
                                     </div> 
@@ -483,7 +483,7 @@ include('partial/loader.php'); ?>
                                         $1400.00
                                     </div> 
                                 </div> 
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3 fw-bold">
                                     Management Fee:
                                     </div> 
@@ -491,7 +491,7 @@ include('partial/loader.php'); ?>
                                     $25.00
                                     </div> 
                                 </div> 
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3 fw-bold">
                                     Service Price:
                                     </div> 
@@ -499,7 +499,7 @@ include('partial/loader.php'); ?>
                                     $0.00
                                     </div> 
                                 </div> 
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3 fw-bold">
                                     Total:
                                     </div> 
@@ -508,7 +508,10 @@ include('partial/loader.php'); ?>
                                     </div> 
                                 </div> 
                                 <?php if($mode != "VIEW"){ ?>
-                                    <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        <div class="card-body btn-showcase" style="text-align: center;">
+                                            <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
+                                            <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        </div>
                                     <?php } ?>
                              </div>
                           </div>

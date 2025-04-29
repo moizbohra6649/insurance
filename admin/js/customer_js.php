@@ -1,11 +1,14 @@
 <script>
 
-/* ==================================================START Vendor FORM JS CODE================================================== */
-$('#customer_form').on('submit', (function(e) {
-    e.preventDefault();
+/* ==================================================START Customer FORM JS CODE================================================== */
+$('.submit_btn').on('click', (function(e) {
 
+    var btn_value = $(this).val();
+    var btn_text = $(this).data('btn_text');
+
+    e.preventDefault();
     var error_arr = [];
-  
+
     if($("#name").val() == ""){
         error_arr.push("Please fill a Name.<br/>");
     } 
@@ -40,40 +43,63 @@ $('#customer_form').on('submit', (function(e) {
         return false;
     }
 
-    var formData = new FormData(this);
-    formData.append('form_request', 'true');
-    $.ajax({
-        type: 'POST',
-        url: '<?=($_SERVER['PHP_SELF'])?>',
-        data: formData,
-        cache: false,
-        dataType: 'json',
-        contentType: false,
-        processData: false,
-        beforeSend: function() {
-            $("#submit_btn").html('Validating...');
-            $("#submit_btn").attr('disabled', 'disabled');
-        },
-        success: function(data) {
-            //For Alert Popups
-            data.status = (data.status == "error" ? "danger" : data.status);
-            var title = (data.status == "success" ? "Success!" : "Oh Snap!");
-            notification(title, data.msg, data.status);
-            
-            if(data.status == "success"){
-                var url = `customer_list.php`;
-                move(`<?=$actual_link?>${url}`);
-            }else{
-                $("#submit_btn").html('Submit');
-                $("#submit_btn").removeAttr('disabled');
-            }
-        },
-        error: function(data) {
-            $("#submit_btn").html('Submit');
-            $("#submit_btn").removeAttr('disabled');
-            console.log("error");
-            console.log(data);
-        }
+    swal({
+        title: "Are you sure?",
+        text: "Once submit, please check customer information!",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+
+            var formElement = $("#customer_form")[0];
+            var formData = fn_from_data(formElement);
+
+            formData.append('form_request', 'true');
+            $.ajax({
+                type: 'POST',
+                url: '<?=($_SERVER['PHP_SELF'])?>',
+                data: formData,
+                cache: false,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $("#submit_btn_" + btn_value).html('Validating...');
+                    $(".submit_btn").attr('disabled', 'disabled');
+                },
+                success: function(data) {
+                    //For Alert Popups
+                    data.status = (data.status == "error" ? "danger" : data.status);
+                    var title = (data.status == "success" ? "Success!" : "Oh Snap!");
+                    notification(title, data.msg, data.status);
+                    
+                    if(data.status == "success"){
+                        var url = `customer_list.php`;
+                        if(data.id != ""){
+                            if(btn_value == "vehicle"){
+                                var url = `vehicle.php?customer_id=${data.id}`;
+                            }else if(btn_value == "driver"){
+                                var url = `driver.php?customer_id=${data.id}`;
+                            }else if(btn_value == "policy"){
+                                var url = `policy.php?customer_id=${data.id}`;
+                            }
+                        }
+                        
+                        move(`<?=$actual_link?>${url}`);
+                    }else{
+                        $("#submit_btn_" + btn_value).html(btn_text);
+                        $(".submit_btn").removeAttr('disabled');
+                    }
+                },
+                error: function(data) {
+                    $("#submit_btn_" + btn_value).html(btn_text);
+                    $(".submit_btn").removeAttr('disabled');
+                    console.log("error");
+                    console.log(data);
+                }
+            });
+        } 
     });
 }));
 
@@ -92,6 +118,6 @@ function fn_search_filter(){
 }
 
 
-/* ==================================================END Vendor FORM JS CODE================================================== */
+/* ==================================================END Customer FORM JS CODE================================================== */
 
 </script>

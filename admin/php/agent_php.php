@@ -39,9 +39,8 @@ $to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_
 $filter_agent_id    = (isset($_REQUEST["filter_agent_id"])) ? $_REQUEST["filter_agent_id"] : "";
 
 $query_count = 0;
+$filter_qry = "";
 if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQUEST["search_list"] == "true"){
-
-    $select_query = "SELECT id, agent_id, name, email, mobile, profile_image, created, status FROM agent WHERE 1=1 ";
 
     if(!empty($from_date)){
         if(empty($to_date)){
@@ -56,21 +55,25 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
     }
     
     if(!empty($from_date) && !empty($to_date)){
-        $select_query .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
+        $filter_qry .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
     }
 
     if(!empty($filter_agent_id)){
-        $select_query .= " AND agent_id = $filter_agent_id ";
+        $filter_qry .= " AND agent_id = $filter_agent_id ";
     }
 
     if(!empty($name)){
-        $select_query .= " AND name LIKE '%$name%' ";
+        $filter_qry .= " AND name LIKE '%$name%' ";
     }
 
     if(!empty($mobile_no)){
-        $select_query .= " AND mobile LIKE '%$mobile_no%' ";
+        $filter_qry .= " AND mobile LIKE '%$mobile_no%' ";
     }
 
+}
+
+if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
+    $select_query = "SELECT id, agent_id, name, email, mobile, profile_image, created, status FROM agent WHERE 1=1 ".$filter_qry;
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
 }

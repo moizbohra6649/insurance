@@ -27,8 +27,8 @@ include('partial/loader.php'); ?>
                                 <form id="model_form" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
                                     <input type="hidden" name="id" value="<?=base64_encode($id)?>" />
                                     <input type="hidden" name="mode" value="<?=$local_mode?>" />
-                                    <div class="row g-3"> 
-                                        <div class="col-md-4">
+                                    <div class="row"> 
+                                        <div class="col-md-4 mb-3">
                                             <label class="form-label" for="make_id">Make <span class="text-danger">*</span></label>
                                             
                                             <select class="form-select" name="make_id" id="make_id" required="">
@@ -49,7 +49,10 @@ include('partial/loader.php'); ?>
                                     </div> 
                                    
                                     <?php if($mode != "VIEW"){ ?>
-                                    <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        <div class="card-body btn-showcase" style="text-align: center;">
+                                            <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
+                                            <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        </div>
                                     <?php } ?> 
                                 </form>
                             </div>

@@ -27,8 +27,8 @@ include('partial/loader.php'); ?>
                                 <form id="agent_form" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
                                 <input type="hidden" name="id" value="<?=base64_encode($id)?>" />
                                 <input type="hidden" name="mode" value="<?=$local_mode?>" />
-                                    <div class="row g-3">
-                                        <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
                                             <label class="form-label" for="name">Name <span class="text-danger">*</span></label>
                                             <input class="form-control onlytext" id="name" name="name" type="text" value="<?=$name?>" placeholder="Name" required="">
                                             <div class="invalid-feedback">Please fill a name.</div>
@@ -48,7 +48,7 @@ include('partial/loader.php'); ?>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="mobile_no">Mobile No. <span class="text-danger">*</span></label>
                                             <input class="form-control allownumber" minlength="12" maxlength="12" id="mobile_no" name="mobile_no" type="text" value="<?=$mobile_no?>" placeholder="Mobile No." onkeypress="applyPhoneInputRestriction('mobile_no')" required="">
@@ -94,7 +94,10 @@ include('partial/loader.php'); ?>
 
                                     </div>
                                     <?php if($mode != "VIEW"){ ?>
-                                    <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                            <div class="card-body btn-showcase" style="text-align: center;">
+                                            <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
+                                            <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        </div>
                                     <?php } ?>  
                                 </form>
                             </div>

@@ -27,13 +27,13 @@
                                 <form id="vendor_form" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
                                     <input type="hidden" name="id" value="<?=base64_encode($id)?>" />
                                     <input type="hidden" name="mode" value="<?=$local_mode?>" />
-                                    <div class="row g-3">
-                                        <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
                                             <label class="form-label" for="name">Company Name <span class="text-danger">*</span></label>
                                             <input class="form-control onlytext" id="company_name" name="company_name" type="text" value="<?=$company_name?>" placeholder="Company Name" required="">
                                             <div class="invalid-feedback">Please fill a company name.</div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-3">
                                             <label class="form-label" for="name">Owner Name <span class="text-danger">*</span></label>
                                             <input class="form-control onlytext" id="name" name="name" type="text" value="<?=$name?>" placeholder="Owner Name" required="">
                                             <div class="invalid-feedback">Please fill a owner name.</div>
@@ -47,7 +47,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label" for="email">Email <span class="text-danger">*</span></label>
                                             <div class="input-group">
@@ -62,7 +62,7 @@
                                             <div class="invalid-feedback">Please provide a valid Mobile No.</div>
                                         </div>
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-12 mb-3">
                                             <label class="form-label" for="address">Address</label>
                                             <div class="input-group">
@@ -70,7 +70,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                         
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label" for="password">Password <span class="text-danger">*</span></label>
@@ -89,7 +89,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" id="tooltip-container">Profile Picture <i class="dripicons-information" data-bs-container="#tooltip-container" data-bs-html="true" data-bs-toggle="tooltip" title="1. File size of more than 2M is not allowed.<br/>2. Only 1 attachment is allowed.<br/>3. File types allowed are- jpeg, jpg, png, gif, bmp"></i></label>
                                             <div id="image_input_div" style="display:<?= ($local_mode == 'NEW') ? 'block': 'none';?>;">
@@ -132,7 +132,10 @@
                                         </div>
                                     </div>
                                     <?php if($mode != "VIEW"){ ?>
-                                    <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        <div class="card-body btn-showcase" style="text-align: center;">
+                                            <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
+                                            <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        </div>
                                     <?php } ?>
                                 </form>
                             </div>
