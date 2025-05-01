@@ -42,6 +42,10 @@ $is_veh_listed_application_used          = (isset($_REQUEST["is_veh_listed_appli
 $is_veh_listed_garaged          = (isset($_REQUEST["is_veh_listed_garaged"])) ? $_REQUEST["is_veh_listed_garaged"] : 0; 
 $is_driver_res          = (isset($_REQUEST["is_driver_res"])) ? $_REQUEST["is_driver_res"] : 0; 
 $is_applicant_other_veh          = (isset($_REQUEST["is_applicant_other_veh"])) ? $_REQUEST["is_applicant_other_veh"] : 0; 
+$is_physical_damage          = (isset($_REQUEST["is_physical_damage"])) ? $_REQUEST["is_physical_damage"] : 0; 
+$driver          = (isset($_REQUEST["driver"])) ? $_REQUEST["driver"] : 0; 
+
+
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -52,9 +56,9 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 }
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
-    $select_query = "SELECT driver.*, customer.name as customer_name FROM driver 
-    left join customer on customer.id = driver.customer_id
-    WHERE driver.customer_id = '$customer_id'";
+    $select_query = "SELECT policy.*, customer.name as customer_name FROM policy 
+    left join customer on customer.id = policy.customer_id
+    WHERE policy.customer_id = '$customer_id'";
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
 }
@@ -80,8 +84,6 @@ switch ($mode) {
 
     case "INSERT":
         $data = [];
-        print_r($_REQUEST);
-        die;
         $error_arr = [];
         
         $policy_id = get_max_id("policy", "policy_id");
@@ -95,9 +97,9 @@ switch ($mode) {
         if(mysqli_num_rows($select_customer) == 0){
             $error_arr[] = "Customer does not exists.<br/>";
         }
-        if (empty($first_name)) {
-            $error_arr[] = "Please fill a First Name.<br/>";
-        }
+        // if (empty($coverage_collision)) {
+        //     $coverage[] = "Please fill a First Name.<br/>";
+        // }
         
 
         // Display errors if any
@@ -109,28 +111,23 @@ switch ($mode) {
             exit;
         }
         mysqli_autocommit($conn,FALSE);
-        
-        
-        $policy_bi          = (isset($_REQUEST["policy_bi"])) ? $_REQUEST["policy_bi"] : 0;
-        $policy_pd          = (isset($_REQUEST["policy_pd"])) ? $_REQUEST["policy_pd"] : 0;
-        $policy_umd          = (isset($_REQUEST["policy_umd"])) ? $_REQUEST["policy_umd"] : 0; 
-        $policy_medical          = (isset($_REQUEST["policy_medical"])) ? $_REQUEST["policy_medical"] : 0; 
-        $vehicle          = (isset($_REQUEST["vehicle"])) ? $_REQUEST["vehicle"] : 0; 
-        $roasass          = (isset($_REQUEST["roasass"])) ? $_REQUEST["roasass"] : 0; 
-        $initials          = (isset($_REQUEST["initials"])) ? $_REQUEST["initials"] : ''; 
-        $mother_maident_name          = (isset($_REQUEST["mother_maident_name"])) ? $_REQUEST["mother_maident_name"] : ''; 
-        $is_vehical_listed          = (isset($_REQUEST["is_vehical_listed"])) ? $_REQUEST["is_vehical_listed"] : 0; 
-        $is_applicant_sole_registered          = (isset($_REQUEST["is_applicant_sole_registered"])) ? $_REQUEST["is_applicant_sole_registered"] : 0; 
-        $is_veh_used_business_q	          = (isset($_REQUEST["is_veh_used_business_q"])) ? $_REQUEST["is_veh_used_business_q"] : 0; 
-        $is_veh_listed_ride          = (isset($_REQUEST["is_veh_listed_ride"])) ? $_REQUEST["is_veh_listed_ride"] : 0; 
-        $is_veh_listed_application_used          = (isset($_REQUEST["is_veh_listed_application_used"])) ? $_REQUEST["is_veh_listed_application_used"] : 0; 
-        $is_veh_listed_garaged          = (isset($_REQUEST["is_veh_listed_garaged"])) ? $_REQUEST["is_veh_listed_garaged"] : 0; 
-        $is_driver_res          = (isset($_REQUEST["is_driver_res"])) ? $_REQUEST["is_driver_res"] : 0; 
-        $is_applicant_other_veh          = (isset($_REQUEST["is_applicant_other_veh"])) ? $_REQUEST["is_applicant_other_veh"] : 0; 
-
-        $insert_query = mysqli_query($conn, "INSERT INTO policy (policy_id, prefix_policy_id, customer_id , policy_coverage, policy_coverage_collision_id, policy_coverage_umpd_id, policy_coverage_rental_id, policy_coverage_towing_id, policy_coverage_deductible_id, is_veh_used_business, is_physical_damage, policy_bi_id, policy_umd_id, policy_medical_id, policy_pd_id, policy_vehicle_id, is_roadside_assistance, is_driver_res, is_vehical_listed, is_applicant_sole_registered, is_applicant_other_veh, is_veh_used_business_q, is_veh_listed_ride, is_veh_listed_application_used , is_veh_listed_garaged	,applicant_initials	, applicant_mother_name , policy_status	, status) VALUES ('$policy_id', '$prefix_policy_id', '$customer_id', '$coverage', '$coverage_collision', '$umpd', '$coverage_rental', '$towning_coverage', '$coverage_deductible', '$is_veh_used_business', '$is_physical_damage', '$zip_code', '$apt_unit', '$address', '$driver_licence_no', '$driver_licence_image', '$date_of_issue', '$date_of_expiry', '$place_of_issue', '$marital_status', '$family_friend', 1)");
+        $insert_query = mysqli_query($conn, "INSERT INTO policy (policy_id, prefix_policy_id, customer_id , policy_coverage, policy_coverage_collision_id, policy_coverage_umpd_id, policy_coverage_rental_id, policy_coverage_towing_id, policy_coverage_deductible_id, is_veh_used_business, is_physical_damage, policy_bi_id, policy_umd_id, policy_medical_id, policy_pd_id, is_roadside_assistance, is_driver_res, is_vehical_listed, is_applicant_sole_registered, is_applicant_other_veh, is_veh_used_business_q, is_veh_listed_ride, is_veh_listed_application_used , is_veh_listed_garaged	,applicant_initials	, applicant_mother_name , policy_status	, status) VALUES ('$policy_id', '$prefix_policy_id', '$customer_id', '$coverage', '$coverage_collision', '$umpd', '$coverage_rental', '$towning_coverage', '$coverage_deductible', '$is_veh_used_business', '$is_physical_damage', '$policy_bi', '$policy_umd', '$policy_medical', '$policy_pd', '$roasass', '$is_driver_res', '$is_vehical_listed', '$is_applicant_sole_registered', '$is_applicant_other_veh', '$is_veh_used_business_q' , '$is_veh_listed_ride' , '$is_veh_listed_application_used' , '$is_veh_listed_garaged' , '$initials' , '$mother_maident_name' , 'pending' , 0)");
 
         $last_inserted_id = mysqli_insert_id($conn);
+
+        if($last_inserted_id > 0 ){
+            foreach ($vehicle as $key => $vehiclevalue) {
+                $vehicle_id = get_max_id("policy_vehicle", "policy_vehicle_id");
+                $prefix_vehicle_id = "POLICY_VEHICAL" . $vehicle_id;
+                $insert_query = mysqli_query($conn, "INSERT INTO policy_vehicle (policy_vehicle_id, prifix_policy_vehicle_id, vehicle_policy_id , vehicle_id) VALUES ('$vehicle_id', '$prefix_vehicle_id', '$last_inserted_id', '$vehiclevalue')");
+            }
+            foreach ($driver as $key => $drivervalue) {
+                $driver_id = get_max_id("policy_driver", "policy_driver_id");
+                $prefix_driver_id = "POLICY_DRIVER" . $driver_id;
+
+                $insert_query = mysqli_query($conn, "INSERT INTO policy_driver (policy_driver_id, prifix_policy_driver_id, driver_policy_id , driver_id) VALUES ('$driver_id', '$prefix_driver_id', '$last_inserted_id', '$drivervalue')");
+            }
+        }
         
         // Commit transaction
         if (!mysqli_commit($conn)) {
@@ -152,63 +149,51 @@ switch ($mode) {
     case "EDIT":
         $local_mode = "INSERT";
         $readonly   = "readonly";
-        $title      = ($mode == "EDIT") ? "Edit Driver" : "View Driver";
+        $title      = ($mode == "EDIT") ? "Edit Policy" : "View Driver";
         
-        $select_query = mysqli_query($conn, "SELECT driver.*, customer.name as customer_name, spouse_detail.first_name as spouse_first_name, spouse_detail.last_name as spouse_last_name, spouse_detail.email as spouse_email, spouse_detail.mobile_no as spouse_mobile_no, spouse_detail.licence_no as spouse_licence_no, spouse_detail.state_id as spouse_state, spouse_detail.city as spouse_city, spouse_detail.zip_code as spouse_zip_code, spouse_detail.apt_unit as spouse_apt_unit, spouse_detail.address as spouse_address, family_friend_detail.first_name as family_friend_first_name, family_friend_detail.last_name as family_friend_last_name, family_friend_detail.email as family_friend_email, family_friend_detail.mobile_no as family_friend_mobile_no, family_friend_detail.licence_no as family_friend_licence_no, family_friend_detail.state_id as family_friend_state, family_friend_detail.city as family_friend_city, family_friend_detail.zip_code as family_friend_zip_code, family_friend_detail.apt_unit as family_friend_apt_unit, family_friend_detail.address as family_friend_address
-        FROM driver 
-        left join customer on customer.id = driver.customer_id
-        left join spouse_detail on spouse_detail.driver_id = driver.id
-        left join family_friend_detail on family_friend_detail.driver_id = driver.id
-        where driver.id = '$id' ");
+        $select_query = mysqli_query($conn, "SELECT policy.*, customer.name  as customer_name , customer.email  as customer_email , customer.mobile  as customer_mobile
+        FROM policy 
+        left join customer on customer.id = policy.customer_id
+        where policy.id = '$id' ");
         
         if(mysqli_num_rows($select_query) > 0){
             $get_data = mysqli_fetch_array($select_query);
+            $customer_name            = $get_data["customer_name"];
+            $customer_email            = $get_data["customer_email"];
+            $customer_mobile            = $get_data["customer_mobile"];
 
-            $driver_id            = $get_data["driver_id"];
-            $prefix_driver_id     = $get_data["prefix_driver_id"];
-            $customer_id          = $get_data["customer_id"];
-            $customer_name        = $get_data["customer_name"];
-            $first_name           = $get_data["first_name"];
-            $middle_name          = $get_data["middle_name"];
-            $last_name            = $get_data["last_name"];
-            $email                = $get_data["email"];
-            $mobile_no            = $get_data["mobile_no"];
-            $date_of_birth        = convert_db_date_readable($get_data["date_of_birth"]);
-            $state                = $get_data["state_id"];
-            $city                 = $get_data["city"];
-            $zip_code             = $get_data["zip_code"];
-            $apt_unit             = $get_data["apt_unit"];
-            $address              = $get_data["address"];
-            $driver_licence_image = $get_data["driver_licence_image"];
-            $driver_licence_no    = $get_data["driver_licence_no"];
-            $date_of_issue        = convert_db_date_readable($get_data["date_of_issue"]);
-            $date_of_expiry       = convert_db_date_readable($get_data["date_of_expiry"]);
-            $place_of_issue       = $get_data["place_of_issue"];
-            $marital_status       = $get_data["marital_status"];
-            $family_friend       = $get_data["family_friend"];
+            $coverage          = $get_data['policy_coverage'];
+            $coverage_collision          = $get_data['policy_coverage_collision_id'];
+            $umpd          = $get_data['policy_coverage_umpd_id'];
+            $towning_coverage          = $get_data['policy_coverage_towing_id'];
+            $coverage_rental          = $get_data['policy_coverage_rental_id'];
+            $coverage_deductible          = $get_data['policy_coverage_deductible_id'];
+            $is_veh_used_business          = $get_data['is_veh_used_business']; 
+            $policy_bi          = $get_data['policy_bi_id'];
+            $policy_pd          = $get_data['policy_pd_id'];
+            $policy_umd          = $get_data['policy_umd_id'];
+            $policy_medical          = $get_data['policy_medical_id'];
+            $roasass          = $get_data['is_roadside_assistance'];
+            $initials          = $get_data['applicant_initials'];
+            $mother_maident_name          = $get_data['applicant_mother_name'];
+            $is_vehical_listed          = $get_data['is_vehical_listed']; 
+            $is_applicant_sole_registered          = $get_data['is_applicant_sole_registered']; 
+            $is_veh_used_business_q	          = $get_data['is_veh_used_business_q']; 
+            $is_veh_listed_ride          = $get_data['is_veh_listed_ride']; 
+            $is_veh_listed_application_used          =  $get_data['is_veh_listed_application_used']; 
+            $is_veh_listed_garaged          = $get_data['is_veh_listed_garaged']; 
+            $is_driver_res          = $get_data['is_driver_res']; 
+            $is_applicant_other_veh          = $get_data['is_applicant_other_veh']; 
+            $is_physical_damage          = $get_data['is_physical_damage']; 
 
-            $spouse_first_name    = $get_data["spouse_first_name"];
-            $spouse_last_name     = $get_data["spouse_last_name"];
-            $spouse_email         = $get_data["spouse_email"];
-            $spouse_mobile_no     = $get_data["spouse_mobile_no"];
-            $spouse_licence_no    = $get_data["spouse_licence_no"];
-            $spouse_state         = $get_data["spouse_state"];
-            $spouse_city          = $get_data["spouse_city"];
-            $spouse_zip_code      = $get_data["spouse_zip_code"];
-            $spouse_apt_unit      = $get_data["spouse_apt_unit"];
-            $spouse_address       = $get_data["spouse_address"];
-
-            $family_friend_first_name    = $get_data["family_friend_first_name"];
-            $family_friend_last_name     = $get_data["family_friend_last_name"];
-            $family_friend_email         = $get_data["family_friend_email"];
-            $family_friend_mobile_no     = $get_data["family_friend_mobile_no"];
-            $family_friend_licence_no    = $get_data["family_friend_licence_no"];
-            $family_friend_state         = $get_data["family_friend_state"];
-            $family_friend_city          = $get_data["family_friend_city"];
-            $family_friend_zip_code      = $get_data["family_friend_zip_code"];
-            $family_friend_apt_unit      = $get_data["family_friend_apt_unit"];
-            $family_friend_address       = $get_data["family_friend_address"];
-
+            $veh_sql = mysqli_query($conn, 'select * from policy_vehicle where vehicle_policy_id = '.$get_data["id"]);
+            while($get_veh = mysqli_fetch_array($veh_sql)){
+                $vehicle .= ','.$get_veh['vehicle_id'] ; 
+            }
+            $veh_sql = mysqli_query($conn, 'select * from policy_driver where driver_policy_id = '.$get_data["id"]);
+            while($get_veh = mysqli_fetch_array($veh_sql)){
+                $driver .= ','.$get_veh['driver_id'] ; 
+            }
             $created              = $get_data["created"];
             $local_mode           = "UPDATE";
         }
@@ -345,14 +330,12 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
     $data["msg"] = "Something went wrong please try again later.";
     $data["status"] = "error";
 
-    if($_REQUEST["ajax_request"] == "getting_vehicle_model"){
-        $select_query = mysqli_query($conn, "SELECT * FROM model WHERE make_id = '$vehicle_make' AND status = 1 AND deleted = 0 ");
-        $data_set = "<option value='0'>Select Vehicle Model</option>";
+    if($_REQUEST["ajax_request"] == "getting_vehicle"){
+        $data_set = '';
+        $select_query = mysqli_query($conn, "SELECT vehicle.id , year.year ,  make.make_name , model.model_name , vehicle.vehicle_no  FROM vehicle INNER JOIN make ON make.id = vehicle.vehicle_make_id inner join model on model.id = vehicle.vehicle_model_id inner join year on year.id = vehicle.vehicle_year_id WHERE  customer_id = $customer_id");
         if(mysqli_num_rows($select_query) > 0){
-            
             while($get_query = mysqli_fetch_array($select_query)){
-                $selected = ($get_query["id"]==$vehicle_model) ? 'selected' : '';
-                $data_set .= "<option ".$selected." value='".$get_query["id"]."'>".$get_query["model_name"]."</option>";
+                $data_set .= "<option value='".$get_query["id"]."' year='".$get_query["year"]."'  make='".$get_query["make_name"]."' model='".$get_query["model_name"]."' vehical_no = '".$get_query["vehicle_no"]."' >".$get_query["make_name"].' - '.$get_query["model_name"] . ' - '. $get_query["vehicle_no"]."</option>";
             }   
         }
         $data["status"] = "success";
