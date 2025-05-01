@@ -5,3 +5,7 @@ ALTER TABLE `service_charge` ADD `agent_id` INT(11) NOT NULL AFTER `service_char
 ALTER TABLE `management_charge` ADD `admin_id` INT(11) NOT NULL AFTER `management_charge_id`;
 
 ALTER TABLE `customer` ADD `agent_id` INT(11) NOT NULL AFTER `prefix_customer_id`;
+
+ALTER TABLE `make` ADD `make_origin` VARCHAR(252) NULL AFTER `make_name`;
+
+ALTER TABLE `vendor` ADD `entry_type` VARCHAR(252) NOT NULL DEFAULT 'manually' COMMENT 'manually = if superadmin add this vendor\r\nrequested = Vendor can request as a vendor register by fronend.' AFTER `business_license`;

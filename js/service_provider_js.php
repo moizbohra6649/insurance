@@ -1,7 +1,7 @@
 <script>
 
 /* ==================================================START Vendor FORM JS CODE================================================== */
-$('#vendor_form').on('submit', (function(e) {
+$('#service_provider_form').on('submit', (function(e) {
     e.preventDefault();
 
     var error_arr = [];
@@ -10,7 +10,7 @@ $('#vendor_form').on('submit', (function(e) {
         error_arr.push("Please enter company name.<br/>");
     }
 
-    if($("#name").val() == ""){
+    if($("#owner_name").val() == ""){
         error_arr.push("Please enter Name.<br/>");
     }
 
@@ -29,7 +29,6 @@ $('#vendor_form').on('submit', (function(e) {
     }else if($("#mobile_no").val().length < 12){
         error_arr.push("Please enter a valid Mobile No.<br/>");
     }
- 
 
     if($("#password").val() == ""){
         error_arr.push("Please enter Password.<br/>");
@@ -72,8 +71,8 @@ $('#vendor_form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                var url = `vendor_list.php`;
-                move(`<?=$actual_link?>${url}`);
+                var url = `service_provider_login.php`;
+                move(`<?=$front_end_link?>${url}`);
             }else{
                 $("#submit_btn").html('Submit');
                 $("#submit_btn").removeAttr('disabled');

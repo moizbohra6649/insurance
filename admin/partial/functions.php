@@ -5,7 +5,10 @@
 //exit;
 
 ob_start();
-session_start();
+if(!isset($_SESSION)) 
+{ 
+	session_start(); 
+}
 //header('Content-Type: application/json');
 
 error_reporting(E_ALL);
@@ -63,7 +66,9 @@ if (mysqli_connect_errno()) {
 }
 
 /* Getting Master Admin URL */
+$domain_folder = "insurance";
 $panel_folder = "insurance/admin";
+$admin_folder = "admin";
 $upload_folder = "uploads";
 $without_session_page = "login.php";
 $pdf_page = "pdf";
@@ -90,6 +95,7 @@ function removeUnderscore($word){
 
 //$link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
 $link = "https://$_SERVER[HTTP_HOST]";
+$front_end_link = $link . "/" . $domain_folder . "/";
 $actual_link = $link . "/" . $panel_folder . "/";
 $panel_link = $link . "/" . $panel_folder . "/index.php";
 $login_link = $link . "/" . $panel_folder . "/login.php";

@@ -41,6 +41,7 @@ include('partial/loader.php'); ?>
                                                     <th style="text-align:center;">S.No.</th>
                                                     <th style="text-align:center;">Make ID</th>
                                                     <th style="text-align:center;">Make</th>  
+                                                    <th style="text-align:center;">Make Origin</th>  
                                                     <th style="text-align:center;">Create Date</th> 
                                                     <th style="text-align:center;">Status</th>
                                                     <th style="text-align:center;">Action</th>
@@ -57,6 +58,7 @@ include('partial/loader.php'); ?>
                                                     <td align="center"> <?=$i++?> </td>
                                                     <td align="center"> <?=$get_data["make_id"]?> </td>
                                                     <td align="center"> <?=$get_data["make_name"]?> </td>
+                                                    <td align="center"> <?=$get_data["make_origin_label"]?> </td>
                                                     <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
                                                     <td align="center">
                                                         <div class="media-body text-end icon-state">

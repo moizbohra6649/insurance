@@ -68,7 +68,8 @@
                                 <li><a href="blog.html">Blog</a></li>
                                 <li><a href="claim.html">Claim</a></li>
                                 <li><a href="contact.html">Contact us</a></li>
-                                <li><a href="register.html" class="QuoteBtn">Become a service provider</a></li>
+                                <li><a href="service_provider.php" class="QuoteBtn">Become a Service Provider</a></li>
+                                <li><a href="agent.php">Become a Agent</a></li>
                             </ul>
                             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
                         </nav>

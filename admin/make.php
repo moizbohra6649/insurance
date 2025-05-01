@@ -34,6 +34,19 @@ include('partial/loader.php'); ?>
                                             <input class="form-control" id="make_name" name="make_name" type="text" value="<?=$make_name?>" placeholder="Make" required="">
                                             <div class="invalid-feedback">Please fill a Make.</div>
                                         </div>  
+                                        <div class="col-md-4 mb-3">
+                                            <label class="form-label" for="make_origin">Make Origin <span class="text-danger">*</span></label>
+                                            
+                                            <select class="form-select" name="make_origin" id="make_origin" required="">
+                                                <option value="">Select Make Origin</option>
+                                                <?php 
+                                                $select_make_origin = mysqli_query($conn, "SELECT * FROM make_origin" );
+                                                while ($row = mysqli_fetch_assoc($select_make_origin)) { ?>  
+                                                    <option <?= ($make_origin == $row['value']) ? "selected" : ""; ?> value="<?php echo $row['value'];?>"><?php echo $row['label'];?></option>
+                                                <?php }?>
+                                            </select>
+                                            <div class="invalid-feedback">Please select a Make Origin.</div>
+                                        </div>
                                     </div>
                                    
                                     <?php if($mode != "VIEW"){ ?>

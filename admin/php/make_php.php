@@ -16,6 +16,7 @@ $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] :
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 $make_id = (isset($_REQUEST["make_id"])) ? $_REQUEST["make_id"] : 0;
+$make_origin = (isset($_REQUEST["make_origin"])) ? $_REQUEST["make_origin"] : "";
 $make_name = (isset($_REQUEST["make_name"])) ? $_REQUEST["make_name"] : "";
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
@@ -27,7 +28,7 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 }
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
-    $select_query = "SELECT * FROM make";
+    $select_query = "SELECT make.*, make_origin.value as make_origin_value, make_origin.label as make_origin_label FROM make left join make_origin on make_origin.value = make.make_origin";
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
 }
@@ -72,7 +73,7 @@ switch ($mode) {
         mysqli_autocommit($conn,FALSE);
  
 
-        $insert_query = mysqli_query($conn, "INSERT INTO make (make_id, prefix_make_id, make_name, status) VALUES ('$make_id', '$prefix_make_id', '$make_name', 1) ");
+        $insert_query = mysqli_query($conn, "INSERT INTO make (make_id, prefix_make_id, make_name, make_origin, status) VALUES ('$make_id', '$prefix_make_id', '$make_name', '$make_origin', 1) ");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
@@ -109,6 +110,7 @@ switch ($mode) {
             $make_id            = $get_data["make_id"];
             $prefix_make_id     = $get_data["prefix_make_id"];
             $make_name          = $get_data["make_name"];
+            $make_origin          = $get_data["make_origin"];
             $created            = $get_data["created"]; 
             $local_mode = "UPDATE";
         }
@@ -151,7 +153,7 @@ switch ($mode) {
         // Turn autocommit off
         mysqli_autocommit($conn,FALSE);
             
-        $update_make = mysqli_query($conn, "UPDATE make SET make_name = '$make_name', updated = now() WHERE id = $id");
+        $update_make = mysqli_query($conn, "UPDATE make SET make_name = '$make_name', make_origin = '$make_origin', updated = now() WHERE id = $id");
  
         // Commit transaction
         if (!mysqli_commit($conn)) {

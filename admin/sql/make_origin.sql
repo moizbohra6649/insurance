@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2025 at 04:56 PM
+-- Generation Time: May 01, 2025 at 08:32 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -24,32 +24,36 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vehicle_category`
+-- Table structure for table `make_origin`
 --
 
-CREATE TABLE `vehicle_category` (
+CREATE TABLE `make_origin` (
   `id` int(11) NOT NULL,
-  `label` varchar(252) DEFAULT NULL,
+  `value` varchar(255) NOT NULL,
+  `label` varchar(255) NOT NULL,
   `status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `vehicle_category`
+-- Dumping data for table `make_origin`
 --
 
-INSERT INTO `vehicle_category` (`id`, `label`, `status`) VALUES
-(1, 'Lease Or Finance vehicle', 1),
-(2, 'Own vehicle', 1),
-(3, 'Now Owner vehicle', 1);
+INSERT INTO `make_origin` (`id`, `value`, `label`, `status`) VALUES
+(1, 'american', 'American Car Brands', 1),
+(2, 'japanese', 'Japanese Car Brands', 1),
+(3, 'south_korean', 'South Korean Car Brands', 1),
+(4, 'german', 'German Car Brands', 1),
+(5, 'other_european', 'Other European Brands', 1),
+(6, 'luxury_supercar', 'Luxury/Supercar Brands', 1);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `vehicle_category`
+-- Indexes for table `make_origin`
 --
-ALTER TABLE `vehicle_category`
+ALTER TABLE `make_origin`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -57,10 +61,10 @@ ALTER TABLE `vehicle_category`
 --
 
 --
--- AUTO_INCREMENT for table `vehicle_category`
+-- AUTO_INCREMENT for table `make_origin`
 --
-ALTER TABLE `vehicle_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `make_origin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

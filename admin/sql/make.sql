@@ -32,6 +32,7 @@ CREATE TABLE `make` (
   `make_id` bigint(22) NOT NULL,
   `prefix_make_id` varchar(252) NOT NULL,
   `make_name` varchar(252) NOT NULL,
+  `make_origin` VARCHAR(252) NULL,
   `status` int(12) NOT NULL DEFAULT 0,
   `deleted` int(12) NOT NULL DEFAULT 0,
   `delete_datetime` timestamp NULL DEFAULT NULL,
