@@ -24,9 +24,6 @@
 <script src="assets/js/editor/ckeditor/adapters/jquery.js"></script>
 <script src="assets/js/editor/ckeditor/styles.js"></script>
 <script src="assets/js/select2/select2.full.min.js"></script>
-
-
-
 <script src="assets/js/moment.js"></script>
 <script src="assets/js/notify/bootstrap-notify.min.js"></script>
 <script src="assets/js/notify/notify-script.js"></script>
