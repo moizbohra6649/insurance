@@ -25,11 +25,8 @@
     <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
     <link rel="stylesheet" type="text/css" href="assets/css/material-date-range-picker/duDatepicker.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/vendors/datatables.css">
-<<<<<<<<< Temporary merge branch 1
     <link rel="stylesheet" type="text/css" href="assets/css/vendors/sweetalert2.css">
-=========
     <link rel="stylesheet" type="text/css" href="assets/css/vendors/select2.css">
->>>>>>>>> Temporary merge branch 2
     
     <style>
         .table .table-user img {
