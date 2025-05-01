@@ -1,6 +1,10 @@
 <script>
 /* ==================================================START STAFF FORM JS CODE================================================== */
-$('#driver_form').on('submit', (function(e) {
+$('.submit_btn').on('click', (function(e) {
+
+    var btn_value = $(this).val();
+    var btn_text = $(this).data('btn_text');
+
     e.preventDefault();
 
     var error_arr = [];
@@ -51,7 +55,9 @@ $('#driver_form').on('submit', (function(e) {
         return false;
     }
 
-    var formData = new FormData(this);
+    var formElement = $("#driver_form")[0];
+    var formData = fn_from_data(formElement);
+
     formData.append('form_request', 'true');
     $.ajax({
         type: 'POST',
@@ -62,8 +68,8 @@ $('#driver_form').on('submit', (function(e) {
         contentType: false,
         processData: false,
         beforeSend: function() {
-            $("#submit_btn").html('Validating...');
-            $("#submit_btn").attr('disabled', 'disabled');
+            $("#submit_btn_" + btn_value).html('Validating...');
+            $(".submit_btn").attr('disabled', 'disabled');
         },
         success: function(data) {
             //For Alert Popups
@@ -73,16 +79,22 @@ $('#driver_form').on('submit', (function(e) {
             
             if(data.status == "success"){
                 var url = `driver_list.php?customer_id=<?=base64_encode($customer_id);?>`;
+                if(data.id != ""){
+                    if(btn_value == "policy"){
+                        var url = `policy.php?customer_id=${data.id}`;
+                    }
+                }
+
                 move(`<?=$actual_link?>${url}`);
                 // setTimeout(function() {  }, 1000);
             }else{
-                $("#submit_btn").html('Submit');
-                $("#submit_btn").removeAttr('disabled');
+                $("#submit_btn_" + btn_value).html(btn_text);
+                $(".submit_btn").removeAttr('disabled');
             }
         },
         error: function(data) {
-            $("#submit_btn").html('Submit');
-            $("#submit_btn").removeAttr('disabled');
+            $("#submit_btn_" + btn_value).html(btn_text);
+            $(".submit_btn").removeAttr('disabled');
             console.log("error");
             console.log(data);
         }

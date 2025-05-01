@@ -25,7 +25,11 @@
     <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
     <link rel="stylesheet" type="text/css" href="assets/css/material-date-range-picker/duDatepicker.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/vendors/datatables.css">
+<<<<<<< HEAD
     <link rel="stylesheet" type="text/css" href="assets/css/vendors/select2.css">
+=======
+    <link rel="stylesheet" type="text/css" href="assets/css/vendors/sweetalert2.css">
+>>>>>>> c8bb09a51da7e8fec8a9ecf4dce7fd45acf2a193
     
     <style>
         .table .table-user img {

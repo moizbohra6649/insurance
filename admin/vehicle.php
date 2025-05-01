@@ -24,6 +24,12 @@ include('partial/loader.php'); ?>
             <?php include('partial/breadcrumb.php') ?>
             <!-- Container-fluid starts-->
             <div class="container-fluid">
+                <?php if(mysqli_num_rows($select_vehicle) >= 5){ ?>
+                    <div class="alert alert-danger inverse alert-dismissible fade show" role="alert"><i class="icon-thumb-down"></i>
+                        <p>This customer already has 5 vehicles added. You can no longer add vehicles for this customer.</p>
+                        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php } ?>
                 <div class="row starter-main">
                     <div class="col-sm-12">
                         <div class="card">
@@ -32,14 +38,14 @@ include('partial/loader.php'); ?>
                                 <input type="hidden" name="id" value="<?=base64_encode($id)?>" />
                                 <input type="hidden" name="customer_id" value="<?=base64_encode($customer_id)?>" />
                                 <input type="hidden" name="mode" value="<?=$local_mode?>" />
-                                    <div class="row g-3">
-                                        <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
                                             <label class="form-label" for="customer_name">Customer Name <span class="text-danger">*</span></label>
                                             <div class="form-input">
                                                 <input class="form-control" id="customer_name" name="customer_name" type="text" value="<?=$customer_name?>" placeholder="Customer Name" readonly>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-3">
                                             <label class="form-label" for="vehicle_no">Vehicle No. (VIN) <span class="text-danger">*</span></label>
                                             <div class="form-input">
                                                 <input class="form-control alpha_num" id="vehicle_no" name="vehicle_no" minlength="17" maxlength="17" type="text" value="<?=$vehicle_no?>" placeholder="Vehicle No. (VIN)" required="">
@@ -59,7 +65,7 @@ include('partial/loader.php'); ?>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="licence_plat_no">Licence Plat Number (LPN) <span class="text-danger">*</span></label>
                                             <div class="form-input">
@@ -99,7 +105,7 @@ include('partial/loader.php'); ?>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="vehicle_model">Vehicle Model <span class="text-danger">*</span></label>
                                             <div class="form-input">
@@ -109,7 +115,7 @@ include('partial/loader.php'); ?>
                                                 <div class="invalid-feedback">Please select Vehicle Model.</div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-3">
                                             <label class="form-label" for="reg_state_vehicle">Registration State Vehicle <span class="text-danger">*</span></label>
                                             <div class="form-input">
                                                 <input class="form-control" type="text" id="reg_state_vehicle" name="reg_state_vehicle" value="<?=$reg_state_vehicle?>" required="" placeholder="Registration State Vehicle">
@@ -123,7 +129,7 @@ include('partial/loader.php'); ?>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col row g-3">
+                                    <div class="col row">
                                         <div class="col-md-4 mb-3 custom-radio-ml">
                                             <?php
                                                 $select_vechile_category = select("vehicle_category","status=1");
@@ -145,7 +151,14 @@ include('partial/loader.php'); ?>
                                     </div>
                                     
                                     <?php if($mode != "VIEW"){ ?>
-                                    <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        <div class="card-body btn-showcase" style="text-align: center;">
+                                            <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
+                                            <button id="submit_btn_vehicle" class="btn btn-primary submit_btn" type="submit" value="vehicle" data-btn_text="Submit">Submit</button>
+                                            <?php if($mode != "EDIT"){ ?>
+                                                <button id="submit_btn_driver" class="btn btn-primary submit_btn" type="submit" value="driver" data-btn_text="Submit & Add Driver">Submit & Add Driver</button>
+                                                <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="policy" data-btn_text="Submit & Add Policy">Submit & Add Policy</button>
+                                            <?php } ?>
+                                        </div>
                                     <?php } ?>
                                 </form>
                             </div>

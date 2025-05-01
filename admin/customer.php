@@ -27,9 +27,9 @@ include('partial/loader.php'); ?>
                                 <form id="customer_form" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
                                     <input type="hidden" name="id" value="<?=base64_encode($id)?>" />
                                     <input type="hidden" name="mode" value="<?=$local_mode?>" />
-                                    <div class="row g-3">
+                                    <div class="row">
                                         
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mb-3">
                                             <label class="form-label" for="name">Name <span class="text-danger">*</span></label>
                                             <input class="form-control onlytext" id="name" name="name" type="text" value="<?=$name?>" placeholder="Name" required="">
                                             <div class="invalid-feedback">Please fill a Name.</div>
@@ -50,21 +50,21 @@ include('partial/loader.php'); ?>
                                             <div class="invalid-feedback">Please provide a valid Mobile No.</div>
                                         </div>
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="date_of_birth">DOB <span class="text-danger">*</span></label>
                                             <input type="text" id="datepicker" name="date_of_birth" data-theme="dark" class="form-control" value="<?=($date_of_birth == "0000-00-00") ? "" : $date_of_birth;?>" readonly required="">
                                             <div class="invalid-feedback">Please provide a valid DOB.</div>
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4  mb-3">
                                             <label class="form-label" for="zip_code">Zip Code <span class="text-danger">*</span></label>
                                             <input class="form-control allownumber" id="zip_code" minlength="6" maxlength="8" name="zip_code" type="text" value="<?=$zip_code?>" placeholder="Zip Code" required="">
                                             <div class="invalid-feedback">Please fill a Zip Code.</div>
                                         </div>
                                       
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-12 mb-3">
                                             <label class="form-label" for="address_1">Address 1 <span class="text-danger">*</span></label>
                                             <div class="input-group">
@@ -81,7 +81,15 @@ include('partial/loader.php'); ?>
                                         </div>
                                     </div>
                                     <?php if($mode != "VIEW"){ ?>
-                                    <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        <div class="card-body btn-showcase" style="text-align: center;">
+                                            <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
+                                            <button id="submit_btn_customer" class="btn btn-primary submit_btn" type="submit" value="customer" data-btn_text="Submit">Submit</button>
+                                            <?php if($mode != "EDIT"){ ?>
+                                                <button id="submit_btn_vehicle" class="btn btn-primary submit_btn" type="submit" value="vehicle" data-btn_text="Submit & Add Vehicle">Submit & Add Vehicle</button>
+                                                <button id="submit_btn_driver" class="btn btn-primary submit_btn" type="submit" value="driver" data-btn_text="Submit & Add Driver">Submit & Add Driver</button>
+                                                <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="policy" data-btn_text="Submit & Add Policy">Submit & Add Policy</button>
+                                            <?php } ?> 
+                                        </div>
                                     <?php } ?> 
                                 </form>
                             </div>
@@ -91,10 +99,11 @@ include('partial/loader.php'); ?>
             </div>
             <!-- Container-fluid Ends-->
         </div>
+        <!-- footer start-->
+        <?php include('partial/footer.php'); ?>
     </div>
 </div>
-<!-- footer start-->
-<?php include('partial/footer.php'); ?>
+
 <?php include('partial/scripts.php');
     /* Include JS File */
     if (file_exists(dirname(__FILE__) . '/js/customer_js.php')) {

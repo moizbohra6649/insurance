@@ -9,14 +9,14 @@ function fn_getting_vehicle(){
         dataType: 'json',           
         success: function(data) {
             $("#vehicle").html(data.res_data);
-
+            var ids = $('#vehical_list').val().split(',');
             if($("#coverage").val() == 'LIBLLITY' ||  $("#coverage").val() == 'Full Coverage' ){
                 $('#vehicle').attr('multiple' , 'multiple');
                 $("#vehicle").select2({
                     placeholder: "Please Select Vehicle's",
                     maximumSelectionLength: 5
                 });
-                var ids = $('#vehical_list').val().split(',');
+               
                 $('#vehicle').val(ids).trigger('change');
 
             }else{
@@ -26,7 +26,7 @@ function fn_getting_vehicle(){
                     minimumResultsForSearch: Infinity,
                     allowClear: true
                 });
-                $('#vehicle').val($('#vehical_list')).trigger('change');
+                $('#vehicle').val(ids).trigger('change');
             }
         },
         error: function(data) {
@@ -183,7 +183,7 @@ $('#policy_form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                var url = `policyterms.php`;
+                var url = `policyterms.php?policy_id=${data.policy_id}`+;
                 move(`<?=$actual_link?>${url}`);
             }else{
                 $("#submit_btn").html('Submit');

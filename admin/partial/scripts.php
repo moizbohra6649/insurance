@@ -19,31 +19,27 @@
 <script src="assets/js/header-slick.js"></script>
 <!-- Plugins JS Ends-->
 <!-- Theme js-->
-
-
 <script src="assets/js/script.js"></script>
 <script src="assets/js/editor/ckeditor/ckeditor.js"></script>
 <script src="assets/js/editor/ckeditor/adapters/jquery.js"></script>
 <script src="assets/js/editor/ckeditor/styles.js"></script>
+<<<<<<< HEAD
 <script src="assets/js/select2/select2.full.min.js"></script>
 
 
 
+=======
+>>>>>>> c8bb09a51da7e8fec8a9ecf4dce7fd45acf2a193
 <script src="assets/js/moment.js"></script>
 <script src="assets/js/notify/bootstrap-notify.min.js"></script>
 <script src="assets/js/notify/notify-script.js"></script>
 <script src="assets/js/form-validation-custom.js"></script>
 <script src="assets/js/tooltip-init.js"></script>
-
 <script src="assets/js/material-date-range-picker/duDatepicker.min.js"></script>
-
 <script src="assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
 <script src="assets/js/datatable/datatables/datatable.custom.js"></script>
-
-
-
+<script src="assets/js/sweet-alert/sweetalert.min.js"></script>
 <!-- third party js ends -->
-
 <?php include('js/main_js.php'); ?>
 
 <script>
@@ -102,6 +98,30 @@
 
 <script>
     $("input").attr('autocomplete', 'off');
+
+    function fn_from_data (formElement){
+        var formData = new FormData();
+        for (var i = 0; i < formElement.elements.length; i++) {
+        var element = formElement.elements[i];
+        var name = element.name;
+
+        if (name) {
+          if (element.type === 'file') {
+            var files = element.files;
+            for (var j = 0; j < files.length; j++) {
+              formData.append(name, files[j]);
+            }
+          } else if (element.type === 'checkbox' || element.type === 'radio') {
+            if (element.checked) {
+              formData.append(name, element.value);
+            }
+          } else {
+            formData.append(name, element.value);
+          }
+        }
+      }
+      return formData;
+    }
     
     function move(link){
         window.location = link;

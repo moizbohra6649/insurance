@@ -1,4 +1,11 @@
-<?php include('partial/header.php') ?>
+<?php 
+    /* Include PHP File */
+    if (file_exists(dirname(__FILE__) . '/php/service_provider_php.php')) {
+        require_once(dirname(__FILE__) . '/php/service_provider_php.php');
+    }
+
+    include('partial/header.php');
+?>
 
     <main class="main">
 
@@ -22,48 +29,55 @@
                         <h2 class="text-center text-info">Register</h2>
                     </div>
                     <div class="col-sm-6 form-group mb-3">
-                        <label for="name-f">Company Name</label>
-                        <input type="text" class="form-control" name="fname" id="name-f" placeholder="Enter company name." required>
+                        <label for="company_name">Company Name</label>
+                        <input type="text" class="form-control onlytext" name="company_name" id="company_name" placeholder="Enter company name." required>
                     </div>
                     <div class="col-sm-6 form-group mb-3">
-                        <label for="name-l">Owner name</label>
-                        <input type="text" class="form-control" name="lname" id="name-l" placeholder="Enter owner name." required>
+                        <label for="owner_name">Owner name</label>
+                        <input type="text" class="form-control onlytext" name="owner_name" id="owner_name" placeholder="Enter owner name." required>
                     </div>
                     <div class="col-sm-6 form-group mb-3">
-                        <label for="name-l">Username</label>
-                        <input type="text" class="form-control" name="lname" id="name-l" placeholder="Enter owner name." required>
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control alpha_num" name="username" id="username" placeholder="Enter User name." required>
                     </div>
                     <div class="col-sm-6 form-group mb-3">
                         <label for="email">Email</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email." required>
                     </div>
                     <div class="col-sm-6 form-group mb-3">
-                        <label for="number">Mobile Number</label>
-                        <input type="address" class="form-control" name="Locality" id="number" placeholder="Mobile number" required>
+                        <label for="mobile_no">Mobile Number</label>
+                        <input type="text" class="form-control allownumber" minlength="12" maxlength="12" id="mobile_no" name="mobile_no" placeholder="Enter Mobile number." onkeypress="applyPhoneInputRestriction('mobile_no')" required>
                     </div>
                     <div class="col-sm-6 form-group mb-3">
-                        <label for="Business">Business Type</label>
-                        <select class="form-select">
-                            <option>Insurance Serices</option>
-                            <option>Repair & Maintenance</option>
-                            <option>Others</option>
-                        </select>
+                        <label for="address">Address</label>
+                        <textarea class="form-control" rows="1" id="address" name="address" placeholder="" required=""></textarea>
                     </div>
                     <div class="col-sm-6 form-group mb-3">
-                        <label for="Address">Address</label>
-                        <textarea class="form-control" rows="1" id="comment" name="text"></textarea>
-                    </div>
-                    <div class="col-sm-6 form-group mb-2">
-                        <label for="Upload">Upload Business License</label>
-                        <div class="input-group custom-file-button">
-                            <label class="input-group-text" for="inputGroupFile">Your Custom Text</label>
-                            <input type="file" class="form-control" id="inputGroupFile">
+                        <label class="form-label" for="password">Password <span class="text-danger">*</span></label>
+                        <div class="form-input">
+                            <input class="form-control password" type="password" id="password" name="password" required="" minlength="8" maxlength="16" placeholder="*********">
                         </div>
                     </div>
-
-                    <div class="col-sm-12 form-group">
-                        <p><a href="login.html" class="login_btn">Login as a agent</a></p>
+                    <div class="col-sm-6 form-group mb-3">
+                        <label class="form-label" for="confirm_password">Confirm Password <span class="text-danger">*</span></label>
+                        <div class="form-input">
+                            <input class="form-control password" type="password" id="confirm_password" name="confirm_password" required="" minlength="8" maxlength="16" placeholder="*********">
+                        </div>
                     </div>
+                    
+                    <div class="col-sm-6 form-group mb-2">
+                        <label for="profile_image">Profile Picture</label>
+                        <input type="file" class="form-control" id="profile_image" name="profile_image">
+                    </div>
+
+                    <div class="col-sm-6 form-group mb-2">
+                        <label for="business_licence_image">Business License</label>
+                        <input type="file" class="form-control" id="business_licence_image" name="business_licence_image">
+                    </div>
+
+                    <!-- <div class="col-sm-12 form-group">
+                        <p><a href="login.html" class="login_btn">Login as a agent</a></p>
+                    </div> -->
 
                     <div class="col-sm-12 form-group mb-0">
                         <button class="submit_btn mt-2">Submit</button>
@@ -76,8 +90,13 @@
     </main>
 
     <!-- footer start-->
-    <?php include('partial/footer.php') ?>
-    <?php include('partial/scripts.php') ?>
+    <?php include('partial/footer.php');
+    include('partial/scripts.php');
+    /* Include JS File */
+    if (file_exists(dirname(__FILE__) . '/js/service_provider_js.php')) {
+        require_once(dirname(__FILE__) . '/js/service_provider_js.php');
+    }
+    ?>
 
 </body>
 </html>

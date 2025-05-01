@@ -83,6 +83,7 @@ switch ($mode) {
         $driver_id = get_max_id("driver", "driver_id");
         $prefix_driver_id = "DRIVER_" . $driver_id;
         $customer_name = get_value("customer", "name", "where customer_id = '$customer_id'");
+        $select_driver = mysqli_query($conn, "SELECT id FROM driver WHERE customer_id = '$customer_id' " );
     break;
 
     case "INSERT":
@@ -101,8 +102,8 @@ switch ($mode) {
             $error_arr[] = "Customer does not exists.<br/>";
         }
 
-        if(mysqli_num_rows($select_driver) >= 3){
-            $error_arr[] = "Customer have already three Driver exists.<br/>";
+        if(mysqli_num_rows($select_driver) >= 5){
+            $error_arr[] = "Customer have already five Driver exists.<br/>";
         }
         
         if (empty($first_name)) {
@@ -182,6 +183,7 @@ switch ($mode) {
         }else if (!empty($insert_query)) {
             $data["msg"] = "Driver inserted successfully.";
             $data["status"] = "success";
+            $data["id"] = base64_encode($last_inserted_id);
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";
@@ -369,6 +371,7 @@ switch ($mode) {
         }else if (!empty($update_query)) {
             $data["msg"] = "Driver updated successfully.";
             $data["status"] = "success";
+            $data["id"] = base64_encode($id);
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";

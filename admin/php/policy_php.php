@@ -134,8 +134,9 @@ switch ($mode) {
             $data["msg"] = "Commit transaction failed";
             $data["status"] = "error";
         }else if (!empty($insert_query)) {
-            $data["msg"] = "Driver inserted successfully.";
+            $data["msg"] = "Policy inserted successfully.";
             $data["status"] = "success";
+            $data["policy_id"] = base64_encode($last_inserted_id);
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";
@@ -149,7 +150,7 @@ switch ($mode) {
     case "EDIT":
         $local_mode = "INSERT";
         $readonly   = "readonly";
-        $title      = ($mode == "EDIT") ? "Edit Policy" : "View Driver";
+        $title      = ($mode == "EDIT") ? "Edit Policy" : "View Policy";
         
         $select_query = mysqli_query($conn, "SELECT policy.*, customer.name  as customer_name , customer.email  as customer_email , customer.mobile  as customer_mobile
         FROM policy 

@@ -25,14 +25,17 @@ include('partial/loader.php'); ?>
                         <div class="card">
                             <div class="card-body">
                                 <form id="service_charge_form" method="POST" class="needs-validation"  enctype="multipart/form-data"> 
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="service_charge">Service Charge <span class="text-danger">*</span></label>
                                             <input class="form-control allownumber" id="service_charge" name="service_charge" type="text" value="<?=$service_charge?>" maxlength="8" placeholder="Service Charge" required="">
                                             <div class="invalid-feedback">Please fill a Service Charge.</div>
                                         </div>  
                                     </div> 
-                                    <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        <div class="card-body btn-showcase" style="text-align: center;">
+                                            <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
+                                            <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        </div>
                                    
                                 </form>
                             </div>

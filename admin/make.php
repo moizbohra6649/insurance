@@ -28,7 +28,7 @@ include('partial/loader.php'); ?>
                                     <input type="hidden" name="id" value="<?=base64_encode($id)?>" />
                                     <input type="hidden" name="mode" value="<?=$local_mode?>" />
                                 
-                                    <div class="row g-3">
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="make_name">Make <span class="text-danger">*</span></label>
                                             <input class="form-control" id="make_name" name="make_name" type="text" value="<?=$make_name?>" placeholder="Make" required="">
@@ -37,7 +37,10 @@ include('partial/loader.php'); ?>
                                     </div>
                                    
                                     <?php if($mode != "VIEW"){ ?>
-                                    <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        <div class="card-body btn-showcase" style="text-align: center;">
+                                            <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
+                                            <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                        </div>
                                     <?php } ?> 
                                 </form>
                             </div>

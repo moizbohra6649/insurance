@@ -28,11 +28,11 @@ include('partial/loader.php'); ?>
                                 <h5>Policy Term: 6 Month</h5>
                             </div>
                             <div class="card-body">
-                                <div class="row g-3">
+                                <div class="row">
                                     <h6 class="col-md-8 mt-4 mb-2">Vehicles</h6>
                                     <h6 class="col-md-4 mt-4 mb-2">Premium</h6>
                                 </div>
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3">
                                                 2011 Honda I20
                                     </div> 
@@ -42,7 +42,7 @@ include('partial/loader.php'); ?>
                                 </div> 
                                
                                 <hr class="mt-2 mb-2  border-1">
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3">
                                     Base Premium	
                                     </div> 
@@ -50,7 +50,7 @@ include('partial/loader.php'); ?>
                                         $1400.00
                                     </div> 
                                 </div> 
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3">
                                     Additional Coverage Premium	
                                     </div> 
@@ -59,7 +59,7 @@ include('partial/loader.php'); ?>
 
                                     </div> 
                                 </div> 
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3">
                                     Custom Discount	
                                     </div> 
@@ -67,7 +67,7 @@ include('partial/loader.php'); ?>
                                     $0.00
                                     </div> 
                                 </div> 
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3">
                                     Total Fees	
                                     </div> 
@@ -77,7 +77,7 @@ include('partial/loader.php'); ?>
                                     </div> 
                                 </div> 
                                 <hr class="mt-1 mb-1">
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3 fw-bold">
                                     Total Premium:
                                     </div> 
@@ -85,7 +85,7 @@ include('partial/loader.php'); ?>
                                         $1400.00
                                     </div> 
                                 </div> 
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3 fw-bold">
                                     Management Fee:
                                     </div> 
@@ -93,7 +93,7 @@ include('partial/loader.php'); ?>
                                     $25.00
                                     </div> 
                                 </div> 
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3 fw-bold">
                                     Service Price:
                                     </div> 
@@ -101,7 +101,7 @@ include('partial/loader.php'); ?>
                                     $0.00
                                     </div> 
                                 </div> 
-                                <div class="row g-3">
+                                <div class="row">
                                     <div class="col-md-8 mb-3 fw-bold">
                                     Total:
                                     </div> 
@@ -116,7 +116,7 @@ include('partial/loader.php'); ?>
                                 <h5>6 Months Term Pay Plans Options</h5>
                             </div>
                             <div class="card-body">
-                                    <div class="row g-3" style="display:none;">
+                                    <div class="row" style="display:none;">
                                         <div class="col-6 text-md-end border-right">  <input class="form-check-input q1" type="radio" name="q1" value="yes" autocomplete="off" data-bs-original-title="" title="">
                                                 <label class="form-check-label f-w-600" for='q1'>Automatic Recurring Credit Card Payment</label>
                                                
@@ -127,14 +127,14 @@ include('partial/loader.php'); ?>
                                         <label class="form-check-label f-w-600"  for='q1'> Non-Recurring Payment</label>
                                         </div>
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                              <div class="col-12 text-md-start">
                                                 <input class="form-check-input q1" type="radio" name="payt" value="yes" autocomplete="off" data-bs-original-title="" title="">
                                                 <label class="form-check-label" for='q1'>Full Premium Payment</label>
                                             </div> 
                                     </div> 
 
-                                    <div class="row g-3">
+                                    <div class="row">
                                              <div class="col-md-2 mb-3">
                                              Payment: <span class="f-w-600">1</span>
                                             </div> 
@@ -160,7 +160,7 @@ include('partial/loader.php'); ?>
 
                                                 </div> 
                                     </div> 
-                                    <div class="row g-3">
+                                    <div class="row">
                                              <div class="col-md-3 mb-3">
                                             
                                             </div> 
@@ -177,13 +177,13 @@ include('partial/loader.php'); ?>
 
 
 
-                                    <div class="row g-3">
+                                    <div class="row">
                                              <div class="col-12 text-md-start">
                                                 <input class="form-check-input q1" type="radio" name="payt" value="yes" autocomplete="off" data-bs-original-title="" title="">
                                                 <label class="form-check-label" for='q1'>Monthly Premium Payment</label>
                                             </div> 
                                     </div> 
-                                    <div class="row g-3">
+                                    <div class="row">
                                              <div class="col-md-2 mb-3">
                                              Payment: <span class="f-w-600">1</span>
                                             </div> 
@@ -209,7 +209,7 @@ include('partial/loader.php'); ?>
 
                                                 </div> 
                                     </div> 
-                                    <div class="row g-3">
+                                    <div class="row">
                                              <div class="col-md-2 mb-3">
                                              Payment: <span class="f-w-600">2</span>
                                             </div> 
@@ -235,7 +235,7 @@ include('partial/loader.php'); ?>
 
                                                 </div> 
                                     </div> 
-                                    <div class="row g-3">
+                                    <div class="row">
                                              <div class="col-md-2 mb-3">
                                              Payment: <span class="f-w-600">3</span>
                                             </div> 
@@ -261,7 +261,7 @@ include('partial/loader.php'); ?>
 
                                                 </div> 
                                     </div> 
-                                    <div class="row g-3">
+                                    <div class="row">
                                              <div class="col-md-2 mb-3">
                                              Payment: <span class="f-w-600">4</span>
                                             </div> 
@@ -287,7 +287,7 @@ include('partial/loader.php'); ?>
 
                                                 </div> 
                                     </div> 
-                                    <div class="row g-3">
+                                    <div class="row">
                                              <div class="col-md-2 mb-3">
                                              Payment: <span class="f-w-600">5</span>
                                             </div> 
@@ -313,7 +313,7 @@ include('partial/loader.php'); ?>
 
                                                 </div> 
                                     </div> 
-                                    <div class="row g-3">
+                                    <div class="row">
                                              <div class="col-md-2 mb-3">
                                              Payment: <span class="f-w-600">6</span>
                                             </div> 
@@ -339,7 +339,7 @@ include('partial/loader.php'); ?>
 
                                                 </div> 
                                     </div>
-                                    <div class="row g-3">
+                                    <div class="row">
                                              <div class="col-md-3 mb-3">
                                             
                                             </div> 
