@@ -38,17 +38,6 @@ CREATE TABLE `management_charge` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `management_charge`
---
-
-INSERT INTO `management_charge` (`id`, `management_charge_id`, `management_charge`, `status`, `created`, `updated`) VALUES
-(1, 1, '10000', 1, '2025-04-22 14:45:27', '2025-04-22 14:45:36');
-
---
--- Indexes for dumped tables
---
-
---
 -- Indexes for table `management_charge`
 --
 ALTER TABLE `management_charge`
@@ -62,7 +51,7 @@ ALTER TABLE `management_charge`
 -- AUTO_INCREMENT for table `management_charge`
 --
 ALTER TABLE `management_charge`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

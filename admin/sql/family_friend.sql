@@ -65,7 +65,7 @@ ALTER TABLE `family_friend_detail`
 -- AUTO_INCREMENT for table `family_friend_detail`
 --
 ALTER TABLE `family_friend_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

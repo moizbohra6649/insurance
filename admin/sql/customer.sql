@@ -31,6 +31,7 @@ CREATE TABLE `customer` (
   `id` int(11) NOT NULL,
   `customer_id` bigint(22) NOT NULL,
   `prefix_customer_id` varchar(252) NOT NULL,
+  `agent_id` INT(11) NOT NULL,
   `name` varchar(252) NOT NULL,
   `email` varchar(252) NOT NULL,
   `mobile` varchar(15) NOT NULL,
@@ -63,7 +64,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
