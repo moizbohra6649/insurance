@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 02, 2025 at 12:10 AM
+-- Generation Time: May 02, 2025 at 12:12 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,28 +24,36 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `policy_vehicle`
+-- Table structure for table `policy_payment`
 --
 
-CREATE TABLE `policy_vehicle` (
+CREATE TABLE `policy_payment` (
   `id` int(11) NOT NULL,
-  `vehicle_policy_id` int(11) NOT NULL,
-  `vehicle_id` int(11) NOT NULL
+  `policy_id` int(11) NOT NULL,
+  `payment_type` enum('single_time','emi') NOT NULL,
+  `payment_status` enum('pending','success','failed','reject') NOT NULL,
+  `policy_installment` varchar(50) NOT NULL,
+  `premium` int(11) NOT NULL,
+  `billing_fee` int(11) NOT NULL,
+  `roadside_assistance` int(11) NOT NULL,
+  `due_amount` int(11) NOT NULL,
+  `due_date` datetime NOT NULL,
+  `created` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `policy_vehicle`
+-- Dumping data for table `policy_payment`
 --
-
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `policy_vehicle`
+-- Indexes for table `policy_payment`
 --
-ALTER TABLE `policy_vehicle`
+ALTER TABLE `policy_payment`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -53,10 +61,10 @@ ALTER TABLE `policy_vehicle`
 --
 
 --
--- AUTO_INCREMENT for table `policy_vehicle`
+-- AUTO_INCREMENT for table `policy_payment`
 --
-ALTER TABLE `policy_vehicle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+ALTER TABLE `policy_payment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

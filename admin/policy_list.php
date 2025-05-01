@@ -4,10 +4,6 @@ if (file_exists(dirname(__FILE__) . '/php/policy_php.php')) {
     require_once(dirname(__FILE__) . '/php/policy_php.php');
 }
 
-if(empty($customer_id)){
-    move($actual_link."customer_list.php");
-}
-
 include('partial/header.php'); 
 include('partial/loader.php'); ?>
 <!-- page-wrapper Start-->

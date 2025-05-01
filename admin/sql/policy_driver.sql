@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2025 at 12:10 AM
+-- Generation Time: May 02, 2025 at 12:11 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,8 +29,6 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `policy_driver` (
   `id` int(11) NOT NULL,
-  `policy_driver_id` int(11) NOT NULL,
-  `prifix_policy_driver_id` varchar(50) NOT NULL,
   `driver_policy_id` int(11) NOT NULL,
   `driver_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -57,7 +55,7 @@ ALTER TABLE `policy_driver`
 -- AUTO_INCREMENT for table `policy_driver`
 --
 ALTER TABLE `policy_driver`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
