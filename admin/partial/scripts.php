@@ -23,7 +23,13 @@
 <script src="assets/js/editor/ckeditor/ckeditor.js"></script>
 <script src="assets/js/editor/ckeditor/adapters/jquery.js"></script>
 <script src="assets/js/editor/ckeditor/styles.js"></script>
+<<<<<<< HEAD
 <script src="assets/js/select2/select2.full.min.js"></script>
+
+
+
+=======
+>>>>>>> c8bb09a51da7e8fec8a9ecf4dce7fd45acf2a193
 <script src="assets/js/moment.js"></script>
 <script src="assets/js/notify/bootstrap-notify.min.js"></script>
 <script src="assets/js/notify/notify-script.js"></script>
