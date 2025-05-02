@@ -17,6 +17,7 @@ $error_msg             = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"
 
 $customer_id           = (isset($_REQUEST["customer_id"]) && !empty($_REQUEST["customer_id"])) ? base64_decode($_REQUEST["customer_id"]) : 0;
 $customer_name  = '' ;
+$customer_dob  = '' ;
 $customer_email  = '' ;
 $customer_mobile  = '' ;
 $coverage          = (isset($_REQUEST["coverage"])) ? $_REQUEST["coverage"] : "";
@@ -57,8 +58,7 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
     $select_query = "SELECT policy.*, customer.name as customer_name FROM policy 
-    left join customer on customer.id = policy.customer_id
-    WHERE policy.customer_id = '$customer_id'";
+    left join customer on customer.id = policy.customer_id";
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
 }
@@ -71,12 +71,13 @@ switch ($mode) {
         $title      = "Add New Policy"; 
         $policy_id = get_max_id("policy", "policy_id");
         $prefix_policy_id = "POLICY_" . $policy_id;
-        $select_customer = mysqli_query($conn, "SELECT name , email , mobile FROM customer WHERE id = '$customer_id' " );
+        $select_customer = mysqli_query($conn, "SELECT name , email , mobile, date_of_birth FROM customer WHERE id = '$customer_id' " );
         if(mysqli_num_rows($select_customer) > 0){
             $get_data = mysqli_fetch_array($select_customer);
             $customer_name            = $get_data["name"];
             $customer_email            = $get_data["email"];
             $customer_mobile            = $get_data["mobile"];
+            $customer_dob  = $get_data["date_of_birth"];
         } 
 
 
@@ -111,21 +112,16 @@ switch ($mode) {
             exit;
         }
         mysqli_autocommit($conn,FALSE);
-        $insert_query = mysqli_query($conn, "INSERT INTO policy (policy_id, prefix_policy_id, customer_id , policy_coverage, policy_coverage_collision_id, policy_coverage_umpd_id, policy_coverage_rental_id, policy_coverage_towing_id, policy_coverage_deductible_id, is_veh_used_business, is_physical_damage, policy_bi_id, policy_umd_id, policy_medical_id, policy_pd_id, is_roadside_assistance, is_driver_res, is_vehical_listed, is_applicant_sole_registered, is_applicant_other_veh, is_veh_used_business_q, is_veh_listed_ride, is_veh_listed_application_used , is_veh_listed_garaged	,applicant_initials	, applicant_mother_name , policy_status	, status) VALUES ('$policy_id', '$prefix_policy_id', '$customer_id', '$coverage', '$coverage_collision', '$umpd', '$coverage_rental', '$towning_coverage', '$coverage_deductible', '$is_veh_used_business', '$is_physical_damage', '$policy_bi', '$policy_umd', '$policy_medical', '$policy_pd', '$roasass', '$is_driver_res', '$is_vehical_listed', '$is_applicant_sole_registered', '$is_applicant_other_veh', '$is_veh_used_business_q' , '$is_veh_listed_ride' , '$is_veh_listed_application_used' , '$is_veh_listed_garaged' , '$initials' , '$mother_maident_name' , 'pending' , 0)");
+        $insert_query = mysqli_query($conn, "INSERT INTO policy (policy_id, prefix_policy_id, customer_id , policy_coverage, policy_coverage_collision_id, policy_coverage_umpd_id, policy_coverage_rental_id, policy_coverage_towing_id, policy_coverage_deductible_id, is_veh_used_business, is_physical_damage, policy_bi_id, policy_umd_id, policy_medical_id, policy_pd_id, is_roadside_assistance, is_driver_res, is_vehical_listed, is_applicant_sole_registered, is_applicant_other_veh, is_veh_used_business_q, is_veh_listed_ride, is_veh_listed_application_used , is_veh_listed_garaged , policy_status	, status) VALUES ('$policy_id', '$prefix_policy_id', '$customer_id', '$coverage', '$coverage_collision', '$umpd', '$coverage_rental', '$towning_coverage', '$coverage_deductible', '$is_veh_used_business', '$is_physical_damage', '$policy_bi', '$policy_umd', '$policy_medical', '$policy_pd', '$roasass', '$is_driver_res', '$is_vehical_listed', '$is_applicant_sole_registered', '$is_applicant_other_veh', '$is_veh_used_business_q' , '$is_veh_listed_ride' , '$is_veh_listed_application_used' , '$is_veh_listed_garaged' , 'pending' , 0)");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
         if($last_inserted_id > 0 ){
             foreach ($vehicle as $key => $vehiclevalue) {
-                $vehicle_id = get_max_id("policy_vehicle", "policy_vehicle_id");
-                $prefix_vehicle_id = "POLICY_VEHICAL" . $vehicle_id;
-                $insert_query = mysqli_query($conn, "INSERT INTO policy_vehicle (policy_vehicle_id, prifix_policy_vehicle_id, vehicle_policy_id , vehicle_id) VALUES ('$vehicle_id', '$prefix_vehicle_id', '$last_inserted_id', '$vehiclevalue')");
+                $insert_query = mysqli_query($conn, "INSERT INTO policy_vehicle (vehicle_policy_id , vehicle_id) VALUES ('$last_inserted_id', '$vehiclevalue')");
             }
             foreach ($driver as $key => $drivervalue) {
-                $driver_id = get_max_id("policy_driver", "policy_driver_id");
-                $prefix_driver_id = "POLICY_DRIVER" . $driver_id;
-
-                $insert_query = mysqli_query($conn, "INSERT INTO policy_driver (policy_driver_id, prifix_policy_driver_id, driver_policy_id , driver_id) VALUES ('$driver_id', '$prefix_driver_id', '$last_inserted_id', '$drivervalue')");
+                $insert_query = mysqli_query($conn, "INSERT INTO policy_driver (driver_policy_id , driver_id) VALUES ('$last_inserted_id', '$drivervalue')");
             }
         }
         
@@ -152,7 +148,7 @@ switch ($mode) {
         $readonly   = "readonly";
         $title      = ($mode == "EDIT") ? "Edit Policy" : "View Policy";
         
-        $select_query = mysqli_query($conn, "SELECT policy.*, customer.name  as customer_name , customer.email  as customer_email , customer.mobile  as customer_mobile
+        $select_query = mysqli_query($conn, "SELECT policy.*, customer.name  as customer_name , customer.email  as customer_email , customer.mobile  as customer_mobile , customer.id as customer_id , customer.date_of_birth as date_of_birth
         FROM policy 
         left join customer on customer.id = policy.customer_id
         where policy.id = '$id' ");
@@ -162,6 +158,8 @@ switch ($mode) {
             $customer_name            = $get_data["customer_name"];
             $customer_email            = $get_data["customer_email"];
             $customer_mobile            = $get_data["customer_mobile"];
+            $customer_dob  = $get_data["date_of_birth"];
+            $customer_id            = $get_data["customer_id"];
 
             $coverage          = $get_data['policy_coverage'];
             $coverage_collision          = $get_data['policy_coverage_collision_id'];

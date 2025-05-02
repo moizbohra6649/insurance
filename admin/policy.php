@@ -437,16 +437,15 @@ include('partial/loader.php'); ?>
                                         </div>  
                                     </div>  
                                     <div class="row mb-4">
-                                            <label class="col-sm-7 col-form-label" for="initials">Please sign the application by entering applicant's initials:<span class="text-danger">*</span></label>
+                                            <label class="col-sm-7 col-form-label" for="initials">Applicant's Name:</label>
                                             <div class="col-sm-5"> 
-                                                <input class="form-control" id="initials" name="initials" type="text" value="<?= $initials ?>" placeholder="Initials" required="">
-                                                <div class="invalid-feedback">Please fill a applicant's initials.</div>
+                                                <input class="form-control" id="initials" name="initials" type="text" value="<?= $customer_name ?>" placeholder="Initials" readonly>
                                             </div>
                                     </div> 
                                     <div class="row mb-4">
-                                            <label class="col-sm-7 col-form-label" for="mother_maident_name">Please sign the application by entering the applicant’s mother’s maiden name:<span class="text-danger">*</span></label>
+                                            <label class="col-sm-7 col-form-label" for="mother_maident_name">Applicant Dob:</label>
                                             <div class="col-sm-5"> 
-                                                <input class="form-control" id="mother_maident_name" name="mother_maident_name" type="text" value="<?= $mother_maident_name ?>" placeholder="Mother’s Maiden Name" required="">
+                                                <input class="form-control" id="mother_maident_name" name="mother_maident_name" type="text" value="<?= $customer_dob ?>" placeholder="Mother’s Maiden Name" readonly>
                                                 <div class="invalid-feedback">Please fill a applicant's Mother’s Maiden Name.</div>
                                             </div>
                                     </div>   
@@ -533,7 +532,7 @@ include('partial/loader.php'); ?>
                                     $1425.00
                                     </div> 
                                 </div> 
-                                <?php if($mode != "VIEW"){ ?>
+                                <?php if($mode != "VIEW" && $mode != "EDIT"){ ?>
                                         <div class="card-body btn-showcase" style="text-align: center;">
                                             <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
                                             <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>

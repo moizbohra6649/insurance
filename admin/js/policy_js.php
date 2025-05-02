@@ -10,6 +10,7 @@ function fn_getting_vehicle(){
         success: function(data) {
             $("#vehicle").html(data.res_data);
             var ids = $('#vehical_list').val().split(',');
+            var driverids = $('#driver_list').val().split(',');
             if($("#coverage").val() == 'LIBLLITY' ||  $("#coverage").val() == 'Full Coverage' ){
                 $('#vehicle').attr('multiple' , 'multiple');
                 $("#vehicle").select2({
@@ -19,6 +20,13 @@ function fn_getting_vehicle(){
                
                 $('#vehicle').val(ids).trigger('change');
 
+                $('#driver').attr('multiple' , 'multiple');
+                $("#driver").select2({
+                    placeholder: "Please Select driver's",
+                    maximumSelectionLength: 5
+                });
+                $('#driver').val(driverids).trigger('change');
+
             }else{
                 
                 $("#vehicle").select2({
@@ -27,6 +35,15 @@ function fn_getting_vehicle(){
                     allowClear: true
                 });
                 $('#vehicle').val(ids).trigger('change');
+
+                $("#driver").select2({
+                    placeholder: "Please Select driver's",
+                    minimumResultsForSearch: Infinity,
+                    allowClear: true
+                });
+                $('#driver').val(driverids).trigger('change');
+
+                
             }
         },
         error: function(data) {
@@ -183,7 +200,7 @@ $('#policy_form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                var url = `policyterms.php?policy_id=${data.policy_id}`+;
+                var url = `policyterms.php?policy_id=${data.policy_id}`;
                 move(`<?=$actual_link?>${url}`);
             }else{
                 $("#submit_btn").html('Submit');

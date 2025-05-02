@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2025 at 12:10 AM
+-- Generation Time: May 02, 2025 at 12:11 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.2.12
 
@@ -66,6 +66,8 @@ CREATE TABLE `policy` (
   `service_price` int(11) NOT NULL,
   `total` int(11) NOT NULL,
   `policy_status` enum('pending','success','failed','reject','emi') NOT NULL,
+  `effective_from` datetime DEFAULT NULL,
+  `effective_to` datetime DEFAULT NULL,
   `status` int(11) NOT NULL,
   `deleted` int(11) NOT NULL,
   `delete_datetime` datetime DEFAULT NULL,
