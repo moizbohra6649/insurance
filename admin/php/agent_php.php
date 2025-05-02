@@ -37,6 +37,8 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 $from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
 $to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
 $filter_agent_id    = (isset($_REQUEST["filter_agent_id"])) ? $_REQUEST["filter_agent_id"] : "";
+$entry_type        = (isset($_REQUEST["entry_type"])) ? $_REQUEST["entry_type"] : "";
+$filter_status        = (isset($_REQUEST["filter_status"])) ? $_REQUEST["filter_status"] : "All";
 
 $query_count = 0;
 $filter_qry = "";
@@ -70,6 +72,14 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
         $filter_qry .= " AND mobile LIKE '%$mobile_no%' ";
     }
 
+    if($filter_status != "All"){
+        $filter_qry .= " AND status='$filter_status' ";
+    }
+    
+    if(!empty($entry_type)){
+        $filter_qry .= " AND entry_type='$entry_type' ";
+    }
+
 }
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
@@ -77,6 +87,8 @@ if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
 }
+
+$db_entry_type = "requested";
 
 switch ($mode) {
     case "NEW":
@@ -160,7 +172,7 @@ switch ($mode) {
 
         $password_hash =  password_hash($password, PASSWORD_DEFAULT);
 
-        $insert_query = mysqli_query($conn, "INSERT INTO agent (agent_id, prefix_agent_id, username, name, email, mobile, password, hint, profile_image) VALUES ('$agent_id', '$prefix_agent_id', '$username', '$name', '$email', '$mobile_no', '$password_hash', '$password', '$profile_image')");
+        $insert_query = mysqli_query($conn, "INSERT INTO agent (agent_id, prefix_agent_id, username, name, email, mobile, password, hint, profile_image, entry_type) VALUES ('$agent_id', '$prefix_agent_id', '$username', '$name', '$email', '$mobile_no', '$password_hash', '$password', '$profile_image', '$db_entry_type')");
 
         $last_inserted_id = mysqli_insert_id($conn);
 

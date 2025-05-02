@@ -97,6 +97,8 @@ if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
     $query_count = mysqli_num_rows($query_result);
 }
 
+$db_entry_type = "requested";
+
 switch ($mode) {
     case "NEW":
         $local_mode = "INSERT";
@@ -136,7 +138,6 @@ switch ($mode) {
             $error_arr[] = "Please enter a valid Email.<br/>";
         }
 
-
         if (empty($mobile_no)) {
             $error_arr[] = "Please enter Mobile No.<br/>";
         } elseif (strlen($mobile_no) < 12) {
@@ -174,7 +175,6 @@ switch ($mode) {
             exit;
         }
 
-
         if(!empty($profile_image)){
             list($txt, $ext) = explode(".", $profile_image);
             $profile_image = $vendor_id . "_" . time() . "." . $ext;
@@ -192,7 +192,7 @@ switch ($mode) {
 
         $password_hash =  password_hash($password, PASSWORD_DEFAULT);
 
-        $insert_query = mysqli_query($conn, "INSERT INTO vendor (vendor_id, prefix_vendor_id, company_name, name, username, email, address, mobile, password, hint, profile_image, business_license) VALUES ('$vendor_id', '$prefix_vendor_id', '$company_name', '$name', '$username', '$email', '$address', '$mobile_no', '$password_hash', '$password', '$profile_image', '$business_licence_image') ");
+        $insert_query = mysqli_query($conn, "INSERT INTO vendor (vendor_id, prefix_vendor_id, company_name, name, username, email, address, mobile, password, hint, profile_image, business_license, entry_type) VALUES ('$vendor_id', '$prefix_vendor_id', '$company_name', '$name', '$username', '$email', '$address', '$mobile_no', '$password_hash', '$password', '$profile_image', '$business_licence_image', '$db_entry_type') ");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
@@ -351,7 +351,6 @@ switch ($mode) {
         $password_hash =  password_hash($password, PASSWORD_DEFAULT);
 
         $update_vendor = mysqli_query($conn, "UPDATE vendor SET company_name = '$company_name', name = '$name', username = '$username', email = '$email', address = '$address', mobile = '$mobile_no', password = '$password_hash', hint = '$password', profile_image = '$profile_image', business_license = '$business_licence_image', updated = now() WHERE id = $id");
-
 
 
         // Commit transaction

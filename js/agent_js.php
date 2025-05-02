@@ -1,17 +1,13 @@
 <script>
 
-/* ==================================================START Vendor FORM JS CODE================================================== */
-$('#service_provider_form').on('submit', (function(e) {
+/* ==================================================START AGENT FORM JS CODE================================================== */
+$('#agent_form').on('submit', (function(e) {
     e.preventDefault();
 
     var error_arr = [];
 
-    if($("#company_name").val() == ""){
-        error_arr.push("Please enter Company Name.<br/>");
-    }
-
-    if($("#owner_name").val() == ""){
-        error_arr.push("Please enter Owner Name.<br/>");
+    if($("#name").val() == ""){
+        error_arr.push("Please enter Name.<br/>");
     }
 
     if($("#username").val() == ""){
@@ -71,7 +67,7 @@ $('#service_provider_form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                var url = `service_provider_login.php`;
+                var url = `agent_login.php`;
                 move(`<?=$front_end_link?>${url}`);
             }else{
                 $("#submit_btn").html('Submit');
@@ -87,6 +83,6 @@ $('#service_provider_form').on('submit', (function(e) {
     });
 }));
 
-/* ==================================================END Vendor FORM JS CODE================================================== */
+/* ==================================================END AGENT FORM JS CODE================================================== */
 
 </script>
