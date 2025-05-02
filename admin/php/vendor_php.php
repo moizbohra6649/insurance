@@ -42,6 +42,8 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 $from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
 $to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
 $filter_vendor_id  = (isset($_REQUEST["filter_vendor_id"])) ? $_REQUEST["filter_vendor_id"] : "";
+$entry_type        = (isset($_REQUEST["entry_type"])) ? $_REQUEST["entry_type"] : "";
+$filter_status        = (isset($_REQUEST["filter_status"])) ? $_REQUEST["filter_status"] : "All";
 
 $query_count = 0;
 $filter_qry = "";
@@ -73,6 +75,14 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
 
     if(!empty($mobile_no)){
         $filter_qry .= " AND mobile LIKE '%$mobile_no%' ";
+    }
+
+    if($filter_status != "All"){
+        $filter_qry .= " AND status='$filter_status' ";
+    }
+    
+    if(!empty($entry_type)){
+        $filter_qry .= " AND entry_type='$entry_type' ";
     }
 
     // if( ($only_staff == true) || (strtolower($login_role) != strtolower($super_admin_role)) ){
