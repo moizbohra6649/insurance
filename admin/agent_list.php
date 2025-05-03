@@ -57,13 +57,33 @@ include('partial/loader.php'); ?>
                                             </div>
 
                                             <div class="row">
-                                                <div class="mb-3 col-md-6">
+                                                <div class="mb-3 col-md-3">
                                                     <label for="name" class="form-label">Agent Name</label>
                                                     <input type="text" class="form-control" id="name" name="name" placeholder="Agent Name" value="<?=$name?>">
                                                 </div>
-                                                <div class="mb-3 col-md-6">
+                                                <div class="mb-3 col-md-3">
                                                     <label for="mobile_no" class="form-label">Mobile No.</label>
                                                     <input class="form-control allownumber" minlength="12" maxlength="12" id="mobile_no" name="mobile_no" type="text" placeholder="Mobile No." onkeypress="applyPhoneInputRestriction('mobile_no')" value="<?=$mobile_no?>">
+                                                </div>
+                                                <div class="mb-3 col-md-3">
+                                                    <label class="form-label" for="filter_status">Status</label>
+                                                    <div class="form-input">
+                                                        <select class="form-select" name="filter_status" id="filter_status">
+                                                            <option value="All">All</option>
+                                                            <option <?= ($filter_status == "1") ? "selected":''; ?> value="1">Active</option>
+                                                            <option <?= ($filter_status == "0") ? "selected":''; ?> value="0">Deactive</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 col-md-3">
+                                                    <label class="form-label" for="entry_type">Entry From</label>
+                                                    <div class="form-input">
+                                                        <select class="form-select" name="entry_type" id="entry_type">
+                                                            <option value="">All</option>
+                                                            <option <?= ($entry_type == "manually") ? "selected":''; ?> value="manually">Manually</option>
+                                                            <option <?= ($entry_type == "requested") ? "selected":''; ?> value="requested">Requested</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
 
