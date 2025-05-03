@@ -1,8 +1,13 @@
 <?php 
 /* Include PHP File */
-if (file_exists(dirname(__FILE__) . '/php/agent_php.php')) {
-    require_once(dirname(__FILE__) . '/php/agent_php.php');
+if (file_exists(dirname(__FILE__) . '/php/transaction_history_php.php')) {
+    require_once(dirname(__FILE__) . '/php/transaction_history_php.php');
 }
+
+if(empty($user_id)){
+    move($actual_link."agent_list.php");
+}
+
 
 include('partial/header.php'); 
 include('partial/loader.php'); ?>
@@ -30,7 +35,7 @@ include('partial/loader.php'); ?>
                                     </div>
                                     <div class="col-sm-6 col-auto">
                                         <div class="text-sm-end">
-                                            <a href="<?=$actual_link?>agent.php" class="btn btn-primary mb-2"><i class="icofont icofont-plus"></i> Add New Agent User</a>
+                                            <a href="<?=$actual_link?>deposit.php?user_id=<?= base64_encode($user_id) ?>" class="btn btn-primary mb-2"><i class="icofont icofont-plus"></i> Deposit Amount</a>
                                         </div>
                                     </div>
                                 </div>
@@ -51,39 +56,19 @@ include('partial/loader.php'); ?>
                                                         <input type="text" id="range-to" name="to_date" value="<?=convert_db_date_readable($to_date);?>" data-value="<?=$to_date?>" class="form-control" readonly>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="filter_agent_id" class="form-label">Agent ID</label>
-                                                    <input type="text" class="form-control allownumber" id="filter_agent_id" name="filter_agent_id" placeholder="Agent ID" maxlength="8" value="<?=$filter_agent_id?>">
+                                                    <label for="filter_agent_id" class="form-label">Transaction ID</label>
+                                                    <input type="text" class="form-control alpha_num" id="filter_agent_id" name="filter_agent_id" placeholder="Transaction ID" maxlength="8" value="<?=$filter_agent_id?>">
                                                 </div>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="mb-3 col-md-3">
-                                                    <label for="name" class="form-label">Agent Name</label>
+                                            <div class="row" style ="display:none;">
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="name" class="form-label">Transaction Name</label>
                                                     <input type="text" class="form-control" id="name" name="name" placeholder="Agent Name" value="<?=$name?>">
                                                 </div>
-                                                <div class="mb-3 col-md-3">
+                                                <div class="mb-3 col-md-6">
                                                     <label for="mobile_no" class="form-label">Mobile No.</label>
                                                     <input class="form-control allownumber" minlength="12" maxlength="12" id="mobile_no" name="mobile_no" type="text" placeholder="Mobile No." onkeypress="applyPhoneInputRestriction('mobile_no')" value="<?=$mobile_no?>">
-                                                </div>
-                                                <div class="mb-3 col-md-3">
-                                                    <label class="form-label" for="filter_status">Status</label>
-                                                    <div class="form-input">
-                                                        <select class="form-select" name="filter_status" id="filter_status">
-                                                            <option value="All">All</option>
-                                                            <option <?= ($filter_status == "1") ? "selected":''; ?> value="1">Active</option>
-                                                            <option <?= ($filter_status == "0") ? "selected":''; ?> value="0">Deactive</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 col-md-3">
-                                                    <label class="form-label" for="entry_type">Entry From</label>
-                                                    <div class="form-input">
-                                                        <select class="form-select" name="entry_type" id="entry_type">
-                                                            <option value="">All</option>
-                                                            <option <?= ($entry_type == "manually") ? "selected":''; ?> value="manually">Manually</option>
-                                                            <option <?= ($entry_type == "requested") ? "selected":''; ?> value="requested">Requested</option>
-                                                        </select>
-                                                    </div>
                                                 </div>
                                             </div>
 
@@ -113,50 +98,37 @@ include('partial/loader.php'); ?>
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: center;">S.No.</th>
-                                                    <th style="text-align: center;">Agent ID</th>
-                                                    <th>Agent Name</th>
-                                                    <th>Email</th>
-                                                    <th>Mobile No.</th>
+                                                    <th style="text-align: center;">User Name</th>
+                                                    <th>Transaction ID </th>
+                                                    <th>Transaction Type </th>
+                                                    <th>Transaction Date</th>
+                                                    <th style="text-align: center;">Amount</th> 
                                                     <th style="text-align: center;">Create Date</th> 
-                                                    <th style="text-align: center;">Status</th>
-                                                    <th style="text-align: center;">Action</th>
+                                                    <!-- <th style="text-align: center;">Action</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php 
                                                     $i = 1;
                                                     while($get_data = mysqli_fetch_array($query_result)){
-
                                                         $id = $get_data["id"];
-                                                        $profile_image_url = $upload_folder . "/profile_picture.jpg";
-                                                        if(!empty($get_data["profile_image"]) && file_exists(dirname(__FILE__) . '/' . $upload_folder . '/agent/' . $get_data["profile_image"])){
-                                                            $profile_image_url = $upload_folder . "/agent/$get_data[profile_image]";
-                                                        }
+                                                        
                                                 ?>
                                                 <tr>
                                                     <td align="center"> <?=$i++?> </td>
-                                                    <td align="center"> <?=$get_data["agent_id"]?> </td>
+                                                    <td align="center"> <?=$get_data["name"]?> </td>
                                                     <td class="table-user">
-                                                        <img src="<?=$profile_image_url?>" alt="Profile Picture" class="me-2 rounded-circle" style="cursor:pointer;" onclick="image_preview('image_preview', 'src_path', '<?=$profile_image_url?>', 'image_preview_label', 'Profile Picture Preview');">
-                                                        <a href="javascript:void(0);" class="text-body fw-semibold"><?=$get_data["name"]?></a>
+                                                     <?=$get_data["transaction_id"]?>
                                                     </td>
-                                                    <td> <?=$get_data["email"]?> </td>
-                                                    <td> <?=$get_data["mobile"]?> </td>
-                                                    <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
-                                                    <td align="center">
-                                                        <div class="media-body text-end icon-state">
-                                                            <label class="switch">
-                                                                <input type="checkbox" <?=(!empty($get_data["status"])) ? "checked" : "" ; ?> class="status" id="status_<?=($id)?>" onchange="fn_status_change('<?=base64_encode($id)?>');"><span class="switch-state"></span>
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td align="center">
-                                                        <a href="<?=$actual_link?>agent.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
-                                                        <a href="<?=$actual_link?>agent.php?id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
-                                                        <a href="<?=$actual_link?>transaction_history_list.php?user_id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"> <i class="icofont icofont-wallet"></i></a>
-                                                </i>
-                                                        <!-- <a href="javascript:void(0);" class="action-icon m-2"> <i class="mdi mdi-delete"></i></a> -->
-                                                    </td>
+                                                    <td> <?=$get_data["transaction_type"]?> </td>
+                                                    <td> <?=convert_db_date_readable($get_data["transaction_date"])?> </td>
+                                                    <td align="center"> <?= $get_data["amount"] ?> </td>
+                                                    <td> <?=convert_db_date_readable($get_data["created"])?> </td>
+                                                    
+                                                    <!-- <td align="center">
+                                                        <a href="<?=$actual_link?>deposit.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
+                                                      
+                                                    </td> -->
                                                 </tr>
                                                 <?php } ?>
                                             </tbody>
@@ -180,8 +152,8 @@ include('partial/loader.php'); ?>
 
 <?php include('partial/scripts.php');
     /* Include JS File */
-    if (file_exists(dirname(__FILE__) . '/js/agent_js.php')) {
-        require_once(dirname(__FILE__) . '/js/agent_js.php');
+    if (file_exists(dirname(__FILE__) . '/js/transaction_history_js.php')) {
+        require_once(dirname(__FILE__) . '/js/transaction_history_js.php');
     }
 ?>
 </body>
