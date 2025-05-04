@@ -11,3 +11,7 @@ ALTER TABLE `make` ADD `make_origin` VARCHAR(252) NULL AFTER `make_name`;
 ALTER TABLE `vendor` ADD `entry_type` VARCHAR(252) NOT NULL DEFAULT 'manually' COMMENT 'manually = if superadmin add this vendor\r\nrequested = Vendor can request as a vendor register by fronend.' AFTER `business_license`;
 
 ALTER TABLE `agent` ADD `entry_type` VARCHAR(252) NOT NULL DEFAULT 'manually' COMMENT 'manually = if superadmin add this agent\r\nrequested = Vendor can request as a agent register by fronend.' AFTER `profile_image`;
+-- for wallet effect
+ALTER TABLE agent 
+ADD total_earning BIGINT(20) NOT NULL DEFAULT 0,
+ADD wallet_amount BIGINT(20) NOT NULL DEFAULT 0;

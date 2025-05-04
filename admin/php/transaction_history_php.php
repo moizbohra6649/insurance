@@ -16,7 +16,7 @@ $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 
 $user_id         = (isset($_REQUEST["user_id"]) && !empty($_REQUEST["user_id"])) ? base64_decode($_REQUEST["user_id"]) : 0;
-$transaction_date         = (isset($_REQUEST["tra_date"]) && !empty($_REQUEST["tra_date"])) ? convert_readable_date_db($_REQUEST["tra_date"]) : "";
+$transaction_date         = (isset($_REQUEST["tra_date"]) && !empty($_REQUEST["tra_date"])) ? convert_readable_date_db($_REQUEST["tra_date"]) : date("F j, Y");;
 $transaction_type               = (isset($_REQUEST["tra_type"])) ? $_REQUEST["tra_type"] : '';
 $transaction_id               = (isset($_REQUEST["tra_id"])) ? $_REQUEST["tra_id"] : "";
 $amount                  = (isset($_REQUEST["amount"])) ? $_REQUEST["amount"] : 0 ;
@@ -79,8 +79,8 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
 }
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
-    $select_query = "SELECT wallet.id, wallet.wallet_id, wallet.wallet_user_id, wallet.transaction_type, wallet.transaction_date, wallet.transaction_id, wallet.amount , wallet.created , agent.name as name
-   FROM wallet  left join agent on wallet.wallet_user_id = agent.id  WHERE 1=1 ".$filter_qry;
+    $select_query = "SELECT wallet.id, wallet.wallet_id, wallet.wallet_agent_id, wallet.transaction_type, wallet.transaction_date, wallet.transaction_id, wallet.amount , wallet.created , agent.name as name
+   FROM wallet  left join agent on wallet.wallet_agent_id = agent.id  WHERE 1=1 ".$filter_qry;
     
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
@@ -92,8 +92,8 @@ switch ($mode) {
     case "NEW":
         $local_mode = "INSERT";
         $readonly   = "";
-        $title      = "Deposite"; 
-        $breadcrumb_title      = "Deposite"; 
+        $title      = "Deposit"; 
+        $breadcrumb_title      = "Deposit"; 
         $wallet_id = get_max_id("wallet", "wallet_id");
 
     break;
@@ -103,11 +103,12 @@ switch ($mode) {
         $error_arr = [];
         
         $wallet_id = get_max_id("wallet", "wallet_id");
-        // $select_agent_id = mysqli_query($conn, "SELECT id FROM agent WHERE id = $user_id " );
+        $select_agent_id = mysqli_query($conn, "SELECT id FROM agent WHERE id = '$user_id' " );
 
-        // if(mysqli_num_rows($select_agent_id) > 0){
-        //     $error_arr[] = "This Agent Does Not Exist.<br/>";
-        // }
+        if(mysqli_num_rows($select_agent_id) <= 0){
+            $error_arr[] = "This Agent Does Not Exist.<br/>";
+        }
+        
         if (!empty($error_arr)) {
             $error_txt = implode('', $error_arr);
             $data["msg"] = $error_txt;
@@ -117,16 +118,20 @@ switch ($mode) {
         }
 
         mysqli_autocommit($conn,FALSE);
-        $insert_query = mysqli_query($conn, "INSERT INTO wallet (wallet_id, wallet_user_id , transaction_type , transaction_date , transaction_id , amount , debit_credit_flag) VALUES ('$wallet_id', $user_id , '$transaction_type', '$transaction_date', '$transaction_id' , $amount , 'debit')");
+        $insert_query = mysqli_query($conn, "INSERT INTO wallet (wallet_id, wallet_agent_id , transaction_type , transaction_date , transaction_id , amount , debit_credit_flag) VALUES ('$wallet_id', $user_id , '$transaction_type', '$transaction_date', '$transaction_id' , $amount , 'debit')");
 
         $last_inserted_id = mysqli_insert_id($conn);
+
+        if($last_inserted_id > 0 ){
+            $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount + $amount WHERE id = $user_id");
+        }
 
         // Commit transaction
         if (!mysqli_commit($conn)) {
             $data["msg"] = "Commit transaction failed";
             $data["status"] = "error";
         }else if (!empty($insert_query)) {
-            $data["msg"] = "Amount Deposite inserted successfully.";
+            $data["msg"] = "Amount Deposit inserted successfully.";
             $data["status"] = "success";
         } else {
             $data["msg"] = "Query error please try again later.";

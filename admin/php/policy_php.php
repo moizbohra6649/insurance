@@ -77,7 +77,7 @@ switch ($mode) {
             $customer_name            = $get_data["name"];
             $customer_email            = $get_data["email"];
             $customer_mobile            = $get_data["mobile"];
-            $customer_dob  = $get_data["date_of_birth"];
+            $customer_dob  = date("F j, Y", strtotime($get_data["date_of_birth"])); ;
         } 
 
 

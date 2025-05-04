@@ -27,7 +27,34 @@ include('partial/loader.php'); ?>
                 <div class="row starter-main">
                     <div class="col-sm-12">
                     <form id="policy_form" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
-                        <div class="card">
+                         <div class="card">
+                            <div class="card-header">
+                                <h5>Customer</h5>
+                            </div>
+                            <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="customer_name">Customer Name</label>
+                                    <div class="form-input">
+                                        <input class="form-control" id="customer_name" name="customer_name" type="text" value="<?=$customer_name?>" placeholder="Customer Name" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="customer_name">Customer Email</label>
+                                    <div class="form-input">
+                                        <input class="form-control" id="customer_email" name="customer_email" type="text" value="<?=$customer_email?>" placeholder="Customer Email" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="customer_mobile">Customer Mobile </label>
+                                    <div class="form-input">
+                                        <input class="form-control" id="customer_mobile" name="customer_mobile" type="text" value="<?= $customer_mobile ?>" placeholder="Customer Mobile" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+                            <div class="card">
                             <div class="card-header">
                                 <h5>Liability Quote</h5>
                             </div>
@@ -35,28 +62,6 @@ include('partial/loader.php'); ?>
                                 <input type="hidden" name="id" value="<?=base64_encode($id)?>" />
                                 <input type="hidden" name="customer_id" id = "customer_id" value="<?=base64_encode($customer_id)?>" />
                                 <input type="hidden" name="mode" value="<?=$local_mode?>" />
-                                    <h6>Customer</h6>
-                                    <hr class="mt-4 mb-4">
-                                    <div class="row">
-                                        <div class="col-md-4 mb-3">
-                                            <label class="form-label" for="customer_name">Customer Name</label>
-                                            <div class="form-input">
-                                                <input class="form-control" id="customer_name" name="customer_name" type="text" value="<?=$customer_name?>" placeholder="Customer Name" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label class="form-label" for="customer_name">Customer Email</label>
-                                            <div class="form-input">
-                                                <input class="form-control" id="customer_email" name="customer_email" type="text" value="<?=$customer_email?>" placeholder="Customer Email" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label class="form-label" for="customer_mobile">Customer Mobile </label>
-                                            <div class="form-input">
-                                                <input class="form-control" id="customer_mobile" name="customer_mobile" type="text" value="<?= $customer_mobile ?>" placeholder="Customer Mobile" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <h6 class="mt-4">Coverage</h6>
                                     <hr class="mt-4 mb-4">
                                     <div class="row">
@@ -66,8 +71,8 @@ include('partial/loader.php'); ?>
                                                 <select class="form-select" name="coverage" id="coverage">
                                                     <option value="">Please Select Coverage</option>
                                                     <option value="LIBLLITY" <?= ($coverage == 'LIBLLITY' ) ? 'selected' : '';  ?>>Libllity</option>
-                                                    <option value="Full Coverage">Full Coverage</option>
-                                                    <option value="Non Owner"> Non Owner</option>
+                                                    <option value="Full Coverage" <?= ($coverage == 'Full Coverage' ) ? 'selected' : '';  ?>>Full Coverage</option>
+                                                    <option value="Non Owner" <?= ($coverage == 'Non Owner' ) ? 'selected' : '';  ?>> Non Owner</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -532,6 +537,15 @@ include('partial/loader.php'); ?>
                                     $1425.00
                                     </div> 
                                 </div> 
+                                <input type="hidden" name="premium" id="premium" value="" autocomplete="off" >
+                                <input type="hidden" name="base_premium" id="base_premium" value="" autocomplete="off" >
+                                <input type="hidden" name="additional_coverage_premium" id="additional_coverage_premium" value="" autocomplete="off" >
+                                <input type="hidden" name="custom_discount" id="custom_discount" value="" autocomplete="off" >
+                                <input type="hidden" name="total_fees" id="total_fees" value="" autocomplete="off" >
+                                <input type="hidden" name="total_premium" id="total_premium" value="" autocomplete="off" >
+                                <input type="hidden" name="management_fee" id="management_fee" value="" autocomplete="off" >
+                                <input type="hidden" name="service_price" id="service_price" value="" autocomplete="off" >
+                                <input type="hidden" name="total" id="total" value="" autocomplete="off" >
                                 <?php if($mode != "VIEW" && $mode != "EDIT"){ ?>
                                         <div class="card-body btn-showcase" style="text-align: center;">
                                             <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>

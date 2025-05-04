@@ -1,5 +1,13 @@
 <script>
 
+$('#tra_type').on('change', (function(e) {
+    if($(this).val() == 'offline'){
+        $('.transacton_id').hide();
+    }else{
+        $('.transacton_id').show();
+    }
+    
+}));
 /* ==================================================START STAFF FORM JS CODE================================================== */
 $('#deposit_form').on('submit', (function(e) {
     e.preventDefault();
@@ -13,9 +21,11 @@ $('#deposit_form').on('submit', (function(e) {
     if($(".tra_date").val() == ""){
         error_arr.push("Please enter Transaction Date.<br/>");
     }
+    if($('#tra_type').val() != 'offline'){
+        if($("#tra_id").val() == ""){
+            error_arr.push("Please enter Transaction ID.<br/>");
+        }
 
-    if($("#tra_id").val() == ""){
-        error_arr.push("Please enter Transaction ID.<br/>");
     }
     if(parseInt($("#amount").val()) <= 0){
         error_arr.push("Please enter Amount.<br/>");
@@ -58,8 +68,6 @@ $('#deposit_form').on('submit', (function(e) {
         error: function(data) {
             $("#submit_btn").html('Submit');
             $("#submit_btn").removeAttr('disabled');
-            console.log("error");
-            console.log(data);
         }
     });
 }));
@@ -76,12 +84,6 @@ function fn_search_filter(){
         return false;
     }
     return true;
-}
-
-function remove_image(){
-    $("#image_preview_div").css('display', 'none');
-    $("#image_input_div").css('display', 'block');
-    $("#delete_image").val('true');
 }
 
 /* ==================================================END STAFF FORM JS CODE================================================== */

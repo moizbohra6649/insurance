@@ -98,13 +98,12 @@ include('partial/loader.php'); ?>
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: center;">S.No.</th>
-                                                    <th style="text-align: center;">User Name</th>
+                                                    <th style="text-align: center;">Agent Name</th>
                                                     <th>Transaction ID </th>
                                                     <th>Transaction Type </th>
                                                     <th>Transaction Date</th>
                                                     <th style="text-align: center;">Amount</th> 
                                                     <th style="text-align: center;">Create Date</th> 
-                                                    <!-- <th style="text-align: center;">Action</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
