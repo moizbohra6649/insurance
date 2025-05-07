@@ -1,0 +1,150 @@
+<?php 
+    /* Include PHP File */
+    if (file_exists(dirname(__FILE__) . '/php/join-with-us-php.php')) {
+        require_once(dirname(__FILE__) . '/php/join-with-us-php.php');
+    }
+
+    include('partial/header.php');
+?> 
+  <main class="main">
+    <!-- Starter Section Section -->
+    <section id="starter-section" class="starter-section section">
+      <!-- Section Title -->
+      <div class="container text-center section-title2" data-aos="fade-up">
+        <h2>Register</h2>
+        <p>
+          <span>Home <i class="bi bi-chevron-right"></i> Register </span>
+        </p>
+      </div>
+      <!-- End Section Title -->
+    </section>
+    <!-- /Starter Section Section -->
+    <div class="container mt_set">
+      <div class="form_w">
+        <h2>Create Account</h2>
+        <ul class="nav nav-pills mb-3 border-bottom border-2 justify-content-center" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-primary fw-semibold active position-relative" id="service-provider-form-tab" data-bs-toggle="pill" data-bs-target="#service-provider-form" type="button" role="tab" aria-controls="service-provider-form" aria-selected="true">Become a service provider</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-primary fw-semibold position-relative" id="agent-form-tab" data-bs-toggle="pill" data-bs-target="#agent-form" type="button" role="tab" aria-controls="agent-form" aria-selected="false">Become a agent</button>
+          </li>
+        </ul>
+        <div class="tab-content p-3" id="pills-tabContent">
+          
+          <form class="tab-pane fade show active" id="service-provider-form" role="tabpanel" aria-labelledby="service-provider-form-tab">
+            <div class="col-sm-12 form-group mb-3">
+                <label for="company_name">Company Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control onlytext" name="company_name" id="company_name" placeholder="Enter Company Name." required>
+            </div>
+            <div class="col-sm-12 form-group mb-3">
+                <label for="name">Owner Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control onlytext" name="name" id="name" placeholder="Enter Owner Name." required>
+            </div>
+            <div class="col-sm-12 form-group mb-3">
+                <label for="username">Username <span class="text-danger">*</span></label>
+                <input type="text" class="form-control alpha_num" name="username" id="username" placeholder="Enter Username." required>
+            </div>
+            <div class="col-sm-12 form-group mb-3">
+                <label for="email">Email <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Enter your Email." required>
+            </div>
+            <div class="col-sm-12 form-group mb-3">
+                <label for="mobile_no">Mobile Number <span class="text-danger">*</span></label>
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" id="mobile_no" name="mobile_no" placeholder="Enter Mobile Number." onkeypress="applyPhoneInputRestriction('mobile_no')" required>
+            </div>
+            <div class="col-sm-12 form-group mb-3">
+                <label for="address">Address</label>
+                <textarea class="form-control" rows="1" id="address" name="address" placeholder=""></textarea>
+            </div>
+            <div class="col-sm-12 form-group mb-3">
+                <label class="form-label" for="password">Password <span class="text-danger">*</span></label>
+                <div class="form-input">
+                    <input class="form-control password" type="password" id="password" name="password" required minlength="8" maxlength="16" placeholder="*********">
+                </div>
+            </div>
+            <div class="col-sm-12 form-group mb-3">
+                <label class="form-label" for="confirm_password">Confirm Password <span class="text-danger">*</span></label>
+                <div class="form-input">
+                    <input class="form-control password" type="password" id="confirm_password" name="confirm_password" required minlength="8" maxlength="16" placeholder="*********">
+                </div>
+            </div>
+            
+            <div class="col-sm-12 form-group mb-3">
+                <label for="profile_image">Profile Picture</label>
+                <input type="file" class="form-control" id="profile_image" name="profile_image">
+            </div>
+
+            <div class="col-sm-12 form-group mb-3">
+                <label for="business_licence_image">Business License</label>
+                <input type="file" class="form-control" id="business_licence_image" name="business_licence_image">
+            </div>
+            <div class="col-sm-12 form-group">
+              <p>
+                <a href="service-provider-login.php" class="login_btn">Login as a service provider</a>
+              </p>
+            </div>
+            <div class="col-sm-12 form-group mb-0">
+              <button id="service_provider_submit_btn" type="submit" class="submit_btn mt-2">Submit</button>
+            </div>
+          </form>
+        
+        
+          <form class="tab-pane fade" id="agent-form" role="tabpanel" aria-labelledby="agent-form-tab">
+            <div class="col-sm-12 form-group mb-3">
+                <label for="name">Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control onlytext" name="name" id="name" placeholder="Enter Name." required>
+            </div>
+            <div class="col-sm-12 form-group mb-3">
+                <label for="username">Username <span class="text-danger">*</span></label>
+                <input type="text" class="form-control alpha_num" name="username" id="username" placeholder="Enter Username." required>
+            </div>
+            <div class="col-sm-12 form-group mb-3">
+                <label for="email">Email <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Enter your Email." required>
+            </div>
+            <div class="col-sm-12 form-group mb-3">
+                <label for="mobile_no">Mobile Number <span class="text-danger">*</span></label>
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" id="mobile_no" name="mobile_no" placeholder="Enter Mobile Number." onkeypress="applyPhoneInputRestriction('mobile_no')" required>
+            </div>
+            <div class="col-sm-12 form-group mb-3">
+                <label class="form-label" for="password">Password <span class="text-danger">*</span></label>
+                <div class="form-input">
+                    <input class="form-control password" type="password" id="password" name="password" required minlength="8" maxlength="16" placeholder="*********">
+                </div>
+            </div>
+            <div class="col-sm-12 form-group mb-3">
+                <label class="form-label" for="confirm_password">Confirm Password <span class="text-danger">*</span></label>
+                <div class="form-input">
+                    <input class="form-control password" type="password" id="confirm_password" name="confirm_password" required minlength="8" maxlength="16" placeholder="*********">
+                </div>
+            </div>
+            
+            <div class="col-sm-12 form-group mb-3">
+                <label for="profile_image">Profile Picture</label>
+                <input type="file" class="form-control" id="profile_image" name="profile_image">
+            </div>
+            <div class="col-sm-12 form-group">
+              <p>
+                <a href="agent-login.php" class="login_btn">Login as a agent</a>
+              </p>
+            </div>
+            <div class="col-sm-12 form-group mb-0">
+              <button id="agent_submit_btn" type="submit" class="submit_btn mt-2">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- footer start--> 
+  <?php 
+    include('partial/footer.php');
+    include('partial/scripts.php');
+    /* Include JS File */
+    if (file_exists(dirname(__FILE__) . '/js/join-with-us-js.php')) {
+        require_once(dirname(__FILE__) . '/js/join-with-us-js.php');
+    }
+  ?> 
+</body>
+</html>
