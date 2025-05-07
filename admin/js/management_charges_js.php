@@ -38,7 +38,7 @@ $('#management_charge_form').on('submit', (function(e) {
             
             if(data.status == "success"){
                 var url = `management_charges.php`;
-                move(`<?=$actual_link?>${url}`);
+                setTimeout(function() { move(`<?=$actual_link?>${url}`); }, 1000);
             }else{
                 $("#submit_btn").html('Submit');
                 $("#submit_btn").removeAttr('disabled');

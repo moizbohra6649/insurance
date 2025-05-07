@@ -45,7 +45,7 @@ $('#lofin-form').on('submit', (function(e) {
             
             if(data.status == "success"){
                 var url = `service-provider-login.php`;
-                move(`<?=$front_end_link?>${url}`);
+                setTimeout(function() { move(`<?=$front_end_link?>${url}`); }, 1000);
             }else{
                 $("#submit_btn").html('Submit');
                 $("#submit_btn").removeAttr('disabled');

@@ -59,7 +59,7 @@ $('#deposit_form').on('submit', (function(e) {
             
             if(data.status == "success"){
                 var url = `transaction_history_list.php?user_id=${$('#user_id').val()}`;
-                move(`<?=$actual_link?>${url}`);
+                setTimeout(function() { move(`<?=$actual_link?>${url}`); }, 1000);
             }else{
                 $("#submit_btn").html('Submit');
                 $("#submit_btn").removeAttr('disabled');
