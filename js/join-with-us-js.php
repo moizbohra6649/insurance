@@ -2,45 +2,47 @@
 
 /* ==================================================START Vendor FORM JS CODE================================================== */
 $('#service-provider-form').on('submit', (function(e) {
+
     e.preventDefault();
 
+    var formData = new FormData(this);
     var error_arr = [];
 
-    if($("#company_name").val() == ""){
+    if(formData.get("company_name") == ""){
         error_arr.push("Please enter Company Name.<br/>");
     }
 
-    if($("#name").val() == ""){
+    if(formData.get("name") == ""){
         error_arr.push("Please enter Owner Name.<br/>");
     }
 
-    if($("#username").val() == ""){
+    if(formData.get("username") == ""){
         error_arr.push("Please enter Username.<br/>");
     }
 
-    if($("#email").val() == ""){
+    if(formData.get("email") == ""){
         error_arr.push("Please enter Email.<br/>");
-    }else if (isEmail($("#email").val()) == false) {
+    }else if (isEmail(formData.get("email")) == false) {
         error_arr.push("Please enter a valid Email.<br/>");
     }
 
-    if($("#mobile_no").val() == ""){
+    if(formData.get("mobile_no") == ""){
         error_arr.push("Please enter Mobile No.<br/>");
-    }else if($("#mobile_no").val().length < 12){
+    }else if(formData.get("mobile_no").length < 12){
         error_arr.push("Please enter a valid Mobile No.<br/>");
     }
 
-    if($("#password").val() == ""){
+    if(formData.get("password") == ""){
         error_arr.push("Please enter Password.<br/>");
-    }else if($("#password").val().length < 8){
+    }else if(formData.get("password").length < 8){
         error_arr.push("Please enter a valid Password.<br/>");
     }
 
-    if($("#confirm_password").val() == ""){
+    if(formData.get("confirm_password") == ""){
         error_arr.push("Please enter Confirm Password.<br/>");
-    }else if($("#confirm_password").val().length < 8){
+    }else if(formData.get("confirm_password").length < 8){
         error_arr.push("Please enter a valid Confirm Password.<br/>");
-    }else if($("#password").val() != $("#confirm_password").val()){
+    }else if(formData.get("password") != formData.get("confirm_password")){
         error_arr.push("Both Passwords do not match.<br/>");
     }
 
@@ -50,7 +52,6 @@ $('#service-provider-form').on('submit', (function(e) {
         return false;
     }
 
-    var formData = new FormData(this);
     formData.append('form_request', 'service_provider');
     $.ajax({
         type: 'POST',
@@ -72,7 +73,7 @@ $('#service-provider-form').on('submit', (function(e) {
             
             if(data.status == "success"){
                 var url = `service-provider-login.php`;
-                move(`<?=$front_end_link?>${url}`);
+                setTimeout(function() { move(`<?=$front_end_link?>${url}`); }, 1000);
             }else{
                 $("#service_provider_submit_btn").html('Submit');
                 $("#service_provider_submit_btn").removeAttr('disabled');
@@ -91,41 +92,43 @@ $('#service-provider-form').on('submit', (function(e) {
 
 /* ==================================================START AGENT FORM JS CODE================================================== */
 $('#agent-form').on('submit', (function(e) {
+
     e.preventDefault();
 
+    var formData = new FormData(this);
     var error_arr = [];
 
-    if($("#name").val() == ""){
+    if(formData.get("name") == ""){
         error_arr.push("Please enter Name.<br/>");
     }
 
-    if($("#username").val() == ""){
+    if(formData.get("username") == ""){
         error_arr.push("Please enter Username.<br/>");
     }
 
-    if($("#email").val() == ""){
+    if(formData.get("email") == ""){
         error_arr.push("Please enter Email.<br/>");
-    }else if (isEmail($("#email").val()) == false) {
+    }else if (isEmail(formData.get("email")) == false) {
         error_arr.push("Please enter a valid Email.<br/>");
     }
 
-    if($("#mobile_no").val() == ""){
+    if(formData.get("mobile_no") == ""){
         error_arr.push("Please enter Mobile No.<br/>");
-    }else if($("#mobile_no").val().length < 12){
+    }else if(formData.get("mobile_no").length < 12){
         error_arr.push("Please enter a valid Mobile No.<br/>");
     }
 
-    if($("#password").val() == ""){
+    if(formData.get("password") == ""){
         error_arr.push("Please enter Password.<br/>");
-    }else if($("#password").val().length < 8){
+    }else if(formData.get("password").length < 8){
         error_arr.push("Please enter a valid Password.<br/>");
     }
 
-    if($("#confirm_password").val() == ""){
+    if(formData.get("confirm_password") == ""){
         error_arr.push("Please enter Confirm Password.<br/>");
-    }else if($("#confirm_password").val().length < 8){
+    }else if(formData.get("confirm_password").length < 8){
         error_arr.push("Please enter a valid Confirm Password.<br/>");
-    }else if($("#password").val() != $("#confirm_password").val()){
+    }else if(formData.get("password") != formData.get("confirm_password")){
         error_arr.push("Both Passwords do not match.<br/>");
     }
 
@@ -135,7 +138,7 @@ $('#agent-form').on('submit', (function(e) {
         return false;
     }
 
-    var formData = new FormData(this);
+    
     formData.append('form_request', 'agent');
     $.ajax({
         type: 'POST',
@@ -157,7 +160,7 @@ $('#agent-form').on('submit', (function(e) {
             
             if(data.status == "success"){
                 var url = `agent-login.php`;
-                move(`<?=$front_end_link?>${url}`);
+                setTimeout(function() { move(`<?=$front_end_link?>${url}`); }, 1000);
             }else{
                 $("#agent_submit_btn").html('Submit');
                 $("#agent_submit_btn").removeAttr('disabled');

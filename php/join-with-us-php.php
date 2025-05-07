@@ -6,12 +6,13 @@ if (file_exists(dirname(__DIR__) . '/'.$admin_folder.'/partial/functions.php')) 
 }
 
 $id         = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
-$form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] : "";
+$form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] : "false";
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 $vendor_id              = (isset($_REQUEST["vendor_id"])) ? $_REQUEST["vendor_id"] : 0;
 $agent_id              = (isset($_REQUEST["agent_id"])) ? $_REQUEST["agent_id"] : 0;
 
+$company_name           = (isset($_REQUEST["company_name"])) ? $_REQUEST["company_name"] : "";
 $name                   = (isset($_REQUEST["name"])) ? $_REQUEST["name"] : "";
 $username               = (isset($_REQUEST["username"])) ? $_REQUEST["username"] : "";
 $email                  = (isset($_REQUEST["email"])) ? $_REQUEST["email"] : "";

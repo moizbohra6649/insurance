@@ -86,7 +86,7 @@ $('.submit_btn').on('click', (function(e) {
                             }
                         }
                         
-                        move(`<?=$actual_link?>${url}`);
+                        setTimeout(function() { move(`<?=$actual_link?>${url}`); }, 1000);
                     }else{
                         $("#submit_btn_" + btn_value).html(btn_text);
                         $(".submit_btn").removeAttr('disabled');

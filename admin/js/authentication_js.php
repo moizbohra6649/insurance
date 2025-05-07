@@ -45,8 +45,7 @@ $('#login_form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                move(`<?=$panel_link?>`);
-                // setTimeout(function() {  }, 1000);
+                setTimeout(function() { move(`<?=$panel_link?>`); }, 1000);
             }else{
                 $("#submit_btn").html('Sign in');
                 $("#submit_btn").removeAttr('disabled');

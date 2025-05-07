@@ -64,7 +64,7 @@
                  <li><a href="blog.html">Blog</a></li>
                 <li><a href="claim.html">Claim</a></li>
                 <li><a href="contact.html">Contact us</a></li>
-                <li><a href="join-with-us.html" class="QuoteBtn">Join with us</a></li>
+                <li><a href="join-with-us.php" class="QuoteBtn">Join with us</a></li>
               </ul>
               <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
