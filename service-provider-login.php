@@ -41,7 +41,7 @@
                   <label for="remember" class="form-label">Remember Me</label>
                 </div>
                 <div class="d-grid">
-                  <input type="hidden" class="form_type" id="form_type" name="form_type" value="agent_login" />
+                  <input type="hidden" class="form_type" id="form_type" name="form_type" value="vendor_login" />
                   <button type="submit" class="submit_btn">Login</button>
                 </div>
               </form>

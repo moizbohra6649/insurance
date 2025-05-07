@@ -1,8 +1,7 @@
 <script>
 
-$('#lofin-form').on('submit', (function(e) {
+$('#login_form').on('submit', (function(e) {
     e.preventDefault();
-
     var error_arr = [];
 
     if($("#email").val() == ""){
@@ -16,15 +15,13 @@ $('#lofin-form').on('submit', (function(e) {
     }else if($("#password").val().length < 8){
         error_arr.push("Please enter a valid Password.<br/>");
     }
-
     var error_txt = error_arr.join('');
     if(error_txt != ""){
         notification("Oh Snap!", error_txt, "danger");
         return false;
     }
-
     var formData = new FormData(this);
-    formData.append('form_request', 'service_provider');
+    formData.append('form_request', 'true');
     $.ajax({
         type: 'POST',
         url: '<?=($_SERVER['PHP_SELF'])?>',
