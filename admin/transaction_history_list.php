@@ -44,6 +44,7 @@ include('partial/loader.php'); ?>
                                 <div class="tab-content">
                                     <div class="tab-pane show active" id="form-row-preview">
                                         <form method="GET" id="agent_list">
+                                             <input type="hidden" id="user_id" name="user_id" value="<?= base64_encode($user_id) ?>" class="form-control">
                                             <div class="row">
                                                 <div class="mb-3 col-lg-3">
                                                     <label class="form-label">From Date</label>
@@ -56,19 +57,8 @@ include('partial/loader.php'); ?>
                                                         <input type="text" id="range-to" name="to_date" value="<?=convert_db_date_readable($to_date);?>" data-value="<?=$to_date?>" class="form-control" readonly>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="filter_agent_id" class="form-label">Transaction ID</label>
-                                                    <input type="text" class="form-control alpha_num" id="filter_agent_id" name="filter_agent_id" placeholder="Transaction ID" maxlength="8" value="<?=$filter_agent_id?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="row" style ="display:none;">
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="name" class="form-label">Transaction Name</label>
-                                                    <input type="text" class="form-control" id="name" name="name" placeholder="Agent Name" value="<?=$name?>">
-                                                </div>
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="mobile_no" class="form-label">Mobile No.</label>
-                                                    <input class="form-control allownumber" minlength="12" maxlength="12" id="mobile_no" name="mobile_no" type="text" placeholder="Mobile No." onkeypress="applyPhoneInputRestriction('mobile_no')" value="<?=$mobile_no?>">
+                                                    <label for="filter_transactionid" class="form-label">Transaction ID</label>
+                                                    <input type="text" class="form-control alpha_num" id="filter_transactionid" name="filter_transactionid" placeholder="Transaction ID" value="<?=$filter_transactionid?>">
                                                 </div>
                                             </div>
 

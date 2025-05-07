@@ -266,15 +266,14 @@ include('partial/loader.php'); ?>
                                                         $coverage_umpd = select("driver","customer_id= ".$customer_id."") ;
                                                         while($get_coverage_umpd = fetch($coverage_umpd)){
                                                     ?>
-                                                            <option value="<?= $get_coverage_umpd["id"] ?>"> 
-                                                                <?php echo  $get_coverage_umpd["first_name"].' '.$get_coverage_umpd["last_name"]; ?></option>
-                                                    <?php } ?>
+                                                            <option drive_id="<?= $get_coverage_umpd["driver_id"] ?>" drive_name="<?= $get_coverage_umpd["first_name"].' '.$get_coverage_umpd["last_name"] ?>" driver_dob ="<?= convert_readable_date_db($get_coverage_umpd["date_of_birth"]) ?>" driver_licence_no="<?= $get_coverage_umpd["driver_licence_no"] ?>" value="<?= $get_coverage_umpd["id"] ?>"><?php echo  $get_coverage_umpd["first_name"].' '.$get_coverage_umpd["last_name"]; ?></option>
+                                                    <?php } ?>driver_licence_no
                                                 </select>
                                             </div>
                                         </div>
                                         
                                     </div>
-                                    <h6 class="mt-4 veh_list" style="display:none;">Vehical's</h6>
+                                    <h6 class="mt-4 veh_list" style="display:none;">Vehicle's</h6>
                                     <hr class="mt-4 mb-4 veh_list" style="display:none;">
                                     <div class="row g-3 veh_list table-responsive signal-table" style="display:none;">
                                         <table class="table table-hover" id="vehicleTable">
@@ -291,6 +290,24 @@ include('partial/loader.php'); ?>
                                             </tbody>
                                         </table>
                                     </div>  
+
+                                    <h6 class="mt-4 driver_list" style="display:none;">Driver's</h6>
+                                    <hr class="mt-4 mb-4 driver_list" style="display:none;">
+                                    <div class="row g-3 driver_list table-responsive signal-table" style="display:none;">
+                                        <table class="table table-hover" id="driverTable">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                <th scope="col">Driver ID</th>
+                                                <th scope="col">Driver Name</th>
+                                                <th scope="col">Driver Dob</th>
+                                                <th scope="col">Driver licence no.</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody> 
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div> 
                                     <h6 class="mt-4">Roadside Assistance</h6>
                                     <hr class="mt-4 mb-4">
                                     <div class="row">

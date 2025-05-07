@@ -75,11 +75,9 @@ $('#deposit_form').on('submit', (function(e) {
 function fn_search_filter(){
     var from_date   = $("#range-from").val();
     var to_date     = $("#range-to").val();
-    var filter_agent_id = $("#filter_agent_id").val();
-    var name   = $("#name").val();
-    var mobile_no   = $("#mobile_no").val();
+    var filter_transactionid = $("#filter_transactionid").val();
 
-    if(from_date == "" && to_date == "" && filter_agent_id == "" && name == "" && mobile_no == ""){
+    if(from_date == "" && to_date == "" && filter_transactionid == ""){
         notification("Oh Snap!", "Please select atleast one searh filter.", "info");
         return false;
     }

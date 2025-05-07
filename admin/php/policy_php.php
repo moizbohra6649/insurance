@@ -202,61 +202,14 @@ switch ($mode) {
         $data = [];
         $error_arr = [];
 
-        $select_driver = mysqli_query($conn, "SELECT * FROM driver WHERE id = '$id' " );
-        $select_customer = mysqli_query($conn, "SELECT id FROM customer WHERE id = '$customer_id' " );
+        $select_policy = mysqli_query($conn, "SELECT id FROM policy WHERE id = '$id' " );
 
         // Validation
 
-        if(mysqli_num_rows($select_customer) == 0){
-            $error_arr[] = "Customer does not exists.<br/>";
+        if(mysqli_num_rows($select_policy) == 0){
+            $error_arr[] = "Policy Does Not Exist.<br/>";
         }
         
-        if (empty($first_name)) {
-            $error_arr[] = "Please fill a First Name.<br/>";
-        }
-        
-        if (empty($last_name)) {
-            $error_arr[] = "Please fill a Last Name.<br/>";
-        }
-        
-        if (empty($date_of_birth)) {
-            $error_arr[] = "Please provide a valid DOB.<br/>";
-        }
-        
-        if (empty($driver_licence_no)) {
-            $error_arr[] = "Please fill a Driver Licence Number.<br/>";
-        }
-        
-        if (empty($marital_status)) {
-            $error_arr[] = "Please select a Marital Status.<br/>";
-        }elseif($marital_status == "married"){
-            if (empty($spouse_first_name)) {
-                $error_arr[] = "Please fill a Spouse First Name.<br/>";
-            }
-            
-            if (empty($spouse_last_name)) {
-                $error_arr[] = "Please fill a Spouse Last Name.<br/>";
-            }
-        }
-
-        if($family_friend != "none"){
-            if (empty($family_friend_first_name)) {
-                $error_arr[] = "Please fill a Family or Friend First Name.<br/>";
-            }
-            
-            if (empty($family_friend_last_name)) {
-                $error_arr[] = "Please fill a Family or Friend Last Name.<br/>";
-            }else if ($family_friend == "family" && $last_name != $family_friend_last_name) {
-                $error_arr[] = "Driver Last name or Family member Last name are not same.<br/>";
-            }
-        }
-
-        if(mysqli_num_rows($select_driver) == 0){
-
-            $data["msg"] = "Something went wrong please try again later.";
-            $data["status"] = "error";
-        }
-
         // Display errors if any
         if (!empty($error_arr)) {
             $error_txt = implode('', $error_arr);
