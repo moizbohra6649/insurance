@@ -119,6 +119,43 @@ function fn_getting_vehicle(){
             });
         }
     });
+
+    $('#driver').on('change', function () {
+         let selectedVal = $(this).val();
+         // Normalize selectedValues: convert to array if it's a single string
+        if (selectedVal && !Array.isArray(selectedVal)) {
+            selectedVal = [selectedVal];
+        }
+         $('.driver_list').hide();
+         if (selectedVal && selectedVal.length > 0) {
+            $('.driver_list').show();
+            $('#driverTable tbody').html('');
+            selectedVal.forEach(function(value) {
+            const option = $('#driver').find('option[value="' + value + '"]');
+
+            const drive_id = option.attr('drive_id');
+            const drive_name = option.attr('drive_name');
+            const driver_dob = option.attr('driver_dob');
+            const driver_licence_no = option.attr('driver_licence_no');
+            const row = `
+                <tr>
+                <td>${drive_id}</td>
+                <td>${drive_name}</td>
+                <td>${driver_dob}</td>
+                <td>${driver_licence_no}</td>
+                </tr>
+            `;
+            $('#driverTable tbody').append(row);
+            
+            });
+        }
+    });
+
+
+    //         //Limited Numbers
+    // $(".js-example-basic-multiple-limit").select2({
+    //     maximumSelectionLength: 2
+    // });
 });
 
 function fn_policy_calculation(){

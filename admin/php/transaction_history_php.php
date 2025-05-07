@@ -32,7 +32,7 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 /* Search Filter */
 $from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
 $to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
-$filter_agent_id    = (isset($_REQUEST["filter_agent_id"])) ? $_REQUEST["filter_agent_id"] : "";
+$filter_transactionid    = (isset($_REQUEST["filter_transactionid"])) ? $_REQUEST["filter_transactionid"] : "";
 $entry_type        = (isset($_REQUEST["entry_type"])) ? $_REQUEST["entry_type"] : "";
 $filter_status        = (isset($_REQUEST["filter_status"])) ? $_REQUEST["filter_status"] : "All";
 
@@ -56,8 +56,8 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
         $filter_qry .= " AND CAST(wallet.created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
     }
 
-    if(!empty($filter_agent_id)){
-        $filter_qry .= " AND wallet.transaction_id = '$filter_agent_id' ";
+    if(!empty($filter_transactionid)){
+        $filter_qry .= " AND wallet.transaction_id = '$filter_transactionid' ";
     }
 
     // if(!empty($name)){
@@ -108,7 +108,7 @@ switch ($mode) {
         if(mysqli_num_rows($select_agent_id) <= 0){
             $error_arr[] = "This Agent Does Not Exist.<br/>";
         }
-        
+
         if (!empty($error_arr)) {
             $error_txt = implode('', $error_arr);
             $data["msg"] = $error_txt;
