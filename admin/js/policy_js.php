@@ -11,7 +11,7 @@ function fn_getting_vehicle(){
             $("#vehicle").html(data.res_data);
             var ids = $('#vehical_list').val().split(',');
             var driverids = $('#driver_list').val().split(',');
-            if($("#coverage").val() == 'LIBLLITY' ||  $("#coverage").val() == 'Full Coverage' ){
+            if($("#coverage").val() == 'liability' ||  $("#coverage").val() == 'full_coverage' ){
                 $('#vehicle').attr('multiple' , 'multiple');
                 $("#vehicle").select2({
                     placeholder: "Please Select Vehicle's",
@@ -56,7 +56,7 @@ function fn_getting_vehicle(){
     
     $("#coverage").on( 'change' , (function(e) {
        let coverage_type = $(this).val() ; 
-       if(coverage_type == 'LIBLLITY' || coverage_type == 'Full Coverage' ){
+       if(coverage_type == 'liability' || coverage_type == 'full_coverage' ){
             $('#vehicle').attr('multiple' , 'multiple');
             $("#vehicle").select2({
                 placeholder: "Please Select Vehicle's",
@@ -119,13 +119,30 @@ function fn_getting_vehicle(){
             });
         }
     });
-
-
-    //         //Limited Numbers
-    // $(".js-example-basic-multiple-limit").select2({
-    //     maximumSelectionLength: 2
-    // });
 });
+
+function fn_policy_calculation(){
+
+    var customer_id = $('#customer_id').val();
+    var coverage = $("#coverage").val();
+    var vehicle_ids = $('#vehicle').val();
+    var driver_ids = $('#driver').val();
+
+    $.ajax({
+        type: 'POST',
+        url: '<?=($_SERVER['PHP_SELF'])?>',
+        data: {ajax_request: 'policy_calculation' , customer_id: customer_id, coverage: coverage, vehicle_ids: vehicle_ids, driver_ids: driver_ids},
+        cache: false,
+        dataType: 'json',           
+        success: function(data) {
+            
+            
+        },
+        error: function(data) {
+            console.log(data);
+        }      
+    });
+}
 
 $('#policy_form').on('submit', (function(e) {
     e.preventDefault();

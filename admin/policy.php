@@ -70,9 +70,9 @@ include('partial/loader.php'); ?>
                                             <div class="form-input">
                                                 <select class="form-select" name="coverage" id="coverage">
                                                     <option value="">Please Select Coverage</option>
-                                                    <option value="LIBLLITY" <?= ($coverage == 'LIBLLITY' ) ? 'selected' : '';  ?>>Libllity</option>
-                                                    <option value="Full Coverage" <?= ($coverage == 'Full Coverage' ) ? 'selected' : '';  ?>>Full Coverage</option>
-                                                    <option value="Non Owner" <?= ($coverage == 'Non Owner' ) ? 'selected' : '';  ?>> Non Owner</option>
+                                                    <option value="liability" <?= ($coverage == 'liability' ) ? 'selected' : '';  ?>>Liability</option>
+                                                    <option value="full_coverage" <?= ($coverage == 'full_coverage' ) ? 'selected' : '';  ?>>Full Coverage</option>
+                                                    <option value="non_owner" <?= ($coverage == 'non_owner' ) ? 'selected' : '';  ?>> Non Owner</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -547,11 +547,11 @@ include('partial/loader.php'); ?>
                                 <input type="hidden" name="service_price" id="service_price" value="" autocomplete="off" >
                                 <input type="hidden" name="total" id="total" value="" autocomplete="off" >
                                 <?php if($mode != "VIEW" && $mode != "EDIT"){ ?>
-                                        <div class="card-body btn-showcase" style="text-align: center;">
-                                            <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
-                                            <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
-                                        </div>
-                                    <?php } ?>
+                                    <div class="card-body btn-showcase" style="text-align: center;">
+                                        <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
+                                        <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
+                                    </div>
+                                <?php } ?>
                              </div>
                           </div>
                         </form>

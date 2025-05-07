@@ -342,7 +342,7 @@ function generateYearList($startYear, $endYear) {
     return $yearList;
 }
 
-$yearList = generateYearList(1980, 3000);
+$yearList = generateYearList(1990, 2025);
 
 /* CRUD Function */
 

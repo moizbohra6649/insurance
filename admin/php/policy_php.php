@@ -46,8 +46,6 @@ $is_applicant_other_veh          = (isset($_REQUEST["is_applicant_other_veh"])) 
 $is_physical_damage          = (isset($_REQUEST["is_physical_damage"])) ? $_REQUEST["is_physical_damage"] : 0; 
 $driver          = (isset($_REQUEST["driver"])) ? $_REQUEST["driver"] : 0; 
 
-
-
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
     $data["msg"] = "Something went wrong please try again later. Request is not Valid.";
@@ -79,8 +77,6 @@ switch ($mode) {
             $customer_mobile            = $get_data["mobile"];
             $customer_dob  = date("F j, Y", strtotime($get_data["date_of_birth"])); ;
         } 
-
-
     break;
 
     case "INSERT":
