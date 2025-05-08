@@ -54,6 +54,21 @@
                         </ul>
                     </div>
                 </li> -->
+
+
+                <li class="d-flex align-items-center me-3 pe-0 py-0">
+                    <div class="text-end me-4">
+                        <div class="text-dark small">Earning</div>
+                        <div class="fw-bold text-success">$ <?= $total_earning ?> </div>
+                    </div>
+                    <?php 
+                    if($login_role == 'agent' or $login_role == 'vendor'){ ?>
+                    <div class="text-end">
+                        <div class="text-dark small">Wallet Balance</div>
+                        <div class="fw-bold text-dark">$ <?= $wallet_amount ?></div>
+                    </div>
+                    <?php  } ?>
+                </li>
                 <li class="profile-nav onhover-dropdown pe-0 py-0">
                     <div class="media profile-media"><img class="b-r-10" style="height: 32px; width: 32px; border-radius: 50% !important;" src="<?=$login_profile_image?>" alt="">
                         <div class="media-body"><span><?=$login_name?></span>

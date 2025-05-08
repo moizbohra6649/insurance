@@ -200,11 +200,14 @@ $login_id = 0;
 $login_email = "";
 $login_name = "";
 $login_role = "";
+$wallet_amount = 0 ; 
+$total_earning = 0 ;
 $login_profile_image = $upload_folder . "/profile_picture.jpg";
 
 if(isset($_SESSION["session"])){
 	$login_id = $_SESSION["session"]["id"];
 	$admin_level_role = array('superadmin', 'admin', 'staff');
+	$agent_vendor_role = array('agent', 'vendor');
 	if(in_array($_SESSION["session"]["role"], $admin_level_role)){
 		$select_user = mysqli_query($conn, "SELECT * FROM users WHERE id = '$login_id' ");
 		if(mysqli_num_rows($select_user) > 0){
@@ -213,6 +216,24 @@ if(isset($_SESSION["session"])){
 			$login_name = $get_user["name"];
 			$login_role = $get_user["role"];
 
+			if(!empty($get_user["profile_image"]) && file_exists(dirname(__DIR__) . '/' . $upload_folder . '/user_profile_picture/' . $get_user["profile_image"])){
+				$login_profile_image = $upload_folder . "/user_profile_picture/$get_user[profile_image]";
+
+			}
+		}
+	}elseif (in_array($_SESSION["session"]["role"], $agent_vendor_role)) {
+		$av_role = $_SESSION["session"]["role"] ; 
+		$select_user = mysqli_query($conn, "SELECT * FROM $av_role WHERE id = '$login_id' ");
+		if(mysqli_num_rows($select_user) > 0){
+			$get_user = mysqli_fetch_assoc($select_user);
+			$login_email = $get_user["email"];
+			$login_name = $get_user["name"];
+			$login_role = $av_role ;
+			if($login_role == 'agent'){
+				$wallet_amount = $get_user['wallet_amount'] ; 
+				$total_earning = $get_user['total_earning'] ;   ;
+			}
+			
 			if(!empty($get_user["profile_image"]) && file_exists(dirname(__DIR__) . '/' . $upload_folder . '/user_profile_picture/' . $get_user["profile_image"])){
 				$login_profile_image = $upload_folder . "/user_profile_picture/$get_user[profile_image]";
 
@@ -229,7 +250,7 @@ function userSecure() {
 	return true;
 }
 
-if(basename($_SERVER['PHP_SELF']) != "login.php"){
+if(basename($_SERVER['PHP_SELF']) != "login.php" && basename($_SERVER['PHP_SELF']) != "agent-login.php" && basename($_SERVER['PHP_SELF']) != "service-provider-login.php" && basename($_SERVER['PHP_SELF']) != "join-with-us.php"){
 	userSecure();
 }
 

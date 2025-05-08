@@ -38,13 +38,52 @@ if($form_request == 'true'){
         echo $json_response = json_encode($data);
         exit;
     }
-}
+    $table_name = '';
+    if($form_type == "agent_login"){
+        $table_name = 'agent';
+    }elseif ($form_type == "vendor_login") {
+        $table_name = 'vendor';
+    }
 
-if($form_type == "agent_login"){
+    $email = mysqli_real_escape_string($conn, $email);
+    $password = mysqli_real_escape_string($conn, $password);
+
+    $select_login = mysqli_query($conn, "SELECT id, password , status FROM $table_name WHERE email = '$email' LIMIT 1");
     
+    if(mysqli_num_rows($select_login) > 0){
+        $get_login_data = mysqli_fetch_assoc($select_login);
+
+        if($get_login_data["status"] == 0){
+            $data["msg"] = "User are not active. Please contact to Superadmin.";
+            $data["status"] = "error";
+            echo $json_response = json_encode($data);
+            exit;
+        }
+        
+        if(password_verify($password, $get_login_data["password"])){
+
+            if(isset($_REQUEST["checkbox_signin"])){
+                $hour = time() + 3600 * 24 * 30;
+                setcookie('login_email', $email, $hour);
+                setcookie('login_password', $password, $hour);
+            }
+
+            $_SESSION["session"] = array("id" => $get_login_data["id"], "role" => $table_name);
+            $data["msg"] = "Login Successfully.";
+            $data["redirection_link"] = $panel_link;
+            $data["status"] = "success";
+
+        }else{
+            $data["msg"] = "Please enter valid Password to Login.";
+            $data["status"] = "error";
+        }
+
+    }else{
+        $data["msg"] = "Please enter valid Email to Login.";
+        $data["status"] = "error";
+    }
 
 
-    
 
     echo $json_response = json_encode($data);
     exit();

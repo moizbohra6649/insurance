@@ -5,6 +5,10 @@
     }
 
     include('partial/header.php');
+
+    if(isset($_SESSION["session"]) && $_SESSION["session"]["id"] != 0){
+      move($panel_link);
+    }
 ?> 
   <main class="main">
 
@@ -30,11 +34,11 @@
             <form id="login_form" name="login_form" method="POST" >
                 <div class="mb-4">
                   <label for="email" class="form-label">Email</label>
-                  <input type="text" class="form-control" id="email" />
+                  <input type="text" class="form-control" name="email" id="email" />
                 </div>
                 <div class="mb-4">
                   <label for="password" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="password" />
+                  <input type="password" class="form-control" name="password" id="password" />
                 </div>
                 <div class="mb-2">
                   <input type="checkbox" class="form-check-input" id="remember" />

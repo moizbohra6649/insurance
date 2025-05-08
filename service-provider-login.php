@@ -5,6 +5,10 @@
     }
 
     include('partial/header.php');
+
+    if(isset($_SESSION["session"]) && $_SESSION["session"]["id"] != 0){
+        move($panel_link);
+      }
 ?> 
   <main class="main">
 

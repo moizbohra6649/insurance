@@ -41,8 +41,7 @@ $('#login_form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                var url = `service-provider-login.php`;
-                setTimeout(function() { move(`<?=$front_end_link?>${url}`); }, 1000);
+                setTimeout(function() { move(`<?=$panel_link?>`); }, 1000);
             }else{
                 $("#submit_btn").html('Submit');
                 $("#submit_btn").removeAttr('disabled');
