@@ -19,7 +19,7 @@
       <!-- End Section Title -->
     </section>
     <!-- /Starter Section Section -->
-    <div class="container mt_set">
+    <div class="container mt_set register_tabs">
       <div class="form_w">
         <h2>Create Account</h2>
         <ul class="nav nav-pills mb-3 border-bottom border-2 justify-content-center" id="pills-tab" role="tablist">
@@ -79,9 +79,14 @@
                 <label class="form-label">Business License</label>
                 <input type="file" class="form-control" name="business_licence_image">
             </div>
-            <div class="col-sm-12 form-group">
+            <div class="col-sm-12 form-group" style="display:none;">
               <p>
                 <a href="service-provider-login.php" class="login_btn">Login as a service provider</a>
+              </p>
+            </div>
+            <div class="col-sm-12 form-group">
+              <p>
+                <a href="javascript:void(0)" class="login_open">Login as a service provider</a>
               </p>
             </div>
             <div class="col-sm-12 form-group mb-0">
@@ -124,14 +129,84 @@
                 <label class="form-label">Profile Picture</label>
                 <input type="file" class="form-control" name="profile_image">
             </div>
-            <div class="col-sm-12 form-group">
+            <div class="col-sm-12 form-group" style="display:none;">
               <p>
                 <a href="agent-login.php" class="login_btn">Login as a agent</a>
+              </p>
+            </div>
+            <div class="col-sm-12 form-group">
+              <p>
+                <a href="javascript:void(0)" class="login_open">Login as a agent</a>
               </p>
             </div>
             <div class="col-sm-12 form-group mb-0">
               <button id="agent_submit_btn" type="submit" class="submit_btn mt-2">Submit</button>
             </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="container mt_set login_tabs" style="display:none;">
+      <div class="form_w">
+        <h2>Login Account</h2>
+        <ul class="nav nav-pills mb-3 border-bottom border-2 justify-content-center" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-primary fw-semibold active position-relative" id="service-provider-login-form-tab" data-bs-toggle="pill" data-bs-target="#service-provider-login-form" type="button" role="tab" aria-controls="service-provider-login-form" aria-selected="true">Login as a service provider</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-primary fw-semibold position-relative" id="agent-login-form-tab" data-bs-toggle="pill" data-bs-target="#agent-login-form" type="button" role="tab" aria-controls="agent-login-form" aria-selected="false">Login as a agent</button>
+          </li>
+        </ul>
+        <div class="tab-content p-3" id="pills-tabContent">
+          
+          <form class="tab-pane fade show active" id="service-provider-login-form" role="tabpanel" aria-labelledby="service-provider-login-form-tab">
+          <div class="mb-4">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="text" class="form-control" id="email" name="email"/>
+                </div>
+                <div class="mb-4">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password" name="password" />
+                </div>
+                <div class="mb-2">
+                  <input type="checkbox" class="form-check-input" id="remember" />
+                  <label for="remember" class="form-label">Remember Me</label>
+                </div>
+                <div class="col-sm-12 form-group">
+                  <p>
+                    <a href="javascript:void(0)" class="register_open">Register as a service provider</a>
+                  </p>
+                </div>
+                
+                <div class="d-grid">
+                  <input type="hidden" class="form_type" id="form_type" name="form_type" value="vendor_login" />
+                  <button type="submit" class="submit_btn">Login</button>
+                </div>
+          </form>
+        
+        
+          <form class="tab-pane fade" id="agent-login-form" role="tabpanel" aria-labelledby="agent-login-form-tab">
+          <div class="mb-4">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="text" class="form-control" name="email" id="email" />
+                </div>
+                <div class="mb-4">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" class="form-control" name="password" id="password" />
+                </div>
+                <div class="mb-2">
+                  <input type="checkbox" class="form-check-input" id="remember" />
+                  <label for="remember" class="form-label">Remember Me</label>
+                </div>
+                <div class="col-sm-12 form-group">
+                  <p>
+                    <a href="javascript:void(0)" class="register_open">Register as a agent</a>
+                  </p>
+                </div>
+                <div class="d-grid">
+                  <input type="hidden" class="form_type" id="form_type" name="form_type" value="agent_login" />
+                  <button type="submit" class="submit_btn">Login</button>
+                </div>
           </form>
         </div>
       </div>

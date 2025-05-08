@@ -224,4 +224,141 @@ if($form_request == "agent"){
     exit();
 }
 
+if($form_request == "service-provider-login"){
+    $data = [];
+    $error_arr = [];
+    if (empty($email)) {
+        $error_arr[] = "Please enter Email.<br/>";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error_arr[] = "Please enter a valid Email.<br/>";
+    }
+    
+    if (empty($password)) {
+        $error_arr[] = "Please enter Password.<br/>";
+    } elseif (strlen($password) < 8) {
+        $error_arr[] = "Please enter a valid Password.<br/>";
+    }
+    
+    // Display errors if any
+    if (!empty($error_arr)) {
+        $error_txt = implode('', $error_arr);
+        $data["msg"] = $error_txt;
+        $data["status"] = "error";
+        echo $json_response = json_encode($data);
+        exit;
+    }
+
+    $email = mysqli_real_escape_string($conn, $email);
+    $password = mysqli_real_escape_string($conn, $password);
+
+    $select_login = mysqli_query($conn, "SELECT id, password , status FROM vendor WHERE email = '$email' and deleted = 0 LIMIT 1");
+    
+    if(mysqli_num_rows($select_login) > 0){
+        $get_login_data = mysqli_fetch_assoc($select_login);
+
+        if($get_login_data["status"] == 0){
+            $data["msg"] = "User are not active. Please contact to Superadmin.";
+            $data["status"] = "error";
+            echo $json_response = json_encode($data);
+            exit;
+        }
+        
+        if(password_verify($password, $get_login_data["password"])){
+
+            if(isset($_REQUEST["checkbox_signin"])){
+                $hour = time() + 3600 * 24 * 30;
+                setcookie('login_email', $email, $hour);
+                setcookie('login_password', $password, $hour);
+            }
+
+            $_SESSION["session"] = array("id" => $get_login_data["id"], "role" => 'vendor');
+            $data["msg"] = "Login Successfully.";
+            $data["redirection_link"] = $panel_link;
+            $data["status"] = "success";
+
+        }else{
+            $data["msg"] = "Please enter valid Password to Login.";
+            $data["status"] = "error";
+        }
+
+    }else{
+        $data["msg"] = "Please enter valid Email to Login.";
+        $data["status"] = "error";
+    }
+
+
+
+    echo $json_response = json_encode($data);
+    exit();
+}
+
+if($form_request == "agent-login"){
+    $data = [];
+    $error_arr = [];
+    if (empty($email)) {
+        $error_arr[] = "Please enter Email.<br/>";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error_arr[] = "Please enter a valid Email.<br/>";
+    }
+    
+    if (empty($password)) {
+        $error_arr[] = "Please enter Password.<br/>";
+    } elseif (strlen($password) < 8) {
+        $error_arr[] = "Please enter a valid Password.<br/>";
+    }
+    
+    // Display errors if any
+    if (!empty($error_arr)) {
+        $error_txt = implode('', $error_arr);
+        $data["msg"] = $error_txt;
+        $data["status"] = "error";
+        echo $json_response = json_encode($data);
+        exit;
+    }
+
+    $email = mysqli_real_escape_string($conn, $email);
+    $password = mysqli_real_escape_string($conn, $password);
+
+    $select_login = mysqli_query($conn, "SELECT id, password , status FROM agent WHERE email = '$email' and deleted = 0 LIMIT 1");
+    
+    if(mysqli_num_rows($select_login) > 0){
+        $get_login_data = mysqli_fetch_assoc($select_login);
+
+        if($get_login_data["status"] == 0){
+            $data["msg"] = "User are not active. Please contact to Superadmin.";
+            $data["status"] = "error";
+            echo $json_response = json_encode($data);
+            exit;
+        }
+        
+        if(password_verify($password, $get_login_data["password"])){
+
+            if(isset($_REQUEST["checkbox_signin"])){
+                $hour = time() + 3600 * 24 * 30;
+                setcookie('login_email', $email, $hour);
+                setcookie('login_password', $password, $hour);
+            }
+
+            $_SESSION["session"] = array("id" => $get_login_data["id"], "role" => 'agent');
+            $data["msg"] = "Login Successfully.";
+            $data["redirection_link"] = $panel_link;
+            $data["status"] = "success";
+
+        }else{
+            $data["msg"] = "Please enter valid Password to Login.";
+            $data["status"] = "error";
+        }
+
+    }else{
+        $data["msg"] = "Please enter valid Email to Login.";
+        $data["status"] = "error";
+    }
+
+
+
+    echo $json_response = json_encode($data);
+    exit();
+}
+
+
 ?>

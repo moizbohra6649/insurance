@@ -16,7 +16,7 @@ $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 
 $user_id         = (isset($_REQUEST["user_id"]) && !empty($_REQUEST["user_id"])) ? base64_decode($_REQUEST["user_id"]) : 0;
-$transaction_date         = (isset($_REQUEST["tra_date"]) && !empty($_REQUEST["tra_date"])) ? convert_readable_date_db($_REQUEST["tra_date"]) : date("F j, Y");;
+$transaction_date         = (isset($_REQUEST["tra_date"]) && !empty($_REQUEST["tra_date"])) ? convert_readable_date_db($_REQUEST["tra_date"]) : date("F j, Y");
 $transaction_type               = (isset($_REQUEST["tra_type"])) ? $_REQUEST["tra_type"] : '';
 $transaction_id               = (isset($_REQUEST["tra_id"])) ? $_REQUEST["tra_id"] : "";
 $amount                  = (isset($_REQUEST["amount"])) ? $_REQUEST["amount"] : 0 ;
