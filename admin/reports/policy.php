@@ -71,20 +71,20 @@ $pdf->SetFont('Arial','B',9);
 
         // Section Titles
         ///$pdf->SetXY(10, $pdf->GetY());
-        $pdf->Cell(95, 5, 'NAMED INSURED(S)/CONTENTS PLUS ENDORSEMENT', 1, 0, 'C');
-        $pdf->Cell(95, 5, 'PRODUCER', 1, 1, 'C');
+        $pdf->Cell(95, 5, 'NAMED INSURED(S)/CONTENTS PLUS ENDORSEMENT', 0, 0, 'C');
+        $pdf->Cell(95, 5, 'PRODUCER', 0, 1, 'C');
 
         $getY = $pdf->GetY();
 
         // Insured Info
         $pdf->SetFont('Arial','',9);
         $pdf->SetXY(12, $pdf->GetY());
-        $pdf->MultiCell(90, 5, "MASHHURBEK YULDASHOV 507 CHAMBERLAIN LN UNIT 103 NAPERVILLE, IL 60540-9284");
+        $pdf->MultiCell(90, 5, "MASHHURBEK YULDASHOV 507 CHAMBERLAIN LN UNIT 103 NAPERVILLE, IL 60540-9284",0,0);
         $getY1 = $pdf->GetY();
 
         // Producer Info
         $pdf->SetXY(107, $getY);
-        $pdf->MultiCell(90, 5, "PERFECT INS & FINANCIAL SRVS 4522052-00 3742 W ALBION AVE LINCOLNWOOD, IL 60712 (847) 477-0843");
+        $pdf->MultiCell(90, 5, "PERFECT INS & FINANCIAL SRVS 4522052-00 3742 W ALBION AVE LINCOLNWOOD, IL 60712 (847) 477-0843",0,0);
         $getY2 = $pdf->GetY();
 
         
@@ -93,8 +93,8 @@ $pdf->SetFont('Arial','B',9);
         $gettotalY       = $getY2 - $getY;
         $totalheight     = max($gettotalY, $getmulticellY);
         
-        $pdf->Rect(10,$getY, 95, $totalheight);
-        $pdf->Rect(105,$getY, 95, $totalheight);
+       // $pdf->Rect(10,$getY, 95, $totalheight);
+       // $pdf->Rect(105,$getY, 95, $totalheight);
         
               
         $h = max(($getY1), ($getY2));
@@ -104,50 +104,50 @@ $pdf->SetFont('Arial','B',9);
 
         $pdf->SetFont('Arial','B',9);
 
-        $pdf->Cell(190, 7, 'VEHICLE(S)', 1, 1, 'C');
+        $pdf->Cell(190, 7, 'VEHICLE(S)', 'T', 1, 'C');
       // Set up table
 $pdf->SetWidths(array(10, 15, 20, 12, 18, 65, 25, 25));
 $pdf->SetAligns(array('C', 'C', 'C', 'C', 'C', 'C', 'C'));
 // Table Header
 $pdf->SetFont('Arial', 'B', 8);
-$pdf->Row(array('(VIN)', 'Type', '(LPN)','Year','Make', 'Model','State','Value'), 1);
+$pdf->Row(array('(VIN)', 'Type', '(LPN)','Year','Make', 'Model','State','Value'), 0);
 $pdf->SetFont('Arial','',8);
-$pdf->Row(array('123','Car','456','2025','mak', 'TOYOTA PRIUS - 4-DR HATCH', 'State', 'Value'), 1);
+$pdf->Row(array('123','Car','456','2025','mak', 'TOYOTA PRIUS - 4-DR HATCH', 'State', 'Value'), 0);
         $pdf->Ln(1); 
 
         $pdf->SetFont('Arial','B',9);
-        $pdf->Cell(190, 7, 'LOSS PAYEE / ADDITIONAL INTEREST', 1, 1, 'C');
+        $pdf->Cell(190, 7, 'LOSS PAYEE / ADDITIONAL INTEREST', 'T', 1, 'C');
 
        // Set up table
 $pdf->SetWidths(array(53, 31, 53, 53));
 $pdf->SetAligns(array('C', 'C', 'C', 'C'));
 // Table Header
 $pdf->SetFont('Arial', 'B', 8);
-$pdf->Row(array('VEHICLE # / PROPERTY', 'TYPE', 'LIENHOLDER','LOAN NUMBER'), 1);
+$pdf->Row(array('VEHICLE # / PROPERTY', 'TYPE', 'LIENHOLDER','LOAN NUMBER'), 0);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Row(array('1','1','1','1'), 1);
+$pdf->Row(array('1','1','1','1'), 0);
 
         $pdf->Ln(1);
 
 
         $pdf->SetFont('Arial','B',9);
-        $pdf->Cell(190, 7, 'DRIVERS', 1, 1, 'C');
+        $pdf->Cell(190, 7, 'DRIVERS', 'T', 1, 'C');
 
        // Set up table
        $pdf->SetWidths(array(10, 45, 25, 15, 20, 20, 30, 25));
 $pdf->SetAligns(array('C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'));
 // Table Header
 $pdf->SetFont('Arial', 'B', 8);
-$pdf->Row(array('Drv #', 'Name', 'DOB','Age','Marital / CU Status','Zip Code', 'Driver License #','Date of Issue'), 1);
+$pdf->Row(array('Drv #', 'Name', 'DOB','Age','Marital / CU Status','Zip Code', 'Driver License #','Date of Issue'), 0);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Row(array('1','1','1','1','1', '1', 'TOYOTA PRIUS', 'TOYOTA PRIUS -'), 1);
+$pdf->Row(array('1','1','1','1','1', '1', 'TOYOTA PRIUS', 'TOYOTA PRIUS -'), 0);
 
         $pdf->Ln(1);
         
         $pdf->SetFont('Arial','B',9);
-        $pdf->Cell(190, 5, 'CURRENT COVERAGES*', 'LRT', 1, 'C');
+        $pdf->Cell(190, 5, 'CURRENT COVERAGES*', 'T', 1, 'C');
         $pdf->SetFont('Arial','',9);
-        $pdf->Cell(190, 5, '*Subject to all of the terms and conditions of the applicable Policy/Endorsements. Coverages may not be stacked', 'LRB', 1, 'C');
+        $pdf->Cell(190, 5, '*Subject to all of the terms and conditions of the applicable Policy/Endorsements. Coverages may not be stacked', 0, 1, 'C');
 
 
           // Set up table
@@ -155,19 +155,63 @@ $pdf->SetWidths(array( 58, 60, 18, 18, 18, 18));
 $pdf->SetAligns(array('C', 'C', 'C', 'C', 'C', 'C'));
 // Table Header
 $pdf->SetFont('Arial', 'B', 8);
-$pdf->Row(array('Coverages', 'Limits Of Liability', '[Veh 1]','[ ]','[ ]', '[ ]'), 1);
+$pdf->Row(array('Coverages', 'Limits Of Liability', '[Veh 1]','[ ]','[ ]', '[ ]'), 0);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Row(array('Bodily Injury Liability','$ 25,000 per person/ $ 50,000 per accident ','$ 255','','', ''), 1);
-$pdf->Row(array('Bodily Injury Liability','$ 25,000 per person/ $ 50,000 per accident ','$ 255','','', ''), 1);
-$pdf->Row(array('Bodily Injury Liability','$ 25,000 per person/ $ 50,000 per accident ','$ 255','','', ''), 1);
-$pdf->Row(array('Bodily Injury Liability','$ 25,000 per person/ $ 50,000 per accident ','$ 255','','', ''), 1);
+$pdf->Row(array('Bodily Injury Liability','$ 25,000 per person/ $ 50,000 per accident ','$ 255','','', ''), 0);
+$pdf->Row(array('Bodily Injury Liability','$ 25,000 per person/ $ 50,000 per accident ','$ 255','','', ''), 0);
+$pdf->Row(array('Bodily Injury Liability','$ 25,000 per person/ $ 50,000 per accident ','$ 255','','', ''), 0);
+$pdf->Row(array('Bodily Injury Liability','$ 25,000 per person/ $ 50,000 per accident ','$ 255','','', ''), 0);
 
           // Set up table
           $pdf->SetWidths(array( 58, 60, 18, 18, 18, 18));
           $pdf->SetAligns(array('C', 'R', 'C', 'C', 'C', 'C'));
-    $pdf->Row(array('','Vehicle Totals','$ 255','','', ''), 1);
+    $pdf->Row(array('','Vehicle Totals','$ 255','','', ''), 0);
 
+    $getdata = $pdf->GetY();
+     // Insured Info
    
+   
+     $pdf->SetFont('Arial','',8);
+     $pdf->SetXY(10, $pdf->GetY());
+     $pdf->MultiCell(95, 5, "MASHHURBEK YUL  103\nNAPERVILLE, IL 60540-9284",0,0);
+     $getY1 = $pdf->GetY();
+     // Producer Info
+     $pdf->SetXY(105, $getdata);
+     $pdf->MultiCell(95, 5, "PERFECT INS  L SRVS 452PNANCIA L SRVS 452PNANCIAL SRVS 452PNANCIAL SRVS 452PNANCIAL SRVS 452PRF FINAN 12\n(847) 477-0843",0,0);
+     $getY2 = $pdf->GetY();
+
+
+ 
+ $getmulticellY   = $getY1 - $getdata;
+$gettotalY       = $getY2 - $getdata;
+$totalheight     = max($gettotalY, $getmulticellY);
+
+   //  $pdf->Rect(10,$getdata, 95, $totalheight);
+    // $pdf->Rect(105,$getdata, 95, $totalheight);
+
+    if($getY2 > 250){
+
+        $pdf->AddPage();
+    }
+
+     
+    $h = max(($getY1), ($getY2)); 
+    $pdf->SetY($h);
+     $pdf->SetFont('Arial','',7);
+     $pdf->Cell(115,5, 'FORMS AND ENDORSEMENTS MADE PART OF THIS POLICY:', '', 0, 'L');
+     $pdf->Cell(75,5, '', '', 1, 'C'); 
+
+     $pdf->Cell(115,5, 'PA017-B Ed. 09-23, PA014-A Ed. 09-23, FCMSMP09010116 ', '', 0, 'L');
+     $pdf->Cell(75,5, 'TOTAL PREMIUMS  $ 673.00 ', '', 1, 'C');
+
+     $pdf->Cell(115,5, '', '', 0, 'L');
+     $pdf->Cell(75,5, 'ALL FEES  $ 0.00 ', '', 1, 'C');
+
+     $pdf->Cell(115,5, 'DISCOUNTS/SURCHARGES: ', '', 0, 'L');
+     $pdf->Cell(75,5, 'TOTAL POLICY PREMIUM  $ 673.00 ', '', 1, 'C');
+
+     $pdf->Cell(115,5, 'Liability Only Discount', '', 0, 'L');
+     $pdf->Cell(75,5, ' ', '', 1, 'C');
 
 
 
