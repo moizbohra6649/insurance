@@ -162,23 +162,27 @@ function fn_policy_calculation(){
 
     var customer_id = $('#customer_id').val();
     var coverage = $("#coverage").val();
-    var vehicle_ids = $('#vehicle').val();
-    var driver_ids = $('#driver').val();
+    var vehicle = $('#vehicle').val();
+    var driver = $('#driver').val();
 
-    $.ajax({
-        type: 'POST',
-        url: '<?=($_SERVER['PHP_SELF'])?>',
-        data: {ajax_request: 'policy_calculation' , customer_id: customer_id, coverage: coverage, vehicle_ids: vehicle_ids, driver_ids: driver_ids},
-        cache: false,
-        dataType: 'json',           
-        success: function(data) {
-            
-            
-        },
-        error: function(data) {
-            console.log(data);
-        }      
-    });
+    //if(!$.isEmptyObject(vehicle)){
+        $.ajax({
+            type: 'POST',
+            url: '<?=($_SERVER['PHP_SELF'])?>',
+            data: {ajax_request: 'policy_calculation', customer_id: customer_id, coverage: coverage, vehicle: vehicle, driver: driver},
+            cache: false,
+            dataType: 'json',           
+            success: function(data) {
+                console.log(data);
+                
+            },
+            error: function(data) {
+                console.log('error');
+                console.log(data);
+            }      
+        });
+    //}
+    
 }
 
 $('#policy_form').on('submit', (function(e) {
