@@ -31,7 +31,8 @@ $policy_bi          = (isset($_REQUEST["policy_bi"])) ? $_REQUEST["policy_bi"] :
 $policy_pd          = (isset($_REQUEST["policy_pd"])) ? $_REQUEST["policy_pd"] : 0;
 $policy_umd          = (isset($_REQUEST["policy_umd"])) ? $_REQUEST["policy_umd"] : 0; 
 $policy_medical          = (isset($_REQUEST["policy_medical"])) ? $_REQUEST["policy_medical"] : 0; 
-$vehicle          = (isset($_REQUEST["vehicle"])) ? $_REQUEST["vehicle"] : 0; 
+$vehicle          = (isset($_REQUEST["vehicle"])) ? $_REQUEST["vehicle"] : array(); 
+$driver          = (isset($_REQUEST["driver"])) ? $_REQUEST["driver"] : array(); 
 $roasass          = (isset($_REQUEST["roasass"])) ? $_REQUEST["roasass"] : 0; 
 $initials          = (isset($_REQUEST["initials"])) ? $_REQUEST["initials"] : ''; 
 $mother_maident_name          = (isset($_REQUEST["mother_maident_name"])) ? $_REQUEST["mother_maident_name"] : ''; 
@@ -44,7 +45,6 @@ $is_veh_listed_garaged          = (isset($_REQUEST["is_veh_listed_garaged"])) ? 
 $is_driver_res          = (isset($_REQUEST["is_driver_res"])) ? $_REQUEST["is_driver_res"] : 0; 
 $is_applicant_other_veh          = (isset($_REQUEST["is_applicant_other_veh"])) ? $_REQUEST["is_applicant_other_veh"] : 0; 
 $is_physical_damage          = (isset($_REQUEST["is_physical_damage"])) ? $_REQUEST["is_physical_damage"] : 0; 
-$driver          = (isset($_REQUEST["driver"])) ? $_REQUEST["driver"] : 0; 
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -66,6 +66,130 @@ if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
     $query_count = mysqli_num_rows($query_result); 
 }
 
+/* ==================================================PHP AJAX================================================== */
+
+if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
+    $data = [];
+    $data["msg"] = "Something went wrong please try again later.";
+    $data["status"] = "error";
+
+    if($_REQUEST["ajax_request"] == "getting_vehicle"){
+        $data_set = '';
+        $select_query = mysqli_query($conn, "SELECT vehicle.id , year.year ,  make.make_name , model.model_name , vehicle.vehicle_no  FROM vehicle INNER JOIN make ON make.id = vehicle.vehicle_make_id inner join model on model.id = vehicle.vehicle_model_id inner join year on year.id = vehicle.vehicle_year_id WHERE  customer_id = $customer_id");
+        if(mysqli_num_rows($select_query) > 0){
+            while($get_query = mysqli_fetch_array($select_query)){
+                $data_set .= "<option value='".$get_query["id"]."' year='".$get_query["year"]."'  make='".$get_query["make_name"]."' model='".$get_query["model_name"]."' vehical_no = '".$get_query["vehicle_no"]."' >".$get_query["make_name"].' - '.$get_query["model_name"] . ' - '. $get_query["vehicle_no"]."</option>";
+            }   
+        }
+        $data["status"] = "success";
+        $data["msg"] = "";
+        $data["res_data"] = $data_set;
+
+        echo $json_response = json_encode($data);
+        exit();
+    }
+
+    $base_premium = 0;
+    $additional_coverage_premium = 0;
+    $custom_discount = 0;
+    $total_fees = 0;
+    $management_fee = 0;
+    $service_fee = 0;
+    $net_total = 0;
+
+    if($_REQUEST["ajax_request"] == "policy_calculation"){
+        
+        $vehicle = (sizeof($vehicle) > 0) ? implode(",", $vehicle) : 0;
+        $select_customer = mysqli_query($conn, "SELECT * FROM customer where id = '$customer_id'");
+        $get_customer = mysqli_fetch_assoc($select_customer);
+        $date_of_birth = $get_customer["date_of_birth"];
+        $customer_age = calculateAge($date_of_birth);
+
+        $data = [];
+        $error_arr = [];
+
+        if($coverage != "non_owner" && empty($vehicle)){
+            $error_arr[] = "Please select a vehicle.<br/>";
+        }
+
+
+        // Display errors if any
+        if (!empty($error_arr)) {
+            $error_txt = implode('', $error_arr);
+            $data["msg"] = $error_txt;
+            $data["status"] = "error";
+            echo $json_response = json_encode($data);
+            exit;
+        }
+
+        $qry = "SELECT policy_calculation.*, year.year, make.make_origin FROM policy_calculation
+            left join vehicle on FIND_IN_SET(vehicle.id, $vehicle) > 0
+            left join year on year.id = vehicle.vehicle_year_id
+            left join make on make.id = vehicle.vehicle_make_id
+            WHERE policy_type = '$coverage' AND $customer_age BETWEEN customer_age_from AND customer_age_to ";
+
+        if($coverage != "non_owner" && !empty($vehicle)){
+            $qry .= " AND ( vehicle_year_from != 0 AND year.year BETWEEN vehicle_year_from AND vehicle_year_to ) ";
+        }
+        
+        $qry .= "ORDER BY policy_calculation.id DESC";
+
+        //echo $qry; die;
+        $select_data = mysqli_query($conn, $qry);
+        while($get_data = mysqli_fetch_assoc($select_data)){
+            $addup_increase_percent = $get_data["addup_increase_percent"];
+            $vehicle_make_origin = $get_data["vehicle_make_origin"];
+            $origin_increase_percent = $get_data["origin_increase_percent"];
+            $spouse_discount_percent = $get_data["spouse_discount_percent"];
+            $family_increase_percent = $get_data["family_increase_percent"];
+            $friend_increase_percent = $get_data["friend_increase_percent"];
+            $more_then_one_driver_increase_percent = $get_data["more_then_one_driver_increase_percent"];
+            $base_policy_amt = $get_data["base_policy_amt"];
+            $make_origin = $get_data["make_origin"];
+
+            //add up price for coverage and customer age
+            $addup_amt = ($base_policy_amt * 12 / 100);
+            $base_policy_with_addup_amt = $base_policy_amt + $addup_amt;
+            $base_premium += $base_policy_with_addup_amt;
+            $additional_coverage_premium += $addup_amt;
+
+
+            //vehicle make origin
+            if($make_origin == $vehicle_make_origin){
+                $origin_increase_amt = ($base_policy_amt * $origin_increase_percent / 100);
+                $base_premium += $origin_increase_amt;
+                $additional_coverage_premium += $origin_increase_amt;
+            }
+        }
+
+
+        $data_set = [
+            "base_premium" => $base_premium,
+            'additional_coverage_premium' => $additional_coverage_premium,
+            'custom_discount' => $custom_discount,
+            'total_fees' => $total_fees,
+            'management_fee' => $management_fee,
+            'service_fee' => $service_fee,
+            'net_total' => $net_total,
+        ];
+        
+
+        // print_r($get_data);
+        // die;
+
+        //make_origin//south_korean
+
+        $data["status"] = "success";
+        $data["msg"] = "";
+        $data["res_data"] = $data_set;
+
+        echo $json_response = json_encode($data);
+        exit();
+    }
+    
+    echo $json_response = json_encode($data);
+    exit();
+}
 
 switch ($mode) {
     case "NEW":
@@ -274,33 +398,6 @@ switch ($mode) {
 
     break;
 
-}
-
-/* ==================================================PHP AJAX================================================== */
-
-if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
-    $data = [];
-    $data["msg"] = "Something went wrong please try again later.";
-    $data["status"] = "error";
-
-    if($_REQUEST["ajax_request"] == "getting_vehicle"){
-        $data_set = '';
-        $select_query = mysqli_query($conn, "SELECT vehicle.id , year.year ,  make.make_name , model.model_name , vehicle.vehicle_no  FROM vehicle INNER JOIN make ON make.id = vehicle.vehicle_make_id inner join model on model.id = vehicle.vehicle_model_id inner join year on year.id = vehicle.vehicle_year_id WHERE  customer_id = $customer_id");
-        if(mysqli_num_rows($select_query) > 0){
-            while($get_query = mysqli_fetch_array($select_query)){
-                $data_set .= "<option value='".$get_query["id"]."' year='".$get_query["year"]."'  make='".$get_query["make_name"]."' model='".$get_query["model_name"]."' vehical_no = '".$get_query["vehicle_no"]."' >".$get_query["make_name"].' - '.$get_query["model_name"] . ' - '. $get_query["vehicle_no"]."</option>";
-            }   
-        }
-        $data["status"] = "success";
-        $data["msg"] = "";
-        $data["res_data"] = $data_set;
-
-        echo $json_response = json_encode($data);
-        exit();
     }
-    
-    echo $json_response = json_encode($data);
-    exit();
-}
 
 ?>

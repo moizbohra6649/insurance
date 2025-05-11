@@ -258,6 +258,13 @@ function isListInPageName($pageName) {
 	return strpos($pageName, "_list") !== false;
 }
 
+function calculateAge($birthDate) {
+    $birthDateObject = new DateTime($birthDate);
+    $currentDateObject = new DateTime();
+    $ageInterval = $currentDateObject->diff($birthDateObject);
+    return $ageInterval->y;
+}
+
 function convert_calender_date($select_date){
 	if(!empty($select_date) && $select_date != "0000-00-00"){
 		$formatted_date = date('d-m-Y', strtotime($select_date));

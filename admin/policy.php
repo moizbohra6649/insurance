@@ -69,7 +69,7 @@ include('partial/loader.php'); ?>
                                             <label class="form-label" for="coverage">Coverage<span class="text-danger">*</span></label>
                                             <div class="form-input">
                                                 <select class="form-select" name="coverage" id="coverage">
-                                                    <option value="">Please Select Coverage</option>
+                                                    <!-- <option value="">Please Select Coverage</option> -->
                                                     <option value="liability" <?= ($coverage == 'liability' ) ? 'selected' : '';  ?>>Liability</option>
                                                     <option value="full_coverage" <?= ($coverage == 'full_coverage' ) ? 'selected' : '';  ?>>Full Coverage</option>
                                                     <option value="non_owner" <?= ($coverage == 'non_owner' ) ? 'selected' : '';  ?>> Non Owner</option>
