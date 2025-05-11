@@ -55,10 +55,15 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 }
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
+    $extrawhere = '';
+    if($login_role == 'agent'){
+        $extrawhere = "and customer.id in (select id from customer where agent_id = $login_id)";
+    }
     $select_query = "SELECT policy.*, customer.name as customer_name FROM policy 
-    left join customer on customer.id = policy.customer_id";
+    left join customer on customer.id = policy.customer_id where 1 = 1 $extrawhere
+    ";
     $query_result = mysqli_query($conn, $select_query);
-    $query_count = mysqli_num_rows($query_result);
+    $query_count = mysqli_num_rows($query_result); 
 }
 
 

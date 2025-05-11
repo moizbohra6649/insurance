@@ -159,8 +159,10 @@ $('#agent-form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                var url = `agent-login.php`;
-                setTimeout(function() { move(`<?=$front_end_link?>${url}`); }, 1000);
+                $('.register_tabs').hide();
+                $('.login_tabs').show();
+                // var url = `agent-login.php`;
+                // setTimeout(function() { move(`${url}`); }, 1000);
             }else{
                 $("#agent_submit_btn").html('Submit');
                 $("#agent_submit_btn").removeAttr('disabled');

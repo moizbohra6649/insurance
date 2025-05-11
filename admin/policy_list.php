@@ -27,7 +27,9 @@ include('partial/loader.php'); ?>
                                 <div class="row align-items-center justify-content-center">
                                     <div class="col-sm-12 col-auto">
                                         <div class="text-sm-end">
+                                        <?php if($login_role != 'superadmin'){ ?>
                                             <a href="<?=$actual_link?>policy.php?customer_id=<?=base64_encode($customer_id);?>" class="btn btn-primary mb-2"><i class="icofont icofont-plus"></i> Add New Policy</a>
+                                            <?php } ?> 
                                         </div>
                                     </div>
                                 </div>

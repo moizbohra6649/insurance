@@ -30,7 +30,9 @@ include('partial/loader.php'); ?>
                                     </div>
                                     <div class="col-sm-6 col-auto">
                                         <div class="text-sm-end">
+                                        <?php if($login_role != 'superadmin'){ ?>
                                             <a href="<?=$actual_link?>customer.php" class="btn btn-primary mb-2"><i class="icofont icofont-plus"></i> Add New Customer</a>
+                                            <?php } ?>  
                                         </div>
                                     </div>
                                 </div>

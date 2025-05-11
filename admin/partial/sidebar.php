@@ -45,6 +45,7 @@
                 <use href="assets/svg/icon-sprite.svg#fill-user"> </use>
               </svg><span>Users</span></a>
             <ul class="sidebar-submenu">
+              <?php if($login_role == 'superadmin' || $login_role == 'vendor'){ ?>
               <li><a class="submenu-title" href="#">Staff<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                 <ul class="nav-sub-childmenu submenu-content">
                   <li><a href="staff_list.php">Staff List</a></li>
@@ -63,15 +64,20 @@
                   <li><a href="vendor.php">Vendor Add</a></li>
                 </ul>
               </li>
+              <?php } ?>
+              <?php if($login_role == 'superadmin' || $login_role == 'agent' ){ ?>
               <li><a class="submenu-title" href="#">Customer<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                 <ul class="nav-sub-childmenu submenu-content">
                   <li><a href="customer_list.php">Customer List</a></li>
-                  <li><a href="customer.php">Customer Add</a></li>
+                  <?php if($login_role != 'superadmin'){ ?>
+                          <li><a href="customer.php">Customer Add</a></li>
+                  <?php } ?>  
                 </ul>
               </li>
+              <?php } ?>
             </ul>
           </li>
-
+          <?php if($login_role == 'superadmin' || $login_role == 'vendor'){ ?>            
           <li class="sidebar-main-title">
             <div>
               <h6 class="">Vehicle</h6>
@@ -106,9 +112,9 @@
               </li>
             </ul>
           </li>
-
+          <?php } ?>
           
-
+          <?php if($login_role == 'superadmin' || $login_role == 'vendor'){ ?>           
           <li class="sidebar-main-title">
             <div>
               <h6 class="">Policy Coverages</h6>
@@ -149,14 +155,34 @@
               </li>
             </ul>
           </li>
+          <?php } ?>
+          <li class="sidebar-main-title">
+            <div>
+              <h6 class="">Policy List</h6>
+            </div>
+          </li>
+          <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+            <svg class="stroke-icon">
+              <use href="assets/svg/icon-sprite.svg#stroke-others"></use>
+            </svg>
+            <svg class="fill-icon">
+              <use href="assets/svg/icon-sprite.svg#fill-others"></use>
+            </svg><span>Policy</span></a>
+            <ul class="sidebar-submenu">
+              <li><a href="policy_list.php">Policy List</a></li>
+            </ul>
+        </li>  
 
+         
           
-
+          <?php if($login_role == 'superadmin' || $login_role == 'vendor'){ ?>       
           <li class="sidebar-main-title">
             <div>
               <h6 class="">Coverages</h6>
             </div>
           </li>
+
+          
 
           <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
               <svg class="stroke-icon">
@@ -198,7 +224,7 @@
               </li>
             </ul>
           </li>
-
+          <?php } ?>
           <li class="sidebar-main-title">
             <div>
               <h6 class="">Charges</h6>
@@ -213,8 +239,12 @@
               <use href="assets/svg/icon-sprite.svg#fill-others"></use>
             </svg><span>Charges</span></a>
           <ul class="sidebar-submenu">
+          <?php if($login_role != 'vendor'){ ?>
             <li><a href="service_charges.php">Service Charges</a></li>
+            <?php } 
+             if($login_role != 'agent'){ ?>
             <li><a href="management_charges.php">Management Charges</a></li>
+            <?php } ?> 
           </ul>
         </li>          
           
