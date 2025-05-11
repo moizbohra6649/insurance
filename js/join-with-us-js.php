@@ -72,8 +72,8 @@ $('#service-provider-form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                var url = `service-provider-login.php`;
-                setTimeout(function() { move(`<?=$front_end_link?>${url}`); }, 1000);
+                $('.register_tabs').hide();
+                $('.login_tabs').show();
             }else{
                 $("#service_provider_submit_btn").html('Submit');
                 $("#service_provider_submit_btn").removeAttr('disabled');

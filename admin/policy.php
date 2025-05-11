@@ -554,15 +554,15 @@ include('partial/loader.php'); ?>
                                     $1425.00
                                     </div> 
                                 </div> 
-                                <input type="hidden" name="premium" id="premium" value="" autocomplete="off" >
-                                <input type="hidden" name="base_premium" id="base_premium" value="" autocomplete="off" >
-                                <input type="hidden" name="additional_coverage_premium" id="additional_coverage_premium" value="" autocomplete="off" >
-                                <input type="hidden" name="custom_discount" id="custom_discount" value="" autocomplete="off" >
-                                <input type="hidden" name="total_fees" id="total_fees" value="" autocomplete="off" >
-                                <input type="hidden" name="total_premium" id="total_premium" value="" autocomplete="off" >
-                                <input type="hidden" name="management_fee" id="management_fee" value="" autocomplete="off" >
-                                <input type="hidden" name="service_price" id="service_price" value="" autocomplete="off" >
-                                <input type="hidden" name="total" id="total" value="" autocomplete="off" >
+                                <input type="hidden" name="premium" id="premium" value="0" autocomplete="off" >
+                                <input type="hidden" name="base_premium" id="base_premium" value="0" autocomplete="off" >
+                                <input type="hidden" name="additional_coverage_premium" id="additional_coverage_premium" value="0" autocomplete="off" >
+                                <input type="hidden" name="custom_discount" id="custom_discount" value="0" autocomplete="off" >
+                                <input type="hidden" name="total_fees" id="total_fees" value="0" autocomplete="off" >
+                                <input type="hidden" name="total_premium" id="total_premium" value="0" autocomplete="off" >
+                                <input type="hidden" name="management_fee" id="management_fee" value="0" autocomplete="off" >
+                                <input type="hidden" name="service_price" id="service_price" value="0" autocomplete="off" >
+                                <input type="hidden" name="total" id="total" value="0" autocomplete="off" >
                                 <?php if($mode != "VIEW" && $mode != "EDIT"){ ?>
                                     <div class="card-body btn-showcase" style="text-align: center;">
                                         <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>

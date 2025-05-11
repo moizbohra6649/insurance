@@ -77,6 +77,7 @@
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
                         <li><a href="#"><i data-feather="user"></i><span>Account </span></a></li>
+                        <li><a href="wallet_list.php"><i data-feather="user"></i><span>Wallet</span></a></li>
                         <li><a href="logout.php"><i data-feather="log-in"> </i><span>Log out</span></a></li>
                     </ul>
                 </li>

@@ -45,6 +45,14 @@ $is_veh_listed_garaged          = (isset($_REQUEST["is_veh_listed_garaged"])) ? 
 $is_driver_res          = (isset($_REQUEST["is_driver_res"])) ? $_REQUEST["is_driver_res"] : 0; 
 $is_applicant_other_veh          = (isset($_REQUEST["is_applicant_other_veh"])) ? $_REQUEST["is_applicant_other_veh"] : 0; 
 $is_physical_damage          = (isset($_REQUEST["is_physical_damage"])) ? $_REQUEST["is_physical_damage"] : 0; 
+$service_price          = (isset($_REQUEST["service_price"])) ? $_REQUEST["service_price"] : 0; 
+$base_premium          = (isset($_REQUEST["base_premium"])) ? $_REQUEST["base_premium"] : 0;  
+$additional_coverage_premium          = (isset($_REQUEST["additional_coverage_premium"])) ? $_REQUEST["additional_coverage_premium"] : 0; 
+$custom_discount          = (isset($_REQUEST["custom_discount"])) ? $_REQUEST["custom_discount"] : 0; 
+$total_fees          = (isset($_REQUEST["total_fees"])) ? $_REQUEST["total_fees"] : 0; 
+$total_premium          = (isset($_REQUEST["total_premium"])) ? $_REQUEST["total_premium"] : 0; 
+$management_fee          = (isset($_REQUEST["management_fee"])) ? $_REQUEST["management_fee"] : 0; 
+$total          = (isset($_REQUEST["total"])) ? $_REQUEST["total"] : 0; 
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -237,7 +245,7 @@ switch ($mode) {
             exit;
         }
         mysqli_autocommit($conn,FALSE);
-        $insert_query = mysqli_query($conn, "INSERT INTO policy (policy_id, prefix_policy_id, customer_id , policy_coverage, policy_coverage_collision_id, policy_coverage_umpd_id, policy_coverage_rental_id, policy_coverage_towing_id, policy_coverage_deductible_id, is_veh_used_business, is_physical_damage, policy_bi_id, policy_umd_id, policy_medical_id, policy_pd_id, is_roadside_assistance, is_driver_res, is_vehical_listed, is_applicant_sole_registered, is_applicant_other_veh, is_veh_used_business_q, is_veh_listed_ride, is_veh_listed_application_used , is_veh_listed_garaged , policy_status	, status) VALUES ('$policy_id', '$prefix_policy_id', '$customer_id', '$coverage', '$coverage_collision', '$umpd', '$coverage_rental', '$towning_coverage', '$coverage_deductible', '$is_veh_used_business', '$is_physical_damage', '$policy_bi', '$policy_umd', '$policy_medical', '$policy_pd', '$roasass', '$is_driver_res', '$is_vehical_listed', '$is_applicant_sole_registered', '$is_applicant_other_veh', '$is_veh_used_business_q' , '$is_veh_listed_ride' , '$is_veh_listed_application_used' , '$is_veh_listed_garaged' , 'pending' , 0)");
+        $insert_query = mysqli_query($conn, "INSERT INTO policy (policy_id, prefix_policy_id, customer_id , policy_coverage, policy_coverage_collision_id, policy_coverage_umpd_id, policy_coverage_rental_id, policy_coverage_towing_id, policy_coverage_deductible_id, is_veh_used_business, is_physical_damage, policy_bi_id, policy_umd_id, policy_medical_id, policy_pd_id, is_roadside_assistance, is_driver_res, is_vehical_listed, is_applicant_sole_registered, is_applicant_other_veh, is_veh_used_business_q, is_veh_listed_ride, is_veh_listed_application_used , is_veh_listed_garaged , policy_status	, status , service_price, base_premium, additional_coverage_premium, customl_discount, total_fees, total_premium, management_fee, total) VALUES ('$policy_id', '$prefix_policy_id', '$customer_id', '$coverage', '$coverage_collision', '$umpd', '$coverage_rental', '$towning_coverage', '$coverage_deductible', '$is_veh_used_business', '$is_physical_damage', '$policy_bi', '$policy_umd', '$policy_medical', '$policy_pd', '$roasass', '$is_driver_res', '$is_vehical_listed', '$is_applicant_sole_registered', '$is_applicant_other_veh', '$is_veh_used_business_q' , '$is_veh_listed_ride' , '$is_veh_listed_application_used' , '$is_veh_listed_garaged' , 'pending' , 0 , $service_price,$base_premium , $additional_coverage_premium  , $custom_discount , $total_fees , $total_premium  , $management_fee  ,$total)");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
