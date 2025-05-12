@@ -213,6 +213,20 @@ if($form_request == "agent"){
         $data["msg"] = "Commit transaction failed";
         $data["status"] = "error";
     }else if (!empty($insert_query)) {
+        $body = file_get_contents(dirname(__DIR__) . '/admin/partial/agent_registration_template.php');
+        $body = str_replace('{{name}}', htmlspecialchars($username), $body);
+        $welcome_mail = mail_send($email, 'Welcome to Road Star USA – Your Registration is Successful!' , $body  , $name);
+
+
+        $placeholders = [
+            '{{name}}'            => htmlspecialchars($name),
+            '{{email}}' => htmlspecialchars($email),
+            '{{activation_link}}'   => $actual_link.'active_agent.php?activation_id='.base64_encode($last_inserted_id)
+        ];  
+        $body = file_get_contents(dirname(__DIR__) . '/admin/partial/agent_activation_template.php');
+        $body = str_replace(array_keys($placeholders), array_values($placeholders), $body);
+        $activation_mail = mail_send('admin@gmail.com', 'New Agent Registration – Action Required' , $body  , 'System Notification');
+
         $data["msg"] = "Agent registered successfully.";
         $data["status"] = "success";
     } else {
