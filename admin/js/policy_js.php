@@ -12,12 +12,12 @@ function fn_getting_vehicle(){
             var ids = $('#vehical_list').val().split(',');
             var driverids = $('#driver_list').val().split(',');
             if($("#coverage").val() == 'liability' ||  $("#coverage").val() == 'full_coverage' ){
+
                 $('#vehicle').attr('multiple' , 'multiple');
                 $("#vehicle").select2({
                     placeholder: "Please Select Vehicle's",
                     maximumSelectionLength: 5
                 });
-               
                 $('#vehicle').val(ids).trigger('change');
 
                 $('#driver').attr('multiple' , 'multiple');
@@ -57,12 +57,14 @@ function fn_getting_vehicle(){
     $("#coverage").on( 'change' , (function(e) {
        let coverage_type = $(this).val() ; 
        if(coverage_type == 'liability' || coverage_type == 'full_coverage' ){
+
             $('#vehicle').attr('multiple' , 'multiple');
             $("#vehicle").select2({
                 placeholder: "Please Select Vehicle's",
                 maximumSelectionLength: 5
             });
             $('#vehicle').val('').trigger('change');
+
             $('#driver').attr('multiple' , 'multiple');
             $("#driver").select2({
                 placeholder: "Please Select driver's",
@@ -70,6 +72,7 @@ function fn_getting_vehicle(){
             });
             $('#driver').val('').trigger('change');
        }else{
+
             $('#vehicle').removeAttr('multiple');
             $("#vehicle").select2({
                 placeholder: "Please Select Vehicle's",
@@ -77,6 +80,7 @@ function fn_getting_vehicle(){
                 allowClear: true
             });
             $('#vehicle').val('').trigger('change');
+
             $('#driver').removeAttr('multiple');
             $("#driver").select2({
                 placeholder: "Please Select driver's",

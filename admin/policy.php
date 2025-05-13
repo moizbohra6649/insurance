@@ -164,11 +164,11 @@ include('partial/loader.php'); ?>
                                         <div class="col">
                                             <div class="mb-3 m-t-15 custom-radio-ml">
                                                 <div class="radio-primary">
-                                                    <input class="form-check-input vehUsed" type="radio" id =  "is_veh_used_business" name="is_veh_used_business"  <?= ($is_veh_used_business == 1 ) ? 'checked' : '';  ?>  value="1">
+                                                    <input class="form-check-input vehUsed" type="radio" name="is_veh_used_business"  <?= ($is_veh_used_business == 1 ) ? 'checked' : '';  ?>  value="1">
                                                     <label class="form-check-label">Yes</label>
                                                 </div>
                                                 <div class="radio-primary">
-                                                    <input class="form-check-input vehUsed" type="radio"  id =  "is_veh_used_business"  name="is_veh_used_business" value="0" <?= ($is_veh_used_business == 0 ) ? 'checked' : '';  ?> >
+                                                    <input class="form-check-input vehUsed" type="radio" name="is_veh_used_business" value="0" <?= ($is_veh_used_business == 0 ) ? 'checked' : '';  ?> >
                                                     <label class="form-check-label">No</label>
                                                 </div>
                                             </div>
@@ -254,8 +254,7 @@ include('partial/loader.php'); ?>
                                             <label class="form-label" for="vehicle">Vehicle's<span class="text-danger">*</span></label>
                                             <div class="form-input">
                                                  <select class="form-select" name="vehicle[]" id="vehicle">
-                                                 
-                                                </select>
+                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-4 mb-3">
@@ -263,11 +262,11 @@ include('partial/loader.php'); ?>
                                             <div class="form-input">
                                                  <select class="form-select" name="driver[]" id="driver">
                                                     <?php
-                                                        $coverage_umpd = select("driver","customer_id= ".$customer_id."") ;
-                                                        while($get_coverage_umpd = fetch($coverage_umpd)){
+                                                        $select_driver = select("driver","customer_id = $customer_id ") ;
+                                                        while($get_driver = fetch($select_driver)){
                                                     ?>
-                                                            <option drive_id="<?= $get_coverage_umpd["driver_id"] ?>" drive_name="<?= $get_coverage_umpd["first_name"].' '.$get_coverage_umpd["last_name"] ?>" driver_dob ="<?= convert_readable_date_db($get_coverage_umpd["date_of_birth"]) ?>" driver_licence_no="<?= $get_coverage_umpd["driver_licence_no"] ?>" value="<?= $get_coverage_umpd["id"] ?>"><?php echo  $get_coverage_umpd["first_name"].' '.$get_coverage_umpd["last_name"]; ?></option>
-                                                    <?php } ?>driver_licence_no
+                                                            <option drive_id="<?= $get_driver["driver_id"] ?>" drive_name="<?= $get_driver["first_name"].' '.$get_driver["last_name"] ?>" driver_dob ="<?= convert_readable_date_db($get_driver["date_of_birth"]) ?>" driver_licence_no="<?= $get_driver["driver_licence_no"] ?>" value="<?= $get_driver["id"] ?>"><?php echo  $get_driver["first_name"].' '.$get_driver["last_name"]; ?></option>
+                                                    <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -389,10 +388,10 @@ include('partial/loader.php'); ?>
                                                 5. Are any vehicles operated by any for commercial business use?
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <input class="form-check-input roasass" type="radio" name="is_veh_used_business " value="1" <?= ($is_veh_used_business == 1) ? 'checked' : '';  ?>>
+                                                <input class="form-check-input roasass" type="radio" name="is_veh_used_business_q " value="1" <?= ($is_veh_used_business_q == 1) ? 'checked' : '';  ?>>
                                                 <label class="form-check-label">Yes</label>
                                                
-                                                    <input class="form-check-input roasass" type="radio" name="is_veh_used_business " value="0" <?= ($is_veh_used_business == 0) ? 'checked' : '';  ?>>
+                                                    <input class="form-check-input roasass" type="radio" name="is_veh_used_business_q " value="0" <?= ($is_veh_used_business_q == 0) ? 'checked' : '';  ?>>
                                                 <label class="form-check-label">No</label>
                                                 
                                             </div>

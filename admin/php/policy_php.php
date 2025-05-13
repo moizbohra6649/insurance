@@ -130,7 +130,55 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
             exit;
         }
 
-        $qry = "SELECT policy_calculation.*, year.year, make.make_origin FROM policy_calculation
+
+        $qry_policy_base_amt = "SELECT * FROM policy_coverage_base_amt_cal
+            WHERE policy_type = '$coverage' AND $customer_age BETWEEN customer_age_from AND customer_age_to ";
+        $select_policy_base_amt = mysqli_query($conn, $qry_policy_base_amt);
+        if(mysqli_num_rows($select_policy_base_amt) > 0){
+            $get_policy_base_amt = mysqli_fetch_assoc($select_policy_base_amt);
+            $vehicle_count = $get_data["vehicle_count"];
+            $driver_count = $get_data["driver_count"];
+            $base_policy_amt = $get_data["base_policy_amt"];
+
+
+            if($coverage != "non_owner" && !empty($vehicle)){
+
+                $qry_policy_vehicle_addup = "SELECT policy_vehicle_amt_cal.*, year.year, make.make_origin FROM policy_vehicle_amt_cal
+                    left join vehicle on FIND_IN_SET(vehicle.id, $vehicle) > 0
+                    left join year on year.id = vehicle.vehicle_year_id
+                    left join make on make.id = vehicle.vehicle_make_id
+                    WHERE policy_type = '$coverage' AND ( vehicle_year_from != 0 AND year.year BETWEEN vehicle_year_from AND vehicle_year_to )";
+
+                $select_policy_vehicle_addup = mysqli_query($conn, $qry_policy_vehicle_addup);
+                if(mysqli_num_rows($select_policy_vehicle_addup) > 0){
+                    $get_policy_vehicle_addup = mysqli_fetch_assoc($select_policy_vehicle_addup);
+                    $addup_increase_percent = $get_data["addup_increase_percent"];
+                    $vehicle_make_origin = $get_data["vehicle_make_origin"];
+                    $origin_increase_percent = $get_data["origin_increase_percent"];
+                    $make_origin = $get_data["make_origin"];
+
+                    //add up price for coverage and customer age
+                    $addup_amt = ($base_policy_amt * $addup_increase_percent / 100);
+                    $base_policy_with_addup_amt = $base_policy_amt + $addup_amt;
+                    $base_premium += $base_policy_with_addup_amt;
+                    $additional_coverage_premium += $addup_amt;
+
+                    //vehicle make origin
+                    if($make_origin == $vehicle_make_origin){
+                        $origin_increase_amt = ($base_policy_amt * $origin_increase_percent / 100);
+                        $base_premium += $origin_increase_amt;
+                        $additional_coverage_premium += $origin_increase_amt;
+                    }
+
+                }
+
+
+            }
+            
+        }
+
+
+        /* $qry = "SELECT policy_calculation.*, year.year, make.make_origin FROM policy_calculation
             left join vehicle on FIND_IN_SET(vehicle.id, $vehicle) > 0
             left join year on year.id = vehicle.vehicle_year_id
             left join make on make.id = vehicle.vehicle_make_id
@@ -168,7 +216,7 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
                 $base_premium += $origin_increase_amt;
                 $additional_coverage_premium += $origin_increase_amt;
             }
-        }
+        } */
 
 
         $data_set = [
