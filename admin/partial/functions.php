@@ -53,6 +53,12 @@ define('site_name', 'Insurance');
 define('site_email', 'moiztandawala52@gmail.com');
 define('admin_email', 'moiztandawala52@gmail.com');
 
+define('smtp_host', 'sandbox.smtp.mailtrap.io');
+define('smtp_username', 'e470bd7999d4d0');
+define('smtp_password', '8f1d411fe9d867');
+define('sent_from_mail', 'insurance@roadstar.com');
+define('sent_from', 'Road Star USA');
+
 function move(string $path) {
 	echo "<script>window.location.href='$path';</script>";
 	return true;
@@ -297,6 +303,19 @@ function convert_readable_date_db($date){
 	$formattedDate = $datetime->format('Y-m-d');
 
 	return $formattedDate; 
+}
+
+function mail_send($usermail = '' , $subject = '' , $body = '' , $name = ''){
+
+	if(empty($usermail)){
+		return 'Try to send Mail on empty email.';
+	}
+	if (file_exists(dirname(__DIR__) . '/partial/send_mail.php')) {
+		require_once(dirname(__DIR__) . '/partial/send_mail.php');
+	}
+
+	return send_mail($usermail , $subject , $body , $name);
+
 }
 
 function convert_db_date($select_date){
