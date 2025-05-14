@@ -109,8 +109,9 @@ if($form_request == "service_provider"){
     mysqli_autocommit($conn,FALSE);
 
     $password_hash =  password_hash($password, PASSWORD_DEFAULT);
-
+   
     $insert_query = mysqli_query($conn, "INSERT INTO vendor (vendor_id, prefix_vendor_id, company_name, name, username, email, address, mobile, password, hint, profile_image, business_license, entry_type) VALUES ('$vendor_id', '$prefix_vendor_id', '$company_name', '$name', '$username', '$email', '$address', '$mobile_no', '$password_hash', '$password', '$profile_image', '$business_licence_image', '$entry_type') ");
+    
 
     $last_inserted_id = mysqli_insert_id($conn);
 
@@ -119,6 +120,20 @@ if($form_request == "service_provider"){
         $data["msg"] = "Commit transaction failed";
         $data["status"] = "error";
     }else if (!empty($insert_query)) {
+        $body = file_get_contents(dirname(__DIR__) . '/admin/partial/agent_registration_template.php');
+        $body = str_replace('{{name}}', htmlspecialchars($username), $body);
+        $welcome_mail = mail_send($email, 'Welcome to Road Star USA – Your Registration is Successful!' , $body  , $name);
+
+        $placeholders = [
+            '{{name}}'            => htmlspecialchars($name),
+            '{{email}}' => htmlspecialchars($email),
+            '{{role}}'  => 'Service Provider',
+            '{{activation_link}}'   => $actual_link.'activation.php?role=service_provider&activation_id='.base64_encode($last_inserted_id)
+        ];  
+        $body = file_get_contents(dirname(__DIR__) . '/admin/partial/agent_activation_template.php');
+        $body = str_replace(array_keys($placeholders), array_values($placeholders), $body);
+        $activation_mail = mail_send('admin@gmail.com', 'New Service Provider Registration – Action Required' , $body  , 'System Notification');
+
         $data["msg"] = "Service Provider registered successfully.";
         $data["status"] = "success";
     } else {
@@ -221,7 +236,8 @@ if($form_request == "agent"){
         $placeholders = [
             '{{name}}'            => htmlspecialchars($name),
             '{{email}}' => htmlspecialchars($email),
-            '{{activation_link}}'   => $actual_link.'active_agent.php?activation_id='.base64_encode($last_inserted_id)
+            '{{role}}'  => 'Agent',
+            '{{activation_link}}'   => $actual_link.'activation.php?role=agent&activation_id='.base64_encode($last_inserted_id)
         ];  
         $body = file_get_contents(dirname(__DIR__) . '/admin/partial/agent_activation_template.php');
         $body = str_replace(array_keys($placeholders), array_values($placeholders), $body);

@@ -86,7 +86,7 @@
             </div>
             <div class="col-sm-12 form-group">
               <p>
-                <a href="javascript:void(0)" class="login_open">Login as a service provider</a>
+                <a href="javascript:void(0)" form-attr="service_provider" class="login_open">Login as a service provider</a>
               </p>
             </div>
             <div class="col-sm-12 form-group mb-0">
@@ -136,7 +136,7 @@
             </div>
             <div class="col-sm-12 form-group">
               <p>
-                <a href="javascript:void(0)" class="login_open">Login as a agent</a>
+                <a href="javascript:void(0)" form-attr="agent"  class="login_open">Login as a agent</a>
               </p>
             </div>
             <div class="col-sm-12 form-group mb-0">
@@ -174,7 +174,7 @@
                 </div>
                 <div class="col-sm-12 form-group">
                   <p>
-                    <a href="javascript:void(0)" class="register_open">Register as a service provider</a>
+                    <a href="javascript:void(0)" form-attr="service_provider" class="register_open">Register as a service provider</a>
                   </p>
                 </div>
                 
@@ -200,7 +200,7 @@
                 </div>
                 <div class="col-sm-12 form-group">
                   <p>
-                    <a href="javascript:void(0)" class="register_open">Register as a agent</a>
+                    <a href="javascript:void(0)" form-attr="agent" class="register_open">Register as a agent</a>
                   </p>
                 </div>
                 <div class="d-grid">

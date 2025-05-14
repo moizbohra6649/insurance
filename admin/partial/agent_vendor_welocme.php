@@ -69,20 +69,21 @@
                       <tbody>
                         <tr>
                           <td style="padding: 30px"> 
-                            <p>Dear Super Admin,</p>
-                            <p>A new {{role}} has registered on the Road Star USA portal and is awaiting activation.</p>
-                            <p>Please review the details below and activate the {{role}} using the link provided.</p>
-                            <p> <b>{{role}} Details:</b></p>
+                            <p>Dear {{name}},</p>
+                            <p>Thank you for registering with <b>Road Star USA!</b></p>
+                            <p> We’re excited to have you on board as one of our valued agents.</p>
+                            <p>Your account has been successfully created, and you can now log in to the agent portal to explore tools, track shipments, and manage your business efficiently.</p>
                             <br>
-                            <p><b>Name</b>: {{name}}</p>
-                            <p><b>Email</b>: {{email}}</p>
-                            <br>
-                            <p>🔗 Activate {{role}}:</p>
-                            <p><a href="{{activation_link}}" target="_blank">[Activation Link Here]</a></p>
+                            Here are your login details:
+                            <p><b>Portal URL:</b> [Your Portal Link]</p>
+                            <p><b>Email:</b> [Agent Email or Username]</p>
+                            <p><b>Password:</b> [Masked or provide set-password link]</p>
+                            <p>If you have any questions or need assistance, feel free to reach out to our support team at mail:support@roadstarusa.com.</p>
+
                             <p> Once again, welcome to the Road Star USA family!</p>
                             <br>
-                            <p>Best regards,</p>
-                            <p> <b>Road Star USA System Notification</b></p>
+                            <p> Warm regards,</p>
+                            <p> <b>Road Star USA Team</b></p>
                           </td>
                         </tr>
                       </tbody>

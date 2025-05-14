@@ -74,6 +74,10 @@ $('#service-provider-form').on('submit', (function(e) {
             if(data.status == "success"){
                 $('.register_tabs').hide();
                 $('.login_tabs').show();
+                $('#service-provider-login-form-tab').addClass('active');
+                $('#service-provider-login-form').addClass('show active');
+                $('#agent-login-form-tab').removeClass('active');
+                $('#agent-login-form').removeClass('show active');
             }else{
                 $("#service_provider_submit_btn").html('Submit');
                 $("#service_provider_submit_btn").removeAttr('disabled');
@@ -161,6 +165,10 @@ $('#agent-form').on('submit', (function(e) {
             if(data.status == "success"){
                 $('.register_tabs').hide();
                 $('.login_tabs').show();
+                $('#agent-login-form-tab').addClass('active');
+                $('#agent-login-form').addClass('show active');
+                $('#service-provider-login-form-tab').removeClass('active');
+                $('#service-provider-login-form').removeClass('show active');
                 // var url = `agent-login.php`;
                 // setTimeout(function() { move(`${url}`); }, 1000);
             }else{
@@ -182,10 +190,34 @@ $('#agent-form').on('submit', (function(e) {
 $('.login_open').on('click', (function(e) {
     $('.register_tabs').hide();
     $('.login_tabs').show();
+    if($(this).attr('form-attr') == 'agent'){
+        $('#agent-login-form-tab').addClass('active'); 
+        $('#agent-login-form').addClass('show active');
+        $('#service-provider-login-form-tab').removeClass('active');
+        $('#service-provider-login-form').removeClass('show active');
+        
+    }else{
+        $('#service-provider-login-form-tab').addClass('active');
+        $('#service-provider-login-form').addClass('show active');
+        $('#agent-login-form-tab').removeClass('active');
+        $('#agent-login-form').removeClass('show active');
+    }
 }));
 $('.register_open').on('click', (function(e) {
     $('.login_tabs').hide();
     $('.register_tabs').show();
+    if($(this).attr('form-attr') == 'agent'){
+        $('#agent-form-tab').addClass('active');
+        $('#agent-form').addClass('show active');
+        $('#service-provider-form-tab').removeClass('active');
+        $('#service-provider-form').removeClass('show active');
+    }else{
+        $('#agent-form-tab').removeClass('active');
+        $('#agent-form').removeClass('show active');
+        $('#service-provider-form-tab').addClass('active');
+        $('#service-provider-form').addClass('show active');
+        
+    }
 }));
 
 
