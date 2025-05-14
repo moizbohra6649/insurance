@@ -169,7 +169,6 @@ switch ($mode) {
             move_uploaded_file($tmp, dirname(__DIR__) . '/' . $upload_folder . '/agent_profile_picture/' . $profile_image);
         }
         mysqli_autocommit($conn,FALSE);
-
         $password_hash =  password_hash($password, PASSWORD_DEFAULT);
 
         $insert_query = mysqli_query($conn, "INSERT INTO agent (agent_id, prefix_agent_id, username, name, email, mobile, password, hint, profile_image, entry_type) VALUES ('$agent_id', '$prefix_agent_id', '$username', '$name', '$email', '$mobile_no', '$password_hash', '$password', '$profile_image', '$db_entry_type')");
@@ -181,6 +180,16 @@ switch ($mode) {
             $data["msg"] = "Commit transaction failed";
             $data["status"] = "error";
         }else if (!empty($insert_query)) {
+        
+            $placeholders = [
+                '{{name}}'            => htmlspecialchars($username),
+                '{{password}}' => htmlspecialchars($password),
+                '{{email}}'  => htmlspecialchars($email),
+                '{{link}}'   => $front_end_link
+            ];  
+            $body = file_get_contents(dirname(__DIR__) . '/partial/agent_vendor_welocme.php');
+            $body = str_replace(array_keys($placeholders), array_values($placeholders), $body);
+            $activation_mail = mail_send('admin@gmail.com', 'Welcome to Road Star USA Your Registration is Successful!' , $body  , 'System Notification');
             $data["msg"] = "Agent inserted successfully.";
             $data["status"] = "success";
         } else {
