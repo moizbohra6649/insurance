@@ -177,7 +177,11 @@ function fn_policy_calculation(){
             cache: false,
             dataType: 'json',           
             success: function(data) {
-                console.log(data);
+                if(data.status == "success"){
+                    var response = data.res_data;
+                    console.log(response);
+                }
+                // console.log(data);
                 
             },
             error: function(data) {
@@ -188,6 +192,8 @@ function fn_policy_calculation(){
     //}
     
 }
+
+fn_policy_calculation();
 
 $('#policy_form').on('submit', (function(e) {
     e.preventDefault();
