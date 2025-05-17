@@ -526,12 +526,9 @@
                            <input type="hidden" name="total_premium" id="total_premium" value="0">
                            <input type="hidden" name="management_fee" id="management_fee" value="0">
                            <input type="hidden" name="service_price" id="service_price" value="0">
-<<<<<<<<< Temporary merge branch 1
                            <input type="hidden" name="net_total" id="net_total" value="0">
-=========
                            <input type="hidden" name="total" id="total" value="0">
                            <?php if($mode != "VIEW"){ ?>
->>>>>>>>> Temporary merge branch 2
                            <div class="card-body btn-showcase" style="text-align: center;">
                               <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
                               <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>

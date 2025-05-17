@@ -23,7 +23,7 @@
      <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <form id="claim_form" >
+          <form id="signUpForm" action="#!">
             <!-- start step indicators -->
             <div class="form-header d-flex mb-4">
                 <span class="stepIndicator">General</span>
@@ -821,13 +821,13 @@
     </section>
 
   </main>
-  <!-- footer start--> 
-  <?php 
+ <!-- footer start--> 
+ <?php 
     include('partial/footer.php');
     include('partial/scripts.php');
     /* Include JS File */
-    if (file_exists(dirname(__FILE__) . '/js/join-with-us-js.php')) {
-        require_once(dirname(__FILE__) . '/js/join-with-us-js.php');
+    if (file_exists(dirname(__FILE__) . '/js/login-js.php')) {
+        require_once(dirname(__FILE__) . '/js/login-js.php');
     }
   ?> 
 </body>
