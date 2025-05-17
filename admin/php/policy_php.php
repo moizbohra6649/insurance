@@ -44,7 +44,7 @@ $is_veh_listed_application_used          = (isset($_REQUEST["is_veh_listed_appli
 $is_veh_listed_garaged          = (isset($_REQUEST["is_veh_listed_garaged"])) ? $_REQUEST["is_veh_listed_garaged"] : 0; 
 $is_driver_res          = (isset($_REQUEST["is_driver_res"])) ? $_REQUEST["is_driver_res"] : 0; 
 $is_applicant_other_veh          = (isset($_REQUEST["is_applicant_other_veh"])) ? $_REQUEST["is_applicant_other_veh"] : 0; 
-$is_physical_damage          = (isset($_REQUEST["is_physical_damage"])) ? $_REQUEST["is_physical_damage"] : 0; 
+$is_physical_damage          = (isset($_REQUEST["is_physical_damage"])) ? ($_REQUEST["is_physical_damage"] == 'on') ? 1 : 0 : 0; 
 $service_price          = (isset($_REQUEST["service_price"])) ? $_REQUEST["service_price"] : 0; 
 $base_premium          = (isset($_REQUEST["base_premium"])) ? $_REQUEST["base_premium"] : 0;  
 $additional_coverage_premium          = (isset($_REQUEST["additional_coverage_premium"])) ? $_REQUEST["additional_coverage_premium"] : 0; 
@@ -348,13 +348,16 @@ switch ($mode) {
         if (!mysqli_commit($conn)) {
             $data["msg"] = "Commit transaction failed";
             $data["status"] = "error";
+            $data["mode"] = $mode;
         }else if (!empty($insert_query)) {
             $data["msg"] = "Policy inserted successfully.";
             $data["status"] = "success";
             $data["policy_id"] = base64_encode($last_inserted_id);
+            $data["mode"] = $mode;
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";
+            $data["mode"] = $mode;
         }
 
         echo $json_response = json_encode($data);
@@ -438,53 +441,71 @@ switch ($mode) {
             exit;
         }
 
-        $get_driver = mysqli_fetch_array($select_driver);
-        $db_driver_licence_image = $get_driver["driver_licence_image"];
-        $driver_id = $get_driver["driver_id"];
+        $update_query = mysqli_query($conn, "
+            UPDATE policy SET 
+                customer_id = '$customer_id',
+                policy_coverage = '$coverage',
+                policy_coverage_collision_id = '$coverage_collision',
+                policy_coverage_umpd_id = '$umpd',
+                policy_coverage_rental_id = '$coverage_rental',
+                policy_coverage_towing_id = '$towning_coverage',
+                policy_coverage_deductible_id = '$coverage_deductible',
+                is_veh_used_business = '$is_veh_used_business',
+                is_physical_damage = '$is_physical_damage',
+                policy_bi_id = '$policy_bi',
+                policy_umd_id = '$policy_umd',
+                policy_medical_id = '$policy_medical',
+                policy_pd_id = '$policy_pd',
+                is_roadside_assistance = '$roasass',
+                is_driver_res = '$is_driver_res',
+                is_vehical_listed = '$is_vehical_listed',
+                is_applicant_sole_registered = '$is_applicant_sole_registered',
+                is_applicant_other_veh = '$is_applicant_other_veh',
+                is_veh_used_business_q = '$is_veh_used_business_q',
+                is_veh_listed_ride = '$is_veh_listed_ride',
+                is_veh_listed_application_used = '$is_veh_listed_application_used',
+                is_veh_listed_garaged = '$is_veh_listed_garaged',
+                policy_status = policy_status,
+                status = status,
+                service_price = $service_price,
+                base_premium = $base_premium,
+                additional_coverage_premium = $additional_coverage_premium,
+                customl_discount = $custom_discount,
+                total_fees = $total_fees,
+                total_premium = $total_premium,
+                management_fee = $management_fee,
+                total = $total
+            WHERE id = '$id'
+            ");
 
-        if(!empty($driver_licence_image)){
-            list($txt, $ext) = explode(".", $driver_licence_image);
-            $driver_licence_image = $driver_id . "_" . time() . "." . $ext;
-            $tmp = $_FILES['driver_licence_image']['tmp_name'];
-            move_uploaded_file($tmp, dirname(__DIR__) . '/' . $upload_folder . '/driver_licence/' . $driver_licence_image);
-        }
+            if ($update_query) {
+            mysqli_query($conn, "DELETE FROM policy_vehicle WHERE vehicle_policy_id = '$id'");
+            mysqli_query($conn, "DELETE FROM policy_driver WHERE driver_policy_id = '$id'");
 
-        if(!empty($delete_driver_licence) && $delete_driver_licence == 'true'){
-            unlink(dirname(__DIR__) . '/' . $upload_folder . '/driver_licence/' . $db_driver_licence_image);
-        }
+                foreach ($vehicle as $key => $vehiclevalue) {
+                    mysqli_query($conn, "INSERT INTO policy_vehicle (vehicle_policy_id, vehicle_id) VALUES ('$id', '$vehiclevalue')");
+                }
 
-        if(empty($delete_driver_licence) && $delete_driver_licence != 'true' && empty($driver_licence_image)){
-            $driver_licence_image = $db_driver_licence_image;
-        }
+                foreach ($driver as $key => $drivervalue) {
+                    mysqli_query($conn, "INSERT INTO policy_driver (driver_policy_id, driver_id) VALUES ('$id', '$drivervalue')");
+                }
+            }
 
-        // Turn autocommit off
-        mysqli_autocommit($conn,FALSE);
-            
-        $update_query = mysqli_query($conn, "UPDATE driver SET first_name = '$first_name', middle_name = '$middle_name', last_name = '$last_name', email = '$email', mobile_no = '$mobile_no', date_of_birth = '$date_of_birth', state_id = '$state', city = '$city', zip_code = '$zip_code', apt_unit = '$apt_unit', address = '$address', driver_licence_no = '$driver_licence_no', driver_licence_image = '$driver_licence_image', date_of_issue = '$date_of_issue', date_of_expiry = '$date_of_expiry', place_of_issue = '$place_of_issue', marital_status = '$marital_status', family_friend = '$family_friend', updated = now() WHERE id = $id");
-
-        mysqli_query($conn, "DELETE FROM spouse_detail WHERE driver_id = $id");
-
-        if($marital_status == "married"){
-            $insert_spouse_detail_query = mysqli_query($conn, "INSERT INTO spouse_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$id', '$spouse_first_name', '$spouse_last_name', '$spouse_email', '$spouse_mobile_no', '$spouse_licence_no', '$spouse_state', '$spouse_city', '$spouse_zip_code', '$spouse_apt_unit', '$spouse_address', 1)");
-        }
-
-        mysqli_query($conn, "DELETE FROM family_friend_detail WHERE driver_id = $id");
-
-        if($family_friend != "none"){
-            $insert_family_friend_detail_query = mysqli_query($conn, "INSERT INTO family_friend_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$id', '$family_friend_first_name', '$family_friend_last_name', '$family_friend_email', '$family_friend_mobile_no', '$family_friend_licence_no', '$family_friend_state', '$family_friend_city', '$family_friend_zip_code', '$family_friend_apt_unit', '$family_friend_address', 1)");
-        }
 
 
         // Commit transaction
         if (!mysqli_commit($conn)) {
             $data["msg"] = "Commit transaction failed";
             $data["status"] = "error";
+            $data["mode"] = $mode;
         }else if (!empty($update_query)) {
-            $data["msg"] = "Driver updated successfully.";
+            $data["msg"] = "Policy updated successfully.";
             $data["status"] = "success";
+            $data["mode"] = $mode;
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";
+            $data["mode"] = $mode;
         } 
 
         echo $json_response = json_encode($data);

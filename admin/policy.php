@@ -4,7 +4,7 @@
        require_once(dirname(__FILE__) . '/php/policy_php.php');
    }
    
-   if(empty($customer_id)){
+   if(empty($customer_id) && $mode == 'NEW'){
        move($actual_link."customer_list.php");
    }
    
@@ -183,7 +183,7 @@
                                  <div class="policy-labels" style="display: flex;justify-content: space-between;">
                                     <label class="form-label" for="policy_bi">BI (Bodily Injury):<span class="text-danger">*</span>
                                     </label>
-                                    <label class="form-check-label" for="is_physical_damage"><input class="form-check-input" id="is_physical_damage" type="checkbox" <?= ($is_physical_damage == 1 ) ? 'checked' : '';  ?> >  Physical Damage Only<span class="digits"></span></label>
+                                    <label class="form-check-label" for="is_physical_damage"><input class="form-check-input" id="is_physical_damage" name="is_physical_damage" type="checkbox" <?= ($is_physical_damage == 1 ) ? 'checked' : '';  ?> >  Physical Damage Only<span class="digits"></span></label>
                                  </div>
                                  <div class="form-input">
                                     <select class="form-select" name="policy_bi" id="policy_bi">
@@ -524,7 +524,7 @@
                            <input type="hidden" name="management_fee" id="management_fee" value="0">
                            <input type="hidden" name="service_price" id="service_price" value="0">
                            <input type="hidden" name="total" id="total" value="0">
-                           <?php if($mode != "VIEW" && $mode != "EDIT"){ ?>
+                           <?php if($mode != "VIEW"){ ?>
                            <div class="card-body btn-showcase" style="text-align: center;">
                               <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
                               <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>
