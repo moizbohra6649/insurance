@@ -452,18 +452,6 @@
                            <h6 class="mt-4">Policy Term: 6 Month  </h6>
                            <hr class="mt-4 mb-4">
                            <div class="selected_vehicle_list">
-                                <!-- <div class="row">
-                                    <h6 class="col-md-8 mt-4 mb-2">Vehicles</h6>
-                                    <h6 class="col-md-4 mt-4 mb-2">Premium</h6>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-8 mb-3">
-                                    2011 Honda I20
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                    $1400.00
-                                    </div>
-                                </div> -->
                            </div>
                            <hr class="mt-2 mb-2  border-1">
                            <div class="row">
@@ -471,7 +459,7 @@
                                  Base Premium	
                               </div>
                               <div class="col-md-4 mb-3 txt_base_premium">
-                                 $1400.00
+                                 $0.00
                               </div>
                            </div>
                            <div class="row">
@@ -500,7 +488,7 @@
                                  Total Premium:
                               </div>
                               <div class="col-md-4 mb-3 txt_total_premium">
-                                 $1400.00
+                                 $0.00
                               </div>
                            </div>
                            <div class="row">
@@ -508,7 +496,7 @@
                                  Management Fee:
                               </div>
                               <div class="col-md-4 mb-3 txt_management_fee">
-                                 $25.00
+                                 $0.00
                               </div>
                            </div>
                            <div class="row">
@@ -527,7 +515,7 @@
                                     Total:
                                  </div>
                                  <div class="col-md-4 mb-3 txt_net_total">
-                                 $1425.00
+                                 $0.00
                               </div>
                            </div>
                            <!-- <input type="hidden" name="premium" id="premium" value="0"> -->
