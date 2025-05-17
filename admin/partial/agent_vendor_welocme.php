@@ -71,8 +71,8 @@
                           <td style="padding: 30px"> 
                             <p>Dear {{name}},</p>
                             <p>Thank you for registering with <b>Road Star USA!</b></p>
-                            <p> We’re excited to have you on board as one of our valued agents.</p>
-                            <p>Your account has been successfully created, and you can now log in to the agent portal to explore tools, track shipments, and manage your business efficiently.</p>
+                            <p> We’re excited to have you on board as one of our valued {{role}}.</p>
+                            <p>Your account has been successfully created, and you can now log in to the {{role}} portal to explore tools, track shipments, and manage your business efficiently.</p>
                             <p>Here are your login details:</p>
                             <p><b>Portal URL:</b> <a target="_blank"href="{{link}}">Link</a></p>
                             <p><b>Email:</b> {{email}}</p>

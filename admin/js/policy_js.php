@@ -372,11 +372,16 @@ $('#policy_form').on('submit', (function(e) {
             data.status = (data.status == "error" ? "danger" : data.status);
             var title = (data.status == "success" ? "Success!" : "Oh Snap!");
             notification(title, data.msg, data.status);
-            
-            if(data.status == "success"){
+            console.log(data.status);
+            console.log(data.mode);
+            if(data.status == "success" && data.mode == 'INSERT'){
                 var url = `policyterms.php?policy_id=${data.policy_id}`;
                 setTimeout(function() { move(`<?=$actual_link?>${url}`); }, 1000);
-            }else{
+            }else if(data.status == "success" && data.mode == 'UPDATE'){
+                var url = `policy_list.php`;
+                setTimeout(function() { move(`<?=$actual_link?>${url}`); }, 1000);
+            }
+            else{
                 $("#submit_btn").html('Submit');
                 $("#submit_btn").removeAttr('disabled');
             }
