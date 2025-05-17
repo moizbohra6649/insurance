@@ -44,6 +44,7 @@ if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
     $query_count = mysqli_num_rows($query_result);
 }
 
+$vehicle_counting = 0;
 
 switch ($mode) {
     case "NEW":
@@ -54,6 +55,7 @@ switch ($mode) {
         $prefix_vehicle_id = "VEHICLE_" . $vehicle_id;
         $customer_name = get_value("customer", "name", "where customer_id = '$customer_id'");
         $select_vehicle = mysqli_query($conn, "SELECT id FROM vehicle WHERE customer_id = '$customer_id' " );
+        $vehicle_counting = mysqli_num_rows($select_vehicle);
     break;
 
     case "INSERT":
@@ -65,6 +67,7 @@ switch ($mode) {
 
         $select_customer = mysqli_query($conn, "SELECT id FROM customer WHERE id = '$customer_id' " );
         $select_vehicle = mysqli_query($conn, "SELECT id FROM vehicle WHERE customer_id = '$customer_id' " );
+        $vehicle_counting = mysqli_num_rows($select_vehicle);
         $select_vehicle_no = mysqli_query($conn, "SELECT id FROM vehicle WHERE customer_id = '$customer_id' AND vehicle_no = '$_REQUEST[vehicle_no]'" );
 
         // Validation
@@ -73,7 +76,7 @@ switch ($mode) {
             $error_arr[] = "Customer does not exists.<br/>";
         }
 
-        if(mysqli_num_rows($select_vehicle) >= 5){
+        if($vehicle_counting >= 5){
             $error_arr[] = "Customer have already five Vehicle exists.<br/>";
         }
 
@@ -105,6 +108,10 @@ switch ($mode) {
         
         if (empty($_POST['reg_state_vehicle'])) {
             $error_arr[] = "Please fill a Registration State Vehicle.<br/>";
+        }
+
+        if ($vehicle_value >= "40000") {
+            $error_arr[] = "More than $40000 value vehicle not insured.<br/>";
         }
 
         if($vehicle_category != 2){

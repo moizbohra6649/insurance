@@ -250,11 +250,21 @@
                                  </div>
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <input type="hidden" value="<?= $vehicle  ?>" id="vehical_list"> 
-                                 <input type="hidden" value="<?= $driver  ?>"  id="driver_list"> 
+                                 <input type="hidden" value="<?= $vehicle?>" id="vehical_list"> 
+                                 <input type="hidden" value="<?= $driver?>"  id="driver_list"> 
                                  <label class="form-label" for="vehicle">Vehicle's<span class="text-danger">*</span></label>
-                                 <div class="form-input">
+                                 <div>
                                     <select class="form-select" name="vehicle[]" id="vehicle" onchange="fn_policy_calculation();">
+                                      <?php
+                                          $select_vehicle = mysqli_query($conn, "SELECT vehicle.id, year.year,  make.make_name, model.model_name, vehicle.vehicle_no  FROM vehicle 
+                                          INNER JOIN year ON year.id = vehicle.vehicle_year_id 
+                                          INNER JOIN make ON make.id = vehicle.vehicle_make_id 
+                                          INNER JOIN model ON model.id = vehicle.vehicle_model_id 
+                                          WHERE customer_id = $customer_id");
+                                          while($get_vehicle = fetch($select_vehicle)){
+                                          ?>
+                                       <option value="<?= $get_vehicle["id"]; ?>" year="<?= $get_vehicle["year"]; ?>"  make="<?= $get_vehicle["make_name"]; ?>" model="<?= $get_vehicle["model_name"]; ?>" vehical_no="<?= $get_vehicle["vehicle_no"]; ?>" ><?php echo $get_vehicle["make_name"].' - '.$get_vehicle["model_name"] . ' - '. $get_vehicle["vehicle_no"] ?></option>
+                                       <?php } ?>
                                     </select>
                                  </div>
                               </div>
@@ -266,7 +276,7 @@
                                           $select_driver = select("driver","customer_id = $customer_id ") ;
                                           while($get_driver = fetch($select_driver)){
                                           ?>
-                                       <option drive_id="<?= $get_driver["driver_id"] ?>" drive_name="<?= $get_driver["first_name"].' '.$get_driver["last_name"] ?>" driver_dob ="<?= convert_readable_date_db($get_driver["date_of_birth"]) ?>" driver_licence_no="<?= $get_driver["driver_licence_no"] ?>" value="<?= $get_driver["id"] ?>"><?php echo  $get_driver["first_name"].' '.$get_driver["last_name"]; ?></option>
+                                       <option driver_id="<?= $get_driver["driver_id"] ?>" driver_name="<?= $get_driver["first_name"].' '.$get_driver["last_name"] ?>" driver_dob ="<?= convert_readable_date_db($get_driver["date_of_birth"]) ?>" driver_licence_no="<?= $get_driver["driver_licence_no"] ?>" value="<?= $get_driver["id"] ?>"><?php echo $get_driver["first_name"].' '.$get_driver["last_name"]; ?></option>
                                        <?php } ?>
                                     </select>
                                  </div>
@@ -427,31 +437,33 @@
                               </div>
                            </div>
                            <div class="row mb-4">
-                              <label class="col-sm-7 col-form-label" for="initials">Applicant's Name:</label>
+                              <label class="col-sm-7 col-form-label">Applicant's Name:</label>
                               <div class="col-sm-5"> 
-                                 <input class="form-control" id="initials" name="initials" type="text" value="<?= $customer_name ?>" placeholder="Initials" readonly>
+                                 <input class="form-control" type="text" value="<?= $customer_name ?>" readonly>
                               </div>
                            </div>
                            <div class="row mb-4">
-                              <label class="col-sm-7 col-form-label" for="mother_maident_name">Applicant Dob:</label>
+                              <label class="col-sm-7 col-form-label">Applicant Dob:</label>
                               <div class="col-sm-5">
-                                 <input class="form-control" id="mother_maident_name" name="mother_maident_name" type="text" value="<?= $customer_dob ?>" placeholder="Mother’s Maiden Name" readonly>
+                                 <input class="form-control" type="text" value="<?= $customer_dob ?>" readonly>
                                  <div class="invalid-feedback">Please fill a applicant's Mother’s Maiden Name.</div>
                               </div>
                            </div>
                            <h6 class="mt-4">Policy Term: 6 Month  </h6>
                            <hr class="mt-4 mb-4">
-                           <div class="row">
-                              <h6 class="col-md-8 mt-4 mb-2">Vehicles</h6>
-                              <h6 class="col-md-4 mt-4 mb-2">Premium</h6>
-                           </div>
-                           <div class="row">
-                              <div class="col-md-8 mb-3">
-                                 2011 Honda I20
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                 $1400.00
-                              </div>
+                           <div class="selected_vehicle_list">
+                                <!-- <div class="row">
+                                    <h6 class="col-md-8 mt-4 mb-2">Vehicles</h6>
+                                    <h6 class="col-md-4 mt-4 mb-2">Premium</h6>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8 mb-3">
+                                    2011 Honda I20
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                    $1400.00
+                                    </div>
+                                </div> -->
                            </div>
                            <hr class="mt-2 mb-2  border-1">
                            <div class="row">
@@ -466,7 +478,7 @@
                               <div class="col-md-8 mb-3">
                                  Additional Coverage Premium	
                               </div>
-                              <div class="col-md-4 mb-3 txt_additional_coverage">
+                              <div class="col-md-4 mb-3 txt_additional_coverage_premium">
                                  $0.00
                               </div>
                            </div>
@@ -503,19 +515,22 @@
                               <div class="col-md-8 mb-3 fw-bold">
                                  Service Price:
                               </div>
-                              <div class="col-md-4 mb-3 txt_service_price">
-                                 $0.00
+                              <!-- <div class="col-md-4 mb-3">
+                                <input class="form-control" type="text" name="" id="txt_service_price" value="0">
+                              </div> -->
+                              <div class="col-md-4 mb-3 price-container">
+                                 <div class="txt_service_price">$0.00</div>
                               </div>
-                           </div>
-                           <div class="row">
-                              <div class="col-md-8 mb-3 fw-bold">
-                                 Total:
                               </div>
-                              <div class="col-md-4 mb-3 txt_net_total">
+                              <div class="row">
+                                 <div class="col-md-8 mb-3 fw-bold">
+                                    Total:
+                                 </div>
+                                 <div class="col-md-4 mb-3 txt_net_total">
                                  $1425.00
                               </div>
                            </div>
-                           <input type="hidden" name="premium" id="premium" value="0">
+                           <!-- <input type="hidden" name="premium" id="premium" value="0"> -->
                            <input type="hidden" name="base_premium" id="base_premium" value="0">
                            <input type="hidden" name="additional_coverage_premium" id="additional_coverage_premium" value="0">
                            <input type="hidden" name="custom_discount" id="custom_discount" value="0">
@@ -523,8 +538,13 @@
                            <input type="hidden" name="total_premium" id="total_premium" value="0">
                            <input type="hidden" name="management_fee" id="management_fee" value="0">
                            <input type="hidden" name="service_price" id="service_price" value="0">
+<<<<<<< HEAD
                            <input type="hidden" name="total" id="total" value="0">
                            <?php if($mode != "VIEW"){ ?>
+=======
+                           <input type="hidden" name="net_total" id="net_total" value="0">
+                           <?php if($mode != "VIEW" && $mode != "EDIT"){ ?>
+>>>>>>> 47328ac373225a48e37d8fd5a8933e043c6ce5fc
                            <div class="card-body btn-showcase" style="text-align: center;">
                               <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
                               <button id="submit_btn" class="btn btn-primary" type="submit">Submit</button>

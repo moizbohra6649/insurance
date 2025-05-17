@@ -1,6 +1,23 @@
 <script>
 
-function fn_getting_vehicle(){
+$("#vehicle").select2({
+    placeholder: "Please Select Vehicle's",
+    minimumResultsForSearch: Infinity,
+    allowClear: true,
+    closeOnSelect: false,
+});
+
+$("#driver").select2({
+    placeholder: "Please Select driver's",
+    minimumResultsForSearch: Infinity,
+    allowClear: true,
+    closeOnSelect: false,
+});
+
+$('#vehicle').val('').trigger('change');
+$('#driver').val('').trigger('change');
+
+/* function fn_getting_vehicle(){
     $.ajax({
         type: 'POST',
         url: '<?=($_SERVER['PHP_SELF'])?>',
@@ -9,7 +26,7 @@ function fn_getting_vehicle(){
         dataType: 'json',           
         success: function(data) {
             $("#vehicle").html(data.res_data);
-            var ids = $('#vehical_list').val().split(',');
+            var vehicleids = $('#vehical_list').val().split(',');
             var driverids = $('#driver_list').val().split(',');
             if($("#coverage").val() == 'liability' ||  $("#coverage").val() == 'full_coverage' ){
 
@@ -18,7 +35,7 @@ function fn_getting_vehicle(){
                     placeholder: "Please Select Vehicle's",
                     maximumSelectionLength: 5
                 });
-                $('#vehicle').val(ids).trigger('change');
+                $('#vehicle').val(vehicleids).trigger('change');
 
                 $('#driver').attr('multiple' , 'multiple');
                 $("#driver").select2({
@@ -34,7 +51,7 @@ function fn_getting_vehicle(){
                     minimumResultsForSearch: Infinity,
                     allowClear: true
                 });
-                $('#vehicle').val(ids).trigger('change');
+                $('#vehicle').val(vehicleids).trigger('change');
 
                 $("#driver").select2({
                     placeholder: "Please Select driver's",
@@ -50,27 +67,35 @@ function fn_getting_vehicle(){
             console.log(data);
         }      
     });
-}
+} */
 
  $(document).ready(function() {
     
     $("#coverage").on( 'change' , (function(e) {
        let coverage_type = $(this).val() ; 
+       var vehicleids = $('#vehical_list').val().split(',');
+       var driverids = $('#driver_list').val().split(',');
        if(coverage_type == 'liability' || coverage_type == 'full_coverage' ){
 
             $('#vehicle').attr('multiple' , 'multiple');
             $("#vehicle").select2({
                 placeholder: "Please Select Vehicle's",
+                minimumResultsForSearch: Infinity,
+                allowClear: true,
+                closeOnSelect: false,
                 maximumSelectionLength: 5
             });
-            $('#vehicle').val('').trigger('change');
+            $('#vehicle').val(vehicleids).trigger('change');
 
             $('#driver').attr('multiple' , 'multiple');
             $("#driver").select2({
                 placeholder: "Please Select driver's",
+                minimumResultsForSearch: Infinity,
+                allowClear: true,
+                closeOnSelect: false,
                 maximumSelectionLength: 5
             });
-            $('#driver').val('').trigger('change');
+            $('#driver').val(driverids).trigger('change');
        }else{
 
             $('#vehicle').removeAttr('multiple');
@@ -137,14 +162,14 @@ function fn_getting_vehicle(){
             selectedVal.forEach(function(value) {
             const option = $('#driver').find('option[value="' + value + '"]');
 
-            const drive_id = option.attr('drive_id');
-            const drive_name = option.attr('drive_name');
+            const driver_id = option.attr('driver_id');
+            const driver_name = option.attr('driver_name');
             const driver_dob = option.attr('driver_dob');
             const driver_licence_no = option.attr('driver_licence_no');
             const row = `
                 <tr>
-                <td>${drive_id}</td>
-                <td>${drive_name}</td>
+                <td>${driver_id}</td>
+                <td>${driver_name}</td>
                 <td>${driver_dob}</td>
                 <td>${driver_licence_no}</td>
                 </tr>
@@ -154,13 +179,73 @@ function fn_getting_vehicle(){
             });
         }
     });
-
-
-    //         //Limited Numbers
-    // $(".js-example-basic-multiple-limit").select2({
-    //     maximumSelectionLength: 2
-    // });
 });
+
+// const priceDiv = document.querySelector('.txt_service_price');
+
+//   priceDiv.setAttribute('contenteditable', true);
+
+//   priceDiv.addEventListener('input', function(event) {
+//     const text = event.target.innerText;
+//     const numericValue = text.replace(/[^0-9.]/g, ''); // Remove non-numeric characters
+//     event.target.innerText = numericValue;
+//     $("#service_price").val(numericValue);
+
+//     // Optional: Ensure only one decimal point
+//     const parts = numericValue.split('.');
+//     if (parts.length > 2) {
+//       event.target.innerText = parts[0] + '.' + parts.slice(1).join('');
+//       $("#service_price").val(parts[0] + '.' + parts.slice(1).join(''));
+//     }
+//   });
+
+//   priceDiv.addEventListener('blur', function(event) {
+//     // Optional: Format the output back to currency format on blur
+//     const value = parseFloat(event.target.innerText);
+//     if (!isNaN(value)) {
+//       event.target.innerText = '$' + value.toFixed(2);
+//       $("#service_price").val(value.toFixed(2));
+//     } else {
+//       event.target.innerText = '$0.00'; // Revert to default if not a valid number
+//       $("#service_price").val('0.00');
+//     }
+//   });
+
+//   // Initialize the div with the currency format
+//   const initialValue = parseFloat(priceDiv.innerText.replace('$', ''));
+//   if (!isNaN(initialValue)) {
+//     priceDiv.innerText = '$' + initialValue.toFixed(2);
+//   }
+
+const priceContainer = document.querySelector('.price-container');
+  let priceDiv = document.querySelector('.txt_service_price');
+  let inputElement = null;
+
+  priceContainer.addEventListener('click', () => {
+    if (!inputElement) {
+      const currentValue = priceDiv.innerText.replace('$', '');
+      priceContainer.innerHTML = `<input type="text" class="price-input" value="${currentValue}">`;
+      inputElement = priceContainer.querySelector('.price-input');
+      inputElement.focus();
+
+      inputElement.addEventListener('input', () => {
+        inputElement.value = inputElement.value.replace(/[^0-9.]/g, '');
+        $("#service_price").val(parseFloat(inputElement.value).toFixed(2));
+        const parts = inputElement.value.split('.');
+        if (parts.length > 2) {
+          inputElement.value = parts[0] + '.' + parts.slice(1).join('');
+        }
+      });
+
+      inputElement.addEventListener('blur', () => {
+        const value = parseFloat(inputElement.value);
+        $("#service_price").val(parseFloat(inputElement.value).toFixed(2));
+        priceContainer.innerHTML = `<div class="txt_service_price">$${isNaN(value) ? '0.00' : value.toFixed(2)}</div>`;
+        priceDiv = document.querySelector('.txt_service_price');
+        inputElement = null;
+      });
+    }
+  });
 
 function fn_policy_calculation(){
 
@@ -179,7 +264,40 @@ function fn_policy_calculation(){
             success: function(data) {
                 if(data.status == "success"){
                     var response = data.res_data;
-                    console.log(response);
+                    $("#base_premium").val(response.base_premium);
+                    $("#additional_coverage_premium").val(response.additional_coverage_premium);
+                    $("#custom_discount").val(response.custom_discount);
+                    $("#total_premium").val(response.total_premium);
+                    $("#management_fee").val(response.management_fee);
+                    $("#service_price").val(response.service_fee);
+                    $("#net_total").val(response.net_total);
+
+                    $(".txt_base_premium").html('$'+parseFloat(response.base_premium).toFixed(2));
+                    $(".txt_additional_coverage_premium").html('$'+parseFloat(response.additional_coverage_premium).toFixed(2));
+                    $(".txt_custom_discount").html('$'+parseFloat(response.custom_discount).toFixed(2));
+                    $(".txt_total_premium").html('$'+parseFloat(response.total_premium).toFixed(2));
+                    $(".txt_management_fee").html('$'+parseFloat(response.management_fee).toFixed(2));
+                    $(".txt_service_price").html('$'+parseFloat(response.service_fee).toFixed(2));
+                    $(".txt_net_total").html('$'+parseFloat(response.net_total).toFixed(2));
+
+                    var htmlString = "";
+                    var data = response.vehicles_premium
+                    $.each(data, function(index, item) {
+                        htmlString += '<div class="row">';
+                        htmlString += '  <div class="col-md-8 mb-3">' + item.vehicle + '</div>';
+                        htmlString += '  <div class="col-md-4 mb-3">$' + parseFloat(item.amount).toFixed(2) + '</div>';
+                        htmlString += '</div>';
+                    });
+
+                    if(htmlString != ""){
+                        $(".selected_vehicle_list").html(`
+                        <div class="row">
+                            <h6 class="col-md-8 mt-4 mb-2">Vehicles</h6>
+                            <h6 class="col-md-4 mt-4 mb-2">Premium</h6>
+                        </div> ${htmlString}`);
+                    }else{
+                        $(".selected_vehicle_list").html('');
+                    }
                 }
                 // console.log(data);
                 
@@ -203,42 +321,30 @@ $('#policy_form').on('submit', (function(e) {
     if($("#coverage").val() == "" ){
         error_arr.push("Please select coverage type.<br/>");
     }
-    if($("#coverage_collision").val() == ""){
-        error_arr.push("Please select Copresnsive / Collision.<br/>");
-    }  
-    if($("#umpd").val() == ""){
-        error_arr.push("Please select UMPD.<br/>");
-    } 
-    if($("#towning_coverage").val() == ""){
-        error_arr.push("Please select Towning coverage.<br/>");
-    } 
-    if($("#coverage_rental").val() == ""){
-        error_arr.push("Please select Rental Reimbursment.<br/>");
-    } 
-    if($("#policy_bi").val() == ""){
-        error_arr.push("Please Select BI (Bodily Injury).<br/>");   
-    } 
-    if($("#policy_pd").val() == ""){
-        error_arr.push("Please Select PD (Property Damage).<br/>");   
-    }
-    if($("#policy_umd").val() == ""){
-        error_arr.push("Please Select UMB (Uninsured Motorist / Bodily Injury).<br/>");   
-    } 
-    if($("#policy_medical").val() == ""){
-        error_arr.push("Please Select Medical.<br/>");   
-    } 
-    if($("#vehicle").val() == ""){
-        error_arr.push("Please Select Vehicle's.<br/>");   
-    } 
-    if($("#driver").val() == ""){
-        error_arr.push("Please Select Driver.<br/>");   
-    } 
-    if($("#initials").val() == ""){
-        error_arr.push("Please enter applicant's initials.<br/>");   
-    } 
-    if($("#mother_maident_name").val() == ""){
-        error_arr.push("Please enter mother’s maiden name.<br/>");   
-    } 
+    // if($("#coverage_collision").val() == ""){
+    //     error_arr.push("Please select Copresnsive / Collision.<br/>");
+    // }  
+    // if($("#umpd").val() == ""){
+    //     error_arr.push("Please select UMPD.<br/>");
+    // } 
+    // if($("#towning_coverage").val() == ""){
+    //     error_arr.push("Please select Towning coverage.<br/>");
+    // } 
+    // if($("#coverage_rental").val() == ""){
+    //     error_arr.push("Please select Rental Reimbursment.<br/>");
+    // } 
+    // if($("#policy_bi").val() == ""){
+    //     error_arr.push("Please Select BI (Bodily Injury).<br/>");   
+    // } 
+    // if($("#policy_pd").val() == ""){
+    //     error_arr.push("Please Select PD (Property Damage).<br/>");   
+    // }
+    // if($("#policy_umd").val() == ""){
+    //     error_arr.push("Please Select UMB (Uninsured Motorist / Bodily Injury).<br/>");   
+    // } 
+    // if($("#policy_medical").val() == ""){
+    //     error_arr.push("Please Select Medical.<br/>");   
+    // }
 
     
     var error_txt = error_arr.join('');
@@ -290,6 +396,6 @@ $('#policy_form').on('submit', (function(e) {
    // window.location.href = window.location.protocol	+ '//' + window.location.host + '/insurance/admin/policyterms.php';    ;
 
 }));
-fn_getting_vehicle();
+// fn_getting_vehicle();
 
 </script>
