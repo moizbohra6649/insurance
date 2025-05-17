@@ -74,6 +74,7 @@ if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
     $query_count = mysqli_num_rows($query_result);
 }
 
+$driver_counting = 0;
 
 switch ($mode) {
     case "NEW":
@@ -84,6 +85,7 @@ switch ($mode) {
         $prefix_driver_id = "DRIVER_" . $driver_id;
         $customer_name = get_value("customer", "name", "where customer_id = '$customer_id'");
         $select_driver = mysqli_query($conn, "SELECT id FROM driver WHERE customer_id = '$customer_id' " );
+        $driver_counting = mysqli_num_rows($select_driver);
     break;
 
     case "INSERT":
@@ -95,6 +97,7 @@ switch ($mode) {
 
         $select_customer = mysqli_query($conn, "SELECT id FROM customer WHERE id = '$customer_id' " );
         $select_driver = mysqli_query($conn, "SELECT id FROM driver WHERE customer_id = '$customer_id' " );
+        $driver_counting = mysqli_num_rows($select_driver);
 
         // Validation
 
@@ -102,7 +105,7 @@ switch ($mode) {
             $error_arr[] = "Customer does not exists.<br/>";
         }
 
-        if(mysqli_num_rows($select_driver) >= 5){
+        if($driver_counting >= 5){
             $error_arr[] = "Customer have already five Driver exists.<br/>";
         }
         
@@ -264,6 +267,7 @@ switch ($mode) {
         $error_arr = [];
 
         $select_driver = mysqli_query($conn, "SELECT * FROM driver WHERE id = '$id' " );
+        $driver_counting = mysqli_num_rows($select_driver);
         $select_customer = mysqli_query($conn, "SELECT id FROM customer WHERE id = '$customer_id' " );
 
         // Validation
@@ -312,7 +316,7 @@ switch ($mode) {
             }
         }
 
-        if(mysqli_num_rows($select_driver) == 0){
+        if($driver_counting == 0){
 
             $data["msg"] = "Something went wrong please try again later.";
             $data["status"] = "error";

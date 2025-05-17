@@ -113,3 +113,7 @@ insert into policy_driver_amt_cal (policy_type, driver_age_from, driver_age_to, 
 ('full_coverage', 25, 30, 12, 50, 40, 45, 65),
 ('full_coverage', 30, 35, 12, 50, 25, 25, 65),
 ('full_coverage', 35, 50, 12, 50, 25, 35, 65);
+
+
+ALTER TABLE `policy` CHANGE `total` `net_total` INT(11) NOT NULL;
+ALTER TABLE `policy` ADD `agent_id` INT(11) NULL AFTER `prefix_policy_id`;

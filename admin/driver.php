@@ -24,7 +24,7 @@ include('partial/loader.php'); ?>
             <?php include('partial/breadcrumb.php') ?>
             <!-- Container-fluid starts-->
             <div class="container-fluid">
-                <?php if(mysqli_num_rows($select_driver) >= 5){ ?>
+                <?php if($driver_counting >= 5){ ?>
                     <div class="alert alert-danger inverse alert-dismissible fade show" role="alert"><i class="icon-thumb-down"></i>
                         <p>This customer already has 5 drivers added. You can no longer add drivers for this customer.</p>
                         <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>

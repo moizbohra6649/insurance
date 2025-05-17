@@ -56,6 +56,10 @@ $('.submit_btn').on('click', (function(e) {
     if($("#reg_state_vehicle").val() == ""){
         error_arr.push("Please fill a Registration State Vehicle.<br/>");
     }
+    
+    if($("#vehicle_value").val()  >= "40000"){
+        error_arr.push("More than $40000 value vehicle not insured.<br/>");
+    }
 
     if($('input[name="vehicle_category"]:checked').val() != "2"){
         if($("#veh_owner_company_name").val() == ""){
