@@ -38,19 +38,15 @@ include('partial/loader.php'); ?>
                                     <div class="tab-pane show active" id="form-row-preview">
                                         <form method="GET" id="agent_list">
                                             <div class="row">
-                                                <div class="mb-3 col-lg-3">
+                                                <div class="mb-3 col-lg-6">
                                                     <label class="form-label">From Date</label>
                                                     <input type="text" id="daterange" data-theme="dark" class="form-control" value="<?=convert_db_date_readable($from_date)?>-<?=convert_db_date_readable($to_date)?>" data-range-from="<?=$from_date?>" data-range-to="<?=$to_date?>">
 		                                            <input type="text" id="range-from" name="from_date" value="<?=convert_db_date_readable($from_date);?>" data-value="<?=$from_date?>" class="form-control" readonly>
 		
                                                 </div>
-                                                <div class="mb-3 col-lg-3">
+                                                <div class="mb-3 col-lg-6">
                                                         <label class="form-label">To Date</label>
                                                         <input type="text" id="range-to" name="to_date" value="<?=convert_db_date_readable($to_date);?>" data-value="<?=$to_date?>" class="form-control" readonly>
-                                                </div>
-                                                <div class="mb-3 col-md-6">
-                                                    <label for="filter_transactionid" class="form-label">Transaction ID</label>
-                                                    <input type="text" class="form-control alpha_num" id="filter_transactionid" name="filter_transactionid" placeholder="Transaction ID" value="<?=$filter_transactionid?>">
                                                 </div>
                                             </div>
 
@@ -80,11 +76,10 @@ include('partial/loader.php'); ?>
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: center;">S.No.</th>
-                                                    <th>Transaction ID </th>
                                                     <th>Transaction Type </th>
-                                                    <th>Transaction Date</th>
+                                                    <th>Cr./Dr.</th>
                                                     <th style="text-align: center;">Amount</th> 
-                                                    <th >Add Date</th> 
+                                                    <th>Transaction Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -97,11 +92,10 @@ include('partial/loader.php'); ?>
                                                 <tr>
                                                     <td align="center"> <?=$i++?> </td>
                                                     <td class="table-user">
-                                                     <?=$get_data["transaction_id"]?>
+                                                     <?=$get_data["transaction_type"]?>
                                                     </td>
-                                                    <td> <?= ucfirst($get_data["transaction_type"])?> </td>
-                                                    <td> <?=convert_db_date_readable($get_data["transaction_date"])?> </td>
-                                                    <td align="center"> <?= $get_data["amount"] ?> </td>
+                                                    <td> <?= ucfirst($get_data["payment_type"])?> </td>
+                                                    <td align="center"> <?= $get_data["transaction_amount"] ?> </td>
                                                     <td> <?=convert_db_date_readable($get_data["created"])?> </td>
                                                 
                                                 </tr>

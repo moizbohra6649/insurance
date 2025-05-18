@@ -78,7 +78,8 @@
                     <ul class="profile-dropdown onhover-show-div">
                         <li><a href="#"><i data-feather="user"></i><span>Account </span></a></li>
                         <?php if($login_role == 'agent'){ ?>   
-                        <li><a href="wallet_list.php"><i data-feather="user"></i><span>Wallet</span></a></li>
+                        <li><a href="wallet_list.php"><span>Transection His.</span></a></li>
+                        <li><a href="transaction_history_list.php"><span>Wallet </span></a></li>
                         <?php  } ?>
                         <li><a href="logout.php"><i data-feather="log-in"> </i><span>Log out</span></a></li>
                     </ul>

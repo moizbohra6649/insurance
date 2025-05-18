@@ -55,25 +55,27 @@ include('partial/loader.php'); ?>
                                              <input type="hidden" id="policy_installment" name="policy_installment" value="1">
                                             </div> 
                                             <div class="col-md-2 mb-3">
-                                            Premium: <span class="f-w-600">$275.00</span>
-                                            <input type="hidden" id="policy_premium" name="policy_premium"  value="275">
+                                            Premium: <span class="f-w-600">$<?= $policy_premium ?> </span>
+                                            <input type="hidden" id="policy_premium" name="policy_premium"  value="<?= $policy_premium ?>">
                                                 </div> 
                                                 <div class="col-md-2 mb-3">
-                                                Admin Fee: <span class="f-w-600">$25.00</span>
-                                                <input type="hidden" id="policy_billing_fee" name="policy_billing_fee"  value="25">
+                                                Admin Fee: <span class="f-w-600"><?= $policy_billing_fee + $service_price ?></span>
+                                                <input type="hidden" id="policy_service_price" name="policy_service_price"  value="<?= $service_price ?>">
+                                                <input type="hidden" id="policy_management_fee" name="policy_management_fee"  value="<?= $policy_billing_fee  ?>">
+                                                <input type="hidden" id="policy_billing_fee" name="policy_billing_fee"  value="<?= $policy_billing_fee + $service_price ?>">
                                                 </div> 
                                                 <div class="col-md-2 mb-3">
                                                 Roadside Assistance: <span class="f-w-600">$0.00</span>
                                                 <input type="hidden" id="policy_roadside" name="policy_roadside"  value="0">
                                                 </div> 
                                                 <div class="col-md-2 mb-3">
-                                                Due: <span class="f-w-600">$300.00</span>
-                                                <input type="hidden" id="policy_due_amt" name="policy_due_amt"  value="300">
+                                                Due: <span class="f-w-600"><?= $net_total ?></span>
+                                                <input type="hidden" id="policy_due_amt" name="policy_due_amt"  value="<?= $net_total ?>">
 
                                                 </div> 
                                                 <div class="col-md-2 mb-3">
-                                                Due Date: <span class="f-w-600">03/22/2025</span>
-                                                <input type="hidden" id="policy_due_date" name="policy_due_date"  value="3/22/2025">
+                                                Due Date: <span class="f-w-600"><?php echo  $full_paymentdue_date = date('Y-m-d', strtotime($currentDate .'+6 months'))  ; ?></span>
+                                                <input type="hidden" id="policy_due_date" name="policy_due_date"  value="<?=  $full_paymentdue_date ; ?>">
 
                                                 </div> 
                                     </div> 
@@ -82,8 +84,8 @@ include('partial/loader.php'); ?>
                                             
                                             </div> 
                                             <div class="col-md-4 mb-3">
-                                            Total: <span class="f-w-600">$1425</span>
-                                            
+                                            Total: <span class="f-w-600"><?= $net_total ?></span>
+                                            <input type="hidden" id="net_tot" name="net_tot" value="<?= $net_total ?>">
                                                 </div> 
                                                 
                                                
@@ -94,211 +96,57 @@ include('partial/loader.php'); ?>
                                                 <label class="form-check-label" for='q1'>Monthly Premium Payment</label>
                                             </div> 
                                     </div> 
+                                    <?php
+                                    $emi_total = 0  ;
+                                     for($i = 1; $i <= $installment ; $i++){ ?>
                                     <div class="row">
                                              <div class="col-md-2 mb-3">
-                                             Payment: <span class="f-w-600">1</span>
-                                             <input type="hidden" id="policy_installment1" name="policy_installment1" value="1">
+                                             Payment: <span class="f-w-600"><?= $i ?></span>
+                                             <input type="hidden" id="policy_installment<?= $i ?>" name="policy_installment<?= $i ?>" value="<?= $i ?>">
                                             </div> 
                                             <div class="col-md-2 mb-3">
-                                            Premium: <span class="f-w-600">$275.00</span>
-                                            <input type="hidden" id="policy_premium1" name="policy_premium1"  value="275">
+                                            Premium: <span class="f-w-600">$<?php echo $prim =  round($convert_emi , 2 ) ?></span>
+                                            <input type="hidden" id="policy_premium<?= $i ?>" name="policy_premium<?= $i ?>"  value="<?= $prim  ?>">
                                                 </div> 
                                                 <div class="col-md-2 mb-3">
-                                                Admin Fee: <span class="f-w-600">$25.00</span>
-                                                <input type="hidden" id="policy_billing_fee1" name="policy_billing_fee1"  value="25">
+                                                <?php echo ($i == 1) ? 'Admin Fee:' : 'Billing Fee:' ;  ?>  <span class="f-w-600"><?php echo $fees = ($i == 1) ? $policy_billing_fee + $service_price : $policy_billing_fee ; ?> </span>
+                                                <input type="hidden" id="policy_management_fee<?= $i ?>" name="policy_management_fee<?= $i ?>"  value="<?= $policy_billing_fee  ?>">
+                                                <input type="hidden" id="policy_billing_fee<?= $i ?>" name="policy_billing_fee<?= $i ?>"  value="<?= $fees  ?>">
+                                                <input type="hidden" id="policy_service_price<?= $i ?>" name="policy_service_price<?= $i ?>"  value="<?= $service_price ?>">
                                                 </div> 
                                                 <div class="col-md-2 mb-3">
                                                 Roadside Assistance: <span class="f-w-600">$0.00</span>
-                                                <input type="hidden" id="policy_roadside1" name="policy_roadside1"  value="0">
+                                                <input type="hidden" id="policy_roadside<?= $i ?>" name="policy_roadside<?= $i ?>"  value="0">
                                                 </div> 
                                                 <div class="col-md-2 mb-3">
-                                                Due: <span class="f-w-600">$300.00</span>
-                                                <input type="hidden" id="policy_due_amt1" name="policy_due_amt1"  value="300">
+                                                Due: <span class="f-w-600">$<?= $prim + $fees ; ?></span>
+                                                <input type="hidden" id="policy_due_amt<?= $i ?>" name="policy_due_amt<?= $i ?>"  value="<?= $prim + $fees  ?>">
 
                                                 </div> 
                                                 <div class="col-md-2 mb-3">
-                                                Due Date: <span class="f-w-600">03/22/2025</span>
-                                                <input type="hidden" id="policy_due_date1" name="policy_due_date1"  value="3/22/2025">
+                                                Due Date: <span class="f-w-600"><?php  
+                                                    echo $currentDate = date('Y-m-d', strtotime($currentDate .'+30 days')) ;   
+                                                ?> </span>
+                                                <input type="hidden" id="policy_due_date<?= $i ?>" name="policy_due_date<?= $i ?>"  value="<?= $currentDate  ?>">
 
                                                 </div> 
                                     </div> 
-                                    <div class="row">
-                                             <div class="col-md-2 mb-3">
-                                             Payment: <span class="f-w-600">2</span>
-                                            </div> 
-                                            <div class="col-md-2 mb-3">
-                                            Premium: <span class="f-w-600">$225.00</span>
-                                            
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Billing Fee: <span class="f-w-600">$12.00</span>
-                                                
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Roadside Assistance: <span class="f-w-600">$0.00</span>
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Due: <span class="f-w-600">$237.00</span>
-
-
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Due Date: <span class="f-w-600">04/22/2025</span>
-
-
-                                                </div> 
-                                    </div> 
-                                    <div class="row">
-                                             <div class="col-md-2 mb-3">
-                                             Payment: <span class="f-w-600">3</span>
-                                            </div> 
-                                            <div class="col-md-2 mb-3">
-                                            Premium: <span class="f-w-600">$225.00</span>
-                                            
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Billing Fee: <span class="f-w-600">$12.00</span>
-                                                
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Roadside Assistance: <span class="f-w-600">$0.00</span>
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Due: <span class="f-w-600">$237.00</span>
-
-
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Due Date: <span class="f-w-600">05/22/2025</span>
-
-
-                                                </div> 
-                                    </div> 
-                                    <div class="row">
-                                             <div class="col-md-2 mb-3">
-                                             Payment: <span class="f-w-600">4</span>
-                                            </div> 
-                                            <div class="col-md-2 mb-3">
-                                            Premium: <span class="f-w-600">$225.00</span>
-                                            
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Billing Fee: <span class="f-w-600">$12.00</span>
-                                                
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Roadside Assistance: <span class="f-w-600">$0.00</span>
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Due: <span class="f-w-600">$237.00</span>
-
-
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Due Date: <span class="f-w-600">06/22/2025</span>
-
-
-                                                </div> 
-                                    </div> 
-                                    <div class="row">
-                                             <div class="col-md-2 mb-3">
-                                             Payment: <span class="f-w-600">5</span>
-                                            </div> 
-                                            <div class="col-md-2 mb-3">
-                                            Premium: <span class="f-w-600">$225.00</span>
-                                            
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Billing Fee: <span class="f-w-600">$12.00</span>
-                                                
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Roadside Assistance: <span class="f-w-600">$0.00</span>
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Due: <span class="f-w-600">$237.00</span>
-
-
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Due Date: <span class="f-w-600">07/22/2025</span>
-
-
-                                                </div> 
-                                    </div> 
-                                    <div class="row">
-                                             <div class="col-md-2 mb-3">
-                                             Payment: <span class="f-w-600">6</span>
-                                            </div> 
-                                            <div class="col-md-2 mb-3">
-                                            Premium: <span class="f-w-600">$225.00</span>
-                                            
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Billing Fee: <span class="f-w-600">$12.00</span>
-                                                
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Roadside Assistance: <span class="f-w-600">$0.00</span>
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Due: <span class="f-w-600">$237.00</span>
-
-
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Due Date: <span class="f-w-600">08/22/2025</span>
-
-
-                                                </div> 
-                                    </div>
-                                        <input type="hidden" id="policy_installment2" name="policy_installment2" value="1">
-                                        <input type="hidden" id="policy_premium2" name="policy_premium2"  value="275">
-                                        <input type="hidden" id="policy_roadside2" name="policy_roadside2"  value="0">
-                                        <input type="hidden" id="policy_billing_fee2" name="policy_billing_fee2"  value="25">
-                                        <input type="hidden" id="policy_due_amt2" name="policy_due_amt2"  value="300">
-                                        <input type="hidden" id="policy_due_date2" name="policy_due_date2"  value="3/22/2025">
-
-                                        <input type="hidden" id="policy_installment3" name="policy_installment3" value="1">
-                                        <input type="hidden" id="policy_premium3" name="policy_premium3" value="265">
-                                        <input type="hidden" id="policy_roadside3" name="policy_roadside3" value="0">
-                                        <input type="hidden" id="policy_billing_fee3" name="policy_billing_fee3" value="15">
-                                        <input type="hidden" id="policy_due_amt3" name="policy_due_amt3" value="280">
-                                        <input type="hidden" id="policy_due_date3" name="policy_due_date3" value="04/05/2025">
-
-                                        <input type="hidden" id="policy_installment4" name="policy_installment4" value="3">
-                                        <input type="hidden" id="policy_premium4" name="policy_premium4" value="310">
-                                        <input type="hidden" id="policy_roadside4" name="policy_roadside4" value="1">
-                                        <input type="hidden" id="policy_billing_fee4" name="policy_billing_fee4" value="30">
-                                        <input type="hidden" id="policy_due_amt4" name="policy_due_amt4" value="340">
-                                        <input type="hidden" id="policy_due_date4" name="policy_due_date4" value="04/12/2025">
-
-                                        <input type="hidden" id="policy_installment5" name="policy_installment5" value="1">
-                                        <input type="hidden" id="policy_premium5" name="policy_premium5" value="250">
-                                        <input type="hidden" id="policy_roadside5" name="policy_roadside5" value="0">
-                                        <input type="hidden" id="policy_billing_fee5" name="policy_billing_fee5" value="10">
-                                        <input type="hidden" id="policy_due_amt5" name="policy_due_amt5" value="260">
-                                        <input type="hidden" id="policy_due_date5" name="policy_due_date5" value="04/19/2025">
-
-                                        <input type="hidden" id="policy_installment6" name="policy_installment6" value="2">
-                                        <input type="hidden" id="policy_premium6" name="policy_premium6" value="285">
-                                        <input type="hidden" id="policy_roadside6" name="policy_roadside6" value="1">
-                                        <input type="hidden" id="policy_billing_fee6" name="policy_billing_fee6" value="25">
-                                        <input type="hidden" id="policy_due_amt6" name="policy_due_amt6" value="310">
-                                        <input type="hidden" id="policy_due_date6" name="policy_due_date6" value="04/26/2025">
+                                    <?php 
+                                $emi_total = $prim + $fees + $emi_total  ;
+                                } ?>
                                     <div class="row">
                                              <div class="col-md-3 mb-3">
                                             
                                             </div> 
                                             <div class="col-md-4 mb-3">
-                                            Total: <span class="f-w-600">$1485</span>
+                                            Total: <span class="f-w-600">$<?=  $emi_total ?></span>
                                             
                                                 </div> 
                                                 
                                                
                                     </div>  
                                     <div class="card-body btn-showcase" style="text-align: center;">
-                                        <input type="hidden" id ="installment_count" name = "installment_count" value="6">
+                                        <input type="hidden" id ="installment_count" name = "installment_count" value="<?= $installment ?>">
                                             <button id="submit_btn" class="btn btn-primary" type="submit" data-bs-original-title="" title="">Submit</button>
                                         </div>      
                             </div>

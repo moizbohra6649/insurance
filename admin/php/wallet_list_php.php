@@ -5,8 +5,8 @@ if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
     require_once(dirname(__DIR__) . '/partial/functions.php');
 }
 $title      = ""; 
-$list_title = "Wallet History";
-$breadcrumb_title = "Wallet History";
+$list_title = "Transaction History";
+$breadcrumb_title = "Transaction History";
 $local_mode = "";
 $readonly   = "";
 $id         = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
@@ -47,18 +47,14 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
     }
     
     if(!empty($from_date) && !empty($to_date)){
-        $filter_qry .= " AND CAST(wallet.created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
-    }
-
-    if(!empty($filter_transactionid)){
-        $filter_qry .= " AND wallet.transaction_id = '$filter_transactionid' ";
+        $filter_qry .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
     }
 
 }
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
-    $select_query = "SELECT wallet.id, wallet.wallet_id, wallet.wallet_agent_id, wallet.transaction_type, wallet.transaction_date, wallet.transaction_id, wallet.amount , wallet.created 
-   FROM wallet WHERE 1=1 and wallet_agent_id = $login_id ".$filter_qry;
+    $select_query = "SELECT *
+   FROM transaction_history WHERE 1=1 and agent_id = $login_id ".$filter_qry;
     
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);

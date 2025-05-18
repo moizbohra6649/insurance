@@ -117,3 +117,5 @@ insert into policy_driver_amt_cal (policy_type, driver_age_from, driver_age_to, 
 
 ALTER TABLE `policy` CHANGE `total` `net_total` INT(11) NOT NULL;
 ALTER TABLE `policy` ADD `agent_id` INT(11) NULL AFTER `prefix_policy_id`;
+
+ALTER TABLE `wallet` CHANGE `amount` `amount` BIGINT(50) NOT NULL;

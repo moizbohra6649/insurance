@@ -5,8 +5,8 @@ if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
     require_once(dirname(__DIR__) . '/partial/functions.php');
 }
 $title      = ""; 
-$list_title = "List of Transection History";
-$breadcrumb_title = "List of Transection History";
+$list_title = "List of Wallet";
+$breadcrumb_title = "List of Wallet";
 $local_mode = "";
 $readonly   = "";
 $id         = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
@@ -14,8 +14,11 @@ $mode       = (isset($_REQUEST["mode"])) ? $_REQUEST["mode"] : "NEW";
 $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] : "false";
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
-
-$user_id         = (isset($_REQUEST["user_id"]) && !empty($_REQUEST["user_id"])) ? base64_decode($_REQUEST["user_id"]) : 0;
+if($login_role == 'superadmin'){
+    $user_id         = (isset($_REQUEST["user_id"]) && !empty($_REQUEST["user_id"])) ? base64_decode($_REQUEST["user_id"]) : 0;
+}else{
+    $user_id         = $login_id ;
+}
 $transaction_date         = (isset($_REQUEST["tra_date"]) && !empty($_REQUEST["tra_date"])) ? convert_readable_date_db($_REQUEST["tra_date"]) : date("F j, Y");
 $transaction_type               = (isset($_REQUEST["tra_type"])) ? $_REQUEST["tra_type"] : '';
 $transaction_id               = (isset($_REQUEST["tra_id"])) ? $_REQUEST["tra_id"] : "";
@@ -80,7 +83,7 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
     $select_query = "SELECT wallet.id, wallet.wallet_id, wallet.wallet_agent_id, wallet.transaction_type, wallet.transaction_date, wallet.transaction_id, wallet.amount , wallet.created , agent.name as name
-   FROM wallet  left join agent on wallet.wallet_agent_id = agent.id  WHERE 1=1 ".$filter_qry;
+   FROM wallet  left join agent on wallet.wallet_agent_id = agent.id  WHERE 1=1 and wallet.wallet_agent_id =  $user_id  ".$filter_qry;
     
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
@@ -92,8 +95,8 @@ switch ($mode) {
     case "NEW":
         $local_mode = "INSERT";
         $readonly   = "";
-        $title      = "Deposit"; 
-        $breadcrumb_title      = "Deposit"; 
+        $title      = "Wallet"; 
+        $breadcrumb_title      = "Wallet"; 
         $wallet_id = get_max_id("wallet", "wallet_id");
 
     break;
@@ -118,7 +121,12 @@ switch ($mode) {
         }
 
         mysqli_autocommit($conn,FALSE);
-        $insert_query = mysqli_query($conn, "INSERT INTO wallet (wallet_id, wallet_agent_id , transaction_type , transaction_date , transaction_id , amount , debit_credit_flag) VALUES ('$wallet_id', $user_id , '$transaction_type', '$transaction_date', '$transaction_id' , $amount , 'debit')");
+        $insert_query = mysqli_query($conn, "INSERT INTO wallet (wallet_id, wallet_agent_id , transaction_type , transaction_date , transaction_id , amount , debit_credit_flag) VALUES ('$wallet_id', $user_id , '$transaction_type', '$transaction_date', '$transaction_id' , $amount , 'credit')");
+
+        $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount
+        ) VALUES (
+            $user_id , 'Add amount by super Admin', 'credit' , $amount 
+        )");
 
         $last_inserted_id = mysqli_insert_id($conn);
 

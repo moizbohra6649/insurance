@@ -5,7 +5,7 @@ if (file_exists(dirname(__FILE__) . '/php/transaction_history_php.php')) {
 }
 
 if(empty($user_id)){
-    move($actual_link."agent_list.php");
+    move($actual_link."dashboard.php");
 }
 
 
@@ -35,7 +35,9 @@ include('partial/loader.php'); ?>
                                     </div>
                                     <div class="col-sm-6 col-auto">
                                         <div class="text-sm-end">
+                                            <?php if($login_role == 'superadmin'){ ?>
                                             <a href="<?=$actual_link?>deposit.php?user_id=<?= base64_encode($user_id) ?>" class="btn btn-primary mb-2"><i class="icofont icofont-plus"></i> Deposit Amount</a>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
