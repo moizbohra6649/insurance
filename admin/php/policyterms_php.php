@@ -45,9 +45,9 @@ if($policy_id > 0 && $mode != 'UPDATE'){
 
 if($policy_id > 0){
     $policy_status = get_value('policy' , 'policy_status' , 'where status = 1 and id = '.$policy_id);
-    // if($policy_status == 'success'){
-    //         move($actual_link."policy_list.php");
-    // }
+    if($policy_status == 'success'){
+            move($actual_link."policy_list.php");
+    }
 
 }
 
