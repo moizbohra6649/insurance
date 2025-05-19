@@ -64,6 +64,10 @@ include('partial/loader.php'); ?>
                                                     <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
                                                     
                                                     <td align="center">
+                                                    <a href="<?=$actual_link?>reports/policy.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2">
+                                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                                    </a>
+                                                    
                                                         <a href="<?=$actual_link?>policy.php?customer_id=<?=base64_encode($customer_id);?>&id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
                                                         <a href="<?=$actual_link?>policy.php?customer_id=<?=base64_encode($customer_id);?>&id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
                                                         <!-- <a href="javascript:void(0);" class="action-icon  m-2"> <i class="mdi mdi-delete"></i></a> -->
