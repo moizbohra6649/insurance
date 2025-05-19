@@ -4,8 +4,8 @@
     var vehicleids = $('#vehical_list').val().split(',');
     var driverids = $('#driver_list').val().split(',');
 
-    $('#vehicle').val(vehicleids).trigger('click');
-    $('#driver').val(driverids).trigger('click');
+    $('#vehicle').val(vehicleids).trigger('select');
+    $('#driver').val(driverids).trigger('select');
     var coverage_type = $("#coverage").val(); 
     if(coverage_type == 'liability' || coverage_type == 'full_coverage' ){
 
@@ -56,7 +56,7 @@
                 closeOnSelect: false,
                 maximumSelectionLength: 5
             });
-            $('#vehicle').val(vehicleids).trigger('change');
+            $('#vehicle').val(vehicleids).trigger('select');
 
             $('#driver').attr('multiple' , 'multiple');
             $("#driver").select2({
@@ -66,7 +66,7 @@
                 closeOnSelect: false,
                 maximumSelectionLength: 5
             });
-            $('#driver').val(driverids).trigger('change');
+            $('#driver').val(driverids).trigger('select');
        }else{
 
             $('#vehicle').removeAttr('multiple');
@@ -75,7 +75,7 @@
                 minimumResultsForSearch: Infinity,
                 allowClear: true
             });
-            $('#vehicle').val('').trigger('change');
+            $('#vehicle').val('').trigger('select');
 
             $('#driver').removeAttr('multiple');
             $("#driver").select2({
@@ -83,7 +83,7 @@
                 minimumResultsForSearch: Infinity,
                 allowClear: true
             });
-            $('#driver').val('').trigger('change');
+            $('#driver').val('').trigger('select');
             
        }
         
