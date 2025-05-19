@@ -58,7 +58,7 @@ $('#deposit_form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                var url = `transaction_history_list.php?user_id=${$('#user_id').val()}`;
+                var url = `wallet_list.php?user_id=${$('#user_id').val()}`;
                 setTimeout(function() { move(`<?=$actual_link?>${url}`); }, 1000);
             }else{
                 $("#submit_btn").html('Submit');

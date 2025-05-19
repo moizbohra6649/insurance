@@ -55,8 +55,6 @@ CREATE TABLE `policy` (
   `is_veh_listed_ride` int(11) NOT NULL,
   `is_veh_listed_application_used` int(11) NOT NULL,
   `is_veh_listed_garaged` int(11) NOT NULL,
-  `applicant_initials` varchar(252) NOT NULL,
-  `applicant_mother_name` varchar(252) NOT NULL,
   `is_premium_payment_type` int(11) NOT NULL,
   `base_premium` int(11) NOT NULL,
   `additional_coverage_premium` int(11) NOT NULL,

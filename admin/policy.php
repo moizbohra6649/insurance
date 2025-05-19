@@ -66,7 +66,7 @@
                            <hr class="mt-4 mb-4">
                            <div class="row">
                               <div class="col-md-4 mb-3">
-                                 <label class="form-label" for="coverage">Coverage<span class="text-danger">*</span></label>
+                                 <label class="form-label" for="coverage">Coverage <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="coverage" id="coverage" onchange="fn_policy_calculation();">
                                        <!-- <option value="">Please Select Coverage</option> -->
@@ -77,7 +77,7 @@
                                  </div>
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <label class="form-label" for="coverage_collision">Copresnsive / Collision<span class="text-danger">*</span></label>
+                                 <label class="form-label" for="coverage_collision">Copresnsive / Collision <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="coverage_collision" id="coverage_collision">
                                        <option value="">Please Select Copresnsive / Collision</option>
@@ -93,7 +93,7 @@
                                  </div>
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <label class="form-label" for="umpd">UMPD (Unissured motorist property damage)<span class="text-danger">*</span></label>
+                                 <label class="form-label" for="umpd">UMPD (Unissured motorist property damage) <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="umpd" id="umpd">
                                        <option value="">Please Select UMPD</option>
@@ -127,7 +127,7 @@
                                  </div>
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <label class="form-label" for="coverage_rental">Rental Reimbursment<span class="text-danger">*</span></label>
+                                 <label class="form-label" for="coverage_rental">Rental Reimbursment <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="coverage_rental" id="coverage_rental">
                                        <option value="">Please Select Rental Reimbursment</option>
@@ -141,7 +141,7 @@
                                  </div>
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <label class="form-label" for="coverage_deductible">Coverage Deductible<span class="text-danger">*</span></label>
+                                 <label class="form-label" for="coverage_deductible">Coverage Deductible <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="coverage_deductible" id="coverage_deductible">
                                        <option value="">Please Select Coverage Deductible</option>
@@ -181,7 +181,7 @@
                            <div class="row">
                               <div class="col-md-4 mb-3">
                                  <div class="policy-labels" style="display: flex;justify-content: space-between;">
-                                    <label class="form-label" for="policy_bi">BI (Bodily Injury):<span class="text-danger">*</span>
+                                    <label class="form-label" for="policy_bi">BI (Bodily Injury) <span class="text-danger">*</span>
                                     </label>
                                     <label class="form-check-label" for="is_physical_damage"><input class="form-check-input" id="is_physical_damage" name="is_physical_damage" type="checkbox" <?= ($is_physical_damage == 1 ) ? 'checked' : '';  ?> >  Physical Damage Only<span class="digits"></span></label>
                                  </div>
@@ -200,7 +200,7 @@
                                  </div>
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <label class="form-label" for="policy_pd">PD (Property Damage):<span class="text-danger">*</span></label>
+                                 <label class="form-label" for="policy_pd">PD (Property Damage) <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="policy_pd" id="policy_pd">
                                        <option value="0">Please Select PD</option>
@@ -216,7 +216,7 @@
                                  </div>
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <label class="form-label" for="policy_umd">UMB (Uninsured Motorist / Bodily Injury):<span class="text-danger">*</span></label>
+                                 <label class="form-label" for="policy_umd">UMB (Uninsured Motorist / Bodily Injury) <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="policy_umd" id="policy_umd">
                                        <option value="0">Please Select UMB</option>
@@ -234,7 +234,7 @@
                            </div>
                            <div class="row">
                               <div class="col-md-4 mb-3">
-                                 <label class="form-label" for="policy_medical">Medical<span class="text-danger">*</span></label>
+                                 <label class="form-label" for="policy_medical">Medical <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="policy_medical" id="policy_medical">
                                        <option value="0">Please Select Medical</option>
@@ -252,7 +252,7 @@
                               <div class="col-md-4 mb-3">
                                  <input type="hidden" value="<?= $vehicle?>" id="vehical_list"> 
                                  <input type="hidden" value="<?= $driver?>"  id="driver_list"> 
-                                 <label class="form-label" for="vehicle">Vehicle's<span class="text-danger">*</span></label>
+                                 <label class="form-label" for="vehicle">Vehicle's <span class="text-danger">*</span></label>
                                  <div>
                                     <select class="form-select" name="vehicle[]" id="vehicle" onchange="fn_policy_calculation();">
                                       <?php
@@ -263,20 +263,20 @@
                                           WHERE customer_id = $customer_id");
                                           while($get_vehicle = fetch($select_vehicle)){
                                           ?>
-                                       <option value="<?= $get_vehicle["id"]; ?>" year="<?= $get_vehicle["year"]; ?>"  make="<?= $get_vehicle["make_name"]; ?>" model="<?= $get_vehicle["model_name"]; ?>" vehical_no="<?= $get_vehicle["vehicle_no"]; ?>" ><?php echo $get_vehicle["make_name"].' - '.$get_vehicle["model_name"] . ' - '. $get_vehicle["vehicle_no"] ?></option>
+                                          <option value="<?= $get_vehicle["id"]; ?>" year="<?= $get_vehicle["year"]; ?>"  make="<?= $get_vehicle["make_name"]; ?>" model="<?= $get_vehicle["model_name"]; ?>" vehical_no="<?= $get_vehicle["vehicle_no"]; ?>" ><?php echo $get_vehicle["make_name"].' - '.$get_vehicle["model_name"] . ' - '. $get_vehicle["vehicle_no"] ?></option>
                                        <?php } ?>
                                     </select>
                                  </div>
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <label class="form-label" for="driver">Driver's<span class="text-danger">*</span></label>
+                                 <label class="form-label" for="driver">Driver's <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="driver[]" id="driver" onchange="fn_policy_calculation();">
                                        <?php
                                           $select_driver = select("driver","customer_id = $customer_id ") ;
                                           while($get_driver = fetch($select_driver)){
                                           ?>
-                                       <option driver_id="<?= $get_driver["driver_id"] ?>" driver_name="<?= $get_driver["first_name"].' '.$get_driver["last_name"] ?>" driver_dob ="<?= convert_readable_date_db($get_driver["date_of_birth"]) ?>" driver_licence_no="<?= $get_driver["driver_licence_no"] ?>" value="<?= $get_driver["id"] ?>"><?php echo $get_driver["first_name"].' '.$get_driver["last_name"]; ?></option>
+                                          <option driver_id="<?= $get_driver["driver_id"] ?>" driver_name="<?= $get_driver["first_name"].' '.$get_driver["last_name"] ?>" driver_dob ="<?= convert_readable_date_db($get_driver["date_of_birth"]) ?>" driver_licence_no="<?= $get_driver["driver_licence_no"] ?>" value="<?= $get_driver["id"] ?>"><?php echo $get_driver["first_name"].' '.$get_driver["last_name"]; ?></option>
                                        <?php } ?>
                                     </select>
                                  </div>
@@ -459,7 +459,7 @@
                                  Base Premium	
                               </div>
                               <div class="col-md-4 mb-3 txt_base_premium">
-                                 $0.00
+                                 $<?=$service_price;?>
                               </div>
                            </div>
                            <div class="row">
@@ -467,7 +467,7 @@
                                  Additional Coverage Premium	
                               </div>
                               <div class="col-md-4 mb-3 txt_additional_coverage_premium">
-                                 $0.00
+                                 $<?=$base_premium;?>
                               </div>
                            </div>
                            <div class="row">
@@ -475,20 +475,16 @@
                                  Custom Discount	
                               </div>
                               <div class="col-md-4 mb-3 txt_custom_discount">
-                                 $0.00
+                                 $<?=$additional_coverage_premium;?>
                               </div>
                            </div>
-                           <!-- <div class="row">
-                              <div class="col-md-8 mb-3">Total Fees</div> 
-                              <div class="col-md-4 mb-3">$0.00</div> 
-                            </div>  -->
                            <hr class="mt-1 mb-1">
                            <div class="row">
                               <div class="col-md-8 mb-3 fw-bold">
                                  Total Premium:
                               </div>
                               <div class="col-md-4 mb-3 txt_total_premium">
-                                 $0.00
+                                 $<?=$custom_discount;?>
                               </div>
                            </div>
                            <div class="row">
@@ -496,7 +492,7 @@
                                  Management Fee:
                               </div>
                               <div class="col-md-4 mb-3 txt_management_fee">
-                                 $0.00
+                                 $<?=$total_premium;?>
                               </div>
                            </div>
                            <div class="row">
@@ -507,7 +503,7 @@
                                 <input class="form-control" type="text" name="" id="txt_service_price" value="0">
                               </div> -->
                               <div class="col-md-4 mb-3 price-container">
-                                 <div class="txt_service_price">$0.00</div>
+                                 <div class="txt_service_price">$<?=$management_fee;?></div>
                               </div>
                               </div>
                               <div class="row">
@@ -515,19 +511,16 @@
                                     Total:
                                  </div>
                                  <div class="col-md-4 mb-3 txt_net_total">
-                                 $0.00
+                                 $<?=$net_total;?>
                               </div>
                            </div>
-                           <!-- <input type="hidden" name="premium" id="premium" value="0"> -->
-                           <input type="hidden" name="base_premium" id="base_premium" value="0">
-                           <input type="hidden" name="additional_coverage_premium" id="additional_coverage_premium" value="0">
-                           <input type="hidden" name="custom_discount" id="custom_discount" value="0">
-                           <!-- <input type="hidden" name="total_fees" id="total_fees" value="0"> -->
-                           <input type="hidden" name="total_premium" id="total_premium" value="0">
-                           <input type="hidden" name="management_fee" id="management_fee" value="0">
-                           <input type="hidden" name="service_price" id="service_price" value="0">
-                           <input type="hidden" name="net_total" id="net_total" value="0">
-                           <input type="hidden" name="total" id="total" value="0">
+                           <input type="hidden" name="base_premium" id="base_premium" value="<?=$service_price?>">
+                           <input type="hidden" name="additional_coverage_premium" id="additional_coverage_premium" value="<?=$base_premium?>">
+                           <input type="hidden" name="custom_discount" id="custom_discount" value="<?=$additional_coverage_premium?>">
+                           <input type="hidden" name="total_premium" id="total_premium" value="<?=$customl_discount?>">
+                           <input type="hidden" name="management_fee" id="management_fee" value="<?=$total_premium?>">
+                           <input type="hidden" name="service_price" id="service_price" value="<?=$management_fee?>">
+                           <input type="hidden" name="net_total" id="net_total" value="<?=$net_total?>">
                            <?php if($mode != "VIEW"){ ?>
                            <div class="card-body btn-showcase" style="text-align: center;">
                               <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>

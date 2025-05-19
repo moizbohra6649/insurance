@@ -1,7 +1,7 @@
 <?php 
 /* Include PHP File */
-if (file_exists(dirname(__FILE__) . '/php/transaction_history_php.php')) {
-    require_once(dirname(__FILE__) . '/php/transaction_history_php.php');
+if (file_exists(dirname(__FILE__) . '/php/wallet_php.php')) {
+    require_once(dirname(__FILE__) . '/php/wallet_php.php');
 }
 
 
@@ -57,11 +57,9 @@ include('partial/loader.php'); ?>
                                             <input type="text" id="datepicker" name="tra_date" data-theme="dark" class="form-control tra_date" value="<?= $transaction_date ?>" readonly="" required="" autocomplete="off" data-bs-original-title="" title="">
                                                 <div class="invalid-feedback">Please fill Transaction Date.</div>
                                         </div>
-                                        <div class="col-md-6 mb-3 transacton_id">
+                                        <div class="col-md-6 mb-3 transacton_id" style="display: none;">
                                             <label class="form-label" for="tra_id">Transaction ID<span class="text-danger">*</span></label>
-                                            
                                                 <input class="form-control alpha_num" id="tra_id" name="tra_id" type="text" value="<?=$transaction_id?>" placeholder="Transaction ID" aria-describedby="inputGroupPrepend">
-                                            
                                         </div>
                                     </div>
                                     <?php if($mode != "VIEW"){ ?>
@@ -86,8 +84,8 @@ include('partial/loader.php'); ?>
 
 <?php include('partial/scripts.php');
     /* Include JS File */
-    if (file_exists(dirname(__FILE__) . '/js/transaction_history_js.php')) {
-        require_once(dirname(__FILE__) . '/js/transaction_history_js.php');
+    if (file_exists(dirname(__FILE__) . '/js/wallet_js.php')) {
+        require_once(dirname(__FILE__) . '/js/wallet_js.php');
     }
 ?>
 </body>

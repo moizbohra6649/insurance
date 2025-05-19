@@ -271,6 +271,21 @@ function calculateAge($birthDate) {
     return $ageInterval->y;
 }
 
+function formatIds($id) {
+    // Check if $id is an array
+    if (is_array($id)) {
+        // Convert array to comma-separated string
+        return implode(',', $id);
+    } elseif (is_string($id)) {
+        // Return the string as-is
+        return $id;
+    } else {
+        // Handle unexpected input
+        return '';
+    }
+}
+
+
 function convert_calender_date($select_date){
 	if(!empty($select_date) && $select_date != "0000-00-00"){
 		$formatted_date = date('d-m-Y', strtotime($select_date));

@@ -1,78 +1,49 @@
 <script>
 
-$("#vehicle").select2({
-    placeholder: "Please Select Vehicle's",
-    minimumResultsForSearch: Infinity,
-    allowClear: true,
-    closeOnSelect: false,
-});
+// $(document).ready(function() {
+    var vehicleids = $('#vehical_list').val().split(',');
+    var driverids = $('#driver_list').val().split(',');
 
-$("#driver").select2({
-    placeholder: "Please Select driver's",
-    minimumResultsForSearch: Infinity,
-    allowClear: true,
-    closeOnSelect: false,
-});
+    $('#vehicle').val(vehicleids).trigger('click');
+    $('#driver').val(driverids).trigger('click');
+    var coverage_type = $("#coverage").val(); 
+    if(coverage_type == 'liability' || coverage_type == 'full_coverage' ){
 
-$('#vehicle').val('').trigger('change');
-$('#driver').val('').trigger('change');
+        $('#vehicle').attr('multiple' , 'multiple');
+        $("#vehicle").select2({
+            placeholder: "Please Select Vehicle's",
+            minimumResultsForSearch: Infinity,
+            allowClear: true,
+            maximumSelectionLength: 5
+        });
 
-/* function fn_getting_vehicle(){
-    $.ajax({
-        type: 'POST',
-        url: '<?=($_SERVER['PHP_SELF'])?>',
-        data: {ajax_request: 'getting_vehicle' , customer_id  : $('#customer_id').val()},
-        cache: false,
-        dataType: 'json',           
-        success: function(data) {
-            $("#vehicle").html(data.res_data);
-            var vehicleids = $('#vehical_list').val().split(',');
-            var driverids = $('#driver_list').val().split(',');
-            if($("#coverage").val() == 'liability' ||  $("#coverage").val() == 'full_coverage' ){
+        $('#driver').attr('multiple' , 'multiple');
+        $("#driver").select2({
+            placeholder: "Please Select driver's",
+            minimumResultsForSearch: Infinity,
+            allowClear: true,
+            maximumSelectionLength: 5
+        });
+    }else{
+        $("#vehicle").select2({
+            placeholder: "Please Select Vehicle's",
+            minimumResultsForSearch: Infinity,
+            allowClear: true,
+        });
 
-                $('#vehicle').attr('multiple' , 'multiple');
-                $("#vehicle").select2({
-                    placeholder: "Please Select Vehicle's",
-                    maximumSelectionLength: 5
-                });
-                $('#vehicle').val(vehicleids).trigger('change');
+        $("#driver").select2({
+            placeholder: "Please Select driver's",
+            minimumResultsForSearch: Infinity,
+            allowClear: true,
+        });
+    }
 
-                $('#driver').attr('multiple' , 'multiple');
-                $("#driver").select2({
-                    placeholder: "Please Select driver's",
-                    maximumSelectionLength: 5
-                });
-                $('#driver').val(driverids).trigger('change');
-
-            }else{
-                
-                $("#vehicle").select2({
-                    placeholder: "Please Select Vehicle's",
-                    minimumResultsForSearch: Infinity,
-                    allowClear: true
-                });
-                $('#vehicle').val(vehicleids).trigger('change');
-
-                $("#driver").select2({
-                    placeholder: "Please Select driver's",
-                    minimumResultsForSearch: Infinity,
-                    allowClear: true
-                });
-                $('#driver').val(driverids).trigger('change');
-
-                
-            }
-        },
-        error: function(data) {
-            console.log(data);
-        }      
-    });
-} */
+// });
 
  $(document).ready(function() {
     
     $("#coverage").on( 'change' , (function(e) {
-       let coverage_type = $(this).val() ; 
+       let coverage_type = $(this).val(); 
        var vehicleids = $('#vehical_list').val().split(',');
        var driverids = $('#driver_list').val().split(',');
        if(coverage_type == 'liability' || coverage_type == 'full_coverage' ){
@@ -181,42 +152,6 @@ $('#driver').val('').trigger('change');
     });
 });
 
-// const priceDiv = document.querySelector('.txt_service_price');
-
-//   priceDiv.setAttribute('contenteditable', true);
-
-//   priceDiv.addEventListener('input', function(event) {
-//     const text = event.target.innerText;
-//     const numericValue = text.replace(/[^0-9.]/g, ''); // Remove non-numeric characters
-//     event.target.innerText = numericValue;
-//     $("#service_price").val(numericValue);
-
-//     // Optional: Ensure only one decimal point
-//     const parts = numericValue.split('.');
-//     if (parts.length > 2) {
-//       event.target.innerText = parts[0] + '.' + parts.slice(1).join('');
-//       $("#service_price").val(parts[0] + '.' + parts.slice(1).join(''));
-//     }
-//   });
-
-//   priceDiv.addEventListener('blur', function(event) {
-//     // Optional: Format the output back to currency format on blur
-//     const value = parseFloat(event.target.innerText);
-//     if (!isNaN(value)) {
-//       event.target.innerText = '$' + value.toFixed(2);
-//       $("#service_price").val(value.toFixed(2));
-//     } else {
-//       event.target.innerText = '$0.00'; // Revert to default if not a valid number
-//       $("#service_price").val('0.00');
-//     }
-//   });
-
-//   // Initialize the div with the currency format
-//   const initialValue = parseFloat(priceDiv.innerText.replace('$', ''));
-//   if (!isNaN(initialValue)) {
-//     priceDiv.innerText = '$' + initialValue.toFixed(2);
-//   }
-
 const priceContainer = document.querySelector('.price-container');
   let priceDiv = document.querySelector('.txt_service_price');
   let inputElement = null;
@@ -310,8 +245,9 @@ function fn_policy_calculation(){
     //}
     
 }
-
+<?php if($mode == "NEW"){ ?>
 fn_policy_calculation();
+<?php } ?>
 
 $('#policy_form').on('submit', (function(e) {
     e.preventDefault();
@@ -378,7 +314,8 @@ $('#policy_form').on('submit', (function(e) {
                 var url = `policyterms.php?policy_id=${data.policy_id}`;
                 setTimeout(function() { move(`<?=$actual_link?>${url}`); }, 1000);
             }else if(data.status == "success" && data.mode == 'UPDATE'){
-                var url = `policy_list.php`;
+                // var url = `policy_list.php`;
+                var url = `policyterms.php?policy_id=${data.policy_id}`;
                 setTimeout(function() { move(`<?=$actual_link?>${url}`); }, 1000);
             }
             else{
@@ -396,6 +333,5 @@ $('#policy_form').on('submit', (function(e) {
    // window.location.href = window.location.protocol	+ '//' + window.location.host + '/insurance/admin/policyterms.php';    ;
 
 }));
-// fn_getting_vehicle();
 
 </script>

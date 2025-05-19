@@ -1,8 +1,13 @@
 <?php 
 /* Include PHP File */
-if (file_exists(dirname(__FILE__) . '/php/wallet_list_php.php')) {
-    require_once(dirname(__FILE__) . '/php/wallet_list_php.php');
+if (file_exists(dirname(__FILE__) . '/php/wallet_php.php')) {
+    require_once(dirname(__FILE__) . '/php/wallet_php.php');
 }
+
+if(empty($user_id)){
+    move($actual_link."dashboard.php");
+}
+
 
 include('partial/header.php'); 
 include('partial/loader.php'); ?>
@@ -29,7 +34,11 @@ include('partial/loader.php'); ?>
                                         <h4 class="header-title align-middle">Search Filter</h4>
                                     </div>
                                     <div class="col-sm-6 col-auto">
-                                        
+                                        <div class="text-sm-end">
+                                            <?php if($login_role == 'superadmin'){ ?>
+                                            <a href="<?=$actual_link?>wallet_deposit.php?user_id=<?= base64_encode($user_id) ?>" class="btn btn-primary mb-2"><i class="icofont icofont-plus"></i> Add Wallet Balance</a>
+                                            <?php } ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -37,16 +46,21 @@ include('partial/loader.php'); ?>
                                 <div class="tab-content">
                                     <div class="tab-pane show active" id="form-row-preview">
                                         <form method="GET" id="agent_list">
+                                             <input type="hidden" id="user_id" name="user_id" value="<?= base64_encode($user_id) ?>" class="form-control">
                                             <div class="row">
-                                                <div class="mb-3 col-lg-6">
+                                                <div class="mb-3 col-lg-3">
                                                     <label class="form-label">From Date</label>
                                                     <input type="text" id="daterange" data-theme="dark" class="form-control" value="<?=convert_db_date_readable($from_date)?>-<?=convert_db_date_readable($to_date)?>" data-range-from="<?=$from_date?>" data-range-to="<?=$to_date?>">
 		                                            <input type="text" id="range-from" name="from_date" value="<?=convert_db_date_readable($from_date);?>" data-value="<?=$from_date?>" class="form-control" readonly>
 		
                                                 </div>
-                                                <div class="mb-3 col-lg-6">
+                                                <div class="mb-3 col-lg-3">
                                                         <label class="form-label">To Date</label>
                                                         <input type="text" id="range-to" name="to_date" value="<?=convert_db_date_readable($to_date);?>" data-value="<?=$to_date?>" class="form-control" readonly>
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="filter_transactionid" class="form-label">Transaction ID</label>
+                                                    <input type="text" class="form-control alpha_num" id="filter_transactionid" name="filter_transactionid" placeholder="Transaction ID" value="<?=$filter_transactionid?>">
                                                 </div>
                                             </div>
 
@@ -76,10 +90,12 @@ include('partial/loader.php'); ?>
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: center;">S.No.</th>
-                                                    <th>Transaction Type </th>
-                                                    <th>Cr./Dr.</th>
+                                                    <th style="text-align: center;">Agent Name</th>
+                                                    <th style="text-align: center;">Transaction ID </th>
+                                                    <th style="text-align: center;">Transaction Type </th>
+                                                    <th style="text-align: center;">Transaction Date</th>
                                                     <th style="text-align: center;">Amount</th> 
-                                                    <th>Transaction Date</th>
+                                                    <th style="text-align: center;">Create Date</th> 
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -91,13 +107,17 @@ include('partial/loader.php'); ?>
                                                 ?>
                                                 <tr>
                                                     <td align="center"> <?=$i++?> </td>
-                                                    <td class="table-user">
-                                                     <?=$get_data["transaction_type"]?>
-                                                    </td>
-                                                    <td> <?= ucfirst($get_data["payment_type"])?> </td>
-                                                    <td align="center"> <?= $get_data["transaction_amount"] ?> </td>
-                                                    <td> <?=convert_db_date_readable($get_data["created"])?> </td>
-                                                
+                                                    <td align="center"> <?=$get_data["name"]?> </td>
+                                                    <td align="center"> <?=$get_data["transaction_id"]?> </td>
+                                                    <td align="center"> <?=$get_data["transaction_type"]?> </td>
+                                                    <td align="center"> <?=convert_db_date_readable($get_data["transaction_date"])?> </td>
+                                                    <td align="center"> $<?= $get_data["amount"] ?> </td>
+                                                    <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
+                                                    
+                                                    <!-- <td align="center">
+                                                        <a href="<?=$actual_link?>deposit.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
+                                                      
+                                                    </td> -->
                                                 </tr>
                                                 <?php } ?>
                                             </tbody>
@@ -121,8 +141,8 @@ include('partial/loader.php'); ?>
 
 <?php include('partial/scripts.php');
     /* Include JS File */
-    if (file_exists(dirname(__FILE__) . '/js/transaction_history_js.php')) {
-        require_once(dirname(__FILE__) . '/js/transaction_history_js.php');
+    if (file_exists(dirname(__FILE__) . '/js/wallet_js.php')) {
+        require_once(dirname(__FILE__) . '/js/wallet_js.php');
     }
 ?>
 </body>

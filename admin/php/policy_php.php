@@ -43,14 +43,13 @@ $is_veh_listed_garaged          = (isset($_REQUEST["is_veh_listed_garaged"])) ? 
 $is_driver_res          = (isset($_REQUEST["is_driver_res"])) ? $_REQUEST["is_driver_res"] : 0; 
 $is_applicant_other_veh          = (isset($_REQUEST["is_applicant_other_veh"])) ? $_REQUEST["is_applicant_other_veh"] : 0; 
 $is_physical_damage          = (isset($_REQUEST["is_physical_damage"])) ? ($_REQUEST["is_physical_damage"] == 'on') ? 1 : 0 : 0; 
-$service_price          = (isset($_REQUEST["service_price"])) ? $_REQUEST["service_price"] : 0; 
-$base_premium          = (isset($_REQUEST["base_premium"])) ? $_REQUEST["base_premium"] : 0;  
-$additional_coverage_premium          = (isset($_REQUEST["additional_coverage_premium"])) ? $_REQUEST["additional_coverage_premium"] : 0; 
-$custom_discount          = (isset($_REQUEST["custom_discount"])) ? $_REQUEST["custom_discount"] : 0; 
-$total_fees          = (isset($_REQUEST["total_fees"])) ? $_REQUEST["total_fees"] : 0; 
-$total_premium          = (isset($_REQUEST["total_premium"])) ? $_REQUEST["total_premium"] : 0; 
-$management_fee          = (isset($_REQUEST["management_fee"])) ? $_REQUEST["management_fee"] : 0; 
-$net_total          = (isset($_REQUEST["net_total"])) ? $_REQUEST["net_total"] : 0; 
+$service_price          = (isset($_REQUEST["service_price"])) ? $_REQUEST["service_price"] : '0.00'; 
+$base_premium          = (isset($_REQUEST["base_premium"])) ? $_REQUEST["base_premium"] : '0.00';  
+$additional_coverage_premium          = (isset($_REQUEST["additional_coverage_premium"])) ? $_REQUEST["additional_coverage_premium"] : '0.00'; 
+$custom_discount          = (isset($_REQUEST["custom_discount"])) ? $_REQUEST["custom_discount"] : '0.00'; 
+$total_premium          = (isset($_REQUEST["total_premium"])) ? $_REQUEST["total_premium"] : '0.00'; 
+$management_fee          = (isset($_REQUEST["management_fee"])) ? $_REQUEST["management_fee"] : '0.00'; 
+$net_total          = (isset($_REQUEST["net_total"])) ? $_REQUEST["net_total"] : '0.00'; 
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -79,27 +78,10 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
     $data["msg"] = "Something went wrong please try again later.";
     $data["status"] = "error";
 
-    /* if($_REQUEST["ajax_request"] == "getting_vehicle"){
-        $data_set = '';
-        $select_query = mysqli_query($conn, "SELECT vehicle.id , year.year ,  make.make_name , model.model_name , vehicle.vehicle_no  FROM vehicle INNER JOIN make ON make.id = vehicle.vehicle_make_id inner join model on model.id = vehicle.vehicle_model_id inner join year on year.id = vehicle.vehicle_year_id WHERE  customer_id = $customer_id");
-        if(mysqli_num_rows($select_query) > 0){
-            while($get_query = mysqli_fetch_array($select_query)){
-                $data_set .= "<option value='".$get_query["id"]."' year='".$get_query["year"]."'  make='".$get_query["make_name"]."' model='".$get_query["model_name"]."' vehical_no = '".$get_query["vehicle_no"]."' >".$get_query["make_name"].' - '.$get_query["model_name"] . ' - '. $get_query["vehicle_no"]."</option>";
-            }   
-        }
-        $data["status"] = "success";
-        $data["msg"] = "";
-        $data["res_data"] = $data_set;
-
-        echo $json_response = json_encode($data);
-        exit();
-    } */
-
     $vehicles_premium = array();
     $base_premium = 0;
     $additional_coverage_premium = 0;
     $custom_discount = 0;
-    // $total_fees = 0;
     $total_premium = 0;
     $management_fee = 0;
     $service_fee = 0;
@@ -109,6 +91,9 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
         
         // $vehicle = (sizeof($vehicle) > 0) ? implode(",", $vehicle) : 0;
         // $driver = (sizeof($driver) > 0) ? implode(",", $driver) : 0;
+
+        $vehicle = formatIds($vehicle);
+        $driver = formatIds($driver);
 
         $select_customer = mysqli_query($conn, "SELECT * FROM customer where id = '$customer_id'");
         $get_customer = mysqli_fetch_assoc($select_customer);
@@ -396,8 +381,6 @@ switch ($mode) {
             $policy_umd          = $get_data['policy_umd_id'];
             $policy_medical          = $get_data['policy_medical_id'];
             $roasass          = $get_data['is_roadside_assistance'];
-            $initials          = $get_data['applicant_initials'];
-            $mother_maident_name          = $get_data['applicant_mother_name'];
             $is_vehical_listed          = $get_data['is_vehical_listed']; 
             $is_applicant_sole_registered          = $get_data['is_applicant_sole_registered']; 
             $is_veh_used_business_q	          = $get_data['is_veh_used_business_q']; 
@@ -408,6 +391,14 @@ switch ($mode) {
             $is_applicant_other_veh          = $get_data['is_applicant_other_veh']; 
             $is_physical_damage          = $get_data['is_physical_damage']; 
 
+            $service_price          = $get_data['service_price']; 
+            $base_premium          = $get_data['base_premium']; 
+            $additional_coverage_premium          = $get_data['additional_coverage_premium']; 
+            $customl_discount          = $get_data['customl_discount']; 
+            $total_premium          = $get_data['total_premium']; 
+            $management_fee          = $get_data['management_fee']; 
+            $net_total          = $get_data['net_total']; 
+
             $veh_sql = mysqli_query($conn, 'select * from policy_vehicle where vehicle_policy_id = '.$get_data["id"]);
             while($get_veh = mysqli_fetch_array($veh_sql)){
                 $vehicle .= ','.$get_veh['vehicle_id'] ; 
@@ -416,6 +407,8 @@ switch ($mode) {
             while($get_veh = mysqli_fetch_array($veh_sql)){
                 $driver .= ','.$get_veh['driver_id'] ; 
             }
+
+            // policy calculation is pending on edit mode
             $created              = $get_data["created"];
             $local_mode           = "UPDATE";
         }
@@ -444,7 +437,6 @@ switch ($mode) {
 
         $update_query = mysqli_query($conn, "
             UPDATE policy SET 
-                customer_id = '$customer_id',
                 policy_coverage = '$coverage',
                 policy_coverage_collision_id = '$coverage_collision',
                 policy_coverage_umpd_id = '$umpd',
@@ -466,16 +458,13 @@ switch ($mode) {
                 is_veh_listed_ride = '$is_veh_listed_ride',
                 is_veh_listed_application_used = '$is_veh_listed_application_used',
                 is_veh_listed_garaged = '$is_veh_listed_garaged',
-                policy_status = policy_status,
-                status = status,
                 service_price = $service_price,
                 base_premium = $base_premium,
                 additional_coverage_premium = $additional_coverage_premium,
                 customl_discount = $custom_discount,
-                total_fees = $total_fees,
                 total_premium = $total_premium,
                 management_fee = $management_fee,
-                total = $total
+                net_total = $net_total
             WHERE id = '$id'
             ");
 
@@ -502,6 +491,7 @@ switch ($mode) {
         }else if (!empty($update_query)) {
             $data["msg"] = "Policy updated successfully.";
             $data["status"] = "success";
+            $data["policy_id"] = base64_encode($id);
             $data["mode"] = $mode;
         } else {
             $data["msg"] = "Query error please try again later.";
