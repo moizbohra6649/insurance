@@ -64,7 +64,13 @@ include('partial/loader.php'); ?>
                                                     <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
                                                     
                                                     <td align="center">
-                                                        <a href="<?=$actual_link?>reports/policy.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>                                                    
+                                                         <a href="<?=$actual_link?>reports/card.html?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2">
+                                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a href="<?=$actual_link?>reports/policy.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2">
+                                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                                    </a>
+                                                    
                                                         <a href="<?=$actual_link?>policy.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
                                                         <?php if($get_data["policy_status"] == "peding"){ ?>
                                                         <a href="<?=$actual_link?>policy.php?id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
