@@ -220,17 +220,17 @@ $pdf->SetWidths(array( 58, 60, 18, 18, 18, 18));
 $pdf->SetAligns(array('L', 'C', 'C', 'C', 'C', 'C'));
 // Table Header
 $pdf->SetFont('Arial', 'B', 8);
-$pdf->Row(array('Coverages', 'Limits Of Liability', '[Veh 1]','[ ]','[ ]', '[ ]'), 0);
+$pdf->Row(array('Coverages', 'Limits Of Liability', '','','', ''), 0);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Row(array('BI (Bodily Injury)',$data_com['bi_minimum_amount'].'/'.$data_com['bi_maximum_amount'],'$ 255','','', ''), 0);
-$pdf->Row(array('PD (Property Damage)',$data_com['pd_minimum_amount'].'/'.$data_com['pd_maximum_amount'],'$ 255','','', ''), 0);
-$pdf->Row(array('UMB (Uninsured Motorist / Bodily Injury) ',$data_com['umd_minimum_amount'].'/'.$data_com['umd_maximum_amount'],'$ 255','','', ''), 0);
-$pdf->Row(array('Medical',$data_com['medical_minimum_amount'].'/'.$data_com['medical_maximum_amount'],'$ 255','','', ''), 0);
+$pdf->Row(array('BI (Bodily Injury)','$'.$data_com['bi_minimum_amount'].' per person / $'.$data_com['bi_maximum_amount'].' per accident','','','', ''), 0);
+$pdf->Row(array('PD (Property Damage)','$'.$data_com['pd_minimum_amount'].' per person / $'.$data_com['pd_maximum_amount'] .' per accident','','','', ''), 0);
+$pdf->Row(array('UMB (Uninsured Motorist / Bodily Injury) ','$'.$data_com['umd_minimum_amount'].' per person / $'.$data_com['umd_maximum_amount'].' per accident','','','', ''), 0);
+$pdf->Row(array('Medical','$'.$data_com['medical_minimum_amount'].' per person / $'.$data_com['medical_maximum_amount'].' per accident','','','', ''), 0);
 
           // Set up table
-          $pdf->SetWidths(array( 58, 60, 18, 18, 18, 18));
-          $pdf->SetAligns(array('C', 'R', 'C', 'C', 'C', 'C'));
-    $pdf->Row(array('','Vehicle Totals','$ 255','','', ''), 0);
+         // $pdf->SetWidths(array( 58, 60, 18, 18, 18, 18));
+        //  $pdf->SetAligns(array('C', 'R', 'C', 'C', 'C', 'C'));
+   // $pdf->Row(array('','Vehicle Totals','$ 255','','', ''), 0);
 
     $getdata = $pdf->GetY();
      // Insured Info
