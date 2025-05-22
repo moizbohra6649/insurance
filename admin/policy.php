@@ -459,7 +459,7 @@
                                  Base Premium	
                               </div>
                               <div class="col-md-4 mb-3 txt_base_premium">
-                                 $<?=$service_price;?>
+                                 $<?=$base_premium;?>
                               </div>
                            </div>
                            <div class="row">
@@ -467,7 +467,7 @@
                                  Additional Coverage Premium	
                               </div>
                               <div class="col-md-4 mb-3 txt_additional_coverage_premium">
-                                 $<?=$base_premium;?>
+                                 $<?=$additional_coverage_premium;?>
                               </div>
                            </div>
                            <div class="row">
@@ -475,7 +475,7 @@
                                  Custom Discount	
                               </div>
                               <div class="col-md-4 mb-3 txt_custom_discount">
-                                 $<?=$additional_coverage_premium;?>
+                                 $<?=$custom_discount;?>
                               </div>
                            </div>
                            <hr class="mt-1 mb-1">
@@ -484,7 +484,7 @@
                                  Total Premium:
                               </div>
                               <div class="col-md-4 mb-3 txt_total_premium">
-                                 $<?=$custom_discount;?>
+                                 $<?=$total_premium;?>
                               </div>
                            </div>
                            <div class="row">
@@ -492,7 +492,7 @@
                                  Management Fee:
                               </div>
                               <div class="col-md-4 mb-3 txt_management_fee">
-                                 $<?=$total_premium;?>
+                                 $<?=$management_fee;?>
                               </div>
                            </div>
                            <div class="row">
@@ -503,7 +503,7 @@
                                 <input class="form-control" type="text" name="" id="txt_service_price" value="0">
                               </div> -->
                               <div class="col-md-4 mb-3 price-container">
-                                 <div class="txt_service_price">$<?=$management_fee;?></div>
+                                 <div class="txt_service_price">$<?=$service_price;?></div>
                               </div>
                               </div>
                               <div class="row">
