@@ -44,7 +44,6 @@ include('partial/loader.php'); ?>
                                                     <th style="text-align:center;">Policy ID</th>
                                                     <th>Customer Name</th> 
                                                     <th>Policy Coverage</th> 
-                                                    
                                                     <th style="text-align:center;">Create Date</th> 
                                                     <th style="text-align:center;">Action</th>
                                                 </tr>
