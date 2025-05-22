@@ -44,6 +44,20 @@ CREATE TABLE `policy_driver_amt_cal` (
 -- Indexes for dumped tables
 --
 
+insert into policy_driver_amt_cal (id, policy_type, driver_age_from, driver_age_to, driver_increase_percent, spouse_discount_percent, family_increase_percent, friend_increase_percent, more_then_one_driver_increase_percent) VALUES 
+(1, 'non_owner', 16, 25, 0, 0, 0, 0, 0),
+(2, 'non_owner', 25, 30, 0, 0, 0, 0, 0),
+(3, 'non_owner', 30, 55, 0, 0, 0, 0, 0),
+(4, 'non_owner', 35, 50, 0, 0, 0, 0, 0),
+(5, 'liability', 16, 25, 12, 50, 50, 60, 65),
+(6, 'liability', 25, 30, 12, 50, 40, 45, 65),
+(7, 'liability', 30, 35, 12, 50, 25, 25, 65),
+(8, 'liability', 35, 50, 12, 50, 25, 35, 65),
+(9, 'full_coverage', 16, 25, 12, 50, 50, 60, 65),
+(10, 'full_coverage', 25, 30, 12, 50, 40, 45, 65),
+(11, 'full_coverage', 30, 35, 12, 50, 25, 25, 65),
+(12, 'full_coverage', 35, 50, 12, 50, 25, 35, 65);
+
 --
 -- Indexes for table `policy_driver_amt_cal`
 --
@@ -58,7 +72,7 @@ ALTER TABLE `policy_driver_amt_cal`
 -- AUTO_INCREMENT for table `policy_driver_amt_cal`
 --
 ALTER TABLE `policy_driver_amt_cal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

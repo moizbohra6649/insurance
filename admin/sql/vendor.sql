@@ -41,6 +41,7 @@ CREATE TABLE `vendor` (
   `hint` varchar(252) NOT NULL,
   `profile_image` varchar(252) DEFAULT NULL,
   `business_license` varchar(252) DEFAULT NULL,
+  `entry_type` VARCHAR(252) NOT NULL DEFAULT 'manually' COMMENT 'manually = if superadmin add this agent\r\nrequested = Vendor can request as a agent register by fronend.',
   `status` int(12) NOT NULL DEFAULT 0,
   `deleted` int(12) NOT NULL DEFAULT 0,
   `delete_datetime` timestamp NULL DEFAULT NULL,

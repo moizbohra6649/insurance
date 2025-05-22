@@ -42,6 +42,20 @@ CREATE TABLE `policy_coverage_base_amt_cal` (
 -- Indexes for dumped tables
 --
 
+insert into policy_coverage_base_amt_cal (id, policy_type, customer_age_from, customer_age_to, vehicle_count, driver_count, base_policy_amt) VALUES 
+(1, 'non_owner', 16, 25, 1, 1, 445),
+(2, 'non_owner', 25, 30, 1, 1, 395),
+(3, 'non_owner', 30, 55, 1, 1, 380),
+(4, 'non_owner', 35, 50, 1, 1, 380),
+(5, 'liability', 16, 25, 5, 5, 640),
+(6, 'liability', 25, 30, 5, 5, 640),
+(7, 'liability', 30, 35, 5, 5, 620),
+(8, 'liability', 35, 50, 5, 5, 470),
+(9, 'full_coverage', 16, 25, 5, 5, 1310),
+(10, 'full_coverage', 25, 30, 5, 5, 1260),
+(11, 'full_coverage', 30, 35, 5, 5, 1220),
+(12, 'full_coverage', 35, 50, 5, 5, 1110);
+
 --
 -- Indexes for table `policy_coverage_base_amt_cal`
 --
@@ -56,7 +70,7 @@ ALTER TABLE `policy_coverage_base_amt_cal`
 -- AUTO_INCREMENT for table `policy_coverage_base_amt_cal`
 --
 ALTER TABLE `policy_coverage_base_amt_cal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

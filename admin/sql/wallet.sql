@@ -34,7 +34,7 @@ CREATE TABLE `wallet` (
   `transaction_type` varchar(100) NOT NULL,
   `transaction_date` datetime NOT NULL,
   `transaction_id` varchar(100) NOT NULL,
-  `amount` int(11) NOT NULL,
+  `amount` BIGINT(50) NOT NULL,
   `debit_credit_flag` enum('credit','debit') NOT NULL,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `updated` datetime NOT NULL
@@ -62,7 +62,7 @@ ALTER TABLE `wallet`
 -- AUTO_INCREMENT for table `wallet`
 --
 ALTER TABLE `wallet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

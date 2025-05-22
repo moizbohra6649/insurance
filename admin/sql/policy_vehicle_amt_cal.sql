@@ -42,6 +42,16 @@ CREATE TABLE `policy_vehicle_amt_cal` (
 -- Indexes for dumped tables
 --
 
+insert into policy_vehicle_amt_cal (id, policy_type, vehicle_year_from, vehicle_year_to, addup_increase_percent, vehicle_make_origin, origin_increase_percent) VALUES 
+(1, 'liability', 1990, 2009, 12, 'south_korean', 20),
+(2, 'liability', 2010, 2014, 60, 'south_korean', 20),
+(3, 'liability', 2015, 2020, 30, 'south_korean', 20),
+(4, 'liability', 2021, 2025, 40, 'south_korean', 20),
+(5, 'full_coverage', 1990, 2009, 12, 'south_korean', 20),
+(6, 'full_coverage', 2010, 2014, 60, 'south_korean', 20),
+(7, 'full_coverage', 2015, 2020, 30, 'south_korean', 20),
+(8, 'full_coverage', 2021, 2025, 40, 'south_korean', 20);
+
 --
 -- Indexes for table `policy_vehicle_amt_cal`
 --
@@ -56,7 +66,7 @@ ALTER TABLE `policy_vehicle_amt_cal`
 -- AUTO_INCREMENT for table `policy_vehicle_amt_cal`
 --
 ALTER TABLE `policy_vehicle_amt_cal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
