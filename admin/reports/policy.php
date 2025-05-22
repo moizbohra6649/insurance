@@ -10,7 +10,15 @@ if(file_exists('../partial/functions.php')) {
 
 $id = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
 
-$query  = "SELECT policy.*  FROM policy  WHERE policy.id = '$id'";
+$query  = "SELECT policy.* , policy_bi.minimum_amount as bi_minimum_amount , policy_bi.maximum_amount as bi_maximum_amount , policy_pd.minimum_amount as pd_minimum_amount , policy_pd.maximum_amount as pd_maximum_amount , policy_umd.minimum_amount as umd_minimum_amount , policy_umd.maximum_amount as umd_maximum_amount , policy_medical.minimum_amount as medical_minimum_amount , policy_medical.maximum_amount as medical_maximum_amount
+
+FROM policy
+left join policy_bi on policy_bi.id = policy.policy_bi_id
+left join policy_pd on policy_pd.id = policy.policy_pd_id
+left join policy_umd on policy_umd.id = policy.policy_umd_id
+left join policy_medical on policy_medical.id = policy.policy_medical_id
+WHERE policy.id = '$id'
+";
 
 $result = mysqli_query($conn, $query);
 if (mysqli_num_rows($result) == 0) {
@@ -45,11 +53,11 @@ class PDF extends FPDF
         $this->Cell(0, 6, 'POLICY PERIOD', 0, 1, 'R');
         $this->SetFont('Arial', '', 10);
         $this->SetX(150);
-        $this->Cell(0, 6, 'EFFECTIVE: '.date('d-m-Y', strtotime($data_com["created"])), 0, 1, 'R');
+        $this->Cell(0, 6, 'EFFECTIVE: '.$data_com["effective_from"], 0, 1, 'R');
         $this->SetX(150);
-        $this->Cell(0, 6, 'EXPIRATION: 05 07 2025 12:01 AM', 0, 1, 'R');
+        $this->Cell(0, 6, 'EXPIRATION: '.$data_com["effective_to"], 0, 1, 'R');
         $this->SetX(150);
-        $this->MultiCell(0, 6, 'This policy was bound on 11/07/2024 at 04:00 PM', 0, 'R');
+        $this->MultiCell(0, 6, 'This policy was bound on '.$data_com["effective_to"], 0, 'R');
 
         // Address block below logos
         $this->SetXY(10, 35);
@@ -209,15 +217,15 @@ $pdf->SetFont('Arial', '', 8);
 
           // Set up table
 $pdf->SetWidths(array( 58, 60, 18, 18, 18, 18));
-$pdf->SetAligns(array('C', 'C', 'C', 'C', 'C', 'C'));
+$pdf->SetAligns(array('L', 'C', 'C', 'C', 'C', 'C'));
 // Table Header
 $pdf->SetFont('Arial', 'B', 8);
 $pdf->Row(array('Coverages', 'Limits Of Liability', '[Veh 1]','[ ]','[ ]', '[ ]'), 0);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Row(array('Bodily Injury Liability','$ 25,000 per person/ $ 50,000 per accident ','$ 255','','', ''), 0);
-$pdf->Row(array('Bodily Injury Liability','$ 25,000 per person/ $ 50,000 per accident ','$ 255','','', ''), 0);
-$pdf->Row(array('Bodily Injury Liability','$ 25,000 per person/ $ 50,000 per accident ','$ 255','','', ''), 0);
-$pdf->Row(array('Bodily Injury Liability','$ 25,000 per person/ $ 50,000 per accident ','$ 255','','', ''), 0);
+$pdf->Row(array('BI (Bodily Injury)',$data_com['bi_minimum_amount'].'/'.$data_com['bi_maximum_amount'],'$ 255','','', ''), 0);
+$pdf->Row(array('PD (Property Damage)',$data_com['pd_minimum_amount'].'/'.$data_com['pd_maximum_amount'],'$ 255','','', ''), 0);
+$pdf->Row(array('UMB (Uninsured Motorist / Bodily Injury) ',$data_com['umd_minimum_amount'].'/'.$data_com['umd_maximum_amount'],'$ 255','','', ''), 0);
+$pdf->Row(array('Medical',$data_com['medical_minimum_amount'].'/'.$data_com['medical_maximum_amount'],'$ 255','','', ''), 0);
 
           // Set up table
           $pdf->SetWidths(array( 58, 60, 18, 18, 18, 18));
@@ -269,13 +277,13 @@ $pdf->Row(array('Bodily Injury Liability','$ 25,000 per person/ $ 50,000 per acc
      $pdf->Cell(75,5, '', '', 1, 'C'); 
 
      $pdf->Cell(115,5, 'PA017-B Ed. 09-23, PA014-A Ed. 09-23, FCMSMP09010116 ', '', 0, 'L');
-     $pdf->Cell(75,5, 'TOTAL PREMIUMS  $ 673.00 ', '', 1, 'C');
-
+     $pdf->Cell(75,5, 'TOTAL PREMIUMS  $ '.$data_com['total_premium'], '', 1, 'C');
+     $fees = $data_com['management_fee'] +  $data_com['service_price'] ;
      $pdf->Cell(115,5, '', '', 0, 'L');
-     $pdf->Cell(75,5, 'ALL FEES  $ 0.00 ', '', 1, 'C');
+     $pdf->Cell(75,5, 'ALL FEES  $ '.$fees, '', 1, 'C');
 
-     $pdf->Cell(115,5, 'DISCOUNTS: $000 ', '', 0, 'L');
-     $pdf->Cell(75,5, 'TOTAL POLICY PREMIUM  $ 673.00 ', '', 1, 'C');
+     $pdf->Cell(115,5, 'DISCOUNTS: $ '.$data_com['customl_discount'], '', 0, 'L');
+     $pdf->Cell(75,5, 'TOTAL POLICY PREMIUM  $ '.$data_com['total_premium'] + $fees , '', 1, 'C');
 
      $pdf->Cell(115,5, 'Liability Only Discount', '', 0, 'L');
      $pdf->Cell(75,5, ' ', '', 1, 'C');
