@@ -64,6 +64,17 @@ include('partial/loader.php'); ?>
                                                     <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
                                                     
                                                     <td align="center">
+                                                        <?php if($get_data["policy_status"] == "success"){ ?>
+                                                        <div class="dropdown">
+                                                            <a href="javascript:;" class="dropbtn">
+                                                                <i class="icofont icofont-sub-listing m-2"></i>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a href="<?=$actual_link?>payment_schedule.php?policy_id=<?=base64_encode($id)?>" class="dropdown-item">Payment Schedule</a>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <?php } ?>
                                                         <a href="<?=$actual_link?>reports/policy.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>                                                    
                                                         <a href="<?=$actual_link?>policy.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
                                                         <?php if($get_data["policy_status"] == "peding"){ ?>

@@ -1,25 +1,21 @@
 <?php
-$table_name = "policy_payment";
+$table_name = "Schedule Payment";
 /* Include Function's File */
 if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
     require_once(dirname(__DIR__) . '/partial/functions.php');
 }
 
-$title      = ""; 
-$list_title = "Policy Payment";
-$breadcrumb_title = "Payment";
+$title      = "Schedule Payment" ;  
+$breadcrumb_title = "Schedule Payment";
 $local_mode = "";
 $readonly   = "";
 $mode                  = (isset($_REQUEST["mode"])) ? $_REQUEST["mode"] : "NEW";
 $form_request          = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] : "false";
 $error_msg             = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
-$customer_id           = (isset($_REQUEST["customer_id"]) && !empty($_REQUEST["customer_id"])) ? base64_decode($_REQUEST["customer_id"]) : 0;
 $policy_id           = (isset($_REQUEST["policy_id"]) && !empty($_REQUEST["policy_id"])) ? base64_decode($_REQUEST["policy_id"]) : 0;
 
-$pay_type             = (isset($_REQUEST["pay_type"])) ? $_REQUEST["pay_type"] : "one_time";
 
-$installment_count             = (isset($_REQUEST["installment_count"])) ? $_REQUEST["installment_count"] : 0;
 
 $policy_installment             = (isset($_REQUEST["policy_installment"])) ? $_REQUEST["policy_installment"] : 1;
 $policy_premium             = (isset($_REQUEST["policy_premium"])) ? $_REQUEST["policy_premium"] : 0;
@@ -29,26 +25,10 @@ $policy_due_amt             = (isset($_REQUEST["policy_due_amt"])) ? $_REQUEST["
 $policy_due_date             = (isset($_REQUEST["policy_due_date"])) ? convert_readable_date_db($_REQUEST["policy_due_date"]) : '0000:00:00' ;
 $policy_management_fee             = (isset($_REQUEST["policy_management_fee"])) ? $_REQUEST["policy_management_fee"] : 0;
 $policy_service_price      = (isset($_REQUEST["policy_service_price"])) ? $_REQUEST["policy_service_price"] : 0 ;
-$payment_type      = (isset($_REQUEST["payment_type"])) ? $_REQUEST["payment_type"] : '' ;
+$schedule_payment = (isset($_REQUEST["schedule_payment"])) ? $_REQUEST["schedule_payment"] : 0 ;
 
 $net_tot             = (isset($_REQUEST["net_tot"])) ? $_REQUEST["net_tot"] : 0;
 
-$service_price = 0 ;
-$net_total  = 0 ;
-$currentDate = date('Y-m-d'); 
-$installment = 6 ; // Static stallment 
-$convert_emi = 0 ; 
-
-// if($policy_id > 0 && $mode != 'UPDATE'){
-//     $mode = 'EDIT';  
-// }
-
-if($policy_id > 0){
-    $policy_status = get_value('policy', 'policy_status', 'where status = 1 and id = '.$policy_id);
-    if($policy_status == 'success' || $policy_status == 'cancel'){
-        move($actual_link."policy_list.php");
-    }
-}
 
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
@@ -58,58 +38,24 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     echo $json_response = json_encode($data);
     exit();
 }
-if($payment_type == 'cancel'){
-    $data = [];
-    $update_policy = mysqli_query($conn, "UPDATE policy SET status = 0 , policy_status = 'cancel' WHERE id = $policy_id");
-    if (!mysqli_commit($conn)) {
-        $data["msg"] = "Commit transaction failed";
-        $data["status"] = "error";
-    }else if (!empty($update_policy)) {
-        $data["msg"] = "Policy Canceled successfully.";
-        $data["status"] = "success";
-        $data["policy_id"] = $policy_id;
-    } else {
-        $data["msg"] = "Query error please try again later.";
-        $data["status"] = "error";
-    } 
-
-    echo $json_response = json_encode($data);
-    exit();
-}
 
 switch ($mode) {
     case "NEW":
+        $title      = "Schedule Payment"; 
         $local_mode = "INSERT";
         $readonly   = "";
-
         $select_policy = mysqli_query($conn, "SELECT * FROM policy WHERE id  = '$policy_id' " );
 
         if(mysqli_num_rows($select_policy) == 0){
             $error_arr[] = "Policy does not exists.<br/>";
         }
 
-        
-
-        // Display errors if any
         if (!empty($error_arr)) {
             $error_txt = implode('', $error_arr);
             $data["msg"] = $error_txt;
             $data["status"] = "error";
             echo $json_response = json_encode($data);
             exit;
-        }
-        
-        $select_query = mysqli_query($conn, "SELECT *
-        FROM policy 
-        where policy.id = '$policy_id' ");
-        
-        if(mysqli_num_rows($select_query) > 0){
-            $get_data = mysqli_fetch_array($select_query);
-            $policy_premium =  $get_data['total_premium'] ;
-            $policy_billing_fee =  $get_data['management_fee'] ;
-            $service_price = $get_data['service_price'] ;
-            $net_total = $get_data['net_total'] ;
-            $convert_emi = $policy_premium / 6 ;
         }
        
     break;
@@ -120,25 +66,29 @@ switch ($mode) {
       
         $select_policy = mysqli_query($conn, "SELECT id FROM policy WHERE id  = '$policy_id' " );
 
+        if($schedule_payment <= 0){
+            $error_arr[] = 'No Checkbox Checked.';
+        }
+
         if(mysqli_num_rows($select_policy) == 0){
             $error_arr[] = "Policy does not exists.<br/>";
         }
 
-
         $wallet_amount = get_value('agent', 'wallet_amount', 'where status = 1 and deleted = 0 and id='.$login_id);
-        if($pay_type == 'one_time'){
-            if($wallet_amount < $net_tot){
-                $error_arr[] = 'Insufficient wallet amount';
-            }
-        }else{
-            $due_amt_key = "policy_due_amt1";
-            $policy_due_amt = isset($_REQUEST[$due_amt_key]) ? $_REQUEST[$due_amt_key] : 0; 
-            if($wallet_amount < $policy_due_amt){
-                $error_arr[] = 'Insufficient wallet amount';
-            }
+        
+        if($wallet_amount < $policy_due_amt){
+            $error_arr[] = 'Insufficient wallet amount';
         }
-       
-        // Display errors if any
+        if($schedule_payment > 0){
+            $policy_pay = mysqli_query($conn, "SELECT * FROM policy_payment WHERE id  = '$schedule_payment' " );
+            if(mysqli_num_rows($policy_pay) == 0){
+                $error_arr[] = "Payment entry does not exist.<br/>";
+            }
+            
+        }
+        
+
+         // Display errors if any
         if (!empty($error_arr)) {
             $error_txt = implode('', $error_arr);
             $data["msg"] = $error_txt;
@@ -147,83 +97,20 @@ switch ($mode) {
             exit;
         }
 
-        if($pay_type == 'one_time'){
-            $durDate_convert = convert_readable_date_db($policy_due_date) ;
-            $insert_query = mysqli_query($conn, "INSERT INTO policy_payment (policy_id, payment_type, payment_status, policy_installment, premium, billing_fee, roadside_assistance, due_amount, due_date) VALUES ('$policy_id', 'single_time', 'success', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$policy_roadside', '$policy_due_amt', '$durDate_convert')");
+        $update_query = mysqli_query($conn, "UPDATE policy_payment 
+        SET payment_status = 'success'WHERE id = '$schedule_payment'");
 
-            $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = 'success', effective_from = CURDATE(), effective_to = '$durDate_convert'   WHERE id = $policy_id");
+        $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = 'success', effective_to = '$policy_due_date'   WHERE id = $policy_id");
 
-            $amount_deduct = $policy_premium  + $policy_management_fee ;
+        $amount_deduct = $policy_premium  + $policy_management_fee ;
 
-            $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
-                ) VALUES (
-                    $login_id, 'Policy Payment', 'debit', $amount_deduct, $policy_id
-                )");
-
-            $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
-                ) VALUES (
-                    $login_id, 'Policy Service Charge', 'debit', $policy_service_price, $policy_id 
-                )");
-            $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
+        $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
             ) VALUES (
-                $login_id, 'Policy Service Charge Return', 'credit', $policy_service_price, $policy_id 
+                $login_id, 'Policy Payment', 'debit', $amount_deduct, $policy_id
             )");
 
-            $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct, total_earning = total_earning + $policy_service_price  WHERE id = $login_id");
-            
-            
-        }else{
-            for($i = 1 ; $i <= $installment_count ; $i++){
-                $installment_key = "policy_installment" . $i;
-                $premium_key = "policy_premium" . $i;
-                $roadside_key = "policy_roadside" . $i;
-                $billing_fee_key = "policy_billing_fee" . $i;
-                $due_amt_key = "policy_due_amt" . $i;
-                $due_date_key = "policy_due_date" . $i;
-                $policy_service_price = "policy_service_price" . $i;
-                $policy_management_fee = "policy_management_fee" . $i;
-        
-                $policy_installment = isset($_REQUEST[$installment_key]) ? $_REQUEST[$installment_key] : 1;
-                $policy_premium = isset($_REQUEST[$premium_key]) ? $_REQUEST[$premium_key] : 0;
-                $policy_roadside = isset($_REQUEST[$roadside_key]) ? $_REQUEST[$roadside_key] : 0;
-                $policy_billing_fee = isset($_REQUEST[$billing_fee_key]) ? $_REQUEST[$billing_fee_key] : 0;
-                $policy_due_amt = isset($_REQUEST[$due_amt_key]) ? $_REQUEST[$due_amt_key] : 0;
-                $policy_due_date = isset($_REQUEST[$due_date_key]) ? convert_readable_date_db($_REQUEST[$due_date_key]) : '0000-00-00';
-                $policy_service_price = (isset($_REQUEST[$policy_service_price])) ? $_REQUEST[$policy_service_price] : 0;
-                $policy_management_fee = (isset($_REQUEST[$policy_management_fee])) ? $_REQUEST[$policy_management_fee] : 0 ;
+        $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct WHERE id = $login_id");
 
-                $status = 'pending' ; 
-                if($i == 1 ){
-                    $durDate_convert = convert_readable_date_db($policy_due_date) ;
-                    $status = 'success' ; 
-                    $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = 'success', effective_from = CURDATE(), effective_to = '$durDate_convert'   WHERE id = $policy_id");
-
-                    $amount_deduct = $policy_premium  + $policy_management_fee ;
-
-                    $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
-                        ) VALUES (
-                            $login_id, 'Policy Payment', 'debit', $amount_deduct, $policy_id
-                        )");
-        
-                    $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
-                        ) VALUES (
-                            $login_id, 'Policy Service Charge', 'debit', $policy_service_price, $policy_id 
-                        )");
-                    $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
-                    ) VALUES (
-                        $login_id, 'Policy Service Charge Return', 'credit', $policy_service_price, $policy_id 
-                    )");
-        
-                    $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct, total_earning = total_earning + $policy_service_price  WHERE id = $login_id");
-                }
-                $insert_query = mysqli_query($conn, "
-                    INSERT INTO policy_payment 
-                    (policy_id, payment_type, payment_status, policy_installment, premium, billing_fee, roadside_assistance, due_amount, due_date)
-                    VALUES 
-                    ('$policy_id', 'emi', '$status', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$policy_roadside', '$policy_due_amt', '$policy_due_date')
-                ");
-            }
-        }
 
         // Commit transaction
         if (!mysqli_commit($conn)) {
@@ -232,7 +119,7 @@ switch ($mode) {
         }else if (!empty($insert_query)) {
             $data["msg"] = "Policy Payment successfully.";
             $data["status"] = "success";
-            $data["policy_id"] = base64_encode($policy_id) ;
+            $data["policy_id"] = $policy_id;
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";

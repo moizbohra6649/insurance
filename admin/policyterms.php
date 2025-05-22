@@ -147,8 +147,11 @@ include('partial/loader.php'); ?>
                                     </div>  
                                     <div class="card-body btn-showcase" style="text-align: center;">
                                         <input type="hidden" id ="installment_count" name = "installment_count" value="<?= $installment ?>">
-                                            <button id="submit_btn" class="btn btn-primary" type="submit" data-bs-original-title="" title="">Submit</button>
-                                        </div>      
+                                        <button id="submit_btn" class="btn btn-primary submit_btn" value ="pay" type="submit" data-bs-original-title="" title="">Pay now</button>
+                                        <button id="submit_btn" class="btn btn-primary submit_btn" value ="cancel" type="submit" data-bs-original-title="" title="">Cancel</button>
+                                        <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
+                                        </div>  
+                                        
                             </div>
                         </div>
                       </form>
