@@ -23,7 +23,7 @@
      <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <form id="signUpForm" action="#!">
+          <form id="signUpForm" method="POST" class="needs-validation"  enctype="multipart/form-data">
             <!-- start step indicators -->
             <div class="form-header d-flex mb-4">
                 <span class="stepIndicator">General</span>
