@@ -63,7 +63,7 @@ CREATE TABLE `policy` (
   `management_fee` int(11) NOT NULL,
   `service_price` int(11) NOT NULL,
   `net_total` int(11) NOT NULL,
-  `policy_status` enum('pending','success','failed','reject','emi') NOT NULL,
+  `policy_status` ENUM('pending','success','failed','reject','cancel') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `effective_from` datetime DEFAULT NULL,
   `effective_to` datetime DEFAULT NULL,
   `status` int(11) NOT NULL,
