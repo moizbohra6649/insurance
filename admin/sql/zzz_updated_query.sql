@@ -109,3 +109,10 @@ ALTER TABLE `policy` ADD `agent_id` INT(11) NULL AFTER `prefix_policy_id`;
 
 ALTER TABLE `wallet` CHANGE `amount` `amount` BIGINT(50) NOT NULL;
 ALTER TABLE `policy` CHANGE `policy_status` `policy_status` ENUM('pending','success','failed','reject','cancel') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+
+
+
+// Latest Updated by Moiz Bohra
+ALTER TABLE `wallet` CHANGE `updated` `updated` DATETIME NULL;
+ALTER TABLE `policy_payment` CHANGE `updated` `updated` DATETIME NULL;
+ALTER TABLE `transaction_history` CHANGE `agent_policy_id` `agent_policy_id` INT(11) NULL;

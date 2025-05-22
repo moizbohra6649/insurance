@@ -1,5 +1,9 @@
 <script>
 $('.submit_btn').on('click', (function(e) {
+    var input_btn = $(this);
+    // $(input_btn).html('Validating...');
+    // console.log(input_btn);
+    // return false;
     e.preventDefault();
     var payment_type = $(this).val() ; 
     var error_arr = []; 
@@ -22,6 +26,7 @@ $('.submit_btn').on('click', (function(e) {
         var alter_text = 'This will cancel the current payment process. Do you want to continue?' ;
         var danger_mode = true ; 
     }
+    
     swal({
         title: alter_title,
         text: alter_text,
@@ -44,8 +49,8 @@ $('.submit_btn').on('click', (function(e) {
                 contentType: false,
                 processData: false,
                 beforeSend: function() {
-                    $("#submit_btn").html('Validating...');
-                    $("#submit_btn").attr('disabled', 'disabled');
+                    $(input_btn).html('Validating...');
+                    $('button').attr('disabled', 'disabled');
                 },
                 success: function(data) {
                     //For Alert Popups
@@ -62,13 +67,23 @@ $('.submit_btn').on('click', (function(e) {
                             location.replace(`<?=$actual_link?>${url}`);
                         }
                     }else{
-                        $("#submit_btn").html('Submit');
-                        $("#submit_btn").removeAttr('disabled');
+                        if(payment_type == 'pay'){
+                            $(input_btn).html('Pay now');
+                        }else{
+                            $(input_btn).html('Cancel');
+                        }
+                        
+                        $(button).removeAttr('disabled');
                     }
                 },
                 error: function(data) {
-                    $("#submit_btn").html('Submit');
-                    $("#submit_btn").removeAttr('disabled');
+                    if(payment_type == 'pay'){
+                        $(input_btn).html('Pay now');
+                    }else{
+                        $(input_btn).html('Cancel');
+                    }
+                    
+                    $(button).removeAttr('disabled');
                     console.log("error");
                     console.log(data);
                 }

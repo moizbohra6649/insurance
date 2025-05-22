@@ -202,14 +202,14 @@ switch ($mode) {
             $data["status"] = "error";
         }else if (!empty($insert_query)) {
             $placeholders = [
-                '{{name}}'            => htmlspecialchars($username),
+                '{{name}}'     => htmlspecialchars($username),
                 '{{password}}' => htmlspecialchars($password),
-                '{{email}}'  => htmlspecialchars($email),
-                '{{link}}'   => $front_end_link
+                '{{email}}'    => htmlspecialchars($email),
+                '{{link}}'     => $front_end_link
             ];  
-            $body = file_get_contents(dirname(__DIR__) . '/partial/agent_vendor_welocme.php');
+            $body = file_get_contents(dirname(__DIR__) . '/partial/welcome_email_template.php');
             $body = str_replace(array_keys($placeholders), array_values($placeholders), $body);
-            $activation_mail = mail_send('admin@gmail.com', 'Welcome to Road Star USA Your Registration is Successful!' , $body  , 'System Notification');
+            $activation_mail = mail_send($email, 'Welcome to Road Star USA Your Registration is Successful!', $body, 'System Notification');
 
             $data["msg"] = "Vendor inserted successfully.";
             $data["status"] = "success";

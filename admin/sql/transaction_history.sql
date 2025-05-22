@@ -33,7 +33,7 @@ CREATE TABLE `transaction_history` (
   `transaction_type` varchar(252) NOT NULL,
   `payment_type` enum('credit','debit') NOT NULL,
   `transaction_amount` bigint(50) NOT NULL,
-  `agent_policy_id` int(11) NOT NULL,
+  `agent_policy_id` int(11) NULL,
   `created` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

@@ -37,7 +37,7 @@ CREATE TABLE `wallet` (
   `amount` BIGINT(50) NOT NULL,
   `debit_credit_flag` enum('credit','debit') NOT NULL,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated` datetime NOT NULL
+  `updated` datetime NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

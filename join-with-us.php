@@ -43,7 +43,7 @@
             </div>
             <div class="col-sm-12 form-group mb-3">
                 <label>Username <span class="text-danger">*</span></label>
-                <input type="text" class="form-control alpha_num" name="username" placeholder="Enter Username." required>
+                <input type="text" class="form-control alpha_num_underscore" name="username" placeholder="Enter Username." required>
             </div>
             <div class="col-sm-12 form-group mb-3">
                 <label>Email <span class="text-danger">*</span></label>
@@ -102,7 +102,7 @@
             </div>
             <div class="col-sm-12 form-group mb-3">
                 <label>Username <span class="text-danger">*</span></label>
-                <input type="text" class="form-control alpha_num" name="username" placeholder="Enter Username." required>
+                <input type="text" class="form-control alpha_num_underscore" name="username" placeholder="Enter Username." required>
             </div>
             <div class="col-sm-12 form-group mb-3">
                 <label>Email <span class="text-danger">*</span></label>
@@ -162,7 +162,7 @@
           <form class="tab-pane fade show active" id="service-provider-login-form" role="tabpanel" aria-labelledby="service-provider-login-form-tab">
           <div class="mb-4">
                   <label for="email" class="form-label">Email</label>
-                  <input type="text" class="form-control" id="email" name="email"/>
+                  <input type="email" class="form-control" id="email" name="email"/>
                 </div>
                 <div class="mb-4">
                   <label for="password" class="form-label">Password</label>
@@ -188,7 +188,7 @@
           <form class="tab-pane fade" id="agent-login-form" role="tabpanel" aria-labelledby="agent-login-form-tab">
           <div class="mb-4">
                   <label for="email" class="form-label">Email</label>
-                  <input type="text" class="form-control" name="email" id="email" />
+                  <input type="email" class="form-control" name="email" id="email" />
                 </div>
                 <div class="mb-4">
                   <label for="password" class="form-label">Password</label>

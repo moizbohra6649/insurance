@@ -153,34 +153,44 @@
 });
 
 const priceContainer = document.querySelector('.price-container');
-  let priceDiv = document.querySelector('.txt_service_price');
-  let inputElement = null;
+let priceDiv = document.querySelector('.txt_service_price');
+let inputElement = null;
 
-  priceContainer.addEventListener('click', () => {
-    if (!inputElement) {
-      const currentValue = priceDiv.innerText.replace('$', '');
-      priceContainer.innerHTML = `<input type="text" class="price-input" value="${currentValue}">`;
-      inputElement = priceContainer.querySelector('.price-input');
-      inputElement.focus();
+priceContainer.addEventListener('click', () => {
+  if (!inputElement) {
+    const currentValue = priceDiv.innerText.replace('$', '');
+    priceContainer.innerHTML = `<input type="text" class="price-input" value="${currentValue}">`;
+    inputElement = priceContainer.querySelector('.price-input');
+    inputElement.focus();
 
-      inputElement.addEventListener('input', () => {
-        inputElement.value = inputElement.value.replace(/[^0-9.]/g, '');
-        $("#service_price").val(parseFloat(inputElement.value).toFixed(2));
-        const parts = inputElement.value.split('.');
-        if (parts.length > 2) {
-          inputElement.value = parts[0] + '.' + parts.slice(1).join('');
-        }
-      });
+    inputElement.addEventListener('input', () => {
+      inputElement.value = inputElement.value.replace(/[^0-9.]/g, '');
+      const sanitizedValue = parseFloat(inputElement.value).toFixed(2);
+      $("#service_price").val(sanitizedValue);
+      calculateNetTotal();
+    });
 
-      inputElement.addEventListener('blur', () => {
-        const value = parseFloat(inputElement.value);
-        $("#service_price").val(parseFloat(inputElement.value).toFixed(2));
-        priceContainer.innerHTML = `<div class="txt_service_price">$${isNaN(value) ? '0.00' : value.toFixed(2)}</div>`;
-        priceDiv = document.querySelector('.txt_service_price');
-        inputElement = null;
-      });
-    }
-  });
+    inputElement.addEventListener('blur', () => {
+      const value = parseFloat(inputElement.value);
+      $("#service_price").val(isNaN(value) ? '0.00' : value.toFixed(2));
+      priceContainer.innerHTML = `<div class="txt_service_price">$${isNaN(value) ? '0.00' : value.toFixed(2)}</div>`;
+      priceDiv = document.querySelector('.txt_service_price');
+      inputElement = null;
+      calculateNetTotal();
+    });
+  }
+});
+
+function calculateNetTotal() {
+  const premium = parseFloat($("#total_premium").val()) || 0;
+  const managementFee = parseFloat($("#management_fee").val()) || 0;
+  const serviceCharge = parseFloat($("#service_price").val()) || 0;
+
+  const netTotal = premium + managementFee + serviceCharge;
+  $("#net_total").val(`${netTotal.toFixed(2)}`);
+  $(".txt_net_total").html(`$${netTotal.toFixed(2)}`);
+}
+
 
 function fn_policy_calculation(){
 
@@ -308,8 +318,6 @@ $('#policy_form').on('submit', (function(e) {
             data.status = (data.status == "error" ? "danger" : data.status);
             var title = (data.status == "success" ? "Success!" : "Oh Snap!");
             notification(title, data.msg, data.status);
-            console.log(data.status);
-            console.log(data.mode);
             if(data.status == "success" && data.mode == 'INSERT'){
                 var url = `policyterms.php?policy_id=${data.policy_id}`;
                 setTimeout(function() { move(`<?=$actual_link?>${url}`); }, 1000);

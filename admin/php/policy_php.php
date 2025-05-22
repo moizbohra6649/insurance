@@ -62,10 +62,12 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
     $extrawhere = '';
     if($login_role == 'agent'){
-        $extrawhere = "and customer.id in (select id from customer where agent_id = $login_id)";
+        $extrawhere = " AND customer.id in (select id from customer where agent_id = $login_id)";
     }
-    $select_query = "SELECT policy.*, customer.name as customer_name FROM policy 
-    left join customer on customer.id = policy.customer_id where 1 = 1 $extrawhere
+    $select_query = "SELECT policy.*, agent.name as agent_name, customer.name as customer_name FROM policy 
+    left join agent on agent.id = policy.agent_id
+    left join customer on customer.id = policy.customer_id 
+    where 1 = 1 $extrawhere
     ";
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result); 
@@ -316,17 +318,25 @@ switch ($mode) {
             exit;
         }
         mysqli_autocommit($conn,FALSE);
-        $insert_query = mysqli_query($conn, "INSERT INTO policy (policy_id, prefix_policy_id, agent_id,  customer_id , policy_coverage, policy_coverage_collision_id, policy_coverage_umpd_id, policy_coverage_rental_id, policy_coverage_towing_id, policy_coverage_deductible_id, is_veh_used_business, is_physical_damage, policy_bi_id, policy_umd_id, policy_medical_id, policy_pd_id, is_roadside_assistance, is_driver_res, is_vehical_listed, is_applicant_sole_registered, is_applicant_other_veh, is_veh_used_business_q, is_veh_listed_ride, is_veh_listed_application_used , is_veh_listed_garaged , policy_status	, status , service_price, base_premium, additional_coverage_premium, customl_discount, total_premium, management_fee, net_total) VALUES ('$policy_id', '$prefix_policy_id', '$login_id' , '$customer_id', '$coverage', '$coverage_collision', '$umpd', '$coverage_rental', '$towning_coverage', '$coverage_deductible', '$is_veh_used_business', '$is_physical_damage', '$policy_bi', '$policy_umd', '$policy_medical', '$policy_pd', '$roasass', '$is_driver_res', '$is_vehical_listed', '$is_applicant_sole_registered', '$is_applicant_other_veh', '$is_veh_used_business_q', '$is_veh_listed_ride', '$is_veh_listed_application_used' , '$is_veh_listed_garaged', 'pending', 0 ,$service_price, $base_premium, $additional_coverage_premium, $custom_discount, $total_premium, $management_fee, $net_total)");
+        $insert_query = mysqli_query($conn, "INSERT INTO policy (policy_id, prefix_policy_id, agent_id,  customer_id , policy_coverage, policy_coverage_collision_id, policy_coverage_umpd_id, policy_coverage_rental_id, policy_coverage_towing_id, policy_coverage_deductible_id, is_veh_used_business, is_physical_damage, policy_bi_id, policy_umd_id, policy_medical_id, policy_pd_id, is_roadside_assistance, is_driver_res, is_vehical_listed, is_applicant_sole_registered, is_applicant_other_veh, is_veh_used_business_q, is_veh_listed_ride, is_veh_listed_application_used , is_veh_listed_garaged , policy_status	, status , service_price, base_premium, additional_coverage_premium, custom_discount, total_premium, management_fee, net_total) VALUES ('$policy_id', '$prefix_policy_id', '$login_id' , '$customer_id', '$coverage', '$coverage_collision', '$umpd', '$coverage_rental', '$towning_coverage', '$coverage_deductible', '$is_veh_used_business', '$is_physical_damage', '$policy_bi', '$policy_umd', '$policy_medical', '$policy_pd', '$roasass', '$is_driver_res', '$is_vehical_listed', '$is_applicant_sole_registered', '$is_applicant_other_veh', '$is_veh_used_business_q', '$is_veh_listed_ride', '$is_veh_listed_application_used' , '$is_veh_listed_garaged', 'pending', 0 ,$service_price, $base_premium, $additional_coverage_premium, $custom_discount, $total_premium, $management_fee, $net_total)");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
         if($last_inserted_id > 0 ){
+            $vehicle = formatIds($vehicle);
+            $vehicle = explode(",", $vehicle);
             foreach ($vehicle as $key => $vehiclevalue) {
-                $insert_query = mysqli_query($conn, "INSERT INTO policy_vehicle (vehicle_policy_id , vehicle_id) VALUES ('$last_inserted_id', '$vehiclevalue')");
+                if($vehiclevalue > 0){
+                    $insert_query = mysqli_query($conn, "INSERT INTO policy_vehicle (vehicle_policy_id , vehicle_id) VALUES ('$last_inserted_id', '$vehiclevalue')");
+                }
             }
 
+            $driver = formatIds($driver);
+            $driver = explode(",", $driver);
             foreach ($driver as $key => $drivervalue) {
-                $insert_query = mysqli_query($conn, "INSERT INTO policy_driver (driver_policy_id , driver_id) VALUES ('$last_inserted_id', '$drivervalue')");
+                if($drivervalue > 0){
+                    $insert_query = mysqli_query($conn, "INSERT INTO policy_driver (driver_policy_id , driver_id) VALUES ('$last_inserted_id', '$drivervalue')");
+                }
             }
         }
         
@@ -394,7 +404,7 @@ switch ($mode) {
             $service_price          = $get_data['service_price']; 
             $base_premium          = $get_data['base_premium']; 
             $additional_coverage_premium          = $get_data['additional_coverage_premium']; 
-            $customl_discount          = $get_data['customl_discount']; 
+            $custom_discount          = $get_data['custom_discount']; 
             $total_premium          = $get_data['total_premium']; 
             $management_fee          = $get_data['management_fee']; 
             $net_total          = $get_data['net_total']; 
@@ -461,7 +471,7 @@ switch ($mode) {
                 service_price = $service_price,
                 base_premium = $base_premium,
                 additional_coverage_premium = $additional_coverage_premium,
-                customl_discount = $custom_discount,
+                custom_discount = $custom_discount,
                 total_premium = $total_premium,
                 management_fee = $management_fee,
                 net_total = $net_total

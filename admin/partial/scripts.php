@@ -156,6 +156,15 @@
         }
     });
 
+    $(".alpha_num_underscore").keypress(function(e) {
+        var regex = new RegExp("^[a-zA-Z0-9_-]$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
     // Validates that the input string is a valid date formatted as "dd-mm-yyyy"
     function isValidDate(dateString)
     {
@@ -403,12 +412,17 @@
         }); */
 
         $("input[type=text]").keyup(function(e) {
-            if($(this).hasClass("not_transform") == false){
+            if (
+                !$(this).hasClass("not_transform") &&
+                $(this).attr("name") !== "email" &&
+                $(this).attr("name") !== "username"
+            ) {
                 var string = $(this).val();
                 var new_string = string.charAt(0).toUpperCase() + string.slice(1);
                 $(this).val(new_string);
             }
         });
+
     });
 
     function applyPhoneInputRestriction(inputId) {

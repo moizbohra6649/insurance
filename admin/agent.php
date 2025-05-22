@@ -36,7 +36,7 @@ include('partial/loader.php'); ?>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="username">Username <span class="text-danger">*</span></label>
                                             <div class="input-group"><span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input class="form-control alpha_num" id="username" name="username" type="text" value="<?=$username?>" placeholder="Username" aria-describedby="inputGroupPrepend" required="">
+                                                <input class="form-control alpha_num_underscore" id="username" name="username" type="text" value="<?=$username?>" placeholder="Username" aria-describedby="inputGroupPrepend" required="">
                                                 <div class="invalid-feedback">Please choose a username.</div>
                                             </div>
                                         </div>

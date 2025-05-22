@@ -42,6 +42,9 @@ include('partial/loader.php'); ?>
                                                 <tr>
                                                     <th style="text-align:center;">S.No.</th>
                                                     <th style="text-align:center;">Policy ID</th>
+                                                    <?php if($login_role != 'agent'){ ?>
+                                                    <th>Agent Name</th> 
+                                                    <?php } ?>
                                                     <th>Customer Name</th> 
                                                     <th>Policy Coverage</th> 
                                                     <th style="text-align:center;">Create Date</th> 
@@ -58,6 +61,9 @@ include('partial/loader.php'); ?>
                                                 <tr>
                                                     <td align="center"> <?=$i++?> </td>
                                                     <td align="center"> <?=$get_data["policy_id"]?> </td>
+                                                    <?php if($login_role != 'agent'){ ?>
+                                                    <th> <?= $get_data["agent_name"] ?> </th> 
+                                                    <?php } ?>
                                                     <td> <?= $get_data["customer_name"] ?> </td>
                                                     <td> <?= $get_data["policy_coverage"] ?> </td>
                                                     <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
@@ -65,7 +71,7 @@ include('partial/loader.php'); ?>
                                                     <td align="center">
                                                         <!-- <a href="<?=$actual_link?>reports/card.html?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a> -->
                                                         <?php if($get_data["policy_status"] == "success"){ ?>
-                                                        <div class="dropdown">
+                                                        <!-- <div class="dropdown">
                                                             <a href="javascript:;" class="dropbtn">
                                                                 <i class="icofont icofont-sub-listing m-2"></i>
                                                             </a>
@@ -73,7 +79,7 @@ include('partial/loader.php'); ?>
                                                                 <a href="<?=$actual_link?>payment_schedule.php?policy_id=<?=base64_encode($id)?>" class="dropdown-item">Payment Schedule</a>
                                                                 
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                         <?php } ?>
                                                         <a href="<?=$actual_link?>reports/policy.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
                                                         <a href="<?=$actual_link?>policy.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>

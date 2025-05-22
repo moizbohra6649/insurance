@@ -38,8 +38,8 @@ CREATE TABLE `policy_payment` (
   `roadside_assistance` int(11) NOT NULL,
   `due_amount` int(11) NOT NULL,
   `due_date` datetime NOT NULL,
-  `created` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated` datetime NOT NULL
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

@@ -171,9 +171,10 @@ switch ($mode) {
         mysqli_autocommit($conn,FALSE);
         $password_hash =  password_hash($password, PASSWORD_DEFAULT);
 
-        $insert_query = mysqli_query($conn, "INSERT INTO agent (agent_id, prefix_agent_id, username, name, email, mobile, password, hint, profile_image, entry_type) VALUES ('$agent_id', '$prefix_agent_id', '$username', '$name', '$email', '$mobile_no', '$password_hash', '$password', '$profile_image', '$db_entry_type')");
+        $insert_query = true;
+        // $insert_query = mysqli_query($conn, "INSERT INTO agent (agent_id, prefix_agent_id, username, name, email, mobile, password, hint, profile_image, entry_type) VALUES ('$agent_id', '$prefix_agent_id', '$username', '$name', '$email', '$mobile_no', '$password_hash', '$password', '$profile_image', '$db_entry_type')");
 
-        $last_inserted_id = mysqli_insert_id($conn);
+        // $last_inserted_id = mysqli_insert_id($conn);
 
         // Commit transaction
         if (!mysqli_commit($conn)) {
@@ -182,15 +183,16 @@ switch ($mode) {
         }else if (!empty($insert_query)) {
         
             $placeholders = [
-                '{{name}}'            => htmlspecialchars($username),
-                '{{password}}' => htmlspecialchars($password),
-                '{{email}}'  => htmlspecialchars($email),
-                '{{link}}'   => $front_end_link,
-                '{{role}}' => 'Agent'
+                '{{name}}'      => htmlspecialchars($username),
+                '{{password}}'  => htmlspecialchars($password),
+                '{{email}}'     => htmlspecialchars($email),
+                '{{link}}'      => $front_end_link,
+                '{{role}}'      => 'Agent'
             ];  
-            $body = file_get_contents(dirname(__DIR__) . '/partial/agent_vendor_welocme.php');
+
+            $body = file_get_contents(dirname(__DIR__) . '/partial/welcome_email_template.php');
             $body = str_replace(array_keys($placeholders), array_values($placeholders), $body);
-            $activation_mail = mail_send('admin@gmail.com', 'Welcome to Road Star USA Your Registration is Successful!' , $body  , 'System Notification');
+            $activation_mail = mail_send($email, 'Welcome to Road Star USA Your Registration is Successful!', $body, 'System Notification');
             $data["msg"] = "Agent inserted successfully.";
             $data["status"] = "success";
         } else {

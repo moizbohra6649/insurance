@@ -69,7 +69,7 @@
                                  <label class="form-label" for="coverage">Coverage <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="coverage" id="coverage" onchange="fn_policy_calculation();">
-                                       <!-- <option value="">Please Select Coverage</option> -->
+                                       <!-- <option value="0">Please Select Coverage</option> -->
                                        <option value="liability" <?= ($coverage == 'liability' ) ? 'selected' : '';  ?>>Liability</option>
                                        <option value="full_coverage" <?= ($coverage == 'full_coverage' ) ? 'selected' : '';  ?>>Full Coverage</option>
                                        <option value="non_owner" <?= ($coverage == 'non_owner' ) ? 'selected' : '';  ?>> Non Owner</option>
@@ -80,7 +80,7 @@
                                  <label class="form-label" for="coverage_collision">Copresnsive / Collision <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="coverage_collision" id="coverage_collision">
-                                       <option value="">Please Select Copresnsive / Collision</option>
+                                       <option value="0">Please Select Copresnsive / Collision</option>
                                        <?php
                                           $selcoverage_collision = select("coverage_collision","status=1") ;
                                           while($get_collision = fetch($selcoverage_collision)){
@@ -96,7 +96,7 @@
                                  <label class="form-label" for="umpd">UMPD (Unissured motorist property damage) <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="umpd" id="umpd">
-                                       <option value="">Please Select UMPD</option>
+                                       <option value="0">Please Select UMPD</option>
                                        <?php
                                           $coverage_umpd = select("coverage_umpd","status=1") ;
                                           while($get_coverage_umpd = fetch($coverage_umpd)){
@@ -114,7 +114,7 @@
                                  <label class="form-label" for="towning_coverage">Towning coverage <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="towning_coverage" id="towning_coverage">
-                                       <option value="">Please Select Towning coverage</option>
+                                       <option value="0">Please Select Towning coverage</option>
                                        <?php
                                           $seltowning_coverage = select("coverage_towing","status=1") ;
                                           while($get_towning_coverage = fetch($seltowning_coverage)){
@@ -130,7 +130,7 @@
                                  <label class="form-label" for="coverage_rental">Rental Reimbursment <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="coverage_rental" id="coverage_rental">
-                                       <option value="">Please Select Rental Reimbursment</option>
+                                       <option value="0">Please Select Rental Reimbursment</option>
                                        <?php
                                           $selcoverage_rental = select("coverage_rental","status=1");
                                           while($get_coverage_rental = fetch($selcoverage_rental)){
@@ -144,7 +144,7 @@
                                  <label class="form-label" for="coverage_deductible">Coverage Deductible <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="coverage_deductible" id="coverage_deductible">
-                                       <option value="">Please Select Coverage Deductible</option>
+                                       <option value="0">Please Select Coverage Deductible</option>
                                        <?php 
                                           $selcoverage_deductible = select("coverage_deductible","status=1") ;
                                           while($get_coverage_deductible = fetch($selcoverage_deductible)){
@@ -514,12 +514,12 @@
                                  $<?=$net_total;?>
                               </div>
                            </div>
-                           <input type="hidden" name="base_premium" id="base_premium" value="<?=$service_price?>">
-                           <input type="hidden" name="additional_coverage_premium" id="additional_coverage_premium" value="<?=$base_premium?>">
-                           <input type="hidden" name="custom_discount" id="custom_discount" value="<?=$additional_coverage_premium?>">
-                           <input type="hidden" name="total_premium" id="total_premium" value="<?=$customl_discount?>">
-                           <input type="hidden" name="management_fee" id="management_fee" value="<?=$total_premium?>">
-                           <input type="hidden" name="service_price" id="service_price" value="<?=$management_fee?>">
+                           <input type="hidden" name="base_premium" id="base_premium" value="<?=$base_premium?>">
+                           <input type="hidden" name="additional_coverage_premium" id="additional_coverage_premium" value="<?=$additional_coverage_premium?>">
+                           <input type="hidden" name="custom_discount" id="custom_discount" value="<?=$custom_discount?>">
+                           <input type="hidden" name="total_premium" id="total_premium" value="<?=$total_premium?>">
+                           <input type="hidden" name="management_fee" id="management_fee" value="<?=$management_fee?>">
+                           <input type="hidden" name="service_price" id="service_price" value="<?=$service_price?>">
                            <input type="hidden" name="net_total" id="net_total" value="<?=$net_total?>">
                            <?php if($mode != "VIEW"){ ?>
                            <div class="card-body btn-showcase" style="text-align: center;">

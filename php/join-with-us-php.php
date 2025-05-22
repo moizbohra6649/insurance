@@ -120,19 +120,19 @@ if($form_request == "service_provider"){
         $data["msg"] = "Commit transaction failed";
         $data["status"] = "error";
     }else if (!empty($insert_query)) {
-        $body = file_get_contents(dirname(__DIR__) . '/admin/partial/agent_registration_template.php');
+        $body = file_get_contents(dirname(__DIR__) . '/admin/partial/registration_template.php');
         $body = str_replace('{{name}}', htmlspecialchars($username), $body);
         $welcome_mail = mail_send($email, 'Welcome to Road Star USA – Your Registration is Successful!' , $body  , $name);
 
         $placeholders = [
-            '{{name}}'            => htmlspecialchars($name),
+            '{{name}}'  => htmlspecialchars($name),
             '{{email}}' => htmlspecialchars($email),
             '{{role}}'  => 'Service Provider',
             '{{activation_link}}'   => $actual_link.'activation.php?role=service_provider&activation_id='.base64_encode($last_inserted_id)
         ];  
-        $body = file_get_contents(dirname(__DIR__) . '/admin/partial/agent_activation_template.php');
+        $body = file_get_contents(dirname(__DIR__) . '/admin/partial/activation_template.php');
         $body = str_replace(array_keys($placeholders), array_values($placeholders), $body);
-        $activation_mail = mail_send('admin@gmail.com', 'New Service Provider Registration – Action Required' , $body  , 'System Notification');
+        $activation_mail = mail_send(admin_email, 'New Service Provider Registration – Action Required' , $body  , 'System Notification');
 
         $data["msg"] = "Service Provider registered successfully.";
         $data["status"] = "success";
@@ -228,20 +228,20 @@ if($form_request == "agent"){
         $data["msg"] = "Commit transaction failed";
         $data["status"] = "error";
     }else if (!empty($insert_query)) {
-        $body = file_get_contents(dirname(__DIR__) . '/admin/partial/agent_registration_template.php');
+        $body = file_get_contents(dirname(__DIR__) . '/admin/partial/registration_template.php');
         $body = str_replace('{{name}}', htmlspecialchars($username), $body);
         $welcome_mail = mail_send($email, 'Welcome to Road Star USA – Your Registration is Successful!' , $body  , $name);
 
 
         $placeholders = [
-            '{{name}}'            => htmlspecialchars($name),
+            '{{name}}'  => htmlspecialchars($name),
             '{{email}}' => htmlspecialchars($email),
             '{{role}}'  => 'Agent',
             '{{activation_link}}'   => $actual_link.'activation.php?role=agent&activation_id='.base64_encode($last_inserted_id)
         ];  
-        $body = file_get_contents(dirname(__DIR__) . '/admin/partial/agent_activation_template.php');
+        $body = file_get_contents(dirname(__DIR__) . '/admin/partial/activation_template.php');
         $body = str_replace(array_keys($placeholders), array_values($placeholders), $body);
-        $activation_mail = mail_send('admin@gmail.com', 'New Agent Registration – Action Required' , $body  , 'System Notification');
+        $activation_mail = mail_send(admin_email, 'New Agent Registration – Action Required' , $body  , 'System Notification');
 
         $data["msg"] = "Agent registered successfully.";
         $data["status"] = "success";
