@@ -172,11 +172,10 @@ switch ($mode) {
         $password_hash =  password_hash($password, PASSWORD_DEFAULT);
 
         $insert_query = true;
-        // $insert_query = mysqli_query($conn, "INSERT INTO agent (agent_id, prefix_agent_id, username, name, email, mobile, password, hint, profile_image, entry_type) VALUES ('$agent_id', '$prefix_agent_id', '$username', '$name', '$email', '$mobile_no', '$password_hash', '$password', '$profile_image', '$db_entry_type')");
+        $insert_query = mysqli_query($conn, "INSERT INTO agent (agent_id, prefix_agent_id, username, name, email, mobile, password, hint, profile_image, entry_type) VALUES ('$agent_id', '$prefix_agent_id', '$username', '$name', '$email', '$mobile_no', '$password_hash', '$password', '$profile_image', '$db_entry_type')");
 
-        // $last_inserted_id = mysqli_insert_id($conn);
+        $last_inserted_id = mysqli_insert_id($conn);
 
-        // Commit transaction
         if (!mysqli_commit($conn)) {
             $data["msg"] = "Commit transaction failed";
             $data["status"] = "error";

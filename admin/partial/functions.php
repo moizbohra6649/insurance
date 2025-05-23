@@ -237,7 +237,7 @@ if(isset($_SESSION["session"])){
 			$login_role = $av_role ;
 			if($login_role == 'agent'){
 				$wallet_amount = $get_user['wallet_amount'] ; 
-				$total_earning = $get_user['total_earning'] ;   ;
+				$total_earning = $get_user['total_earning'] ; 
 			}
 			
 			if(!empty($get_user["profile_image"]) && file_exists(dirname(__DIR__) . '/' . $upload_folder . '/user_profile_picture/' . $get_user["profile_image"])){

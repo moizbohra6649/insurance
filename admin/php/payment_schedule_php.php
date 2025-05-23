@@ -111,6 +111,9 @@ switch ($mode) {
 
         $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct WHERE id = $login_id");
 
+         // Update earning in super admin 
+         $update_query = mysqli_query($conn, "UPDATE users SET earning = earning + $policy_management_fee WHERE id = 1 and role = 'superadmin'");
+
 
         // Commit transaction
         if (!mysqli_commit($conn)) {
