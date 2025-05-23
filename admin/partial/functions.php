@@ -222,6 +222,7 @@ if(isset($_SESSION["session"])){
 			$login_email = $get_user["email"];
 			$login_name = $get_user["name"];
 			$login_role = $get_user["role"];
+			$total_earning = $get_user['earning']; 
 
 			if(!empty($get_user["profile_image"]) && file_exists(dirname(__DIR__) . '/' . $upload_folder . '/user_profile_picture/' . $get_user["profile_image"])){
 				$login_profile_image = $upload_folder . "/user_profile_picture/$get_user[profile_image]";
@@ -237,8 +238,8 @@ if(isset($_SESSION["session"])){
 			$login_name = $get_user["name"];
 			$login_role = $av_role ;
 			if($login_role == 'agent'){
-				$wallet_amount = $get_user['wallet_amount'] ; 
-				$total_earning = $get_user['total_earning'] ; 
+				$wallet_amount = $get_user['wallet_amount']; 
+				$total_earning = $get_user['total_earning']; 
 			}
 			
 			if(!empty($get_user["profile_image"]) && file_exists(dirname(__DIR__) . '/' . $upload_folder . '/user_profile_picture/' . $get_user["profile_image"])){
