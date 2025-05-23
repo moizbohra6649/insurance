@@ -4,6 +4,10 @@ if (file_exists(dirname(__FILE__) . '/php/policy_php.php')) {
     require_once(dirname(__FILE__) . '/php/policy_php.php');
 }
 
+if($is_customer_exits == false && $login_role != $super_admin_role && $login_role != $agent_role){
+   move($actual_link."customer_list.php");
+}
+
 include('partial/header.php'); 
 include('partial/loader.php'); ?>
 <!-- page-wrapper Start-->
@@ -27,7 +31,7 @@ include('partial/loader.php'); ?>
                                 <div class="row align-items-center justify-content-center">
                                     <div class="col-sm-12 col-auto">
                                         <div class="text-sm-end">
-                                        <?php if($login_role != 'superadmin'){ ?>
+                                        <?php if($is_customer_exits != false && $login_role != 'superadmin'){ ?>
                                             <a href="<?=$actual_link?>policy.php?customer_id=<?=base64_encode($customer_id);?>" class="btn btn-primary mb-2"><i class="icofont icofont-plus"></i> Add New Policy</a>
                                             <?php } ?> 
                                         </div>

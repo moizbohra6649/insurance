@@ -423,6 +423,55 @@
             }
         });
 
+        var $input = $('.numberInput');
+
+        // On focus: clear if value is "0"
+        $input.on('focus', function () {
+            if ($(this).val() === "0") {
+                $(this).val('');
+            }
+        });
+
+        // On input: allow only numbers
+        $input.on('input', function () {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // On blur: if empty or non-numeric, set back to 0
+        $input.on('blur', function () {
+            if ($(this).val().trim() === '') {
+                $(this).val('0');
+            }
+        });
+
+        // function validateAmounts() {
+        //     let min = $('#minimum_amount').val().trim();
+        //     let max = $('#maximum_amount').val().trim();
+        //     var error_arr = [];
+
+        //     // Check character length
+        //     if (min.length < 2 || min.length > 6) {
+        //         error_arr.push('Minimum amount must be between 2 and 6 characters.<br/>');
+        //     } else if (max.length < 2 || max.length > 6) {
+        //         error_arr.push('Maximum amount must be between 2 and 6 characters.<br/>');
+        //     } 
+        //     // Check numeric values
+        //     else if (!$.isNumeric(min) || !$.isNumeric(max)) {
+        //         error_arr.push('Both fields must be numeric.<br/>');
+        //     } 
+        //     // Logical comparison
+        //     else if (parseFloat(min) >= parseFloat(max)) {
+        //         error_arr.push('Minimum amount must be less than maximum amount.<br/>');
+        //     }
+
+        //     var error_txt = error_arr.join('');
+        //     if(error_txt != ""){
+        //         notification("Oh Snap!", error_txt, "danger");
+        //         return false;
+        //     }
+        // }
+
+        // $('#minimum_amount, #maximum_amount').on('input', validateAmounts);
     });
 
     function applyPhoneInputRestriction(inputId) {

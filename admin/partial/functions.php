@@ -81,6 +81,7 @@ $pdf_page = "pdf";
 $dashboard = "index.php";
 
 $super_admin_role = "superadmin";
+$agent_role = "agent";
 
 if (isset($_SERVER['HTTPS']) &&
     ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
@@ -580,6 +581,25 @@ function update(string $tblname, array $var_value, string $condition, string $up
 
 	return $updateQuery;
 }
+
+function checkAndSelectValue($table, $selectColumn, $where) {
+
+	$conn = mysqli_connect(host, dbuser, dbpass, dbname);
+	
+    // Build query string safely
+    $query = "SELECT $selectColumn FROM $table WHERE 1=1 $where LIMIT 1";
+
+    // Execute query
+    $result = mysqli_query($conn, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        return $row[$selectColumn];
+    } else {
+        return false;
+    }
+}
+
 
 /* Number To Word Function in PHP */
 

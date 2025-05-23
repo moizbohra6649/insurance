@@ -31,13 +31,13 @@ include('partial/loader.php'); ?>
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="minimum_amount">Minimum Amount <span class="text-danger">*</span></label>
-                                            <input class="form-control allownumber" id="minimum_amount" name="minimum_amount" type="text" value="<?=$minimum_amount?>" placeholder="Minimum Amount" required="">
+                                            <input class="form-control numberInput" id="minimum_amount" name="minimum_amount" type="text" value="<?=$minimum_amount?>" placeholder="Minimum Amount" required="">
                                             <div class="invalid-feedback">Please fill a Minimum Amount</div>
                                         </div>  
 
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="maximum_amount">Maximum Amount <span class="text-danger">*</span></label>
-                                            <input class="form-control allownumber" id="maximum_amount" name="maximum_amount" type="text" value="<?=$maximum_amount?>" placeholder="Maximum Amount" required="">
+                                            <input class="form-control numberInput" id="maximum_amount" name="maximum_amount" type="text" value="<?=$maximum_amount?>" placeholder="Maximum Amount" required="">
                                             <div class="invalid-feedback">Please fill a Maximum Amount.</div>
                                         </div>  
 

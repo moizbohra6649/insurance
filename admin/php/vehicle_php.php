@@ -24,7 +24,7 @@ $vehicle_year                   = (isset($_REQUEST["vehicle_year"])) ? $_REQUEST
 $vehicle_make                  = (isset($_REQUEST["vehicle_make"])) ? $_REQUEST["vehicle_make"] : "";
 $vehicle_model              = (isset($_REQUEST["vehicle_model"])) ? $_REQUEST["vehicle_model"] : "";
 $reg_state_vehicle               = (isset($_REQUEST["reg_state_vehicle"])) ? $_REQUEST["reg_state_vehicle"] : "";
-$vehicle_value       = (isset($_REQUEST["vehicle_value"])) ? $_REQUEST["vehicle_value"] : "";
+$vehicle_value       = (isset($_REQUEST["vehicle_value"])) ? $_REQUEST["vehicle_value"] : 0;
 $vehicle_category       = (isset($_REQUEST["vehicle_category"])) ? $_REQUEST["vehicle_category"] : 2;
 $veh_owner_company_name       = (isset($_REQUEST["veh_owner_company_name"])) ? $_REQUEST["veh_owner_company_name"] : "";
 
@@ -35,6 +35,8 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     echo $json_response = json_encode($data);
     exit();
 }
+
+$is_customer_exits = checkAndSelectValue("customer", "id", " AND id = $customer_id ");
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
     $select_query = "SELECT vehicle.*, customer.name as customer_name FROM vehicle 
@@ -53,7 +55,7 @@ switch ($mode) {
         $title      = "Add New Vehicle"; 
         $vehicle_id = get_max_id("vehicle", "vehicle_id");
         $prefix_vehicle_id = "VEHICLE_" . $vehicle_id;
-        $customer_name = get_value("customer", "name", "where customer_id = '$customer_id'");
+        $customer_name = get_value("customer", "name", "where id = '$customer_id'");
         $select_vehicle = mysqli_query($conn, "SELECT id FROM vehicle WHERE customer_id = '$customer_id' " );
         $vehicle_counting = mysqli_num_rows($select_vehicle);
     break;
@@ -110,7 +112,7 @@ switch ($mode) {
             $error_arr[] = "Please fill a Registration State Vehicle.<br/>";
         }
 
-        if ($vehicle_value >= "40000") {
+        if ($vehicle_value >= 40000) {
             $error_arr[] = "More than $40000 value vehicle not insured.<br/>";
         }
 

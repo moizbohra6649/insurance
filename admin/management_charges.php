@@ -28,7 +28,7 @@ include('partial/loader.php'); ?>
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="management_charge">Management Charge <span class="text-danger">*</span></label>
-                                            <input class="form-control allownumber" id="management_charge" name="management_charge" type="text" value="<?=$management_charge?>" maxlength="8" placeholder="Management Charge" required="">
+                                            <input class="form-control numberInput" id="management_charge" name="management_charge" type="text" value="<?=$management_charge?>" maxlength="8" placeholder="Management Charge" required="">
                                             <div class="invalid-feedback">Please fill a management Charge.</div>
                                         </div>  
                                     </div> 

@@ -6,7 +6,7 @@ $('#service_charge_form').on('submit', (function(e) {
 
     var error_arr = []; 
 
-    if($("#service_charge").val() == ""){
+    if($("#service_charge").val() == 0){
         error_arr.push("Please fill a Service Charge.<br/>");
     } 
  

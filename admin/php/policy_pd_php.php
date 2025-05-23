@@ -54,16 +54,33 @@ switch ($mode) {
 
         // Validation 
 
-        if (empty($minimum_amount)) {
+        // Check if fields are empty or 0
+        if ($minimum_amount == 0 || $minimum_amount === '') {
             $error_arr[] = "Please fill a Minimum Amount<br/>";
-        } 
-        if (empty($maximum_amount)) {
-            $error_arr[] = "Please fill a Maximum Amount.<br/>";
-        } 
+        }
 
-        if ($minimum_amount > $maximum_amount) {
-            $error_arr[] = "Minimum amount cannot be greater than the maximum amount.<br/>";
-        } 
+        if ($maximum_amount == 0 || $maximum_amount === '') {
+            $error_arr[] = "Please fill a Maximum Amount.<br/>";
+        }
+
+        // Check length
+        if (strlen($minimum_amount) < 2 || strlen($minimum_amount) > 6) {
+            $error_arr[] = "Minimum amount must be between 2 and 6 characters.<br/>";
+        }
+
+        if (strlen($maximum_amount) < 2 || strlen($maximum_amount) > 6) {
+            $error_arr[] = "Maximum amount must be between 2 and 6 characters.<br/>";
+        }
+
+        // Check if numeric
+        if (!is_numeric($minimum_amount) || !is_numeric($maximum_amount)) {
+            $error_arr[] = "Both fields must be numeric.<br/>";
+        }
+
+        // Check logical order
+        if (is_numeric($minimum_amount) && is_numeric($maximum_amount) && floatval($minimum_amount) > floatval($maximum_amount)) {
+            $error_arr[] = "Minimum amount must be less than maximum_amountimum amount.<br/>";
+        }
         
         if(mysqli_num_rows($select_qry) > 0){
             $error_arr[] = "This Policy PD is already exists.<br/>";

@@ -57,7 +57,7 @@ $('.submit_btn').on('click', (function(e) {
         error_arr.push("Please fill a Registration State Vehicle.<br/>");
     }
     
-    if($("#vehicle_value").val()  >= "40000"){
+    if($("#vehicle_value").val()  >= 40000){
         error_arr.push("More than $40000 value vehicle not insured.<br/>");
     }
 

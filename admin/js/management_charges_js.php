@@ -6,7 +6,7 @@ $('#management_charge_form').on('submit', (function(e) {
 
     var error_arr = []; 
 
-    if($("#management_charge").val() == ""){
+    if($("#management_charge").val() == 0){
         error_arr.push("Please fill a Management Charge.<br/>");
     } 
  

@@ -282,7 +282,7 @@ $pdf->Row(array('Medical','$'.$data_com['medical_minimum_amount'].' per person /
      $pdf->Cell(115,5, '', '', 0, 'L');
      $pdf->Cell(75,5, 'ALL FEES  $ '.$fees, '', 1, 'C');
 
-     $pdf->Cell(115,5, 'DISCOUNTS: $ '.$data_com['customl_discount'], '', 0, 'L');
+     $pdf->Cell(115,5, 'DISCOUNTS: $ '.$data_com['custom_discount'], '', 0, 'L');
      $pdf->Cell(75,5, 'TOTAL POLICY PREMIUM  $ '.$data_com['total_premium'] + $fees , '', 1, 'C');
 
      $pdf->Cell(115,5, 'Liability Only Discount', '', 0, 'L');

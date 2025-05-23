@@ -59,6 +59,8 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     exit();
 }
 
+$is_customer_exits = checkAndSelectValue("customer", "id", " AND id = $customer_id ");
+
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
     $extrawhere = '';
     if($login_role == 'agent'){
@@ -119,12 +121,16 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
         }
 
         $select_management_fee = mysqli_query($conn, "SELECT * FROM management_charge where status = 1 ORDER BY id DESC LIMIT 1");
-        $get_management_fee = mysqli_fetch_assoc($select_management_fee);
-        $management_fee = $get_management_fee["management_charge"];
+        if(mysqli_num_rows($select_management_fee) > 0){
+            $get_management_fee = mysqli_fetch_assoc($select_management_fee);
+            $management_fee = $get_management_fee["management_charge"];
+        }
 
         $select_service_charge = mysqli_query($conn, "SELECT * FROM service_charge where status = 1 ORDER BY id DESC LIMIT 1");
-        $get_service_charge = mysqli_fetch_assoc($select_service_charge);
-        $service_fee = $get_service_charge["service_charge"];
+        if(mysqli_num_rows($select_service_charge) > 0){
+            $get_service_charge = mysqli_fetch_assoc($select_service_charge);
+            $service_fee = $get_service_charge["service_charge"];
+        }
 
         $qry_policy_base_amt = "SELECT * FROM policy_coverage_base_amt_cal
             WHERE policy_type = '$coverage' AND $customer_age BETWEEN customer_age_from AND customer_age_to ";

@@ -46,7 +46,7 @@ include('partial/loader.php'); ?>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label" for="amount">Amount <span class="text-danger">*</span></label>
-                                            <input class="form-control allownumber" minlength="12" maxlength="12" id="amount" name="amount" type="text" value="<?=$amount?>" placeholder="Amount" required="">
+                                            <input class="form-control numberInput" minlength="12" maxlength="12" id="amount" name="amount" type="text" value="<?=$amount?>" placeholder="Amount" required="">
                                             <div class="invalid-feedback">Please fill Amount.</div>
                                         </div>
                                        

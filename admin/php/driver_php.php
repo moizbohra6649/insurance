@@ -66,6 +66,8 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     exit();
 }
 
+$is_customer_exits = checkAndSelectValue("customer", "id", " AND id = $customer_id ");
+
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
     $select_query = "SELECT driver.*, customer.name as customer_name FROM driver 
     left join customer on customer.id = driver.customer_id

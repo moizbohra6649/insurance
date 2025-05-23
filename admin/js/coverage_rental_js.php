@@ -6,11 +6,30 @@ $('#coverage_rental_form').on('submit', (function(e) {
 
     var error_arr = []; 
 
-    if($("#minimum_amount").val() == ""){
+    var min = $("#minimum_amount").val();
+    var max = $("#maximum_amount").val();
+
+    if(min == 0){
         error_arr.push("Please fill a Minimum Amount<br/>");
     } 
-    if($("#maximum_amount").val() == ""){
+    if(max == 0){
         error_arr.push("Please fill a Maximum Amount.<br/>");
+    } 
+
+    if (min.length < 2 || min.length > 6) {
+        error_arr.push('Minimum amount must be between 2 and 6 characters.<br/>');
+    } 
+    
+    if (max.length < 2 || max.length > 6) {
+        error_arr.push('Maximum amount must be between 2 and 6 characters.<br/>');
+    } 
+    
+    if (!$.isNumeric(min) || !$.isNumeric(max)) {
+        error_arr.push('Both fields must be numeric.<br/>');
+    } 
+    
+    if (parseFloat(min) > parseFloat(max)) {
+        error_arr.push('Minimum amount must be less than maximum amount.<br/>');
     } 
  
     var error_txt = error_arr.join('');

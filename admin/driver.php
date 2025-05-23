@@ -4,8 +4,8 @@ if (file_exists(dirname(__FILE__) . '/php/driver_php.php')) {
     require_once(dirname(__FILE__) . '/php/driver_php.php');
 }
 
-if(empty($customer_id)){
-    move($actual_link."customer_list.php");
+if($is_customer_exits == false && $mode == 'NEW'){
+   move($actual_link."customer_list.php");
 }
 
 include('partial/header.php'); 

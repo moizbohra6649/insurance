@@ -4,8 +4,8 @@ if (file_exists(dirname(__FILE__) . '/php/vehicle_php.php')) {
     require_once(dirname(__FILE__) . '/php/vehicle_php.php');
 }
 
-if(empty($customer_id)){
-    move($actual_link."customer_list.php");
+if($is_customer_exits == false && $mode == 'NEW'){
+   move($actual_link."customer_list.php");
 }
 
 include('partial/header.php'); 
@@ -125,7 +125,7 @@ include('partial/loader.php'); ?>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="vehicle_value">Vehicle Value</label>
                                             <div class="form-input">
-                                                <input class="form-control allownumber" type="text" id="vehicle_value" name="vehicle_value" value="<?=$vehicle_value?>" placeholder="Vehicle Value">
+                                                <input class="form-control numberInput" type="text" id="vehicle_value" name="vehicle_value" value="<?=$vehicle_value?>" placeholder="Vehicle Value">
                                             </div>
                                         </div>
                                     </div>
