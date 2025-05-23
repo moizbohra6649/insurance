@@ -40,6 +40,7 @@ CREATE TABLE `users` (
   `hint` varchar(252) NOT NULL,
   `profile_image` varchar(252) DEFAULT NULL,
   `status` int(12) NOT NULL DEFAULT 0,
+  `earning` BIGINT(50) NOT NULL DEFAULT 0,
   `deleted` int(12) NOT NULL DEFAULT 0,
   `delete_datetime` timestamp NULL DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT current_timestamp(),

@@ -35,6 +35,8 @@ CREATE TABLE `policy_payment` (
   `policy_installment` varchar(50) NOT NULL,
   `premium` int(11) NOT NULL,
   `billing_fee` int(11) NOT NULL,
+  `management_fee` INT NOT NULL DEFAULT 0,
+  `service_price` INT NOT NULL DEFAULT 0,
   `roadside_assistance` int(11) NOT NULL,
   `due_amount` int(11) NOT NULL,
   `due_date` datetime NOT NULL,
