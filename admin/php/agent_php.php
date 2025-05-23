@@ -175,7 +175,6 @@ switch ($mode) {
 
         $last_inserted_id = mysqli_insert_id($conn);
 
-        // Commit transaction
         if (!mysqli_commit($conn)) {
             $data["msg"] = "Commit transaction failed";
             $data["status"] = "error";

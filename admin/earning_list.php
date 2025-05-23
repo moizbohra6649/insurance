@@ -95,7 +95,7 @@ include('partial/loader.php'); ?>
                                                     <th>Customer Name</th>
                                                     <th>Amount</th>
                                                     <th>Earning Date</th>
-                                                </tr>
+                                                </tr> 
                                             </thead>
                                             <tbody>
                                                 <?php 

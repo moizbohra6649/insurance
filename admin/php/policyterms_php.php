@@ -149,7 +149,7 @@ switch ($mode) {
 
         if($pay_type == 'one_time'){
             $durDate_convert = convert_readable_date_db($policy_due_date) ;
-            $insert_query = mysqli_query($conn, "INSERT INTO policy_payment (policy_id, payment_type, payment_status, policy_installment, premium, billing_fee, roadside_assistance, due_amount, due_date) VALUES ('$policy_id', 'single_time', 'success', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$policy_roadside', '$policy_due_amt', '$durDate_convert')");
+            $insert_query = mysqli_query($conn, "INSERT INTO policy_payment (policy_id, payment_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date) VALUES ('$policy_id', 'single_time', 'success', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$policy_management_fee' ,  '$policy_service_price' , '$policy_roadside', '$policy_due_amt', '$durDate_convert')");
 
             $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = 'success', effective_from = CURDATE(), effective_to = '$durDate_convert'   WHERE id = $policy_id");
 
@@ -170,6 +170,9 @@ switch ($mode) {
             )");
 
             $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct, total_earning = total_earning + $policy_service_price  WHERE id = $login_id");
+
+            // Update earning in super admin 
+            $update_query = mysqli_query($conn, "UPDATE users SET earning = earning + $policy_management_fee WHERE id = 1 and role = 'superadmin'");
             
             
         }else{
@@ -215,12 +218,15 @@ switch ($mode) {
                     )");
         
                     $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct, total_earning = total_earning + $policy_service_price  WHERE id = $login_id");
+
+                    // Update earning in super admin 
+                    $update_query = mysqli_query($conn, "UPDATE users SET earning = earning + $policy_management_fee WHERE id = 1 and role = 'superadmin'");
                 }
                 $insert_query = mysqli_query($conn, "
                     INSERT INTO policy_payment 
-                    (policy_id, payment_type, payment_status, policy_installment, premium, billing_fee, roadside_assistance, due_amount, due_date)
+                    (policy_id, payment_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date)
                     VALUES 
-                    ('$policy_id', 'emi', '$status', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$policy_roadside', '$policy_due_amt', '$policy_due_date')
+                    ('$policy_id', 'emi', '$status', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$policy_management_fee' ,  '$policy_service_price' , '$policy_roadside', '$policy_due_amt', '$policy_due_date')
                 ");
             }
         }

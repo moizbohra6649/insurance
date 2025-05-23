@@ -116,3 +116,10 @@ ALTER TABLE `policy` CHANGE `policy_status` `policy_status` ENUM('pending','succ
 ALTER TABLE `wallet` CHANGE `updated` `updated` DATETIME NULL;
 ALTER TABLE `policy_payment` CHANGE `updated` `updated` DATETIME NULL;
 ALTER TABLE `transaction_history` CHANGE `agent_policy_id` `agent_policy_id` INT(11) NULL;
+
+-- Update by Shubham Bilodiya
+
+ALTER TABLE `users` ADD `earning` BIGINT(50) NOT NULL DEFAULT '0' AFTER `status`;
+ALTER TABLE `policy_payment` ADD `management_fee` INT NOT NULL DEFAULT '0' AFTER `billing_fee`, ADD `service_price` INT NOT NULL DEFAULT '0' AFTER `management_fee`;
+
+-- Update by Shubham Bilodiya
