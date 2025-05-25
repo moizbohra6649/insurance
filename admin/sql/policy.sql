@@ -65,6 +65,8 @@ CREATE TABLE `policy` (
   `policy_status` ENUM('pending','success','failed','reject','cancel') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `effective_from` datetime DEFAULT NULL,
   `effective_to` datetime DEFAULT NULL,
+  `policy_purchase_date` datetime DEFAULT NULL,
+  `policy_due_date` datetime DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT 0,
   `deleted` int(11) NOT NULL DEFAULT 0,
   `delete_datetime` datetime DEFAULT NULL,

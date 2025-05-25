@@ -302,12 +302,12 @@ $pdf->Cell(190, 5, '*Subject to all of the terms and conditions of the applicabl
 
 // Set up table
 $pdf->SetWidths(array(
-    58,
+    66,
     60,
-    18,
-    18,
-    18,
-    18
+    16,
+    16,
+    16,
+    16
 ));
 $pdf->SetAligns(array(
     'L',
@@ -329,7 +329,7 @@ $pdf->Row(array(
 ) , 0);
 $pdf->SetFont('Arial', '', 8);
 
-if (!empty($collision_minimum_amount) and !empty($collision_maximum_amount)) {
+if (!empty($data['collision_minimum_amount']) && !empty($data['collision_maximum_amount'])) {
     $pdf->Row(array(
         'Copresnsive / Collision',
         '$' . $data['collision_minimum_amount'] . ' per person / $' . $data['collision_maximum_amount'] . ' per accident',
@@ -340,7 +340,7 @@ if (!empty($collision_minimum_amount) and !empty($collision_maximum_amount)) {
     ) , 0);
 }
 
-if (!empty($umpd_minimum_amount) and !empty($umpd_maximum_amount)) {
+if (!empty($data['umpd_minimum_amount']) and !empty($data['umpd_maximum_amount'])) {
     $pdf->Row(array(
         'UMPD (Unissured motorist property damage)',
         '$' . $data['umpd_minimum_amount'] . ' per person / $' . $data['umpd_maximum_amount'] . ' per accident',
@@ -351,7 +351,7 @@ if (!empty($umpd_minimum_amount) and !empty($umpd_maximum_amount)) {
     ) , 0);
 }
 
-if (!empty($towing_minimum_amount) and !empty($towing_maximum_amount)) {
+if (!empty($data['towing_minimum_amount']) and !empty($data['towing_maximum_amount'])) {
     $pdf->Row(array(
         'Towning coverage',
         '$' . $data['towing_minimum_amount'] . ' per person / $' . $data['towing_maximum_amount'] . ' per accident',
@@ -362,7 +362,7 @@ if (!empty($towing_minimum_amount) and !empty($towing_maximum_amount)) {
     ) , 0);
 }
 
-if (!empty($rental_minimum_amount) and !empty($rental_maximum_amount)) {
+if (!empty($data['rental_minimum_amount']) and !empty($data['rental_maximum_amount'])) {
     $pdf->Row(array(
         'Rental Reimbursment',
         '$' . $data['rental_minimum_amount'] . ' per person / $' . $data['rental_maximum_amount'] . ' per accident',
@@ -373,7 +373,7 @@ if (!empty($rental_minimum_amount) and !empty($rental_maximum_amount)) {
     ) , 0);
 }
 
-if (!empty($deductible_minimum_amount) and !empty($deductible_maximum_amount)) {
+if (!empty($data['deductible_minimum_amount']) and !empty($data['deductible_maximum_amount'])) {
     $pdf->Row(array(
         'Coverage Deductible',
         '$' . $data['deductible_minimum_amount'] . ' per person / $' . $data['deductible_maximum_amount'] . ' per accident',
@@ -384,7 +384,7 @@ if (!empty($deductible_minimum_amount) and !empty($deductible_maximum_amount)) {
     ) , 0);
 }
 
-if (!empty($bi_minimum_amount) and !empty($bi_maximum_amount)) {
+if (!empty($data['bi_minimum_amount']) and !empty($data['bi_maximum_amount'])) {
     $pdf->Row(array(
         'BI (Bodily Injury)',
         '$' . $data['bi_minimum_amount'] . ' per person / $' . $data['bi_maximum_amount'] . ' per accident',
@@ -395,7 +395,7 @@ if (!empty($bi_minimum_amount) and !empty($bi_maximum_amount)) {
     ) , 0);
 }
 
-if (!empty($pd_minimum_amount) and !empty($pd_maximum_amount)) {
+if (!empty($data['pd_minimum_amount']) and !empty($data['pd_maximum_amount'])) {
     $pdf->Row(array(
         'PD (Property Damage)',
         '$' . $data['pd_minimum_amount'] . ' per person / $' . $data['pd_maximum_amount'] . ' per accident',
@@ -406,7 +406,7 @@ if (!empty($pd_minimum_amount) and !empty($pd_maximum_amount)) {
     ) , 0);
 }
 
-if (!empty($umd_minimum_amount) and !empty($umd_maximum_amount)) {
+if (!empty($data['umd_minimum_amount']) and !empty($data['umd_maximum_amount'])) {
     $pdf->Row(array(
         'UMB (Uninsured Motorist / Bodily Injury) ',
         '$' . $data['umd_minimum_amount'] . ' per person / $' . $data['umd_maximum_amount'] . ' per accident',
@@ -417,7 +417,7 @@ if (!empty($umd_minimum_amount) and !empty($umd_maximum_amount)) {
     ) , 0);
 }
 
-if (!empty($medical_minimum_amount) and !empty($medical_maximum_amount)) {
+if (!empty($data['medical_minimum_amount']) and !empty($data['medical_maximum_amount'])) {
     $pdf->Row(array(
         'Medical',
         '$' . $data['medical_minimum_amount'] . ' per person / $' . $data['medical_maximum_amount'] . ' per accident',
