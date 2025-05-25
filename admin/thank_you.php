@@ -18,9 +18,10 @@ include('partial/loader.php'); ?>
             Your policy has been successfully issued. Please find your policy details below:
             </p>
             <ul>
-                <li><strong>Policy Number:</strong> <?= $prefix_policy_id ?></li>
-                <li><strong>Effective Date:</strong><?= $effective_to ?> </li>
-                <li><strong>Policy Coverage:</strong> <?= $policy_coverage ?> </li>
+                <li><strong>Policy Number: </strong> <?= $prefix_policy_id ?></li>
+                <li><strong>EFFECTIVE: </strong><?= $effective_from ?> </li>
+                <li><strong>EXPIRATION: </strong><?= $effective_to ?> </li>
+                <li><strong>Policy Coverage: </strong> <?= $policy_coverage ?> </li>
             </ul>
             <p>
                 You can download or view your policy document here:
