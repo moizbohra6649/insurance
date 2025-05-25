@@ -408,6 +408,18 @@ function generateYearList($startYear, $endYear) {
 
 $yearList = generateYearList(1990, 2025);
 
+function get_policy_id(){
+	$conn = mysqli_connect(host, dbuser, dbpass, dbname);
+	$policy_id = "1013101";
+	$select_last_policy_id = mysqli_query($conn, "SELECT * FROM policy ORDER BY policy_id DESC LIMIT 1");
+	if(mysqli_num_rows($select_last_policy_id) > 0){
+		$get_last_policy_id = mysqli_fetch_assoc($select_last_policy_id);
+		$policy_id = $get_last_policy_id["policy_id"] + 3;
+	}
+
+    return $policy_id;
+}
+
 /* CRUD Function */
 
 /* 

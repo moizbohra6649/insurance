@@ -29,6 +29,36 @@
     <link rel="stylesheet" type="text/css" href="assets/css/vendors/select2.css">
     
     <style>
+        /* Sidebar Logo Wrapper */
+        .logo-wrapper a img,
+        .logo-icon-wrapper a img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Specific sizing for large logo (logo-white and logo-black) */
+        .logo-wrapper .for-light,
+        .logo-wrapper .for-dark {
+            max-height: 60px; /* Adjust as needed */
+            width: auto;
+            margin: 10px 10px 10px -25px;
+        }
+
+        /* Icon logo (small one for collapsed or mobile sidebar) */
+        .logo-icon-wrapper img {
+            max-height: 58px;
+            width: 70px;
+            margin: auto;
+        }
+
+        /* Optional: Better align and center */
+        .logo-icon-wrapper,
+        .logo-wrapper {
+            text-align: center;
+            padding: 10px 0;
+        }
+
         .table .table-user img {
             height: 30px;
             width: 30px;

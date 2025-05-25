@@ -356,25 +356,25 @@ contact@aginsuranceusa.com</li>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
-  window.onload = function () {
-    const { jsPDF } = window.jspdf;
+  // window.onload = function () {
+  //   const { jsPDF } = window.jspdf;
 
-    // Delay to ensure full rendering
+  //   // Delay to ensure full rendering
    
-      html2canvas(document.body, { scale: 2 }).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'pt', 'a4');
+  //     html2canvas(document.body, { scale: 2 }).then(canvas => {
+  //       const imgData = canvas.toDataURL('image/png');
+  //       const pdf = new jsPDF('p', 'pt', 'a4');
 
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+  //       const pdfWidth = pdf.internal.pageSize.getWidth();
+  //       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+  //       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
-        // Create blob URL and redirect to it (same tab)
-        const blob = pdf.output('blob');
-        const url = URL.createObjectURL(blob);
-        window.location.href = url; // Opens in same tab
-      });
+  //       // Create blob URL and redirect to it (same tab)
+  //       const blob = pdf.output('blob');
+  //       const url = URL.createObjectURL(blob);
+  //       window.location.href = url; // Opens in same tab
+  //     });
    
-  };
+  // };
 </script>

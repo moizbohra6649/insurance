@@ -123,3 +123,7 @@ ALTER TABLE `users` ADD `earning` BIGINT(50) NOT NULL DEFAULT '0' AFTER `status`
 ALTER TABLE `policy_payment` ADD `management_fee` INT NOT NULL DEFAULT '0' AFTER `billing_fee`, ADD `service_price` INT NOT NULL DEFAULT '0' AFTER `management_fee`;
 
 -- Update by Shubham Bilodiya
+
+
+ALTER TABLE `policy` ADD `policy_purchase_date` DATETIME NULL AFTER `effective_to`;
+ALTER TABLE `policy` ADD `policy_due_date` DATETIME NULL AFTER `effective_to`;

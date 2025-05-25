@@ -91,6 +91,7 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
     $service_fee = 0;
     $net_total = 0;
 
+    //policy calculation
     if($_REQUEST["ajax_request"] == "policy_calculation"){
         
         // $vehicle = (sizeof($vehicle) > 0) ? implode(",", $vehicle) : 0;
@@ -283,8 +284,8 @@ switch ($mode) {
         $local_mode = "INSERT";
         $readonly   = "";
         $title      = "Add New Policy"; 
-        $policy_id = get_max_id("policy", "policy_id");
-        $prefix_policy_id = "POLICY_" . $policy_id;
+        $policy_id = get_policy_id();
+        $prefix_policy_id = "WL-" . $policy_id;
         $select_customer = mysqli_query($conn, "SELECT name , email , mobile, date_of_birth FROM customer WHERE id = '$customer_id' " );
         if(mysqli_num_rows($select_customer) > 0){
             $get_data = mysqli_fetch_array($select_customer);
@@ -299,8 +300,8 @@ switch ($mode) {
         $data = [];
         $error_arr = [];
         
-        $policy_id = get_max_id("policy", "policy_id");
-        $prefix_policy_id = "POLICY_" . $policy_id;
+        $policy_id = get_policy_id();
+        $prefix_policy_id = "WL-" . $policy_id;
 
         $select_customer = mysqli_query($conn, "SELECT id FROM customer WHERE id = '$customer_id' " );
         // $select_policy = mysqli_query($conn, "SELECT id FROM policy WHERE customer_id = '$customer_id' " );
