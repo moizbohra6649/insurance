@@ -80,7 +80,9 @@ $('.submit_btn').on('click', (function(e) {
             if(data.status == "success"){
                 var url = `driver_list.php?customer_id=<?=base64_encode($customer_id);?>`;
                 if(data.id != ""){
-                    if(btn_value == "policy"){
+                    if(btn_value == "vehicle"){
+                        var url = `vechile.php?customer_id=${data.id}`;
+                    }else if(btn_value == "policy"){
                         var url = `policy.php?customer_id=${data.id}`;
                     }
                 }

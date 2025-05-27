@@ -16,12 +16,18 @@ $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] :
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 $agent_id               = (isset($_REQUEST["agent_id"])) ? $_REQUEST["agent_id"] : 0;
-$name                   = (isset($_REQUEST["name"])) ? $_REQUEST["name"] : "";
+$first_name            = (isset($_REQUEST["first_name"])) ? $_REQUEST["first_name"] : "";
+$last_name             = (isset($_REQUEST["last_name"])) ? $_REQUEST["last_name"] : "";
 $username               = (isset($_REQUEST["username"])) ? $_REQUEST["username"] : "";
 $email                  = (isset($_REQUEST["email"])) ? $_REQUEST["email"] : "";
 $mobile_no              = (isset($_REQUEST["mobile_no"])) ? $_REQUEST["mobile_no"] : "";
 $password               = (isset($_REQUEST["password"])) ? $_REQUEST["password"] : "";
 $confirm_password       = (isset($_REQUEST["confirm_password"])) ? $_REQUEST["confirm_password"] : "";
+$address               = (isset($_REQUEST["address"])) ? $_REQUEST["address"] : "";
+$apt_unit              = (isset($_REQUEST["apt_unit"])) ? $_REQUEST["apt_unit"] : "";
+$state                 = (isset($_REQUEST["state"])) ? $_REQUEST["state"] : 0;
+$city                  = (isset($_REQUEST["city"])) ? $_REQUEST["city"] : "";
+$zip_code              = (isset($_REQUEST["zip_code"])) ? $_REQUEST["zip_code"] : "";
 $profile_image          = (isset($_FILES["profile_image"]['name'])) ? $_FILES["profile_image"]['name'] : "";
 $delete_image           = (isset($_REQUEST["delete_image"])) ? $_REQUEST["delete_image"] : "";
 
@@ -37,6 +43,7 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 $from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
 $to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
 $filter_agent_id    = (isset($_REQUEST["filter_agent_id"])) ? $_REQUEST["filter_agent_id"] : "";
+$filter_agent_name    = (isset($_REQUEST["filter_agent_name"])) ? $_REQUEST["filter_agent_name"] : "";
 $entry_type        = (isset($_REQUEST["entry_type"])) ? $_REQUEST["entry_type"] : "";
 $filter_status        = (isset($_REQUEST["filter_status"])) ? $_REQUEST["filter_status"] : "All";
 
@@ -64,8 +71,8 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
         $filter_qry .= " AND agent_id = $filter_agent_id ";
     }
 
-    if(!empty($name)){
-        $filter_qry .= " AND name LIKE '%$name%' ";
+    if(!empty($filter_agent_name)){
+        $filter_qry .= " AND (CONCAT(first_name, ' ', last_name) LIKE '%$filter_agent_name%') ";
     }
 
     if(!empty($mobile_no)){
@@ -83,7 +90,7 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
 }
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
-    $select_query = "SELECT id, agent_id, name, email, mobile, profile_image, created, status FROM agent WHERE 1=1 ".$filter_qry;
+    $select_query = "SELECT agent.*, CONCAT(agent.first_name, ' ', agent.last_name) AS full_name FROM agent WHERE 1=1 ".$filter_qry;
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
 }
@@ -110,8 +117,12 @@ switch ($mode) {
         $select_agent_mobile = mysqli_query($conn, "SELECT id FROM agent WHERE mobile = '$_REQUEST[mobile_no]' " );
 
         // Validation
-        if (empty($name)) {
-            $error_arr[] = "Please enter Name.<br/>";
+        if (empty($first_name)) {
+            $error_arr[] = "Please fill a First Name.<br/>";
+        }
+        
+        if (empty($last_name)) {
+            $error_arr[] = "Please fill a Last Name.<br/>";
         }
 
         if (empty($username)) {
@@ -171,7 +182,7 @@ switch ($mode) {
         mysqli_autocommit($conn,FALSE);
         $password_hash =  password_hash($password, PASSWORD_DEFAULT);
 
-        $insert_query = mysqli_query($conn, "INSERT INTO agent (agent_id, prefix_agent_id, username, name, email, mobile, password, hint, profile_image, entry_type) VALUES ('$agent_id', '$prefix_agent_id', '$username', '$name', '$email', '$mobile_no', '$password_hash', '$password', '$profile_image', '$db_entry_type')");
+        $insert_query = mysqli_query($conn, "INSERT INTO agent (agent_id, prefix_agent_id, username, first_name, last_name, email, mobile, address, apt_unit, state_id, city, zip_code, password, hint, profile_image, entry_type) VALUES ('$agent_id', '$prefix_agent_id', '$username', '$first_name', '$last_name', '$email', '$mobile_no', '$address', '$apt_unit', '$state', '$city', '$zip_code', '$password_hash', '$password', '$profile_image', '$db_entry_type')");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
@@ -219,10 +230,16 @@ switch ($mode) {
             $agent_id            = $get_data["agent_id"];
             $prefix_agent_id     = $get_data["prefix_agent_id"];
             
-            $name                = $get_data["name"];
+            $first_name                = $get_data["first_name"];
+            $last_name                = $get_data["last_name"];
             $username            = $get_data["username"];
             $email               = $get_data["email"];
             $mobile_no           = $get_data["mobile"];
+            $address           = $get_data["address"];
+            $apt_unit           = $get_data["apt_unit"];
+            $state           = $get_data["state_id"];
+            $city           = $get_data["city"];
+            $zip_code           = $get_data["zip_code"];
             $password            = $get_data["hint"];
             $profile_image       = $get_data["profile_image"];
             $created             = $get_data["created"];
@@ -238,8 +255,12 @@ switch ($mode) {
         $select_agent_email = mysqli_query($conn, "SELECT id FROM agent WHERE email = '$_REQUEST[email]' AND id != '$id'" );
 
         // Validation
-        if (empty($name)) {
-            $error_arr[] = "Please enter Name.<br/>";
+        if (empty($first_name)) {
+            $error_arr[] = "Please fill a First Name.<br/>";
+        }
+        
+        if (empty($last_name)) {
+            $error_arr[] = "Please fill a Last Name.<br/>";
         }
 
         if (empty($username)) {
@@ -319,7 +340,7 @@ switch ($mode) {
 
         $password_hash =  password_hash($password, PASSWORD_DEFAULT);
             
-        $update_agent = mysqli_query($conn, "UPDATE agent SET name = '$name', email = '$email', username = '$username', mobile = '$mobile_no', password = '$password_hash', hint = '$password', profile_image = '$profile_image', updated = now() WHERE id = $id");
+        $update_agent = mysqli_query($conn, "UPDATE agent SET first_name = '$first_name', last_name = '$last_name', email = '$email', username = '$username', mobile = '$mobile_no', address = '$address', apt_unit = '$apt_unit', state_id = '$state', city = '$city', zip_code = '$zip_code', password = '$password_hash', hint = '$password', profile_image = '$profile_image', updated = now() WHERE id = $id");
 
         // Commit transaction
         if (!mysqli_commit($conn)) {

@@ -6,8 +6,12 @@ $('#agent_form').on('submit', (function(e) {
 
     var error_arr = [];
 
-    if($("#name").val() == ""){
-        error_arr.push("Please enter Name.<br/>");
+    if($("#first_name").val() == ""){
+        error_arr.push("Please fill a First Name.<br/>");
+    }
+
+    if($("#last_name").val() == ""){
+        error_arr.push("Please fill a Last Name.<br/>");
     }
 
     if($("#username").val() == ""){

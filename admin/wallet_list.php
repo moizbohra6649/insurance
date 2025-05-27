@@ -107,7 +107,7 @@ include('partial/loader.php'); ?>
                                                 ?>
                                                 <tr>
                                                     <td align="center"> <?=$i++?> </td>
-                                                    <td align="center"> <?=$get_data["name"]?> </td>
+                                                    <td align="center"> <?=$get_data["agent_full_name"]?> </td>
                                                     <td align="center"> <?=$get_data["transaction_id"]?> </td>
                                                     <td align="center"> <?=$get_data["transaction_type"]?> </td>
                                                     <td align="center"> <?=convert_db_date_readable($get_data["transaction_date"])?> </td>

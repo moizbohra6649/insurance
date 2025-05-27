@@ -67,10 +67,10 @@ include('partial/loader.php'); ?>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
-                                            <label class="form-label" for="licence_plat_no">Licence Plat Number (LPN) <span class="text-danger">*</span></label>
+                                            <label class="form-label" for="licence_plat_no">LPN <span class="text-danger">*</span></label>
                                             <div class="form-input">
-                                                <input class="form-control" id="licence_plat_no" name="licence_plat_no" type="text" value="<?=$licence_plat_no?>" placeholder="Licence Plat Number (LPN)" required="">
-                                                <div class="invalid-feedback">Please fill a Licence Plat Number (LPN).</div>
+                                                <input class="form-control" id="licence_plat_no" name="licence_plat_no" type="text" value="<?=$licence_plat_no?>" placeholder="LPN" required="">
+                                                <div class="invalid-feedback">Please fill a LPN.</div>
                                             </div>
                                         </div>
                                         <div class="col-md-4 mb-3">

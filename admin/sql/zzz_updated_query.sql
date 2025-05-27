@@ -125,5 +125,21 @@ ALTER TABLE `policy_payment` ADD `management_fee` INT NOT NULL DEFAULT '0' AFTER
 -- Update by Shubham Bilodiya
 
 
+--Latest SQL By Moiz Bohra
+
+
 ALTER TABLE `policy` ADD `policy_purchase_date` DATETIME NULL AFTER `effective_to`;
 ALTER TABLE `policy` ADD `policy_due_date` DATETIME NULL AFTER `effective_to`;
+
+
+ALTER TABLE `agent` CHANGE `name` `first_name` VARCHAR(252) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+ALTER TABLE `agent` ADD `last_name` VARCHAR(252) NOT NULL AFTER `first_name`;
+ALTER TABLE `agent` ADD `address` TEXT NULL AFTER `wallet_amount`, ADD `apt_unit` VARCHAR(252) NULL AFTER `address`, ADD `state_id` INT(11) NULL AFTER `apt_unit`, ADD `city` VARCHAR(252) NULL AFTER `state_id`, ADD `zip_code` VARCHAR(52) NULL AFTER `city`;
+
+
+ALTER TABLE `customer` CHANGE `name` `first_name` VARCHAR(252) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+ALTER TABLE `customer` ADD `last_name` VARCHAR(252) NOT NULL AFTER `first_name`;
+ALTER TABLE `customer` CHANGE `zip_code` `address` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+ALTER TABLE `customer` CHANGE `address_1` `apt_unit` VARCHAR(252) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+ALTER TABLE `customer` CHANGE `address_2` `state_id` INT(11) NULL DEFAULT NULL;
+ALTER TABLE `customer` ADD `city` VARCHAR(252) NULL AFTER `state_id`, ADD `zip_code` VARCHAR(52) NULL AFTER `city`;

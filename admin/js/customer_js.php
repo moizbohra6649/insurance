@@ -9,8 +9,12 @@ $('.submit_btn').on('click', (function(e) {
     e.preventDefault();
     var error_arr = [];
 
-    if($("#name").val() == ""){
-        error_arr.push("Please fill a Name.<br/>");
+    if($("#first_name").val() == ""){
+        error_arr.push("Please fill a First Name.<br/>");
+    }
+
+    if($("#last_name").val() == ""){
+        error_arr.push("Please fill a Last Name.<br/>");
     } 
 
     if($("#email").val() == ""){

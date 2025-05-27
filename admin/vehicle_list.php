@@ -48,10 +48,8 @@ include('partial/loader.php'); ?>
                                                     <th style="text-align:center;">Vehicle ID</th>
                                                     <th>Customer Name</th> 
                                                     <th>Vehicle No. (VIN)</th> 
-                                                    <th>Vehicle Type</th>  
-                                                    <th>Licence Plat Number (LPN)</th> 
+                                                    <th>LPN</th> 
                                                     <th>Policy No</th>
-                                                    <th style="text-align:center;">Create Date</th> 
                                                     <th style="text-align:center;">Status</th>
                                                     <th style="text-align:center;">Action</th>
                                                 </tr>
@@ -68,10 +66,8 @@ include('partial/loader.php'); ?>
                                                     <td align="center"> <?=$get_data["vehicle_id"]?> </td>
                                                     <td> <?=$get_data["customer_name"]?> </td>
                                                     <td> <?=$get_data["vehicle_no"]?> </td>
-                                                    <td> <?=$get_data["vehicle_type"]?> </td>
                                                     <td> <?=$get_data["licence_plat_no"]?> </td>
                                                     <td align="center"> </td>
-                                                    <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
                                                     <td align="center">
                                                         <div class="media-body text-end icon-state">
                                                             <label class="switch">

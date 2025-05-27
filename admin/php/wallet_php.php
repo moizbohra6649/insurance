@@ -64,8 +64,8 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
 }
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
-    $select_query = "SELECT wallet.id, wallet.wallet_id, wallet.wallet_agent_id, wallet.transaction_type, wallet.transaction_date, wallet.transaction_id, wallet.amount , wallet.created , agent.name as name
-   FROM wallet  left join agent on wallet.wallet_agent_id = agent.id  WHERE 1=1 and wallet.wallet_agent_id =  $user_id  ".$filter_qry;
+    $select_query = "SELECT wallet.id, wallet.wallet_id, wallet.wallet_agent_id, wallet.transaction_type, wallet.transaction_date, wallet.transaction_id, wallet.amount , wallet.created , CONCAT(agent.first_name, ' ', agent.last_name) AS agent_full_name
+   FROM wallet left join agent on wallet.wallet_agent_id = agent.id  WHERE 1=1 and wallet.wallet_agent_id =  $user_id  ".$filter_qry;
     
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);

@@ -58,8 +58,8 @@ include('partial/loader.php'); ?>
 
                                             <div class="row">
                                                 <div class="mb-3 col-md-3">
-                                                    <label for="name" class="form-label">Agent Name</label>
-                                                    <input type="text" class="form-control" id="name" name="name" placeholder="Agent Name" value="<?=$name?>">
+                                                    <label for="filter_agent_name" class="form-label">Agent Name</label>
+                                                    <input type="text" class="form-control" id="filter_agent_name" name="filter_agent_name" placeholder="Agent Name" value="<?=$filter_agent_name?>">
                                                 </div>
                                                 <div class="mb-3 col-md-3">
                                                     <label for="mobile_no" class="form-label">Mobile No.</label>
@@ -138,7 +138,7 @@ include('partial/loader.php'); ?>
                                                     <td align="center"> <?=$get_data["agent_id"]?> </td>
                                                     <td class="table-user">
                                                         <img src="<?=$profile_image_url?>" alt="Profile Picture" class="me-2 rounded-circle" style="cursor:pointer;" onclick="image_preview('image_preview', 'src_path', '<?=$profile_image_url?>', 'image_preview_label', 'Profile Picture Preview');">
-                                                        <a href="javascript:void(0);" class="text-body fw-semibold"><?=$get_data["name"]?></a>
+                                                        <a href="javascript:void(0);" class="text-body fw-semibold"><?=$get_data["full_name"]?></a>
                                                     </td>
                                                     <td> <?=$get_data["email"]?> </td>
                                                     <td> <?=$get_data["mobile"]?> </td>

@@ -39,7 +39,7 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 $is_customer_exits = checkAndSelectValue("customer", "id", " AND id = $customer_id ");
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
-    $select_query = "SELECT vehicle.*, customer.name as customer_name FROM vehicle 
+    $select_query = "SELECT vehicle.*, CONCAT(customer.first_name, ' ', customer.last_name) AS customer_name FROM vehicle 
     left join customer on customer.id = vehicle.customer_id
     WHERE vehicle.customer_id = '$customer_id'";
     $query_result = mysqli_query($conn, $select_query);
@@ -55,7 +55,7 @@ switch ($mode) {
         $title      = "Add New Vehicle"; 
         $vehicle_id = get_max_id("vehicle", "vehicle_id");
         $prefix_vehicle_id = "VEHICLE_" . $vehicle_id;
-        $customer_name = get_value("customer", "name", "where id = '$customer_id'");
+        $customer_name = get_value("customer", "CONCAT(customer.first_name, ' ', customer.last_name)", "where id = '$customer_id'");
         $select_vehicle = mysqli_query($conn, "SELECT id FROM vehicle WHERE customer_id = '$customer_id' " );
         $vehicle_counting = mysqli_num_rows($select_vehicle);
     break;

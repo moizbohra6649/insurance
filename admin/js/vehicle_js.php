@@ -38,7 +38,7 @@ $('.submit_btn').on('click', (function(e) {
     }
 
     if($("#licence_plat_no").val() == ""){
-        error_arr.push("Please fill a Licence Plat Number (LPN).<br/>");
+        error_arr.push("Please fill a LPN.<br/>");
     }
 
     if($("#vehicle_year").val() == "" || $("#vehicle_year").val() == 0){

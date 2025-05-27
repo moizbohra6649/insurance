@@ -231,11 +231,11 @@ if(isset($_SESSION["session"])){
 		}
 	}elseif (in_array($_SESSION["session"]["role"], $agent_vendor_role)) {
 		$av_role = $_SESSION["session"]["role"] ; 
-		$select_user = mysqli_query($conn, "SELECT * FROM $av_role WHERE id = '$login_id' ");
+		$select_user = mysqli_query($conn, "SELECT agent.*, CONCAT(agent.first_name, ' ', agent.last_name) AS full_name FROM $av_role WHERE id = '$login_id' ");
 		if(mysqli_num_rows($select_user) > 0){
 			$get_user = mysqli_fetch_assoc($select_user);
 			$login_email = $get_user["email"];
-			$login_name = $get_user["name"];
+			$login_name = $get_user["full_name"];
 			$login_role = $av_role ;
 			if($login_role == 'agent'){
 				$wallet_amount = $get_user['wallet_amount']; 

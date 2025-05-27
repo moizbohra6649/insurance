@@ -60,8 +60,8 @@ include('partial/loader.php'); ?>
 
                                             <div class="row">
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="name" class="form-label">Customer Name</label>
-                                                    <input type="text" class="form-control" id="name" name="name" placeholder="Customer Name" value="<?=$name?>">
+                                                    <label for="filter_customer_name" class="form-label">Customer Name</label>
+                                                    <input type="text" class="form-control" id="filter_customer_name" name="filter_customer_name" placeholder="Customer Name" value="<?=$filter_customer_name?>">
                                                 </div>
                                                 <div class="mb-3 col-md-6">
                                                     <label for="mobile_no" class="form-label">Mobile No.</label>
@@ -117,7 +117,7 @@ include('partial/loader.php'); ?>
                                                     <td align="center"> <?=$i++?> </td>
                                                     <td align="center"> <?=$get_data["customer_id"]?> </td>
                                                     <td class="table-user">
-                                                        <a href="javascript:void(0);" class="text-body fw-semibold"><?=$get_data["name"]?></a>
+                                                        <a href="javascript:void(0);" class="text-body fw-semibold"><?=$get_data["full_name"]?></a>
                                                     </td>
                                                     <td> <?=$get_data["email"]?> </td>
                                                     <td> <?=$get_data["mobile"]?> </td>

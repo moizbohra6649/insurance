@@ -16,13 +16,16 @@ $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] :
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 $customer_id     = (isset($_REQUEST["customer_id"])) ? $_REQUEST["customer_id"] : 0;
-$name            = (isset($_REQUEST["name"])) ? $_REQUEST["name"] : "";
+$first_name            = (isset($_REQUEST["first_name"])) ? $_REQUEST["first_name"] : "";
+$last_name             = (isset($_REQUEST["last_name"])) ? $_REQUEST["last_name"] : "";
 $email           = (isset($_REQUEST["email"])) ? $_REQUEST["email"] : "";
 $mobile_no       = (isset($_REQUEST["mobile_no"])) ? $_REQUEST["mobile_no"] : "";
 $date_of_birth   = (isset($_REQUEST["date_of_birth"]) && !empty($_REQUEST["date_of_birth"])) ? convert_readable_date_db($_REQUEST["date_of_birth"]) : "0000-00-00";
-$zip_code        = (isset($_REQUEST["zip_code"])) ? $_REQUEST["zip_code"] : "";
-$address_1       = (isset($_REQUEST["address_1"])) ? $_REQUEST["address_1"] : "";
-$address_2       = (isset($_REQUEST["address_2"])) ? $_REQUEST["address_2"] : "";
+$address               = (isset($_REQUEST["address"])) ? $_REQUEST["address"] : "";
+$apt_unit              = (isset($_REQUEST["apt_unit"])) ? $_REQUEST["apt_unit"] : "";
+$state                 = (isset($_REQUEST["state"])) ? $_REQUEST["state"] : 0;
+$city                  = (isset($_REQUEST["city"])) ? $_REQUEST["city"] : "";
+$zip_code              = (isset($_REQUEST["zip_code"])) ? $_REQUEST["zip_code"] : "";
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -36,6 +39,7 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 $from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
 $to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
 $filter_customer_id    = (isset($_REQUEST["filter_customer_id"])) ? $_REQUEST["filter_customer_id"] : "";
+$filter_customer_name    = (isset($_REQUEST["filter_customer_name"])) ? $_REQUEST["filter_customer_name"] : "";
 
 $query_count = 0;
 $filter_qry = "";
@@ -61,8 +65,8 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
         $filter_qry .= " AND customer_id = $filter_customer_id ";
     }
 
-    if(!empty($name)){
-        $filter_qry .= " AND name LIKE '%$name%' ";
+    if(!empty($filter_customer_name)){
+        $filter_qry .= " AND (CONCAT(first_name, ' ', last_name) LIKE '%$filter_customer_name%') ";
     }
 
     if(!empty($mobile_no)){
@@ -79,7 +83,7 @@ if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
         $filter_qry .= " AND agent_id = '$login_id' ";
     }
 
-    $select_query = "SELECT id, customer_id, name, email, mobile, date_of_birth, zip_code, created, status FROM customer WHERE 1=1 ".$filter_qry;
+    $select_query = "SELECT customer.*, CONCAT(customer.first_name, ' ', customer.last_name) AS full_name FROM customer WHERE 1=1 ".$filter_qry;
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
 }
@@ -105,8 +109,12 @@ switch ($mode) {
 
         // Validation
 
-        if (empty($name)) {
-            $error_arr[] = "Please fill a Name.<br/>";
+        if (empty($first_name)) {
+            $error_arr[] = "Please fill a First Name.<br/>";
+        }
+        
+        if (empty($last_name)) {
+            $error_arr[] = "Please fill a Last Name.<br/>";
         }
 
         if (empty($email)) {
@@ -123,14 +131,6 @@ switch ($mode) {
 
         if (empty($date_of_birth) || $date_of_birth == "0000-00-00") {
             $error_arr[] = "Please provide a valid DOB.<br/>";
-        }
-
-        if (empty($zip_code)) {
-            $error_arr[] = "Please fill a Zip Code.<br/>";
-        }
-        
-        if (empty($address_1)) {
-            $error_arr[] = "Please fill a Address.<br/>";
         }
 
         if(mysqli_num_rows($select_customer_email) > 0){
@@ -153,7 +153,7 @@ switch ($mode) {
         mysqli_autocommit($conn,FALSE);
  
 
-        $insert_query = mysqli_query($conn, "INSERT INTO customer (customer_id, prefix_customer_id, agent_id, name, email, mobile, date_of_birth, zip_code, address_1, address_2) VALUES ('$customer_id', '$prefix_customer_id', '$login_id', '$name',  '$email','$mobile_no','$date_of_birth','$zip_code', '$address_1','$address_2' ) ");
+        $insert_query = mysqli_query($conn, "INSERT INTO customer (customer_id, prefix_customer_id, agent_id, first_name, last_name, email, mobile, date_of_birth, address, apt_unit, state_id, city, zip_code) VALUES ('$customer_id', '$prefix_customer_id', '$login_id', '$first_name', '$last_name', '$email','$mobile_no','$date_of_birth', '$address', '$apt_unit', '$state', '$city', '$zip_code') ");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
@@ -190,13 +190,16 @@ switch ($mode) {
 
             $customer_id            = $get_data["customer_id"];
             $prefix_customer_id     = $get_data["prefix_customer_id"];
-            $name                   = $get_data["name"];
+            $first_name                = $get_data["first_name"];
+            $last_name                = $get_data["last_name"];
             $email                  = $get_data["email"];
             $mobile_no              = $get_data["mobile"];
             $date_of_birth          = convert_db_date_readable($get_data["date_of_birth"]);
-            $zip_code               = $get_data["zip_code"];
-            $address_1              = $get_data["address_1"];
-            $address_2              = $get_data["address_2"];
+            $address           = $get_data["address"];
+            $apt_unit           = $get_data["apt_unit"];
+            $state           = $get_data["state_id"];
+            $city           = $get_data["city"];
+            $zip_code           = $get_data["zip_code"];
             $created                = $get_data["created"]; 
          
             $local_mode = "UPDATE";
@@ -212,8 +215,12 @@ switch ($mode) {
 
         // Validation
 
-        if (empty($name)) {
-            $error_arr[] = "Please enter Name.<br/>";
+        if (empty($first_name)) {
+            $error_arr[] = "Please fill a First Name.<br/>";
+        }
+        
+        if (empty($last_name)) {
+            $error_arr[] = "Please fill a Last Name.<br/>";
         }
 
         if (empty($email)) {
@@ -228,17 +235,10 @@ switch ($mode) {
             $error_arr[] = "Please enter a valid Mobile No.<br/>";
         }
 
-        if (empty($date_of_birth)) {
-            $error_arr[] = "Please enter DOB.<br/>";
+        if (empty($date_of_birth) || $date_of_birth == "0000-00-00") {
+            $error_arr[] = "Please provide a valid DOB.<br/>";
         }
 
-        if (empty($zip_code)) {
-            $error_arr[] = "Please enter zip code.<br/>";
-        }
-        
-        if (empty($address_1)) {
-            $error_arr[] = "Please enter address.<br/>";
-        }
 
         if(mysqli_num_rows($select_customer) == 0){
             $data["msg"] = "Something went wrong please try again later.";
@@ -270,7 +270,7 @@ switch ($mode) {
         // Turn autocommit off
         mysqli_autocommit($conn,FALSE);
             
-        $update_vendor = mysqli_query($conn, "UPDATE customer SET name = '$name', email = '$email', mobile = '$mobile_no', date_of_birth = '$date_of_birth', zip_code = '$zip_code', address_1 = '$address_1', address_2 = '$address_2', updated = now() WHERE id = $id");
+        $update_vendor = mysqli_query($conn, "UPDATE customer SET first_name = '$first_name', last_name = '$last_name', email = '$email', mobile = '$mobile_no', date_of_birth = '$date_of_birth', address = '$address', apt_unit = '$apt_unit', state_id = '$state', city = '$city', zip_code = '$zip_code', updated = now() WHERE id = $id");
 
 
 
