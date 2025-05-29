@@ -29,7 +29,6 @@
 <script src="assets/js/notify/notify-script.js"></script>
 <script src="assets/js/form-validation-custom.js"></script>
 <script src="assets/js/tooltip-init.js"></script>
-<script src="assets/js/material-date-range-picker/duDatepicker.min.js"></script>
 <script src="assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
 <script src="assets/js/datatable/datatables/datatable.custom.js"></script>
 <script src="assets/js/sweet-alert/sweetalert.min.js"></script>
