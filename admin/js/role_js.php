@@ -1,5 +1,50 @@
 <script>
 
+$(document).ready(function() { 
+    let selectAllPermissions = $('#select_all_permissions');
+    let allPermissionCheckboxes = $('.permission-checkbox');
+    let selectAllGroupCheckboxes = $('.select-all-group');
+
+    function updateGlobalSelectAll() {
+        var allChecked = allPermissionCheckboxes.length === allPermissionCheckboxes.filter(':checked').length;
+        selectAllPermissions.prop('checked', allChecked);
+    }
+
+    selectAllPermissions.on('change', function() {
+        var isChecked = $(this).is(':checked');
+        allPermissionCheckboxes.prop('checked', isChecked);
+        selectAllGroupCheckboxes.prop('checked', isChecked);
+    });
+
+    selectAllGroupCheckboxes.on('change', function() {
+        var group = $(this).data('group');
+        var isChecked = $(this).is(':checked');
+        $(`.${group}-perm`).prop('checked', isChecked);
+        updateGlobalSelectAll();
+    });
+
+    allPermissionCheckboxes.on('change', function() {
+        var classList = $(this).attr('class').split(/\s+/);
+        var groupName = null;
+        $.each(classList, function(index, item) {
+            if (item.endsWith('-perm')) {
+                groupName = item.replace('-perm', '');
+                return false; 
+            }
+        });
+
+        if (groupName) {
+            var groupCheckboxes = $(`.${groupName}-perm`);
+            var groupSelectAll = $(`#${groupName}_all`);
+            if (groupSelectAll.length) { 
+                var allInGroupChecked = groupCheckboxes.length === groupCheckboxes.filter(':checked').length;
+                groupSelectAll.prop('checked', allInGroupChecked);
+            }
+        }
+        updateGlobalSelectAll();
+    });
+});
+
 /* ==================================================START STAFF FORM JS CODE================================================== */
 $('#staff_role_form').on('submit', (function(e) {
     e.preventDefault();
@@ -25,7 +70,7 @@ $('#staff_role_form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                var url = `agent_list.php`;
+                var url = `staff_list.php`;
                 setTimeout(function() { move(`<?=$actual_link?>${url}`); }, 1000);
             }else{
                 $("#staff_role").html('Submit');
