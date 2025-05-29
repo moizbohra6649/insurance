@@ -40,8 +40,8 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 }
 
 /* Search Filter */
-$from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
-$to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
+$from_date         = (isset($_REQUEST["from_date"])) ? convertToYMD($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
+$to_date           = (isset($_REQUEST["to_date"])) ? convertToYMD($_REQUEST["to_date"]) : date('Y-m-d');
 $filter_agent_id    = (isset($_REQUEST["filter_agent_id"])) ? $_REQUEST["filter_agent_id"] : "";
 $filter_agent_name    = (isset($_REQUEST["filter_agent_name"])) ? $_REQUEST["filter_agent_name"] : "";
 $entry_type        = (isset($_REQUEST["entry_type"])) ? $_REQUEST["entry_type"] : "";

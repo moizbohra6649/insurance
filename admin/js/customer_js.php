@@ -108,13 +108,13 @@ $('.submit_btn').on('click', (function(e) {
 }));
 
 function fn_search_filter(){
-    var from_date   = $("#range-from").val();
-    var to_date     = $("#range-to").val();
+    var from_date   = $("#from_date").val();
+    var to_date     = $("#to_date").val();
     var filter_user_id = $("#filter_user_id").val();
-    var name   = $("#name").val();
+    var filter_customer_name   = $("#filter_customer_name").val();
     var mobile_no   = $("#mobile_no").val();
 
-    if(from_date == "" && to_date == "" && filter_user_id == "" && name == "" && mobile_no == ""){
+    if(from_date == "" && to_date == "" && filter_user_id == "" && filter_customer_name == "" && mobile_no == ""){
         notification("Oh Snap!", "Please select atleast one searh filter.", "info");
         return false;
     }

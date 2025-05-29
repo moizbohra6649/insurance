@@ -216,11 +216,11 @@ if(isset($_SESSION["session"])){
 	$admin_level_role = array('superadmin', 'admin', 'staff');
 	$agent_vendor_role = array('agent', 'vendor');
 	if(in_array($_SESSION["session"]["role"], $admin_level_role)){
-		$select_user = mysqli_query($conn, "SELECT * FROM users WHERE id = '$login_id' ");
+		$select_user = mysqli_query($conn, "SELECT users.*, CONCAT(users.first_name, ' ', users.last_name) AS full_name FROM users WHERE id = '$login_id' ");
 		if(mysqli_num_rows($select_user) > 0){
 			$get_user = mysqli_fetch_assoc($select_user);
 			$login_email = $get_user["email"];
-			$login_name = $get_user["name"];
+			$login_name = $get_user["full_name"];
 			$login_role = $get_user["role"];
 			$total_earning = $get_user['earning']; 
 
@@ -287,6 +287,27 @@ function formatIds($id) {
     }
 }
 
+function convertToYMD($date) {
+    // Convert from mm/dd/yyyy to yyyy-mm-dd
+    if (!empty($date) && $date != "0000-00-00") {
+        $dateTime = DateTime::createFromFormat('m/d/Y', $date);
+        if ($dateTime && $dateTime->format('m/d/Y') === $date) {
+            return $dateTime->format('Y-m-d');
+        }
+    } 
+	return "";
+}
+
+function convertToMDY($date) {
+    // Convert from yyyy-mm-dd to mm/dd/yyyy
+    if (!empty($date) && $date != "0000-00-00") {
+        $dateTime = DateTime::createFromFormat('Y-m-d', $date);
+        if ($dateTime && $dateTime->format('Y-m-d') === $date) {
+            return $dateTime->format('m/d/Y');
+        }
+    } 
+	return "";
+}
 
 function convert_calender_date($select_date){
 	if(!empty($select_date) && $select_date != "0000-00-00"){
@@ -321,6 +342,36 @@ function convert_readable_date_db($date){
 
 	return $formattedDate; 
 }
+
+function numberToOrdinal($number) {
+    if (!is_numeric($number)) {
+        return $number; // return original input if it's not a number
+    }
+
+    $lastDigit = $number % 10;
+    $lastTwoDigits = $number % 100;
+
+    if ($lastTwoDigits >= 11 && $lastTwoDigits <= 13) {
+        $suffix = 'th';
+    } else {
+        switch ($lastDigit) {
+            case 1:
+                $suffix = 'st';
+                break;
+            case 2:
+                $suffix = 'nd';
+                break;
+            case 3:
+                $suffix = 'rd';
+                break;
+            default:
+                $suffix = 'th';
+        }
+    }
+
+    return $number . $suffix;
+}
+
 
 function mail_send($usermail = '' , $subject = '' , $body = '' , $name = ''){
 

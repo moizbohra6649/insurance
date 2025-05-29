@@ -153,10 +153,18 @@ include('partial/loader.php'); ?>
                                     <?php if($mode != "VIEW"){ ?>
                                         <div class="card-body btn-showcase" style="text-align: center;">
                                             <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
-                                            <button id="submit_btn_vehicle" class="btn btn-primary submit_btn" type="submit" value="vehicle" data-btn_text="Submit">Submit</button>
-                                            <?php if($mode != "EDIT"){ ?>
-                                                <button id="submit_btn_driver" class="btn btn-primary submit_btn" type="submit" value="driver" data-btn_text="Submit & Add Driver">Submit & Add Driver</button>
-                                                <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="policy" data-btn_text="Submit & Add Policy">Submit & Add Policy</button>
+                                            <!-- <button id="submit_btn_vehicle" class="btn btn-primary submit_btn" type="submit" value="vehicle" data-btn_text="Submit">Submit</button> -->
+                                            <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="policy" data-btn_text="Submit">Submit</button>
+                                            <?php if($mode != "EDIT"){ 
+                                                $vehicle_counting++;
+                                                if($vehicle_counting < $max_customer_vehicle_insert_count){ 
+                                                    $vehicle_counting++;
+                                                    $get_vehicle_button_num = numberToOrdinal($vehicle_counting);
+                                                ?>
+                                                    <button id="submit_btn_vehicle_add" class="btn btn-primary submit_btn" type="submit" value="vehicle_add" data-btn_text="Submit & Add <?=$get_vehicle_button_num;?> Vehicle">Submit & Add <?=$get_vehicle_button_num;?> Vehicle</button>
+                                                <?php } ?>
+                                                <!-- <button id="submit_btn_driver" class="btn btn-primary submit_btn" type="submit" value="driver" data-btn_text="Submit & Add Driver">Submit & Add Driver</button>
+                                                <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="policy" data-btn_text="Submit & Add Policy">Submit & Add Policy</button> -->
                                             <?php } ?>
                                         </div>
                                     <?php } ?>

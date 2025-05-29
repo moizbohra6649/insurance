@@ -20,7 +20,7 @@ $first_name            = (isset($_REQUEST["first_name"])) ? $_REQUEST["first_nam
 $last_name             = (isset($_REQUEST["last_name"])) ? $_REQUEST["last_name"] : "";
 $email           = (isset($_REQUEST["email"])) ? $_REQUEST["email"] : "";
 $mobile_no       = (isset($_REQUEST["mobile_no"])) ? $_REQUEST["mobile_no"] : "";
-$date_of_birth   = (isset($_REQUEST["date_of_birth"]) && !empty($_REQUEST["date_of_birth"])) ? convert_readable_date_db($_REQUEST["date_of_birth"]) : "0000-00-00";
+$date_of_birth   = (isset($_REQUEST["date_of_birth"]) && !empty($_REQUEST["date_of_birth"])) ? convertToYMD($_REQUEST["date_of_birth"]) : "0000-00-00";
 $address               = (isset($_REQUEST["address"])) ? $_REQUEST["address"] : "";
 $apt_unit              = (isset($_REQUEST["apt_unit"])) ? $_REQUEST["apt_unit"] : "";
 $state                 = (isset($_REQUEST["state"])) ? $_REQUEST["state"] : 0;
@@ -36,8 +36,8 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 }
 
 /* Search Filter */
-$from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
-$to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
+$from_date         = (isset($_REQUEST["from_date"])) ? convertToYMD($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
+$to_date           = (isset($_REQUEST["to_date"])) ? convertToYMD($_REQUEST["to_date"]) : date('Y-m-d');
 $filter_customer_id    = (isset($_REQUEST["filter_customer_id"])) ? $_REQUEST["filter_customer_id"] : "";
 $filter_customer_name    = (isset($_REQUEST["filter_customer_name"])) ? $_REQUEST["filter_customer_name"] : "";
 
@@ -129,7 +129,7 @@ switch ($mode) {
             $error_arr[] = "Please provide a valid Mobile No.<br/>";
         }
 
-        if (empty($date_of_birth) || $date_of_birth == "0000-00-00") {
+        if (empty($date_of_birth)) {
             $error_arr[] = "Please provide a valid DOB.<br/>";
         }
 
@@ -194,7 +194,7 @@ switch ($mode) {
             $last_name                = $get_data["last_name"];
             $email                  = $get_data["email"];
             $mobile_no              = $get_data["mobile"];
-            $date_of_birth          = convert_db_date_readable($get_data["date_of_birth"]);
+            $date_of_birth        = $get_data["date_of_birth"];
             $address           = $get_data["address"];
             $apt_unit           = $get_data["apt_unit"];
             $state           = $get_data["state_id"];
@@ -235,7 +235,7 @@ switch ($mode) {
             $error_arr[] = "Please enter a valid Mobile No.<br/>";
         }
 
-        if (empty($date_of_birth) || $date_of_birth == "0000-00-00") {
+        if (empty($date_of_birth)) {
             $error_arr[] = "Please provide a valid DOB.<br/>";
         }
 

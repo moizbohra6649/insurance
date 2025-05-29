@@ -65,9 +65,7 @@ include('partial/loader.php'); ?>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="address">Address</label>
-                                            <div class="input-group">
-                                                <input class="form-control" id="address" name="address" type="text" value="<?=$address?>" placeholder="Address">
-                                            </div>
+                                            <input class="form-control" id="address" name="address" type="text" value="<?=$address?>" placeholder="Address">
                                         </div>
                                     </div>
                                     <div class="row">

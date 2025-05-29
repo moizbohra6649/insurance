@@ -73,8 +73,8 @@ $('#deposit_form').on('submit', (function(e) {
 }));
 
 function fn_search_filter(){
-    var from_date   = $("#range-from").val();
-    var to_date     = $("#range-to").val();
+    var from_date   = $("#from_date").val();
+    var to_date     = $("#to_date").val();
     var filter_transactionid = $("#filter_transactionid").val();
 
     if(from_date == "" && to_date == "" && filter_transactionid == ""){

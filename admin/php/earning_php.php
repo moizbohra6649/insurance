@@ -28,8 +28,8 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 }
 
 /* Search Filter */
-$from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
-$to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
+$from_date         = (isset($_REQUEST["from_date"])) ? convertToYMD($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
+$to_date           = (isset($_REQUEST["to_date"])) ? convertToYMD($_REQUEST["to_date"]) : date('Y-m-d');
 $policy_id    = (isset($_REQUEST["policy_id"])) ? $_REQUEST["policy_id"] : "";
 $amount    = (isset($_REQUEST["amount"])) ? $_REQUEST["amount"] : "";
 

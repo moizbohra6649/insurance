@@ -42,13 +42,21 @@ include('partial/loader.php'); ?>
                                             <div class="row">
                                                 <div class="mb-3 col-lg-3">
                                                     <label class="form-label">From Date</label>
-                                                    <input type="text" id="daterange" data-theme="dark" class="form-control" value="<?=convert_db_date_readable($from_date)?>-<?=convert_db_date_readable($to_date)?>" data-range-from="<?=$from_date?>" data-range-to="<?=$to_date?>">
-		                                            <input type="text" id="range-from" name="from_date" value="<?=convert_db_date_readable($from_date);?>" data-value="<?=$from_date?>" class="form-control" readonly>
-		
+                                                    <div class="ui calendar" id="from_date_div">
+                                                        <div class="ui input left icon" style="width: 100%; height:33.1px;">
+                                                            <i class="calendar icon"></i>
+                                                            <input type="text" name="from_date" id="from_date" class="form-control" placeholder="From Date" value="<?=convertToMDY($from_date) ;?>" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="mb-3 col-lg-3">
-                                                        <label class="form-label">To Date</label>
-                                                        <input type="text" id="range-to" name="to_date" value="<?=convert_db_date_readable($to_date);?>" data-value="<?=$to_date?>" class="form-control" readonly>
+                                                    <label class="form-label">To Date</label>
+                                                    <div class="ui calendar" id="to_date_div">
+                                                        <div class="ui input left icon" style="width: 100%; height:33.1px;">
+                                                            <i class="calendar icon"></i>
+                                                            <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" value="<?=convertToMDY($to_date) ;?>" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
                                                     <label for="filter_agent_id" class="form-label">Agent ID</label>

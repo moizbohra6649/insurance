@@ -102,6 +102,8 @@ $('.submit_btn').on('click', (function(e) {
                         var url = `driver.php?customer_id=${data.id}`;
                     }else if(btn_value == "policy"){
                         var url = `policy.php?customer_id=${data.id}`;
+                    }else if(btn_value == "vehicle_add"){
+                        var url = `vehicle.php?customer_id=${data.id}`;
                     }
                 }
 

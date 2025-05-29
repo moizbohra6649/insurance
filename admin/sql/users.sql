@@ -33,12 +33,18 @@ CREATE TABLE `users` (
   `prefix_user_id` varchar(252) NOT NULL,
   `role` varchar(252) NOT NULL,
   `username` varchar(252) NOT NULL,
-  `name` varchar(252) NOT NULL,
+  `first_name` varchar(252) NOT NULL,
+  `last_name` varchar(252) NOT NULL,
   `email` varchar(252) NOT NULL,
   `mobile` varchar(15) NOT NULL,
   `password` varchar(252) NOT NULL,
   `hint` varchar(252) NOT NULL,
   `profile_image` varchar(252) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `apt_unit` varchar(252) DEFAULT NULL,
+  `state_id` int(11) DEFAULT NULL,
+  `city` varchar(252) DEFAULT NULL,
+  `zip_code` varchar(52) DEFAULT NULL,
   `status` int(12) NOT NULL DEFAULT 0,
   `earning` BIGINT(50) NOT NULL DEFAULT 0,
   `deleted` int(12) NOT NULL DEFAULT 0,
@@ -51,8 +57,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `user_id`, `prefix_user_id`, `role`, `username`, `name`, `email`, `mobile`, `password`, `hint`, `profile_image`, `status`) VALUES
-(1, 1, 'STAFF_1', 'superadmin', 'insurance', 'Insurance SuperAdmin', 'superadmin@insurance.com', '8819945752', '$2y$10$/w2sddYGfaP8cH32IFjXXuRZKf8v6LoZEvr9XvpycKRM5gx6ndL9K', '12345678', NULL, 1);
+INSERT INTO `users` (`id`, `user_id`, `prefix_user_id`, `role`, `username`, `first_name`, `last_name`, `email`, `mobile`, `password`, `hint`, `profile_image`, `status`) VALUES
+(1, 1, 'STAFF_1', 'superadmin', 'insurance', 'Insurance', 'SuperAdmin', 'superadmin@insurance.com', '8819945752', '$2y$10$/w2sddYGfaP8cH32IFjXXuRZKf8v6LoZEvr9XvpycKRM5gx6ndL9K', '12345678', NULL, 1);
 
 --
 -- Indexes for dumped tables

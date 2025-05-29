@@ -41,12 +41,12 @@ include('partial/loader.php'); ?>
                                                 <div class="mb-3 col-lg-6">
                                                     <label class="form-label">From Date</label>
                                                     <input type="text" id="daterange" data-theme="dark" class="form-control" value="<?=convert_db_date_readable($from_date)?>-<?=convert_db_date_readable($to_date)?>" data-range-from="<?=$from_date?>" data-range-to="<?=$to_date?>">
-		                                            <input type="text" id="range-from" name="from_date" value="<?=convert_db_date_readable($from_date);?>" data-value="<?=$from_date?>" class="form-control" readonly>
+		                                            <input type="text" id="range-from" name="from_date" id="from_date" value="<?=convert_db_date_readable($from_date);?>" data-value="<?=$from_date?>" class="form-control" readonly>
 		
                                                 </div>
                                                 <div class="mb-3 col-lg-6">
                                                         <label class="form-label">To Date</label>
-                                                        <input type="text" id="range-to" name="to_date" value="<?=convert_db_date_readable($to_date);?>" data-value="<?=$to_date?>" class="form-control" readonly>
+                                                        <input type="text" id="range-to" name="to_date" id="to_date" value="<?=convert_db_date_readable($to_date);?>" data-value="<?=$to_date?>" class="form-control" readonly>
                                                 </div>
                                             </div>
 

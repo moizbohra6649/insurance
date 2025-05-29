@@ -1,5 +1,6 @@
 <?php
 $table_name = "driver";
+$max_customer_driver_insert_count = 5;
 /* Include Function's File */
 if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
     require_once(dirname(__DIR__) . '/partial/functions.php');
@@ -56,6 +57,8 @@ $family_friend_city           = (isset($_REQUEST["family_friend_city"])) ? $_REQ
 $family_friend_zip_code       = (isset($_REQUEST["family_friend_zip_code"])) ? $_REQUEST["family_friend_zip_code"] : "";
 $family_friend_apt_unit       = (isset($_REQUEST["family_friend_apt_unit"])) ? $_REQUEST["family_friend_apt_unit"] : "";
 $family_friend_address        = (isset($_REQUEST["family_friend_address"])) ? $_REQUEST["family_friend_address"] : "";
+$is_fruad_alert        = (isset($_REQUEST["is_fruad_alert"])) ? $_REQUEST["is_fruad_alert"] : "";
+$is_fruad_alert_family_info        = (isset($_REQUEST["is_fruad_alert_family_info"])) ? $_REQUEST["is_fruad_alert_family_info"] : "";
 
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
@@ -69,7 +72,7 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 $is_customer_exits = checkAndSelectValue("customer", "id", " AND id = $customer_id ");
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
-    $select_query = "SELECT driver.*, customer.name as customer_name FROM driver 
+    $select_query = "SELECT driver.*, CONCAT(customer.first_name, ' ', customer.last_name) AS customer_name FROM driver 
     left join customer on customer.id = driver.customer_id
     WHERE driver.customer_id = '$customer_id'";
     $query_result = mysqli_query($conn, $select_query);
@@ -85,7 +88,7 @@ switch ($mode) {
         $title      = "Add New Driver"; 
         $driver_id = get_max_id("driver", "driver_id");
         $prefix_driver_id = "DRIVER_" . $driver_id;
-        $customer_name = get_value("customer", "name", "where customer_id = '$customer_id'");
+        $customer_name = get_value("customer", "CONCAT(customer.first_name, ' ', customer.last_name)", "where customer_id = '$customer_id'");
         $select_driver = mysqli_query($conn, "SELECT id FROM driver WHERE customer_id = '$customer_id' " );
         $driver_counting = mysqli_num_rows($select_driver);
     break;
@@ -107,7 +110,7 @@ switch ($mode) {
             $error_arr[] = "Customer does not exists.<br/>";
         }
 
-        if($driver_counting >= 5){
+        if($driver_counting >= $max_customer_driver_insert_count){
             $error_arr[] = "Customer have already five Driver exists.<br/>";
         }
         

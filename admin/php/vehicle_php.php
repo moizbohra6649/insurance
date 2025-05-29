@@ -1,5 +1,6 @@
 <?php
 $table_name = "vehicle";
+$max_customer_vehicle_insert_count = 5;
 /* Include Function's File */
 if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
     require_once(dirname(__DIR__) . '/partial/functions.php');
@@ -78,7 +79,7 @@ switch ($mode) {
             $error_arr[] = "Customer does not exists.<br/>";
         }
 
-        if($vehicle_counting >= 5){
+        if($vehicle_counting >= $max_customer_vehicle_insert_count){
             $error_arr[] = "Customer have already five Vehicle exists.<br/>";
         }
 

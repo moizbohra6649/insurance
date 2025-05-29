@@ -33,10 +33,77 @@
 <script src="assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
 <script src="assets/js/datatable/datatables/datatable.custom.js"></script>
 <script src="assets/js/sweet-alert/sweetalert.min.js"></script>
+<!-- Inputmask Plugin -->
+<script src="assets/js/inputmask.bundle.min.js"></script>
+<script src="assets/js/semantic-ui.min.js"></script>
 <!-- third party js ends -->
 <?php include('js/main_js.php'); ?>
 
 <script>
+    
+    $(document).ready(function () {
+
+        var today = new Date(); // current date
+        var minDate = new Date(1900, 0, 1); // Jan 1, 1900
+
+        $("input[data-mask]").inputmask(); 	 	
+        
+        $('.datepicker_div').calendar({
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    return month + '/' + day + '/' + year;
+                }
+            },
+            type: 'date',
+            minDate: minDate,
+            maxDate: today
+        });
+
+        $('.datepicker').calendar({
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    return month + '/' + day + '/' + year;
+                }
+            },
+            type: 'date',
+        });
+
+        $('#from_date_div').calendar({
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    return month + '/' + day + '/' + year;
+                }
+            },
+            type: 'date',
+            endCalendar: $('#to_date_div')
+        });
+        $('#to_date_div').calendar({
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    return month + '/' + day + '/' + year;
+                }
+            },
+            type: 'date',
+            startCalendar: $('#from_date')
+        });
+    });	
+    
     $(document).ready(function() {
         "use strict";
 
@@ -47,45 +114,6 @@
 
         var end = moment();
         var now = Date.now();
-
-        duDatepicker('#yearPicker', {
-            
-            clearBtn: false, theme: 'yellow',
-            inline: false,
-            
-        });
-
-        duDatepicker('#daterange', {
-            range: true, format: 'mmmm d, yyyy', outFormat: 'yyyy-mm-dd', fromTarget: '#range-from', toTarget: '#range-to',
-            clearBtn: false, theme: 'yellow', maxDate: 'today',
-            inline: false,
-            events: {
-                // onRangeFormat: function (from, to) {
-                //     var dateFormat = 'yyyy-mm-dd';
-                //     return from.getTime() === to.getTime()
-                //         ? this.formatDate(from, dateFormat)
-                //         : [this.formatDate(from, dateFormat), this.formatDate(to, dateFormat)].join(' - ');
-                // },
-
-                // ready: function () {
-                //     console.log('duDatepicker', this)
-                // },
-                // dateChanged: function (data) {
-                //     console.log('new date', data)
-                // }
-            }
-        });
-
-        duDatepicker('#datepicker', {
-            format: 'mmmm d, yyyy', outFormat: 'yyyy-mm-dd',
-            clearBtn: false, theme: 'yellow', maxDate: 'today',
-            inline: false,
-        });
-        duDatepicker('#min_datepicker', {
-            format: 'mmmm d, yyyy', outFormat: 'yyyy-mm-dd',
-            clearBtn: false, theme: 'yellow', minDate: 'today',
-            inline: false,
-        });
 
     });
 </script>

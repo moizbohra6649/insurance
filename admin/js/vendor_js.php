@@ -10,8 +10,12 @@ $('#vendor_form').on('submit', (function(e) {
         error_arr.push("Please enter company name.<br/>");
     }
 
-    if($("#name").val() == ""){
-        error_arr.push("Please enter Name.<br/>");
+    if($("#first_name").val() == ""){
+        error_arr.push("Please fill a First Name.<br/>");
+    }
+
+    if($("#last_name").val() == ""){
+        error_arr.push("Please fill a Last Name.<br/>");
     }
 
     if($("#username").val() == ""){
@@ -89,13 +93,13 @@ $('#vendor_form').on('submit', (function(e) {
 }));
 
 function fn_search_filter(){
-    var from_date   = $("#range-from").val();
-    var to_date     = $("#range-to").val();
+    var from_date   = $("#from_date").val();
+    var to_date     = $("#to_date").val();
     var filter_vendor_id = $("#filter_vendor_id").val();
-    var name   = $("#name").val();
+    var filter_vendor_name   = $("#filter_vendor_name").val();
     var mobile_no   = $("#mobile_no").val();
 
-    if(from_date == "" && to_date == "" && filter_vendor_id == "" && name == "" && mobile_no == ""){
+    if(from_date == "" && to_date == "" && filter_vendor_id == "" && filter_vendor_name == "" && mobile_no == ""){
         notification("Oh Snap!", "Please select atleast one searh filter.", "info");
         return false;
     }

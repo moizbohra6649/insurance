@@ -17,7 +17,7 @@ $('.submit_btn').on('click', (function(e) {
         error_arr.push("Please fill a Last Name.<br/>");
     }
 
-    if($("#date_of_birth").val() == ""  || $("#birth_date").val() == "0000-00-00"){
+    if($("#date_of_birth").val() == ""){
         error_arr.push("Please provide a valid DOB.<br/>");
     }
 
@@ -47,6 +47,10 @@ $('.submit_btn').on('click', (function(e) {
         }else if($('input[name="family_friend"]:checked').val() == "family" && $("#last_name").val() != $("#family_friend_last_name").val()){
             error_arr.push("Driver Last name or Family member Last name are not same.<br/>");
         }
+    }
+
+    if(!$('input[name="is_fruad_alert"]:checked')){
+        error_arr.push("Please check a final declaration checkbox.<br/>");
     }
 
     var error_txt = error_arr.join('');
@@ -84,6 +88,8 @@ $('.submit_btn').on('click', (function(e) {
                         var url = `vechile.php?customer_id=${data.id}`;
                     }else if(btn_value == "policy"){
                         var url = `policy.php?customer_id=${data.id}`;
+                    }else if(btn_value == "driver_add"){
+                        var url = `driver.php?customer_id=${data.id}`;
                     }
                 }
 

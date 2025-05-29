@@ -42,13 +42,21 @@ include('partial/loader.php'); ?>
                                             <div class="row">
                                                 <div class="mb-3 col-lg-3">
                                                     <label class="form-label">From Date</label>
-                                                    <input type="text" id="daterange" data-theme="dark" class="form-control" value="<?=convert_db_date_readable($from_date)?>-<?=convert_db_date_readable($to_date)?>" data-range-from="<?=$from_date?>" data-range-to="<?=$to_date?>">
-		                                            <input type="text" id="range-from" name="from_date" value="<?=convert_db_date_readable($from_date);?>" data-value="<?=$from_date?>" class="form-control" readonly>
-		
+                                                    <div class="ui calendar" id="from_date_div">
+                                                        <div class="ui input left icon" style="width: 100%; height:33.1px;">
+                                                            <i class="calendar icon"></i>
+                                                            <input type="text" name="from_date" id="from_date" class="form-control" placeholder="From Date" value="<?=convertToMDY($from_date) ;?>" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="mb-3 col-lg-3">
-                                                        <label class="form-label">To Date</label>
-                                                        <input type="text" id="range-to" name="to_date" value="<?=convert_db_date_readable($to_date);?>" data-value="<?=$to_date?>" class="form-control" readonly>
+                                                    <label class="form-label">To Date</label>
+                                                    <div class="ui calendar" id="to_date_div">
+                                                        <div class="ui input left icon" style="width: 100%; height:33.1px;">
+                                                            <i class="calendar icon"></i>
+                                                            <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" value="<?=convertToMDY($to_date) ;?>" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
                                                     <label for="filter_vendor_id" class="form-label">Vendor ID</label>
@@ -58,8 +66,8 @@ include('partial/loader.php'); ?>
 
                                             <div class="row">
                                                 <div class="mb-3 col-md-3">
-                                                    <label for="name" class="form-label">Vendor Name</label>
-                                                    <input type="text" class="form-control" id="name" name="name" placeholder="Vendor Name" value="<?=$name?>">
+                                                    <label for="filter_vendor_name" class="form-label">Vendor Name</label>
+                                                    <input type="text" class="form-control" id="filter_vendor_name" name="filter_vendor_name" placeholder="Vendor Name" value="<?=$filter_vendor_name?>">
                                                 </div>
                                                 <div class="mb-3 col-md-3">
                                                     <label for="mobile_no" class="form-label">Mobile No.</label>
@@ -138,7 +146,7 @@ include('partial/loader.php'); ?>
                                                     <td align="center"> <?=$get_data["vendor_id"]?> </td>
                                                     <td class="table-user">
                                                         <img src="<?=$profile_image_url?>" alt="Profile Picture" class="me-2 rounded-circle" style="cursor:pointer;" onclick="image_preview('image_preview', 'src_path', '<?=$profile_image_url?>', 'image_preview_label', 'Profile Picture Preview');">
-                                                        <a href="javascript:void(0);" class="text-body fw-semibold"><?=$get_data["name"]?></a>
+                                                        <a href="javascript:void(0);" class="text-body fw-semibold"><?=$get_data["full_name"]?></a>
                                                     </td>
                                                     <td> <?=$get_data["email"]?> </td>
                                                     <td> <?=$get_data["mobile"]?> </td>

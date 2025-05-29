@@ -17,11 +17,11 @@ $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 $vendor_id              = (isset($_REQUEST["vendor_id"])) ? $_REQUEST["vendor_id"] : 0;
 $company_name           = (isset($_REQUEST["company_name"])) ? $_REQUEST["company_name"] : "";
-$name                   = (isset($_REQUEST["name"])) ? $_REQUEST["name"] : "";
+$first_name            = (isset($_REQUEST["first_name"])) ? $_REQUEST["first_name"] : "";
+$last_name             = (isset($_REQUEST["last_name"])) ? $_REQUEST["last_name"] : "";
 $username               = (isset($_REQUEST["username"])) ? $_REQUEST["username"] : "";
 $business_type          = (isset($_REQUEST["business_type"])) ? $_REQUEST["business_type"] : 0;
 $email                  = (isset($_REQUEST["email"])) ? $_REQUEST["email"] : "";
-$address                = (isset($_REQUEST["address"])) ? $_REQUEST["address"] : "";
 $mobile_no              = (isset($_REQUEST["mobile_no"])) ? $_REQUEST["mobile_no"] : "";
 $password               = (isset($_REQUEST["password"])) ? $_REQUEST["password"] : "";
 $confirm_password       = (isset($_REQUEST["confirm_password"])) ? $_REQUEST["confirm_password"] : "";
@@ -29,6 +29,11 @@ $profile_image          = (isset($_FILES["profile_image"]['name'])) ? $_FILES["p
 $business_licence_image = (isset($_FILES["business_licence_image"]['name'])) ? $_FILES["business_licence_image"]['name'] : "";
 $delete_image           = (isset($_REQUEST["delete_image"])) ? $_REQUEST["delete_image"] : "";
 $delete_business_licence_image           = (isset($_REQUEST["delete_business_licence_image"])) ? $_REQUEST["delete_business_licence_image"] : "";
+$address               = (isset($_REQUEST["address"])) ? $_REQUEST["address"] : "";
+$apt_unit              = (isset($_REQUEST["apt_unit"])) ? $_REQUEST["apt_unit"] : "";
+$state                 = (isset($_REQUEST["state"])) ? $_REQUEST["state"] : 0;
+$city                  = (isset($_REQUEST["city"])) ? $_REQUEST["city"] : "";
+$zip_code              = (isset($_REQUEST["zip_code"])) ? $_REQUEST["zip_code"] : "";
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -39,9 +44,10 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 }
 
 /* Search Filter */
-$from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
-$to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
+$from_date         = (isset($_REQUEST["from_date"])) ? convertToYMD($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
+$to_date           = (isset($_REQUEST["to_date"])) ? convertToYMD($_REQUEST["to_date"]) : date('Y-m-d');
 $filter_vendor_id  = (isset($_REQUEST["filter_vendor_id"])) ? $_REQUEST["filter_vendor_id"] : "";
+$filter_vendor_name    = (isset($_REQUEST["filter_vendor_name"])) ? $_REQUEST["filter_vendor_name"] : "";
 $entry_type        = (isset($_REQUEST["entry_type"])) ? $_REQUEST["entry_type"] : "";
 $filter_status        = (isset($_REQUEST["filter_status"])) ? $_REQUEST["filter_status"] : "All";
 
@@ -69,8 +75,8 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
         $filter_qry .= " AND vendor_id = $filter_vendor_id ";
     }
 
-    if(!empty($name)){
-        $filter_qry .= " AND name LIKE '%$name%' ";
+    if(!empty($filter_vendor_name)){
+        $filter_qry .= " AND (CONCAT(first_name, ' ', last_name) LIKE '%$filter_vendor_name%') ";
     }
 
     if(!empty($mobile_no)){
@@ -92,7 +98,7 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
 }
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
-    $select_query = "SELECT id, vendor_id, name, email, mobile, profile_image, created, status FROM vendor WHERE 1=1 ".$filter_qry;
+    $select_query = "SELECT vendor.*, CONCAT(vendor.first_name, ' ', vendor.last_name) AS full_name FROM vendor WHERE 1=1 ".$filter_qry;
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
 }
@@ -124,8 +130,12 @@ switch ($mode) {
             $error_arr[] = "Please enter company name.<br/>";
         }
 
-        if (empty($name)) {
-            $error_arr[] = "Please enter Name.<br/>";
+        if (empty($first_name)) {
+            $error_arr[] = "Please fill a First Name.<br/>";
+        }
+        
+        if (empty($last_name)) {
+            $error_arr[] = "Please fill a Last Name.<br/>";
         }
 
         if (empty($username)) {
@@ -192,7 +202,7 @@ switch ($mode) {
 
         $password_hash =  password_hash($password, PASSWORD_DEFAULT);
 
-        $insert_query = mysqli_query($conn, "INSERT INTO vendor (vendor_id, prefix_vendor_id, company_name, name, username, email, address, mobile, password, hint, profile_image, business_license, entry_type) VALUES ('$vendor_id', '$prefix_vendor_id', '$company_name', '$name', '$username', '$email', '$address', '$mobile_no', '$password_hash', '$password', '$profile_image', '$business_licence_image', '$db_entry_type') ");
+        $insert_query = mysqli_query($conn, "INSERT INTO vendor (vendor_id, prefix_vendor_id, company_name, first_name, last_name, username, email, mobile, address, apt_unit, state_id, city, zip_code, password, hint, profile_image, business_license, entry_type) VALUES ('$vendor_id', '$prefix_vendor_id', '$company_name', '$first_name', '$last_name', '$username', '$email', '$mobile_no', '$address', '$apt_unit', '$state', '$city', '$zip_code', '$password_hash', '$password', '$profile_image', '$business_licence_image', '$db_entry_type') ");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
@@ -236,12 +246,17 @@ switch ($mode) {
             $vendor_id           = $get_data["vendor_id"];
             $prefix_vendor_id    = $get_data["prefix_vendor_id"];
             $company_name        = $get_data["company_name"];
-            $name                = $get_data["name"];
+            $first_name                = $get_data["first_name"];
+            $last_name                = $get_data["last_name"];
             $username            = $get_data["username"];
             $email               = $get_data["email"];
             $mobile_no           = $get_data["mobile"];
             $password            = $get_data["hint"];
-            $address             = $get_data["address"];
+            $address           = $get_data["address"];
+            $apt_unit           = $get_data["apt_unit"];
+            $state           = $get_data["state_id"];
+            $city           = $get_data["city"];
+            $zip_code           = $get_data["zip_code"];
             $profile_image       = $get_data["profile_image"];
             $business_licence_image = $get_data["business_license"];
             $created             = $get_data["created"];
@@ -262,8 +277,12 @@ switch ($mode) {
             $error_arr[] = "Please enter company name.<br/>";
         }
 
-        if (empty($name)) {
-            $error_arr[] = "Please enter Name.<br/>";
+        if (empty($first_name)) {
+            $error_arr[] = "Please fill a First Name.<br/>";
+        }
+        
+        if (empty($last_name)) {
+            $error_arr[] = "Please fill a Last Name.<br/>";
         }
 
         if (empty($username)) {
@@ -360,7 +379,7 @@ switch ($mode) {
             
         $password_hash =  password_hash($password, PASSWORD_DEFAULT);
 
-        $update_vendor = mysqli_query($conn, "UPDATE vendor SET company_name = '$company_name', name = '$name', username = '$username', email = '$email', address = '$address', mobile = '$mobile_no', password = '$password_hash', hint = '$password', profile_image = '$profile_image', business_license = '$business_licence_image', updated = now() WHERE id = $id");
+        $update_vendor = mysqli_query($conn, "UPDATE vendor SET company_name = '$company_name', first_name = '$first_name', last_name = '$last_name', username = '$username', email = '$email', mobile = '$mobile_no', address = '$address', apt_unit = '$apt_unit', state_id = '$state', city = '$city', zip_code = '$zip_code', password = '$password_hash', hint = '$password', profile_image = '$profile_image', business_license = '$business_licence_image', updated = now() WHERE id = $id");
 
 
         // Commit transaction

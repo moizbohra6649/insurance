@@ -1,6 +1,7 @@
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400, 700, 400italic, 700italic&subset=latin" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
     <!-- ico-font-->
     <link rel="stylesheet" type="text/css" href="assets/css/vendors/icofont.css">
@@ -16,6 +17,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/vendors/scrollbar.css">
     <link rel="stylesheet" type="text/css" href="assets/css/vendors/animate.css">
     <!-- Plugins css Ends-->
+    <link async rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"/>
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="assets/css/vendors/bootstrap.css">
     <!-- App css-->
@@ -27,7 +29,6 @@
     <link rel="stylesheet" type="text/css" href="assets/css/vendors/datatables.css">
     <link rel="stylesheet" type="text/css" href="assets/css/vendors/sweetalert2.css">
     <link rel="stylesheet" type="text/css" href="assets/css/vendors/select2.css">
-    
     <style>
         /* Sidebar Logo Wrapper */
         .logo-wrapper a img,

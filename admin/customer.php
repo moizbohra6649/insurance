@@ -57,16 +57,19 @@ include('partial/loader.php'); ?>
                                             <input class="form-control allownumber" minlength="12" maxlength="12" id="mobile_no" name="mobile_no" type="text" value="<?=$mobile_no?>" placeholder="Mobile No." onkeypress="applyPhoneInputRestriction('mobile_no')" required="">
                                             <div class="invalid-feedback">Please provide a valid Mobile No.</div>
                                         </div>
-                                        <div class="col-md-4 mb-3">
+                                        <div class="col-md-4 mb-3"> 
                                             <label class="form-label" for="date_of_birth">DOB <span class="text-danger">*</span></label>
-                                            <input type="text" id="datepicker" name="date_of_birth" data-theme="dark" class="form-control" value="<?=($date_of_birth == "0000-00-00") ? "" : $date_of_birth;?>" readonly required="">
-                                            <div class="invalid-feedback">Please provide a valid DOB.</div>
+                                            <div class="ui calendar datepicker_div">
+                                                <div class="ui input left icon" style="width: 100%; height:33.1px;">
+                                                    <i class="calendar icon"></i>
+                                                    <input type="text" name="date_of_birth" id="date_of_birth" class="form-control" placeholder="DOB" value="<?=convertToMDY($date_of_birth) ;?>" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask required="">
+                                                </div>
+                                                <div class="invalid-feedback">Please provide a valid DOB.</div>
+                                            </div>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="address">Address</label>
-                                            <div class="input-group">
-                                                <input class="form-control" id="address" name="address" type="text" value="<?=$address?>" placeholder="Address">
-                                            </div>
+                                            <input class="form-control" id="address" name="address" type="text" value="<?=$address?>" placeholder="Address">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -94,7 +97,7 @@ include('partial/loader.php'); ?>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4  mb-3">
+                                        <div class="col-md-4 mb-3">
                                             <label class="form-label" for="zip_code">Zip Code <span class="text-danger">*</span></label>
                                             <input class="form-control allownumber" id="zip_code" minlength="6" maxlength="8" name="zip_code" type="text" value="<?=$zip_code?>" placeholder="Zip Code" required="">
                                             <div class="invalid-feedback">Please fill a Zip Code.</div>

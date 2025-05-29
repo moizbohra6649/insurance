@@ -16,7 +16,8 @@ $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] :
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 $user_id                = (isset($_REQUEST["user_id"])) ? $_REQUEST["user_id"] : 0;
-$name                   = (isset($_REQUEST["name"])) ? $_REQUEST["name"] : "";
+$first_name            = (isset($_REQUEST["first_name"])) ? $_REQUEST["first_name"] : "";
+$last_name             = (isset($_REQUEST["last_name"])) ? $_REQUEST["last_name"] : "";
 $username               = (isset($_REQUEST["username"])) ? $_REQUEST["username"] : "";
 $role                   = (isset($_REQUEST["role"])) ? $_REQUEST["role"] : 0;
 $email                  = (isset($_REQUEST["email"])) ? $_REQUEST["email"] : "";
@@ -25,6 +26,11 @@ $password               = (isset($_REQUEST["password"])) ? $_REQUEST["password"]
 $confirm_password       = (isset($_REQUEST["confirm_password"])) ? $_REQUEST["confirm_password"] : "";
 $profile_image          = (isset($_FILES["profile_image"]['name'])) ? $_FILES["profile_image"]['name'] : "";
 $delete_image           = (isset($_REQUEST["delete_image"])) ? $_REQUEST["delete_image"] : "";
+$address               = (isset($_REQUEST["address"])) ? $_REQUEST["address"] : "";
+$apt_unit              = (isset($_REQUEST["apt_unit"])) ? $_REQUEST["apt_unit"] : "";
+$state                 = (isset($_REQUEST["state"])) ? $_REQUEST["state"] : 0;
+$city                  = (isset($_REQUEST["city"])) ? $_REQUEST["city"] : "";
+$zip_code              = (isset($_REQUEST["zip_code"])) ? $_REQUEST["zip_code"] : "";
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -35,9 +41,10 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 }
 
 /* Search Filter */
-$from_date         = (isset($_REQUEST["from_date"])) ? convert_readable_date_db($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
-$to_date           = (isset($_REQUEST["to_date"])) ? convert_readable_date_db($_REQUEST["to_date"]) : date('Y-m-d');
+$from_date         = (isset($_REQUEST["from_date"])) ? convertToYMD($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
+$to_date           = (isset($_REQUEST["to_date"])) ? convertToYMD($_REQUEST["to_date"]) : date('Y-m-d');
 $filter_user_id    = (isset($_REQUEST["filter_user_id"])) ? $_REQUEST["filter_user_id"] : "";
+$filter_staff_name    = (isset($_REQUEST["filter_staff_name"])) ? $_REQUEST["filter_staff_name"] : "";
 $only_staff        = (isset($_REQUEST["only_staff"])) ? $_REQUEST["only_staff"] : false;
 
 $query_count = 0;
@@ -64,8 +71,8 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
         $filter_qry .= " AND user_id = $filter_user_id ";
     }
 
-    if(!empty($name)){
-        $filter_qry .= " AND name LIKE '%$name%' ";
+    if(!empty($filter_staff_name)){
+        $filter_qry .= " AND (CONCAT(first_name, ' ', last_name) LIKE '%$filter_staff_name%') ";
     }
 
     if(!empty($mobile_no)){
@@ -78,7 +85,7 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
 }
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
-    $select_query = "SELECT id, user_id, name, email, mobile, profile_image, created, role, status FROM users WHERE 1=1 AND deleted = 0 AND user_id != $login_id AND role != '$super_admin_role' ".$filter_qry;
+    $select_query = "SELECT users.*, CONCAT(users.first_name, ' ', users.last_name) AS full_name FROM users WHERE 1=1 AND deleted = 0 AND user_id != $login_id AND role != '$super_admin_role' ".$filter_qry;
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
 }
@@ -103,8 +110,13 @@ switch ($mode) {
         $select_staff_mobile = mysqli_query($conn, "SELECT id FROM users WHERE mobile = '$_REQUEST[mobile_no]' " );
 
         // Validation
-        if (empty($name)) {
-            $error_arr[] = "Please enter Name.<br/>";
+
+        if (empty($first_name)) {
+            $error_arr[] = "Please fill a First Name.<br/>";
+        }
+        
+        if (empty($last_name)) {
+            $error_arr[] = "Please fill a Last Name.<br/>";
         }
 
         if (empty($username)) {
@@ -169,7 +181,7 @@ switch ($mode) {
 
         $password_hash =  password_hash($password, PASSWORD_DEFAULT);
 
-        $insert_query = mysqli_query($conn, "INSERT INTO users (user_id, prefix_user_id, role, username, name, email, mobile, password, hint, profile_image) VALUES ('$user_id', '$prefix_user_id', '$role', '$username', '$name', '$email', '$mobile_no', '$password_hash', '$password', '$profile_image')");
+        $insert_query = mysqli_query($conn, "INSERT INTO users (user_id, prefix_user_id, role, username, first_name, last_name, email, mobile, password, hint, profile_image, address, apt_unit, state_id, city, zip_code) VALUES ('$user_id', '$prefix_user_id', '$role', '$username', '$first_name', '$last_name', '$email', '$mobile_no', '$password_hash', '$password', '$profile_image', '$address', '$apt_unit', '$state', '$city', '$zip_code')");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
@@ -203,12 +215,18 @@ switch ($mode) {
             $user_id            = $get_data["user_id"];
             $prefix_user_id     = $get_data["prefix_user_id"];
             $role               = $get_data["role"];
-            $name               = $get_data["name"];
+            $first_name         = $get_data["first_name"];
+            $last_name          = $get_data["last_name"];
             $username           = $get_data["username"];
             $email              = $get_data["email"];
             $mobile_no          = $get_data["mobile"];
             $password           = $get_data["hint"];
             $profile_image      = $get_data["profile_image"];
+            $address           = $get_data["address"];
+            $apt_unit           = $get_data["apt_unit"];
+            $state           = $get_data["state_id"];
+            $city           = $get_data["city"];
+            $zip_code           = $get_data["zip_code"];
             $created            = $get_data["created"];
             $local_mode         = "UPDATE";
         }
@@ -222,8 +240,13 @@ switch ($mode) {
         $select_staff_email = mysqli_query($conn, "SELECT id FROM users WHERE email = '$_REQUEST[email]' AND id != '$id'" );
 
         // Validation
-        if (empty($name)) {
-            $error_arr[] = "Please enter Name.<br/>";
+        
+        if (empty($first_name)) {
+            $error_arr[] = "Please fill a First Name.<br/>";
+        }
+        
+        if (empty($last_name)) {
+            $error_arr[] = "Please fill a Last Name.<br/>";
         }
 
         if (empty($username)) {
@@ -306,7 +329,7 @@ switch ($mode) {
         
         $password_hash =  password_hash($password, PASSWORD_DEFAULT);
             
-        $update_staff = mysqli_query($conn, "UPDATE users SET name = '$name', role = '$role', username = '$username', email = '$email', mobile = '$mobile_no', password = '$password_hash', hint = '$password', profile_image = '$profile_image', updated = now() WHERE id = $id");
+        $update_staff = mysqli_query($conn, "UPDATE users SET first_name = '$first_name', last_name = '$last_name', role = '$role', username = '$username', email = '$email', mobile = '$mobile_no', password = '$password_hash', hint = '$password', profile_image = '$profile_image', address = '$address', apt_unit = '$apt_unit', state_id = '$state', city = '$city', zip_code = '$zip_code', updated = now() WHERE id = $id");
 
         // Commit transaction
         if (!mysqli_commit($conn)) {

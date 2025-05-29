@@ -81,11 +81,26 @@ include('partial/loader.php'); ?>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4 mb-3">
+                                        <div class="col-md-4 mb-3"> 
                                             <label class="form-label" for="date_of_birth">DOB <span class="text-danger">*</span></label>
-                                            <input type="text" id="datepicker" name="date_of_birth" data-theme="dark" class="form-control" value="<?=($date_of_birth == "0000-00-00") ? "" : $date_of_birth;?>" readonly required="">
-                                            <div class="invalid-feedback">Please provide a valid DOB.</div>
+                                            <div class="ui calendar datepicker_div">
+                                                <div class="ui input left icon" style="width: 100%; height:33.1px;">
+                                                    <i class="calendar icon"></i>
+                                                    <input type="text" name="date_of_birth" id="date_of_birth" class="form-control" placeholder="DOB" value="<?=convertToMDY($date_of_birth) ;?>" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask required="">
+                                                </div>
+                                                <div class="invalid-feedback">Please provide a valid DOB.</div>
+                                            </div>
                                         </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label class="form-label" for="address">Address</label>
+                                            <input class="form-control" id="address" name="address" type="text" value="<?=$address?>" placeholder="Address">
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label class="form-label" for="apt_unit">APT/Unit</label>
+                                            <input class="form-control" id="apt_unit" name="apt_unit" type="text" value="<?=$apt_unit?>" placeholder="APT/Unit">
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="state">State</label>
                                             <div class="form-input">
@@ -104,23 +119,9 @@ include('partial/loader.php'); ?>
                                             <label class="form-label" for="city">City</label>
                                             <input class="form-control" id="city" name="city" type="text" value="<?=$city?>" placeholder="City">
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="zip_code">Zip Code</label>
                                             <input class="form-control allownumber" id="zip_code" minlength="6" maxlength="8" name="zip_code" type="text" value="<?=$zip_code?>" placeholder="Zip Code">
-                                        </div>
-                                        <div class="col-md-8 mb-3">
-                                            <label class="form-label" for="apt_unit">APT/Unit</label>
-                                            <input class="form-control" id="apt_unit" name="apt_unit" type="text" value="<?=$apt_unit?>" placeholder="APT/Unit">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-3">
-                                            <label class="form-label" for="address">Address</label>
-                                            <div class="input-group">
-                                                <textarea class="form-control" id="address" name="address" placeholder="Address" ><?=$address?></textarea>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -151,13 +152,23 @@ include('partial/loader.php'); ?>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="date_of_issue">Date of Issue</label>
-                                            <input type="text" id="datepicker" name="date_of_issue" data-theme="dark" class="form-control" value="<?=($date_of_issue == "0000-00-00") ? "" : $date_of_issue;?>" readonly>
+                                            <div class="ui calendar datepicker_div">
+                                                <div class="ui input left icon" style="width: 100%; height:33.1px;">
+                                                    <i class="calendar icon"></i>
+                                                    <input type="text" name="date_of_issue" class="form-control" placeholder="Date of Issue" value="<?=convertToMDY($date_of_issue) ;?>" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="date_of_expiry">Date of Expiry</label>
-                                            <input type="text" id="min_datepicker" name="date_of_expiry" data-theme="dark" class="form-control" value="<?=($date_of_expiry == "0000-00-00") ? "" : $date_of_expiry;?>" readonly>
+                                            <div class="ui calendar datepicker">
+                                                <div class="ui input left icon" style="width: 100%; height:33.1px;">
+                                                    <i class="calendar icon"></i>
+                                                    <input type="text" name="date_of_expiry" class="form-control" placeholder="Date of Expiry" value="<?=convertToMDY($date_of_expiry) ;?>" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="place_of_issue">Place of Issue</label>
@@ -220,6 +231,16 @@ include('partial/loader.php'); ?>
                                                     <input class="form-control allownumber" id="spouse_licence_no" name="spouse_licence_no" type="text" value="<?=$spouse_licence_no?>" placeholder="Licence Number">
                                                 </div>
                                                 <div class="col-md-4 mb-3">
+                                                    <label class="form-label" for="spouse_address">Address</label>
+                                                    <input class="form-control" id="spouse_address" name="spouse_address" type="text" value="<?=$spouse_address?>" placeholder="Address">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label" for="spouse_apt_unit">APT/Unit</label>
+                                                    <input class="form-control" id="spouse_apt_unit" name="spouse_apt_unit" type="text" value="<?=$spouse_apt_unit?>" placeholder="APT/Unit">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
                                                     <label class="form-label" for="spouse_state">State</label>
                                                     <div class="form-input">
                                                         <select class="form-select" name="spouse_state" id="spouse_state">
@@ -233,28 +254,17 @@ include('partial/loader.php'); ?>
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
                                                 <div class="col-md-4 mb-3">
                                                     <label class="form-label" for="spouse_city">City</label>
                                                     <input class="form-control" id="spouse_city" name="spouse_city" type="text" value="<?=$spouse_city?>" placeholder="City">
                                                 </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-md-4 mb-3">
                                                     <label class="form-label" for="spouse_zip_code">Zip Code</label>
                                                     <input class="form-control allownumber" id="spouse_zip_code" minlength="6" maxlength="8" name="spouse_zip_code" type="text" value="<?=$spouse_zip_code?>" placeholder="Zip Code">
                                                 </div>
-                                                <div class="col-md-4 mb-3">
-                                                    <label class="form-label" for="spouse_apt_unit">APT/Unit</label>
-                                                    <input class="form-control" id="spouse_apt_unit" name="spouse_apt_unit" type="text" value="<?=$spouse_apt_unit?>" placeholder="APT/Unit">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12 mb-3">
-                                                    <label class="form-label" for="spouse_address">Address</label>
-                                                    <div class="input-group">
-                                                        <textarea class="form-control" id="spouse_address" name="spouse_address" placeholder="Address" ><?=$spouse_address?></textarea>
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -317,6 +327,16 @@ include('partial/loader.php'); ?>
                                                     <input class="form-control allownumber" id="family_friend_licence_no" name="family_friend_licence_no" type="text" value="<?=$family_friend_licence_no?>" placeholder="Licence Number">
                                                 </div>
                                                 <div class="col-md-4 mb-3">
+                                                    <label class="form-label" for="family_friend_address">Address</label>
+                                                    <input class="form-control" id="family_friend_address" name="family_friend_address" type="text" value="<?=$family_friend_address?>" placeholder="Address">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label" for="family_friend_apt_unit">APT/Unit</label>
+                                                    <input class="form-control" id="family_friend_apt_unit" name="family_friend_apt_unit" type="text" value="<?=$family_friend_apt_unit?>" placeholder="APT/Unit">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
                                                     <label class="form-label" for="family_friend_state">State</label>
                                                     <div class="form-input">
                                                         <select class="form-select" name="family_friend_state" id="family_friend_state">
@@ -330,39 +350,57 @@ include('partial/loader.php'); ?>
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
                                                 <div class="col-md-4 mb-3">
                                                     <label class="form-label" for="family_friend_city">City</label>
                                                     <input class="form-control" id="family_friend_city" name="family_friend_city" type="text" value="<?=$family_friend_city?>" placeholder="City">
                                                 </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-md-4 mb-3">
                                                     <label class="form-label" for="family_friend_zip_code">Zip Code</label>
                                                     <input class="form-control allownumber" id="family_friend_zip_code" minlength="6" maxlength="8" name="family_friend_zip_code" type="text" value="<?=$family_friend_zip_code?>" placeholder="Zip Code">
                                                 </div>
-                                                <div class="col-md-4 mb-3">
-                                                    <label class="form-label" for="family_friend_apt_unit">APT/Unit</label>
-                                                    <input class="form-control" id="family_friend_apt_unit" name="family_friend_apt_unit" type="text" value="<?=$family_friend_apt_unit?>" placeholder="APT/Unit">
-                                                </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-12 mb-3">
-                                                    <label class="form-label" for="family_friend_address">Address</label>
-                                                    <div class="input-group">
-                                                        <textarea class="form-control" id="family_friend_address" name="family_friend_address" placeholder="Address" ><?=$family_friend_address?></textarea>
-                                                    </div>
+                                            <div class="col">
+                                            <div class="mb-3 mt-3">
+                                                <div class="form-check align-items-start">
+                                                    <input class="form-check-input mt-1 me-2" type="checkbox" name="is_fruad_alert_family_info" value="true" <?= ($is_fruad_alert_family_info == "true") ? "checked": ""; ?> style="width: 1em; height: 1em;">
+                                                    <label class="form-check-label">
+                                                        If a family member is added and during our investigation we are unable to locate or verify their details, the policy will be closed immediately.
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
+                                        </div>
                                     </div>
-                                    
+                                    <hr>
+                                    <div class="col">
+                                        <div class="mb-3 mt-3">
+                                            <div class="form-check align-items-start">
+                                                <input class="form-check-input mt-1 me-2" type="checkbox" name="is_fruad_alert" value="true" <?= ($is_fruad_alert == "true") ? "checked": ""; ?> style="width: 1em; height: 1em;">
+                                                <label class="form-check-label">
+                                                    If any information provided is found to be fraudulent or misrepresented, your policy may be canceled (lapsed) immediately, and future claims may be denied. Please ensure all information is accurate and truthful. For assistance, contact our support team.
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <?php if($mode != "VIEW"){ ?>
                                         <div class="card-body btn-showcase" style="text-align: center;">
                                             <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
-                                            <button id="submit_btn_driver" class="btn btn-primary submit_btn" type="submit" value="driver" data-btn_text="Submit">Submit</button>
-                                            <?php if($mode != "EDIT"){ ?>
-                                                <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="vehicle" data-btn_text="Submit & Add Vehicle">Submit & Add Vehicle</button>
-                                                <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="policy" data-btn_text="Submit & Add Policy">Submit & Add Policy</button>
+                                            <!-- <button id="submit_btn_driver" class="btn btn-primary submit_btn" type="submit" value="driver" data-btn_text="Submit">Submit</button> -->
+                                            <button id="submit_btn_vehicle" class="btn btn-primary submit_btn" type="submit" value="vehicle" data-btn_text="Submit">Submit</button>
+                                            
+                                            <?php if($mode != "EDIT"){ 
+                                                $driver_counting++;
+                                                if($driver_counting < $max_customer_driver_insert_count){ 
+                                                    $driver_counting++;
+                                                    $get_driver_button_num = numberToOrdinal($driver_counting);
+                                                ?>
+                                                    <button id="submit_btn_driver_add" class="btn btn-primary submit_btn" type="submit" value="driver_add" data-btn_text="Submit & Add <?=$get_driver_button_num;?> Driver">Submit & Add <?=$get_driver_button_num;?> Driver</button>
+                                                <?php } ?>
+                                                <!-- <button id="submit_btn_vehicle" class="btn btn-primary submit_btn" type="submit" value="vehicle" data-btn_text="Submit & Add Vehicle">Submit & Add Vehicle</button>
+                                                <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="policy" data-btn_text="Submit & Add Policy">Submit & Add Policy</button> -->
                                             <?php } ?>
                                         </div>
                                     <?php } ?>
