@@ -84,7 +84,7 @@ class PDF extends FPDF {
         $this->SetFont('Arial', '', 10);
         $this->Cell(0, 6, 'POLICY NUMBER: ' . $data['prefix_policy_id'], 0, 1, 'R');
         $this->SetX(150);
-        $this->Cell(0, 6, 'DATE PROCESSED: ' . convert_calender_datetime($data["policy_purchase_date"]) , 0, 1, 'R');
+        $this->Cell(0, 6, 'DATE PROCESSED: ' . convertDatetimeFormat($data["policy_purchase_date"]) , 0, 1, 'R');
 
         $this->Ln(3);
 
@@ -94,11 +94,11 @@ class PDF extends FPDF {
         $this->Cell(0, 6, 'POLICY PERIOD', 0, 1, 'R');
         $this->SetFont('Arial', '', 10);
         $this->SetX(150);
-        $this->Cell(0, 6, 'EFFECTIVE: ' . convert_calender_datetime($data["effective_from"]) , 0, 1, 'R');
+        $this->Cell(0, 6, 'EFFECTIVE: ' . convertDatetimeFormat($data["effective_from"]) , 0, 1, 'R');
         $this->SetX(150);
-        $this->Cell(0, 6, 'EXPIRATION: ' . convert_calender_datetime($data["effective_to"]) , 0, 1, 'R');
+        $this->Cell(0, 6, 'EXPIRATION: ' . convertDatetimeFormat($data["effective_to"]) , 0, 1, 'R');
         $this->SetX(150);
-        $this->MultiCell(0, 6, 'This policy was bound on ' . convert_calender_datetime($data["policy_due_date"]) , 0, 'R');
+        $this->MultiCell(0, 6, 'This policy was bound on ' . convertDatetimeFormat($data["policy_due_date"]) , 0, 'R');
 
         // Address block below logos
         $this->SetXY(10, 35);

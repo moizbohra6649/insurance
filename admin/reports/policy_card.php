@@ -16,37 +16,40 @@ class PDF extends FPDF {
         // NEW CODE — INLINE LOGO + TITLE
         
 
-        $this->SetXY($x, $y + 8); // Title slightly lower to align with logo center
+        $this->SetXY($x, $y + 5); // Title slightly lower to align with logo center
         $this->SetFont('Arial', 'B', 10);
         $this->SetTextColor(0);
         $this->Cell($x, 5, 'Proof of Insurance Card', 0, 1);
 
         $this->SetXY(60, $y + 4);
-        if (file_exists('logo.png')) {
-            $this->Image('logo.png', 60, $y + 4, 20); // Logo aligned left
+        if (file_exists('../assets/images/logo/logo-white.png')) {
+            $this->Image('../assets/images/logo/logo-white.png', 60, $y + 2, 30); // Logo aligned left
         }
 
 
-        $this->SetXY($x, $y + 20);
+        $this->SetXY($x, $y + 12);
         $this->SetFont('Arial', 'B', 8);
-        $this->Cell(0, 4, 'Causality Management Company', 0, 1);
+        $this->Cell(0, 5, 'Causality Management Company', 0, 1);
 
         $this->SetFont('Arial', '', 8);
-        $this->Cell(0, 4, $data['name'], 0, 1);
+        $this->Cell(0, 5, $data['name'], 0, 1);
+        $this->Cell(0, 5, 'Excluded Drivers: Moiz, Shubham', 0, 1);
+
 
         $this->SetFont('Arial', 'B', 8);
-        $this->Cell(0, 4, 'POLICY NUMBER: ' . $data['policy'], 0, 1);
-        $this->Cell(0, 4, 'EFFECTIVE DATE: ' . $data['effective'], 0, 1);
-        $this->Cell(0, 4, 'YEAR / MAKE / MODEL', 0, 1);
+        $this->Cell(0, 5, 'Policy Number: ' . $data['policy'], 0, 1);
+        $this->Cell(0, 5, 'Effective Date: ' . $data['effective'], 0, 1);
+        $this->Cell(0, 5, 'Expiration Date: ' . $data['expiration'], 0, 1);
+        $this->Cell(0, 5, 'Year / Make / Model', 0, 1);
 
         $this->SetFont('Arial', '', 8);
-        $this->Cell(0, 4, $data['year_make_model'], 0, 1);
+        $this->Cell(0, 5, $data['year_make_model'], 0, 1);
 
         $this->SetFont('Arial', 'B', 8);
-        $this->Cell(0, 4, 'Vehicle Identification Number', 0, 1);
+        $this->Cell(0, 5, 'Vehicle Identification Number', 0, 1);
 
         $this->SetFont('Arial', '', 8);
-        $this->Cell(0, 4, $data['vin'], 0, 1);
+        $this->Cell(0, 5, $data['vin'], 0, 1);
 
         // Right Section (Instructions)
         $rightX = $x + $cardWidth + 2;
@@ -55,7 +58,7 @@ class PDF extends FPDF {
         $this->SetTextColor(85, 26, 139);
         $this->Cell(90, 5, 'Examine policy exclusions carefully.', 0, 1);
 
-        $this->SetFont('Arial', '', 6.5);
+        $this->SetFont('Arial', '', 7);
         $this->SetTextColor(0, 0, 0);
         $points = [
             'Determine injuries/damage. Get medical help if needed.',
@@ -71,7 +74,7 @@ class PDF extends FPDF {
         foreach ($points as $point) {
             $this->SetX($rightX);
             $this->Cell(2, 3, chr(149), 0, 0); // Bullet
-            $this->MultiCell(85, 3, $point, 0, 'L');
+            $this->MultiCell(85, 4, $point, 0, 'L');
         }
     }
 }
@@ -82,6 +85,7 @@ $cards = [
         'name' => 'YUSUP OVEZOV',
         'policy' => 'ILC00-806018291828',
         'effective' => '05/12/2025',
+        'expiration' => '11/12/2025',
         'year_make_model' => '2011 / TOYOTA / CAMARY',
         'vin' => '4TABF3EKXBR168180',
     ],

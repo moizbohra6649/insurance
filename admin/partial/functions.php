@@ -309,6 +309,17 @@ function convertToMDY($date) {
 	return "";
 }
 
+function convertDatetimeFormat($datetime) {
+	if(!empty($datetime)){
+		$date = DateTime::createFromFormat('Y-m-d H:i:s', $datetime);
+		if ($date) {
+			return $date->format('m/d/Y h:i A');
+		}
+	}else {
+        return "";
+    }
+}
+
 function convert_calender_date($select_date){
 	if(!empty($select_date) && $select_date != "0000-00-00"){
 		$formatted_date = date('d-m-Y', strtotime($select_date));
