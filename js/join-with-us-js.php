@@ -12,8 +12,12 @@ $('#service-provider-form').on('submit', (function(e) {
         error_arr.push("Please enter Company Name.<br/>");
     }
 
-    if(formData.get("name") == ""){
-        error_arr.push("Please enter Owner Name.<br/>");
+    if(formData.get("first_name") == ""){
+        error_arr.push("Please fill a First Name.<br/>");
+    }
+
+    if(formData.get("last_name") == ""){
+        error_arr.push("Please fill a Last Name.<br/>");
     }
 
     if(formData.get("username") == ""){
@@ -102,8 +106,12 @@ $('#agent-form').on('submit', (function(e) {
     var formData = new FormData(this);
     var error_arr = [];
 
-    if(formData.get("name") == ""){
-        error_arr.push("Please enter Name.<br/>");
+    if(formData.get("first_name") == ""){
+        error_arr.push("Please fill a First Name.<br/>");
+    }
+
+    if(formData.get("last_name") == ""){
+        error_arr.push("Please fill a Last Name.<br/>");
     }
 
     if(formData.get("username") == ""){

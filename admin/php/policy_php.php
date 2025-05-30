@@ -66,7 +66,7 @@ if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
     if($login_role == 'agent'){
         $extrawhere = " AND customer.id in (select id from customer where agent_id = $login_id)";
     }
-    $select_query = "SELECT policy.*, agent.name as agent_name, customer.name as customer_name FROM policy 
+    $select_query = "SELECT policy.*, CONCAT(agent.first_name, ' ', agent.last_name) AS agent_name, CONCAT(customer.first_name, ' ', customer.last_name) AS customer_name FROM policy 
     left join agent on agent.id = policy.agent_id
     left join customer on customer.id = policy.customer_id 
     where 1 = 1 $extrawhere
@@ -286,10 +286,10 @@ switch ($mode) {
         $title      = "Add New Policy"; 
         $policy_id = get_policy_id();
         $prefix_policy_id = "WL-" . $policy_id;
-        $select_customer = mysqli_query($conn, "SELECT name , email , mobile, date_of_birth FROM customer WHERE id = '$customer_id' " );
+        $select_customer = mysqli_query($conn, "SELECT CONCAT(customer.first_name, ' ', customer.last_name) AS customer_name, email, mobile, date_of_birth FROM customer WHERE id = '$customer_id' " );
         if(mysqli_num_rows($select_customer) > 0){
             $get_data = mysqli_fetch_array($select_customer);
-            $customer_name            = $get_data["name"];
+            $customer_name            = $get_data["customer_name"];
             $customer_email            = $get_data["email"];
             $customer_mobile            = $get_data["mobile"];
             $customer_dob  = date("F j, Y", strtotime($get_data["date_of_birth"])); ;
@@ -373,7 +373,7 @@ switch ($mode) {
         $readonly   = "readonly";
         $title      = ($mode == "EDIT") ? "Edit Policy" : "View Policy";
         
-        $select_query = mysqli_query($conn, "SELECT policy.*, customer.name  as customer_name , customer.email  as customer_email , customer.mobile  as customer_mobile , customer.id as customer_id , customer.date_of_birth as date_of_birth
+        $select_query = mysqli_query($conn, "SELECT policy.*, CONCAT(customer.first_name, ' ', customer.last_name) AS customer_name, customer.email  as customer_email, customer.mobile  as customer_mobile, customer.id as customer_id, customer.date_of_birth as date_of_birth
         FROM policy 
         left join customer on customer.id = policy.customer_id
         where policy.id = '$id' ");

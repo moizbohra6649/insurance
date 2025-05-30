@@ -38,8 +38,12 @@
                 <input type="text" class="form-control onlytext" name="company_name" placeholder="Enter Company Name." required>
             </div>
             <div class="col-sm-12 form-group mb-3">
-                <label>Owner Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control onlytext" name="name" placeholder="Enter Owner Name." required>
+                <label>First Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control onlytext" name="first_name" placeholder="Enter First Name." required>
+            </div>
+            <div class="col-sm-12 form-group mb-3">
+                <label>Last Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control onlytext" name="last_name" placeholder="Enter Last Name." required>
             </div>
             <div class="col-sm-12 form-group mb-3">
                 <label>Username <span class="text-danger">*</span></label>
@@ -52,10 +56,6 @@
             <div class="col-sm-12 form-group mb-3">
                 <label>Mobile Number <span class="text-danger">*</span></label>
                 <input type="text" class="form-control allownumber" minlength="12" maxlength="12" id="mobile_no" name="mobile_no" placeholder="Enter Mobile Number." onkeypress="applyPhoneInputRestriction('mobile_no')" required>
-            </div>
-            <div class="col-sm-12 form-group mb-3">
-                <label>Address</label>
-                <textarea class="form-control" rows="1" name="address" placeholder=""></textarea>
             </div>
             <div class="col-sm-12 form-group mb-3">
                 <label class="form-label">Password <span class="text-danger">*</span></label>
@@ -97,8 +97,12 @@
         
           <form class="tab-pane fade" id="agent-form" role="tabpanel" aria-labelledby="agent-form-tab">
             <div class="col-sm-12 form-group mb-3">
-                <label>Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control onlytext" name="name" placeholder="Enter Name." required>
+                <label>First Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control onlytext" name="first_name" placeholder="Enter First Name." required>
+            </div>
+            <div class="col-sm-12 form-group mb-3">
+                <label>Last Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control onlytext" name="last_name" placeholder="Enter Last Name." required>
             </div>
             <div class="col-sm-12 form-group mb-3">
                 <label>Username <span class="text-danger">*</span></label>

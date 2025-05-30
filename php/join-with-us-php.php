@@ -13,10 +13,10 @@ $vendor_id              = (isset($_REQUEST["vendor_id"])) ? $_REQUEST["vendor_id
 $agent_id              = (isset($_REQUEST["agent_id"])) ? $_REQUEST["agent_id"] : 0;
 
 $company_name           = (isset($_REQUEST["company_name"])) ? $_REQUEST["company_name"] : "";
-$name                   = (isset($_REQUEST["name"])) ? $_REQUEST["name"] : "";
+$first_name            = (isset($_REQUEST["first_name"])) ? $_REQUEST["first_name"] : "";
+$last_name             = (isset($_REQUEST["last_name"])) ? $_REQUEST["last_name"] : "";
 $username               = (isset($_REQUEST["username"])) ? $_REQUEST["username"] : "";
 $email                  = (isset($_REQUEST["email"])) ? $_REQUEST["email"] : "";
-$address                = (isset($_REQUEST["address"])) ? $_REQUEST["address"] : "";
 $mobile_no              = (isset($_REQUEST["mobile_no"])) ? $_REQUEST["mobile_no"] : "";
 $password               = (isset($_REQUEST["password"])) ? $_REQUEST["password"] : "";
 $confirm_password       = (isset($_REQUEST["confirm_password"])) ? $_REQUEST["confirm_password"] : "";
@@ -41,8 +41,12 @@ if($form_request == "service_provider"){
         $error_arr[] = "Please enter Company Name.<br/>";
     }
 
-    if (empty($name)) {
-        $error_arr[] = "Please enter Owner Name.<br/>";
+    if (empty($first_name)) {
+        $error_arr[] = "Please fill a First Name.<br/>";
+    }
+    
+    if (empty($last_name)) {
+        $error_arr[] = "Please fill a Last Name.<br/>";
     }
 
     if (empty($username)) {
@@ -110,7 +114,7 @@ if($form_request == "service_provider"){
 
     $password_hash =  password_hash($password, PASSWORD_DEFAULT);
    
-    $insert_query = mysqli_query($conn, "INSERT INTO vendor (vendor_id, prefix_vendor_id, company_name, name, username, email, address, mobile, password, hint, profile_image, business_license, entry_type) VALUES ('$vendor_id', '$prefix_vendor_id', '$company_name', '$name', '$username', '$email', '$address', '$mobile_no', '$password_hash', '$password', '$profile_image', '$business_licence_image', '$entry_type') ");
+    $insert_query = mysqli_query($conn, "INSERT INTO vendor (vendor_id, prefix_vendor_id, company_name, first_name, last_name, username, email, mobile, password, hint, profile_image, business_license, entry_type) VALUES ('$vendor_id', '$prefix_vendor_id', '$company_name', '$first_name', '$last_name', '$username', '$email', '$mobile_no', '$password_hash', '$password', '$profile_image', '$business_licence_image', '$entry_type') ");
     
 
     $last_inserted_id = mysqli_insert_id($conn);
@@ -157,8 +161,12 @@ if($form_request == "agent"){
 
     // Validation
 
-    if (empty($name)) {
-        $error_arr[] = "Please enter Name.<br/>";
+    if (empty($first_name)) {
+        $error_arr[] = "Please fill a First Name.<br/>";
+    }
+    
+    if (empty($last_name)) {
+        $error_arr[] = "Please fill a Last Name.<br/>";
     }
 
     if (empty($username)) {
@@ -219,7 +227,7 @@ if($form_request == "agent"){
 
     $password_hash =  password_hash($password, PASSWORD_DEFAULT);
 
-    $insert_query = mysqli_query($conn, "INSERT INTO agent (agent_id, prefix_agent_id, name, username, email, mobile, password, hint, profile_image, entry_type) VALUES ('$agent_id', '$prefix_agent_id', '$name', '$username', '$email', '$mobile_no', '$password_hash', '$password', '$profile_image', '$entry_type') ");
+    $insert_query = mysqli_query($conn, "INSERT INTO agent (agent_id, prefix_agent_id, first_name, last_name, username, email, mobile, password, hint, profile_image, entry_type) VALUES ('$agent_id', '$prefix_agent_id', '$first_name', '$last_name', '$username', '$email', '$mobile_no', '$password_hash', '$password', '$profile_image', '$entry_type') ");
 
     $last_inserted_id = mysqli_insert_id($conn);
 

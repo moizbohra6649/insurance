@@ -28,15 +28,21 @@ $query = "SELECT
     policy_medical.minimum_amount AS medical_minimum_amount, 
     policy_medical.maximum_amount AS medical_maximum_amount,
     CONCAT_WS(', ',
-        NULLIF(customer.name, ''),
-        NULLIF(customer.address_1, ''),
-        NULLIF(customer.address_2, ''),
+        NULLIF(CONCAT(customer.first_name, ' ', customer.last_name), ''),
+        NULLIF(customer.address, ''),
+        NULLIF(customer.apt_unit, ''),
+        NULLIF(customer_state.name, ''),
+        NULLIF(customer.city, ''),
         NULLIF(customer.zip_code, '')
     ) AS customer_details,
     CONCAT_WS(', ',
-        NULLIF(agent.name, ''),
+        NULLIF(CONCAT(agent.first_name, ' ', agent.last_name), ''),
         NULLIF(CONCAT('(', agent.username, ')'), ''),
-        NULLIF(agent.mobile, '')
+        NULLIF(agent.address, ''),
+        NULLIF(agent.apt_unit, ''),
+        NULLIF(agent_state.name, ''),
+        NULLIF(agent.city, ''),
+        NULLIF(agent.zip_code, '')
     ) AS agent_details
 
     FROM policy
@@ -50,7 +56,10 @@ $query = "SELECT
     LEFT JOIN policy_umd ON policy_umd.id = policy.policy_umd_id
     LEFT JOIN policy_medical ON policy_medical.id = policy.policy_medical_id
     LEFT JOIN customer ON customer.id = policy.customer_id
+    LEFT JOIN states customer_state ON customer_state.id = customer.state_id
     LEFT JOIN agent ON agent.id = policy.agent_id
+    LEFT JOIN states agent_state ON customer_state.id = agent.state_id
+
 
     WHERE policy.id = '$id'
 ";
@@ -137,12 +146,12 @@ $getY = $pdf->GetY();
 // Insured Info
 $pdf->SetFont('Arial', '', 9);
 $pdf->SetXY(12, $pdf->GetY());
-$pdf->MultiCell(90, 5, $data["customer_details"], 0, 0);
+$pdf->MultiCell(90, 5, $data["customer_details"], 0, 'C');
 $getY1 = $pdf->GetY();
 
 // Producer Info
 $pdf->SetXY(107, $getY);
-$pdf->MultiCell(90, 5, $data["agent_details"], 0, 0);
+$pdf->MultiCell(90, 5, $data["agent_details"], 0, 'C');
 $getY2 = $pdf->GetY();
 
 $getmulticellY = $getY1 - $getY;
