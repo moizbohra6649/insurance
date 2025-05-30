@@ -57,8 +57,8 @@ $family_friend_city           = (isset($_REQUEST["family_friend_city"])) ? $_REQ
 $family_friend_zip_code       = (isset($_REQUEST["family_friend_zip_code"])) ? $_REQUEST["family_friend_zip_code"] : "";
 $family_friend_apt_unit       = (isset($_REQUEST["family_friend_apt_unit"])) ? $_REQUEST["family_friend_apt_unit"] : "";
 $family_friend_address        = (isset($_REQUEST["family_friend_address"])) ? $_REQUEST["family_friend_address"] : "";
-$is_fruad_alert        = (isset($_REQUEST["is_fruad_alert"])) ? $_REQUEST["is_fruad_alert"] : "";
-$is_fruad_alert_family_info        = (isset($_REQUEST["is_fruad_alert_family_info"])) ? $_REQUEST["is_fruad_alert_family_info"] : "";
+$is_fruad_alert        = (isset($_REQUEST["is_fruad_alert"])) ? $_REQUEST["is_fruad_alert"] : "false";
+$is_fruad_alert_family_info        = (isset($_REQUEST["is_fruad_alert_family_info"])) ? $_REQUEST["is_fruad_alert_family_info"] : "false";
 
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
@@ -152,6 +152,14 @@ switch ($mode) {
             }else if ($family_friend == "family" && $last_name != $family_friend_last_name) {
                 $error_arr[] = "Driver Last name or Family member Last name are not same.<br/>";
             }
+
+            if (empty($is_fruad_alert_family_info) || $is_fruad_alert_family_info == "false") {
+                $error_arr[] = "Please check the 'Family Member/Friend Details Verified' checkbox.<br/>";
+            }
+        }
+
+        if (empty($is_fruad_alert) || $is_fruad_alert == "false") {
+            $error_arr[] = "Please check the Final Declaration checkbox.<br/>";
         }
 
         // Display errors if any

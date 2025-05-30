@@ -40,11 +40,6 @@ CREATE TABLE `user_page_permissions` (
 -- Dumping data for table `user_page_permissions`
 --
 
-INSERT INTO `user_page_permissions` (`id`, `staff_id`, `page_name`, `status`, `updated`, `created`) VALUES
-(4, 2, 'vendor_add', 1, NULL, '2025-05-30 02:12:45'),
-(5, 2, 'vendor_edit', 1, NULL, '2025-05-30 02:12:45'),
-(6, 2, 'vehicle_view', 1, NULL, '2025-05-30 02:12:45');
-
 --
 -- Indexes for dumped tables
 --
@@ -63,7 +58,7 @@ ALTER TABLE `user_page_permissions`
 -- AUTO_INCREMENT for table `user_page_permissions`
 --
 ALTER TABLE `user_page_permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

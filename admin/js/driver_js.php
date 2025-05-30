@@ -47,10 +47,14 @@ $('.submit_btn').on('click', (function(e) {
         }else if($('input[name="family_friend"]:checked').val() == "family" && $("#last_name").val() != $("#family_friend_last_name").val()){
             error_arr.push("Driver Last name or Family member Last name are not same.<br/>");
         }
+
+        if(!$('input[name="is_fruad_alert_family_info"]').is(':checked')){
+            error_arr.push("Please check the 'Family Member/Friend Details Verified' checkbox.<br/>");
+        }
     }
 
-    if(!$('input[name="is_fruad_alert"]:checked')){
-        error_arr.push("Please check a final declaration checkbox.<br/>");
+    if(!$('input[name="is_fruad_alert"]').is(':checked')){
+        error_arr.push("Please check the Final Declaration checkbox.<br/>");
     }
 
     var error_txt = error_arr.join('');
