@@ -1228,7 +1228,12 @@ protected function _loadfont($font)
 	// Load a font definition file from the font directory
 	if(strpos($font,'/')!==false || strpos($font,"\\")!==false)
 		$this->Error('Incorrect font definition file name: '.$font);
-	include($this->fontpath.$font);
+	$fontFile = realpath(__DIR__ . '/../font/' . $this->fontpath.$font);
+	if ($fontFile && file_exists($fontFile)) {
+		include($fontFile);
+	} else {
+		$this->Error("Font file not found: " . $fontFile);
+	}
 	if(!isset($name))
 		$this->Error('Could not include font definition file');
 	if(isset($enc))
