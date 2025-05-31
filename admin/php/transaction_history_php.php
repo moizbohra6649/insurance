@@ -50,9 +50,10 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
 
 }
 
+$filter_qry .= " ORDER BY created DESC";
+
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
-    $select_query = "SELECT *
-   FROM transaction_history WHERE 1=1 and agent_id = $login_id ".$filter_qry;
+    $select_query = "SELECT * FROM transaction_history WHERE 1=1 and agent_id = $login_id ".$filter_qry;
     
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);

@@ -1,4 +1,5 @@
 <script>
+    console.log(<?=$customer_id?>);
 /* ==================================================PHP AJAX================================================== */
 
 function fn_getting_vehicle_model(vehicle_make, vehicle_model){
@@ -57,7 +58,7 @@ $('.submit_btn').on('click', (function(e) {
         error_arr.push("Please fill a Registration State Vehicle.<br/>");
     }
     
-    if($("#vehicle_value").val()  >= 40000){
+    if($("#vehicle_value").val()  > 40000){
         error_arr.push("More than $40000 value vehicle not insured.<br/>");
     }
 
@@ -97,18 +98,18 @@ $('.submit_btn').on('click', (function(e) {
             
             if(data.status == "success"){
                 var url = `vehicle_list.php?customer_id=<?=base64_encode($customer_id);?>`;
-                if(data.id != ""){
+                
+                if(data.encoded_customer_id != ""){
                     if(btn_value == "driver"){
-                        var url = `driver.php?customer_id=${data.id}`;
+                        var url = `driver.php?customer_id=${data.encoded_customer_id}`;
                     }else if(btn_value == "policy"){
-                        var url = `policy.php?customer_id=${data.id}`;
+                        var url = `policy.php?customer_id=${data.encoded_customer_id}`;
                     }else if(btn_value == "vehicle_add"){
-                        var url = `vehicle.php?customer_id=${data.id}`;
+                        var url = `vehicle.php?customer_id=${data.encoded_customer_id}`;
                     }
                 }
-
+                
                 setTimeout(function() { move(`<?=$actual_link?>${url}`); }, 1000);
-                // setTimeout(function() {  }, 1000);
             }else{
                 $("#submit_btn_" + btn_value).html(btn_text);
                 $(".submit_btn").removeAttr('disabled');

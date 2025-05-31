@@ -70,7 +70,7 @@ if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
     if($login_role == 'agent'){
         $extrawhere = "and customer.id in (select id from customer where agent_id = $login_id)";
     }
-    $select_query = "SELECT policy.*, customer.name as customer_name FROM policy 
+    $select_query = "SELECT policy.*, CONCAT(customer.first_name, ' ', customer.last_name) AS customer_name FROM policy 
     left join customer on customer.id = policy.customer_id where 1 = 1 and service_price <> 0  $extrawhere 
     ".$filter_qry;
     $query_result = mysqli_query($conn, $select_query);

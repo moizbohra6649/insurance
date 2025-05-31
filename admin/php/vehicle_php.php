@@ -113,7 +113,7 @@ switch ($mode) {
             $error_arr[] = "Please fill a Registration State Vehicle.<br/>";
         }
 
-        if ($vehicle_value >= 40000) {
+        if ($vehicle_value > 40000) {
             $error_arr[] = "More than $40000 value vehicle not insured.<br/>";
         }
 
@@ -145,7 +145,7 @@ switch ($mode) {
         }else if (!empty($insert_query)) {
             $data["msg"] = "Vehicle inserted successfully.";
             $data["status"] = "success";
-            $data["id"] = base64_encode($last_inserted_id);
+            $data["encoded_customer_id"] = base64_encode($customer_id);
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";
@@ -161,7 +161,7 @@ switch ($mode) {
         $readonly   = "readonly";
         $title      = ($mode == "EDIT") ? "Edit Vehicle" : "View Vehicle";
         
-        $select_query = mysqli_query($conn, "SELECT vehicle.*, customer.name as customer_name FROM vehicle 
+        $select_query = mysqli_query($conn, "SELECT vehicle.*, CONCAT(customer.first_name, ' ', customer.last_name) AS customer_name FROM vehicle 
         left join customer on customer.id = vehicle.customer_id
         left join year on year.id = vehicle.vehicle_year_id
         left join make on make.id = vehicle.vehicle_make_id
@@ -233,6 +233,10 @@ switch ($mode) {
             $error_arr[] = "Please fill a Registration State Vehicle.<br/>";
         }
 
+        if ($vehicle_value > 40000) {
+            $error_arr[] = "More than $40000 value vehicle not insured.<br/>";
+        }
+
         if($vehicle_category != 2){
             if(empty($veh_owner_company_name)){
                 $error_arr[] = "Please fill a Vehicle Owner Company Name.<br/>";
@@ -260,7 +264,7 @@ switch ($mode) {
         }else if (!empty($update_query)) {
             $data["msg"] = "Vehicle updated successfully.";
             $data["status"] = "success";
-            $data["id"] = base64_encode($id);
+            $data["encoded_customer_id"] = base64_encode($customer_id);
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";

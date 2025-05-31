@@ -304,10 +304,6 @@ switch ($mode) {
         $prefix_policy_id = "WL-" . $policy_id;
 
         $select_customer = mysqli_query($conn, "SELECT id FROM customer WHERE id = '$customer_id' " );
-        // $select_policy = mysqli_query($conn, "SELECT id FROM policy WHERE customer_id = '$customer_id' " );
-        $select_agent = mysqli_query($conn, "SELECT * FROM agent WHERE id = '$login_id' " );
-        $get_agent = mysqli_fetch_array($select_agent);
-        $wallet_amount = $get_agent["wallet_amount"];
 
         // Validation
 
@@ -418,11 +414,11 @@ switch ($mode) {
 
             $veh_sql = mysqli_query($conn, 'select * from policy_vehicle where vehicle_policy_id = '.$get_data["id"]);
             while($get_veh = mysqli_fetch_array($veh_sql)){
-                $vehicle .= ','.$get_veh['vehicle_id'] ; 
+                $vehicle .= ','.$get_veh['vehicle_id']; 
             }
             $veh_sql = mysqli_query($conn, 'select * from policy_driver where driver_policy_id = '.$get_data["id"]);
             while($get_veh = mysqli_fetch_array($veh_sql)){
-                $driver .= ','.$get_veh['driver_id'] ; 
+                $driver .= ','.$get_veh['driver_id']; 
             }
 
             // policy calculation is pending on edit mode
@@ -436,8 +432,13 @@ switch ($mode) {
         $error_arr = [];
 
         $select_policy = mysqli_query($conn, "SELECT id FROM policy WHERE id = '$id' " );
+        $select_customer = mysqli_query($conn, "SELECT id FROM customer WHERE id = '$customer_id' " );
 
         // Validation
+
+        if(mysqli_num_rows($select_customer) == 0){
+            $error_arr[] = "Customer does not exists.<br/>";
+        }
 
         if(mysqli_num_rows($select_policy) == 0){
             $error_arr[] = "Policy Does Not Exist.<br/>";
@@ -486,8 +487,8 @@ switch ($mode) {
             ");
 
             if ($update_query) {
-            mysqli_query($conn, "DELETE FROM policy_vehicle WHERE vehicle_policy_id = '$id'");
-            mysqli_query($conn, "DELETE FROM policy_driver WHERE driver_policy_id = '$id'");
+                mysqli_query($conn, "DELETE FROM policy_vehicle WHERE vehicle_policy_id = '$id'");
+                mysqli_query($conn, "DELETE FROM policy_driver WHERE driver_policy_id = '$id'");
 
                 foreach ($vehicle as $key => $vehiclevalue) {
                     mysqli_query($conn, "INSERT INTO policy_vehicle (vehicle_policy_id, vehicle_id) VALUES ('$id', '$vehiclevalue')");
@@ -497,8 +498,6 @@ switch ($mode) {
                     mysqli_query($conn, "INSERT INTO policy_driver (driver_policy_id, driver_id) VALUES ('$id', '$drivervalue')");
                 }
             }
-
-
 
         // Commit transaction
         if (!mysqli_commit($conn)) {

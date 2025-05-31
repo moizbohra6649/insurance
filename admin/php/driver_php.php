@@ -33,8 +33,8 @@ $apt_unit              = (isset($_REQUEST["apt_unit"])) ? $_REQUEST["apt_unit"] 
 $address               = (isset($_REQUEST["address"])) ? $_REQUEST["address"] : "";
 $driver_licence_image  = (isset($_FILES["driver_licence_image"]['name'])) ? $_FILES["driver_licence_image"]['name'] : "";
 $driver_licence_no     = (isset($_REQUEST["driver_licence_no"])) ? $_REQUEST["driver_licence_no"] : "";
-$date_of_issue         = (isset($_REQUEST["date_of_issue"]) && !empty($_REQUEST["date_of_issue"])) ? convert_readable_date_db($_REQUEST["date_of_issue"]) : '0000-00-00';
-$date_of_expiry        = (isset($_REQUEST["date_of_expiry"]) && !empty($_REQUEST["date_of_expiry"])) ? convert_readable_date_db($_REQUEST["date_of_expiry"]) : '0000-00-00';
+$date_of_issue         = (isset($_REQUEST["date_of_issue"]) && !empty($_REQUEST["date_of_issue"])) ? convert_readable_date_db($_REQUEST["date_of_issue"]) : "";
+$date_of_expiry        = (isset($_REQUEST["date_of_expiry"]) && !empty($_REQUEST["date_of_expiry"])) ? convert_readable_date_db($_REQUEST["date_of_expiry"]) : "";
 $place_of_issue        = (isset($_REQUEST["place_of_issue"])) ? $_REQUEST["place_of_issue"] : "";
 $marital_status        = (isset($_REQUEST["marital_status"])) ? $_REQUEST["marital_status"] : "unmarried";
 $delete_driver_licence = (isset($_REQUEST["delete_driver_licence"])) ? $_REQUEST["delete_driver_licence"] : "";
@@ -124,7 +124,7 @@ switch ($mode) {
             $error_arr[] = "Please fill a Last Name.<br/>";
         }
         
-        if (empty($date_of_birth) || $date_of_birth == "0000-00-00") {
+        if (empty($date_of_birth)) {
             $error_arr[] = "Please provide a valid DOB.<br/>";
         }
         
@@ -229,7 +229,7 @@ switch ($mode) {
         }else if (!empty($insert_query)) {
             $data["msg"] = "Driver inserted successfully.";
             $data["status"] = "success";
-            $data["id"] = base64_encode($last_inserted_id);
+            $data["encoded_customer_id"] = base64_encode($customer_id);
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";
@@ -245,7 +245,7 @@ switch ($mode) {
         $readonly   = "readonly";
         $title      = ($mode == "EDIT") ? "Edit Driver" : "View Driver";
         
-        $select_query = mysqli_query($conn, "SELECT driver.*, customer.name as customer_name, spouse_detail.first_name as spouse_first_name, spouse_detail.last_name as spouse_last_name, spouse_detail.email as spouse_email, spouse_detail.mobile_no as spouse_mobile_no, spouse_detail.licence_no as spouse_licence_no, spouse_detail.state_id as spouse_state, spouse_detail.city as spouse_city, spouse_detail.zip_code as spouse_zip_code, spouse_detail.apt_unit as spouse_apt_unit, spouse_detail.address as spouse_address, family_friend_detail.first_name as family_friend_first_name, family_friend_detail.last_name as family_friend_last_name, family_friend_detail.email as family_friend_email, family_friend_detail.mobile_no as family_friend_mobile_no, family_friend_detail.licence_no as family_friend_licence_no, family_friend_detail.state_id as family_friend_state, family_friend_detail.city as family_friend_city, family_friend_detail.zip_code as family_friend_zip_code, family_friend_detail.apt_unit as family_friend_apt_unit, family_friend_detail.address as family_friend_address
+        $select_query = mysqli_query($conn, "SELECT driver.*, CONCAT(customer.first_name, ' ', customer.last_name) AS customer_name, spouse_detail.first_name as spouse_first_name, spouse_detail.last_name as spouse_last_name, spouse_detail.email as spouse_email, spouse_detail.mobile_no as spouse_mobile_no, spouse_detail.licence_no as spouse_licence_no, spouse_detail.state_id as spouse_state, spouse_detail.city as spouse_city, spouse_detail.zip_code as spouse_zip_code, spouse_detail.apt_unit as spouse_apt_unit, spouse_detail.address as spouse_address, family_friend_detail.first_name as family_friend_first_name, family_friend_detail.last_name as family_friend_last_name, family_friend_detail.email as family_friend_email, family_friend_detail.mobile_no as family_friend_mobile_no, family_friend_detail.licence_no as family_friend_licence_no, family_friend_detail.state_id as family_friend_state, family_friend_detail.city as family_friend_city, family_friend_detail.zip_code as family_friend_zip_code, family_friend_detail.apt_unit as family_friend_apt_unit, family_friend_detail.address as family_friend_address
         FROM driver 
         left join customer on customer.id = driver.customer_id
         left join spouse_detail on spouse_detail.driver_id = driver.id
@@ -418,7 +418,7 @@ switch ($mode) {
         }else if (!empty($update_query)) {
             $data["msg"] = "Driver updated successfully.";
             $data["status"] = "success";
-            $data["id"] = base64_encode($id);
+            $data["encoded_customer_id"] = base64_encode($customer_id);
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";

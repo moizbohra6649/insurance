@@ -76,7 +76,7 @@ include('partial/loader.php'); ?>
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: center;">S.No.</th>
-                                                    <th style="text-align: center;">Transaction Type </th>
+                                                    <th>Transaction Type </th>
                                                     <th style="text-align: center;">Cr./Dr.</th>
                                                     <th style="text-align: center;">Amount</th> 
                                                     <th style="text-align: center;">Transaction Date</th>
@@ -90,7 +90,7 @@ include('partial/loader.php'); ?>
                                                 ?>
                                                 <tr>
                                                     <td align="center"> <?=$i++?> </td>
-                                                    <td align="center"> <?=$get_data["transaction_type"]?> </td>
+                                                    <td> <?=$get_data["transaction_type"]?> </td>
                                                     <td align="center" style="color: <?= ($get_data["payment_type"] == "credit") ? 'green' :'red'; ?>;"> <?= ucfirst($get_data["payment_type"])?> </td>
                                                     <td align="center"> $<?= $get_data["transaction_amount"] ?> </td>
                                                     <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>

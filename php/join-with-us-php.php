@@ -5,6 +5,8 @@ if (file_exists(dirname(__DIR__) . '/'.$admin_folder.'/partial/functions.php')) 
     require_once(dirname(__DIR__) . '/'.$admin_folder.'/partial/functions.php');
 }
 
+require_once 'admin/phpmailer/index.php'; 
+
 $id         = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
 $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] : "false";
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
@@ -126,7 +128,7 @@ if($form_request == "service_provider"){
     }else if (!empty($insert_query)) {
         $body = file_get_contents(dirname(__DIR__) . '/admin/partial/registration_template.php');
         $body = str_replace('{{name}}', htmlspecialchars($username), $body);
-        $welcome_mail = mail_send($email, 'Welcome to Road Star USA – Your Registration is Successful!' , $body  , $name);
+        $welcome_mail = send_mail($username, $email, 'Welcome to Westland Mutual Insurance - Your Registration is Successful!', $body);
 
         $placeholders = [
             '{{name}}'  => htmlspecialchars($name),
@@ -136,7 +138,7 @@ if($form_request == "service_provider"){
         ];  
         $body = file_get_contents(dirname(__DIR__) . '/admin/partial/activation_template.php');
         $body = str_replace(array_keys($placeholders), array_values($placeholders), $body);
-        $activation_mail = mail_send(admin_email, 'New Service Provider Registration – Action Required' , $body  , 'System Notification');
+        $activation_mail = send_mail(admin_name, admin_email, 'New Service Provider Registration – Action Required!', $body);
 
         $data["msg"] = "Service Provider registered successfully.";
         $data["status"] = "success";
@@ -238,8 +240,7 @@ if($form_request == "agent"){
     }else if (!empty($insert_query)) {
         $body = file_get_contents(dirname(__DIR__) . '/admin/partial/registration_template.php');
         $body = str_replace('{{name}}', htmlspecialchars($username), $body);
-        $welcome_mail = mail_send($email, 'Welcome to Road Star USA – Your Registration is Successful!' , $body  , $name);
-
+        $welcome_mail = send_mail($username, $email, 'Welcome to Westland Mutual Insurance - Your Registration is Successful!', $body);
 
         $placeholders = [
             '{{name}}'  => htmlspecialchars($name),
@@ -249,7 +250,7 @@ if($form_request == "agent"){
         ];  
         $body = file_get_contents(dirname(__DIR__) . '/admin/partial/activation_template.php');
         $body = str_replace(array_keys($placeholders), array_values($placeholders), $body);
-        $activation_mail = mail_send(admin_email, 'New Agent Registration – Action Required' , $body  , 'System Notification');
+        $activation_mail = send_mail(admin_name, admin_email, 'New Agent Registration – Action Required!', $body);
 
         $data["msg"] = "Agent registered successfully.";
         $data["status"] = "success";
