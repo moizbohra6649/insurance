@@ -120,6 +120,38 @@
 <script>
     $("input").attr('autocomplete', 'off');
 
+    function numberToOrdinal(number) {
+        if (isNaN(number)) {
+            return number; // return original input if it's not a number
+        }
+
+        number = parseInt(number, 10);
+        const lastDigit = number % 10;
+        const lastTwoDigits = number % 100;
+
+        let suffix;
+        if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
+            suffix = 'th';
+        } else {
+            switch (lastDigit) {
+                case 1:
+                    suffix = 'st';
+                    break;
+                case 2:
+                    suffix = 'nd';
+                    break;
+                case 3:
+                    suffix = 'rd';
+                    break;
+                default:
+                    suffix = 'th';
+            }
+        }
+
+        return number + suffix;
+    }
+
+
     function fn_from_data (formElement){
         var formData = new FormData();
         for (var i = 0; i < formElement.elements.length; i++) {

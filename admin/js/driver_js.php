@@ -1,5 +1,5 @@
 <script>
-/* ==================================================START STAFF FORM JS CODE================================================== */
+/* ==================================================START DRIVER FORM JS CODE================================================== */
 $('.submit_btn').on('click', (function(e) {
 
     var btn_value = $(this).val();
@@ -37,21 +37,35 @@ $('.submit_btn').on('click', (function(e) {
         }
     }
 
-    if($('input[name="family_friend"]:checked').val() != "none"){
-        if ($("#family_friend_first_name").val() == "") {
-            error_arr.push("Please fill a Family or Friend First Name.<br/>");
-        }
-        
-        if ($("#family_friend_last_name").val() == "") {
-            error_arr.push("Please fill a Family or Friend Last Name.<br/>");
-        }else if($('input[name="family_friend"]:checked').val() == "family" && $("#last_name").val() != $("#family_friend_last_name").val()){
-            error_arr.push("Driver Last name or Family member Last name are not same.<br/>");
-        }
+    if ($('input[name="family_friend"]:checked').val() != "none") {
+        var i = 1;
+        var selectedType = $('input[name="family_friend"]:checked').val();
+        var mainLastName = $("#last_name").val().trim();
 
-        if(!$('input[name="is_fruad_alert_family_info"]').is(':checked')){
+        $('input[name="family_friend_first_name[]"]').each(function(index) {
+            var firstName = $(this).val().trim();
+            var lastName = $('input[name="family_friend_last_name[]"]').eq(index).val().trim();
+
+            if (firstName === "") {
+                error_arr.push("Please fill a Family or Friend First Name.<br/>");
+            }
+
+            if (lastName === "") {
+                error_arr.push("Please fill a Family or Friend Last Name.<br/>");
+            } else if (selectedType === "family" && firstName !== "") {
+                if (lastName !== mainLastName) {
+                    error_arr.push(`Driver Last name and the ${numberToOrdinal(i)} family member's last name do not match.<br/>`);
+                }
+            }
+
+            i++;
+        });
+
+        if (!$('input[name="is_fruad_alert_family_info"]').is(':checked')) {
             error_arr.push("Please check the 'Family Member/Friend Details Verified' checkbox.<br/>");
         }
     }
+
 
     if(!$('input[name="is_fruad_alert"]').is(':checked')){
         error_arr.push("Please check the Final Declaration checkbox.<br/>");
@@ -134,6 +148,28 @@ $(".family_friend").click(function(){
         $(".family_friend_div").css('display', 'none');
     }
 });
-/* ==================================================END STAFF FORM JS CODE================================================== */
+
+// Add new entry
+$('#addMoreFriend').click(function(){
+    var max_count_of_form = ($('input[name="family_friend"]:checked').val() == "family") ? <?=$max_driver_family?> : <?=$max_driver_friend?>;
+    let newEntry = $('.familyFriendEntry:first').clone();
+    if($('.familyFriendEntry').length >= max_count_of_form){
+        notification("Oh Snap!", "At least one entry is required.", "danger");
+    }else{
+        newEntry.find('input, select').val('');
+        $('#familyFriendContainer').append(newEntry);
+    }
+});
+
+// Remove entry
+$(document).on('click', '.removeEntry', function(){
+    if($('.familyFriendEntry').length > 1){
+        $(this).closest('.familyFriendEntry').remove();
+    } else {
+        notification("Oh Snap!", "At least one entry is required.", "danger");
+    }
+});
+
+/* ==================================================END DRIVER FORM JS CODE================================================== */
 
 </script>

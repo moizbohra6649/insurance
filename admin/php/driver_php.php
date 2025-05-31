@@ -1,6 +1,8 @@
 <?php
 $table_name = "driver";
 $max_customer_driver_insert_count = 5;
+$max_driver_family = 5;
+$max_driver_friend = 3;
 /* Include Function's File */
 if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
     require_once(dirname(__DIR__) . '/partial/functions.php');
@@ -47,16 +49,16 @@ $spouse_zip_code       = (isset($_REQUEST["spouse_zip_code"])) ? $_REQUEST["spou
 $spouse_apt_unit       = (isset($_REQUEST["spouse_apt_unit"])) ? $_REQUEST["spouse_apt_unit"] : "";
 $spouse_address        = (isset($_REQUEST["spouse_address"])) ? $_REQUEST["spouse_address"] : "";
 $family_friend        = (isset($_REQUEST["family_friend"])) ? $_REQUEST["family_friend"] : "none";
-$family_friend_first_name     = (isset($_REQUEST["family_friend_first_name"])) ? $_REQUEST["family_friend_first_name"] : "";
-$family_friend_last_name      = (isset($_REQUEST["family_friend_last_name"])) ? $_REQUEST["family_friend_last_name"] : "";
-$family_friend_email          = (isset($_REQUEST["family_friend_email"])) ? $_REQUEST["family_friend_email"] : "";
-$family_friend_mobile_no      = (isset($_REQUEST["family_friend_mobile_no"])) ? $_REQUEST["family_friend_mobile_no"] : "";
-$family_friend_licence_no     = (isset($_REQUEST["family_friend_licence_no"])) ? $_REQUEST["family_friend_licence_no"] : "";
-$family_friend_state          = (isset($_REQUEST["family_friend_state"])) ? $_REQUEST["family_friend_state"] : "";
-$family_friend_city           = (isset($_REQUEST["family_friend_city"])) ? $_REQUEST["family_friend_city"] : "";
-$family_friend_zip_code       = (isset($_REQUEST["family_friend_zip_code"])) ? $_REQUEST["family_friend_zip_code"] : "";
-$family_friend_apt_unit       = (isset($_REQUEST["family_friend_apt_unit"])) ? $_REQUEST["family_friend_apt_unit"] : "";
-$family_friend_address        = (isset($_REQUEST["family_friend_address"])) ? $_REQUEST["family_friend_address"] : "";
+$family_friend_first_name     = (isset($_REQUEST["family_friend_first_name"])) ? $_REQUEST["family_friend_first_name"] : [];
+$family_friend_last_name      = (isset($_REQUEST["family_friend_last_name"])) ? $_REQUEST["family_friend_last_name"] : [];
+$family_friend_email          = (isset($_REQUEST["family_friend_email"])) ? $_REQUEST["family_friend_email"] : [];
+$family_friend_mobile_no      = (isset($_REQUEST["family_friend_mobile_no"])) ? $_REQUEST["family_friend_mobile_no"] : [];
+$family_friend_licence_no     = (isset($_REQUEST["family_friend_licence_no"])) ? $_REQUEST["family_friend_licence_no"] : [];
+$family_friend_state          = (isset($_REQUEST["family_friend_state"])) ? $_REQUEST["family_friend_state"] : [];
+$family_friend_city           = (isset($_REQUEST["family_friend_city"])) ? $_REQUEST["family_friend_city"] : [];
+$family_friend_zip_code       = (isset($_REQUEST["family_friend_zip_code"])) ? $_REQUEST["family_friend_zip_code"] : [];
+$family_friend_apt_unit       = (isset($_REQUEST["family_friend_apt_unit"])) ? $_REQUEST["family_friend_apt_unit"] : [];
+$family_friend_address        = (isset($_REQUEST["family_friend_address"])) ? $_REQUEST["family_friend_address"] : [];
 $is_fruad_alert        = (isset($_REQUEST["is_fruad_alert"])) ? $_REQUEST["is_fruad_alert"] : "false";
 $is_fruad_alert_family_info        = (isset($_REQUEST["is_fruad_alert_family_info"])) ? $_REQUEST["is_fruad_alert_family_info"] : "false";
 
@@ -142,18 +144,31 @@ switch ($mode) {
             }
         }
 
-        if($family_friend != "none"){
-            if (empty($family_friend_first_name)) {
-                $error_arr[] = "Please fill a Family or Friend First Name.<br/>";
-            }
-            
-            if (empty($family_friend_last_name)) {
-                $error_arr[] = "Please fill a Family or Friend Last Name.<br/>";
-            }else if ($family_friend == "family" && $last_name != $family_friend_last_name) {
-                $error_arr[] = "Driver Last name or Family member Last name are not same.<br/>";
+        if (!empty($_POST['family_friend']) && $_POST['family_friend'] !== 'none') {
+            $selectedType = $_POST['family_friend'];
+            $mainLastName = trim($_POST['last_name'] ?? '');
+
+            $firstNames = $_POST['family_friend_first_name'] ?? [];
+            $lastNames = $_POST['family_friend_last_name'] ?? [];
+
+            foreach ($firstNames as $i => $firstName) {
+                $firstName = trim($firstName);
+                $lastName = trim($lastNames[$i] ?? '');
+
+                if ($firstName === '') {
+                    $error_arr[] = "Please fill a Family or Friend First Name.<br/>";
+                }
+
+                if ($lastName === '') {
+                    $error_arr[] = "Please fill a Family or Friend Last Name.<br/>";
+                } elseif ($selectedType === 'family' && $firstName !== '') {
+                    if ($lastName !== $mainLastName) {
+                        $error_arr[] = "Driver Last name and the " . numberToOrdinal($i + 1) . " family member's last name do not match.<br/>";
+                    }
+                }
             }
 
-            if (empty($is_fruad_alert_family_info) || $is_fruad_alert_family_info == "false") {
+            if (empty($_POST['is_fruad_alert_family_info'])) {
                 $error_arr[] = "Please check the 'Family Member/Friend Details Verified' checkbox.<br/>";
             }
         }
@@ -189,7 +204,22 @@ switch ($mode) {
         }
 
         if($family_friend != "none"){
-            $insert_family_friend_detail_query = mysqli_query($conn, "INSERT INTO family_friend_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$last_inserted_id', '$family_friend_first_name', '$family_friend_last_name', '$family_friend_email', '$family_friend_mobile_no', '$family_friend_licence_no', '$family_friend_state', '$family_friend_city', '$family_friend_zip_code', '$family_friend_apt_unit', '$family_friend_address', 1)");
+            $count = count($family_friend_first_name);
+            for ($i = 0; $i < $count; $i++) {
+
+                $first_name = trim($family_friend_first_name[$i]);
+                $last_name = trim($family_friend_last_name[$i]);
+                $email = trim($family_friend_email[$i]);
+                $mobile_no = trim($family_friend_mobile_no[$i]);
+                $licence_no = trim($family_friend_licence_no[$i]);
+                $state = trim($family_friend_state[$i]);
+                $city = trim($family_friend_city[$i]);
+                $zip_code = intval($family_friend_zip_code[$i]);
+                $apt_unit = trim($family_friend_apt_unit[$i]);
+                $address = trim($family_friend_address[$i]);
+
+                $insert_family_friend_detail_query = mysqli_query($conn, "INSERT INTO family_friend_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$last_inserted_id', '$first_name', '$last_name', '$email', '$mobile_no', '$licence_no', '$state', '$city', '$zip_code', '$apt_unit', '$address',  1)");
+            }
         }
 
         // Commit transaction
