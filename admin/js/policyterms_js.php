@@ -63,7 +63,7 @@ $('.submit_btn').on('click', (function(e) {
                             var url = `thank_you.php?policy_id=${data.policy_id}`;
                             location.replace(`<?=$actual_link?>${url}`);
                         }else{
-                            var url = `policy_list.php`;
+                            var url = `policy_list.php?customer_id=<?=base64_encode($customer_id)?>`;
                             location.replace(`<?=$actual_link?>${url}`);
                         }
                     }else{

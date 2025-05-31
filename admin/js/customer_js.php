@@ -80,13 +80,13 @@ $('.submit_btn').on('click', (function(e) {
                     
                     if(data.status == "success"){
                         var url = `customer_list.php`;
-                        if(data.id != ""){
+                        if(data.encoded_customer_id != ""){
                             if(btn_value == "vehicle"){
-                                var url = `vehicle.php?customer_id=${data.id}`;
+                                var url = `vehicle.php?customer_id=${data.encoded_customer_id}`;
                             }else if(btn_value == "driver"){
-                                var url = `driver.php?customer_id=${data.id}`;
+                                var url = `driver.php?customer_id=${data.encoded_customer_id}`;
                             }else if(btn_value == "policy"){
-                                var url = `policy.php?customer_id=${data.id}`;
+                                var url = `policy.php?customer_id=${data.encoded_customer_id}`;
                             }
                         }
                         

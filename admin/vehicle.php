@@ -48,7 +48,7 @@ include('partial/loader.php'); ?>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="vehicle_no">Vehicle No. (VIN) <span class="text-danger">*</span></label>
                                             <div class="form-input">
-                                                <input class="form-control alpha_num" id="vehicle_no" name="vehicle_no" minlength="17" maxlength="17" type="text" value="<?=$vehicle_no?>" placeholder="Vehicle No. (VIN)" required="">
+                                                <input class="form-control" id="vehicle_no" name="vehicle_no" minlength="17" maxlength="17" type="text" value="<?=$vehicle_no?>" placeholder="Vehicle No. (VIN)" required="" oninput="alphaNumLimit(event, 17);">
                                                 <div class="invalid-feedback">Please fill a Vehicle No. (VIN).</div>
                                             </div>
                                         </div>
@@ -69,7 +69,7 @@ include('partial/loader.php'); ?>
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="licence_plat_no">LPN <span class="text-danger">*</span></label>
                                             <div class="form-input">
-                                                <input class="form-control" id="licence_plat_no" name="licence_plat_no" type="text" value="<?=$licence_plat_no?>" placeholder="LPN" required="">
+                                                <input class="form-control" id="licence_plat_no" name="licence_plat_no" type="text" value="<?=$licence_plat_no?>" placeholder="LPN" required="" oninput="alphaNumLimit(event, 12);">
                                                 <div class="invalid-feedback">Please fill a LPN.</div>
                                             </div>
                                         </div>
@@ -132,12 +132,12 @@ include('partial/loader.php'); ?>
                                     <div class="col row">
                                         <div class="col-md-4 mb-3 custom-radio-ml">
                                             <?php
-                                                $select_vechile_category = select("vehicle_category","status=1");
-                                                while($get_vechile_category = fetch($select_vechile_category)){
+                                                $select_vehicle_category = select("vehicle_category","status=1");
+                                                while($get_vehicle_category = fetch($select_vehicle_category)){
                                             ?>
                                             <div class="radio-primary">
-                                                <input class="form-check-input" type="radio" name="vehicle_category" value="<?=$get_vechile_category["id"]?>" <?= ($get_vechile_category["id"] == $vehicle_category) ? "checked": ""; ?> onclick="fn_change_vehicle_category(this.value);">
-                                                <label class="form-check-label"><?=$get_vechile_category["label"]?></label>
+                                                <input class="form-check-input" type="radio" name="vehicle_category" value="<?=$get_vehicle_category["id"]?>" <?= ($get_vehicle_category["id"] == $vehicle_category) ? "checked": ""; ?> onclick="fn_change_vehicle_category(this.value);">
+                                                <label class="form-check-label"><?=$get_vehicle_category["label"]?></label>
                                             </div>
                                             <?php } ?>
                                         </div>

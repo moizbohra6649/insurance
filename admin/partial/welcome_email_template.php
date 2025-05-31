@@ -70,19 +70,19 @@
                         <tr>
                           <td style="padding: 30px"> 
                             <p>Dear {{name}},</p>
-                            <p>Thank you for registering with <b>Road Star USA!</b></p>
+                            <p>Thank you for registering with <b>Westland Mutual Insurance!</b></p>
                             <p> We’re excited to have you on board as one of our valued {{role}}.</p>
                             <p>Your account has been successfully created, and you can now log in to the {{role}} portal to explore tools, track shipments, and manage your business efficiently.</p>
                             <p>Here are your login details:</p>
                             <p><b>Portal URL:</b> <a target="_blank"href="{{link}}">Link</a></p>
                             <p><b>Email:</b> {{email}}</p>
                             <p><b>Password:</b> {{password}}</p>
-                            <p>If you have any questions or need assistance, feel free to reach out to our support team at mail:support@roadstarusa.com.</p>
+                            <p>If you have any questions or need assistance, feel free to reach out to our support team at mail:support@westlandmutual.com</p>
 
-                            <p> Once again, welcome to the Road Star USA family!</p>
+                            <p> Once again, welcome to the Westland Mutual Insurance family!</p>
                             <br>
                             <p> Warm regards,</p>
-                            <p> <b>Road Star USA Team</b></p>
+                            <p> <b>Westland Mutual Insurance Team</b></p>
                           </td>
                         </tr>
                       </tbody>

@@ -127,7 +127,7 @@ include('partial/loader.php'); ?>
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="driver_licence_no">Driver Licence Number <span class="text-danger">*</span></label>
-                                            <input class="form-control allownumber" id="driver_licence_no" name="driver_licence_no" type="text" value="<?=$driver_licence_no?>" placeholder="Driver Licence Number" required="">
+                                            <input class="form-control" id="driver_licence_no" name="driver_licence_no" type="text" value="<?=$driver_licence_no?>" placeholder="Driver Licence Number" required="" oninput="alphaNumLimit(event, 17);" >
                                             <div class="invalid-feedback">Please fill a Driver Licence Number.</div>
                                         </div>
                                         <div class="col-md-4 mb-3">
@@ -228,7 +228,7 @@ include('partial/loader.php'); ?>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
                                                     <label class="form-label" for="spouse_licence_no">Licence Number</label>
-                                                    <input class="form-control allownumber" id="spouse_licence_no" name="spouse_licence_no" type="text" value="<?=$spouse_licence_no?>" placeholder="Licence Number">
+                                                    <input class="form-control" id="spouse_licence_no" name="spouse_licence_no" type="text" value="<?=$spouse_licence_no?>" placeholder="Licence Number" oninput="alphaNumLimit(event, 17);">
                                                 </div>
                                                 <div class="col-md-4 mb-3">
                                                     <label class="form-label" for="spouse_address">Address</label>
@@ -324,7 +324,7 @@ include('partial/loader.php'); ?>
                                                 </div>
                                                 <div class="col-md-4 mb-3">
                                                     <label class="form-label" for="family_friend_licence_no">Licence Number</label>
-                                                    <input class="form-control allownumber" id="family_friend_licence_no" name="family_friend_licence_no" type="text" value="<?=$family_friend_licence_no?>" placeholder="Licence Number">
+                                                    <input class="form-control" id="family_friend_licence_no" name="family_friend_licence_no" type="text" value="<?=$family_friend_licence_no?>" placeholder="Licence Number" oninput="alphaNumLimit(event, 17);">
                                                 </div>
                                                 <div class="col-md-4 mb-3">
                                                     <label class="form-label" for="family_friend_address">Address</label>

@@ -70,7 +70,7 @@
                         <tr>
                           <td style="padding: 30px"> 
                             <p>Dear Super Admin,</p>
-                            <p>A new {{role}} has registered on the Road Star USA portal and is awaiting activation.</p>
+                            <p>A new {{role}} has registered on the Westland Mutual Insurance portal and is awaiting activation.</p>
                             <p>Please review the details below and activate the {{role}} using the link provided.</p>
                             <p> <b>{{role}} Details:</b></p>
                             <br>
@@ -79,10 +79,10 @@
                             <br>
                             <p>🔗 Activate {{role}}:</p>
                             <p><a href="{{activation_link}}" target="_blank">[Activation Link Here]</a></p>
-                            <p> Once again, welcome to the Road Star USA family!</p>
+                            <p> Once again, welcome to the Westland Mutual Insurance family!</p>
                             <br>
                             <p>Best regards,</p>
-                            <p> <b>Road Star USA System Notification</b></p>
+                            <p> <b>Westland Mutual Insurance System Notification</b></p>
                           </td>
                         </tr>
                       </tbody>

@@ -192,6 +192,26 @@
         }
     });
 
+    //Alpha numric with limit and all caps
+    function alphaNumLimit(event, maxChars) {
+        const inputElement = event.target;
+        let inputValue = inputElement.value;
+
+        // 1. Convert to uppercase immediately (this handles pasted content too)
+        inputValue = inputValue.toUpperCase();
+
+        // 2. Filter out non-alphanumeric characters
+        inputValue = inputValue.replace(/[^a-zA-Z0-9]/g, '');
+
+        // 3. Limit max length
+        if (inputValue.length > maxChars) {
+            inputValue = inputValue.substring(0, maxChars);
+        }
+
+        // Update the input field's value
+        inputElement.value = inputValue;
+    }
+
     // Validates that the input string is a valid date formatted as "dd-mm-yyyy"
     function isValidDate(dateString)
     {

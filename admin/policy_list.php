@@ -69,7 +69,7 @@ include('partial/loader.php'); ?>
                                                     <th> <?= $get_data["agent_name"] ?> </th> 
                                                     <?php } ?>
                                                     <td> <?= $get_data["customer_name"] ?> </td>
-                                                    <td> <?= $get_data["policy_coverage"] ?> </td>
+                                                    <td> <?= getLabelByValue($coverage_dropdown, $get_data["policy_coverage"]) ?> </td>
                                                     <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
                                                     
                                                     <td align="center">

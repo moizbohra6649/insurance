@@ -164,7 +164,7 @@ switch ($mode) {
         }else if (!empty($insert_query)) {
             $data["msg"] = "Customer inserted successfully.";
             $data["status"] = "success";
-            $data["id"] = base64_encode($last_inserted_id);
+            $data["encoded_customer_id"] = base64_encode($last_inserted_id);
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";
@@ -281,7 +281,7 @@ switch ($mode) {
         }else if (!empty($update_vendor)) {
             $data["msg"] = "Customer updated successfully.";
             $data["status"] = "success";
-            $data["id"] = base64_encode($id);
+            $data["encoded_customer_id"] = base64_encode($id);
         } else {
             $data["msg"] = "Query error please try again later.";
             $data["status"] = "error";

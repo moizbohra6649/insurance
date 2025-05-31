@@ -5,6 +5,8 @@ if (file_exists(dirname(__DIR__) . '/partial/functions.php')) {
     require_once(dirname(__DIR__) . '/partial/functions.php');
 }
 
+require_once 'phpmailer/index.php'; 
+
 $title      = ""; 
 $list_title = "List of Agent User";
 $breadcrumb_title = "Agent User";
@@ -201,7 +203,7 @@ switch ($mode) {
 
             $body = file_get_contents(dirname(__DIR__) . '/partial/welcome_email_template.php');
             $body = str_replace(array_keys($placeholders), array_values($placeholders), $body);
-            $activation_mail = mail_send($email, 'Welcome to Road Star USA Your Registration is Successful!', $body, 'System Notification');
+            $activation_mail = send_mail($username, $email, 'Welcome to Westland Mutual Insurance Your Registration is Successful!', $body);
             $data["msg"] = "Agent inserted successfully.";
             $data["status"] = "success";
         } else {
