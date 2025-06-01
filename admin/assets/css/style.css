@@ -2597,7 +2597,9 @@ table tbody .border-bottom-warning td {
 
 /**====== Modal style css end ======**/
 /**====== Animation css start ======**/
-.options > div {
+
+/* Comment by Moiz Bohra */
+/* .options > div {
   color: #cccccc;
   display: inline-block;
   padding: 2px 10px;
@@ -2609,7 +2611,7 @@ table tbody .border-bottom-warning td {
   background-color: #7366FF;
   color: #fff;
   transition: all 0.3s ease;
-}
+} */
 
 /**====== Animation css Ends ======**/
 .modal-footer {
@@ -16898,11 +16900,12 @@ span.twitter-typeahead .tt-suggestion.active, span.twitter-typeahead .tt-suggest
 .starter-main .card-body p {
   font-size: 14px;
 }
-.starter-main .card-body ul {
+/* Comment by Moiz Bohra */
+/* .starter-main .card-body ul {
   padding-left: 30px;
   list-style-type: disc;
   margin-bottom: 15px;
-}
+} */
 .starter-main .card-body h5 {
   font-size: 18px;
 }

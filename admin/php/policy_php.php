@@ -82,6 +82,97 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
     $data["msg"] = "Something went wrong please try again later.";
     $data["status"] = "error";
 
+
+    //Vehicle Detail Get
+
+    if($_REQUEST["ajax_request"] == "vehicle_detail_get"){
+        
+
+        $vehicle = formatIds($vehicle);
+
+        $select_customer = mysqli_query($conn, "SELECT * FROM customer where id = '$customer_id'");
+
+        $data = [];
+        $error_arr = [];
+
+        // Validation
+
+        if(mysqli_num_rows($select_customer) == 0){
+            $error_arr[] = "Customer does not exists.<br/>";
+        }
+
+        // Display errors if any
+        if (!empty($error_arr)) {
+            $error_txt = implode('', $error_arr);
+            $data["msg"] = $error_txt;
+            $data["status"] = "error";
+            echo $json_response = json_encode($data);
+            exit;
+        }
+
+        $vehicle_details = [];
+        $select_vehicles_details = mysqli_query($conn, "SELECT vehicle.id, year.year,  make.make_name, model.model_name, vehicle.vehicle_no FROM vehicle 
+            INNER JOIN year ON year.id = vehicle.vehicle_year_id 
+            INNER JOIN make ON make.id = vehicle.vehicle_make_id 
+            INNER JOIN model ON model.id = vehicle.vehicle_model_id 
+            WHERE vehicle.id IN ($vehicle)");
+        if(mysqli_num_rows($select_vehicles_details) > 0){
+            while($get_vehicles_details = mysqli_fetch_assoc($select_vehicles_details)){
+                array_push($vehicle_details, $get_vehicles_details);
+            }
+        }
+
+        $data["status"] = "success";
+        $data["msg"] = "";
+        $data["res_data"] = $vehicle_details;
+
+        echo $json_response = json_encode($data);
+        exit();
+    }
+
+    //Driver Detail Get
+
+    if($_REQUEST["ajax_request"] == "driver_detail_get"){
+        
+
+        $driver = formatIds($driver);
+
+        $select_customer = mysqli_query($conn, "SELECT * FROM customer where id = '$customer_id'");
+
+        $data = [];
+        $error_arr = [];
+
+        // Validation
+
+        if(mysqli_num_rows($select_customer) == 0){
+            $error_arr[] = "Customer does not exists.<br/>";
+        }
+
+        // Display errors if any
+        if (!empty($error_arr)) {
+            $error_txt = implode('', $error_arr);
+            $data["msg"] = $error_txt;
+            $data["status"] = "error";
+            echo $json_response = json_encode($data);
+            exit;
+        }
+
+        $driver_details = [];
+        $select_drivers_details = mysqli_query($conn, "SELECT driver.id as driver_id, CONCAT_WS(' ', driver.first_name, driver.middle_name, driver.last_name) AS driver_name, driver.date_of_birth as driver_dob, driver.driver_licence_no FROM driver WHERE driver.id IN ($driver)");
+        if(mysqli_num_rows($select_drivers_details) > 0){
+            while($get_drivers_details = mysqli_fetch_assoc($select_drivers_details)){
+                array_push($driver_details, $get_drivers_details);
+            }
+        }
+
+        $data["status"] = "success";
+        $data["msg"] = "";
+        $data["res_data"] = $driver_details;
+
+        echo $json_response = json_encode($data);
+        exit();
+    }
+
     $vehicles_premium = array();
     $base_premium = 0;
     $additional_coverage_premium = 0;
@@ -93,9 +184,6 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
 
     //policy calculation
     if($_REQUEST["ajax_request"] == "policy_calculation"){
-        
-        // $vehicle = (sizeof($vehicle) > 0) ? implode(",", $vehicle) : 0;
-        // $driver = (sizeof($driver) > 0) ? implode(",", $driver) : 0;
 
         $vehicle = formatIds($vehicle);
         $driver = formatIds($driver);
@@ -145,7 +233,7 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
             if($coverage != "non_owner" && !empty($vehicle)){
 
                 $qry_policy_vehicle_addup = "SELECT policy_vehicle_amt_cal.*, vehicle.id as vehicle_id, year.year,  make.make_name, make.make_origin, model.model_name, vehicle.vehicle_no FROM policy_vehicle_amt_cal
-                    left join vehicle on FIND_IN_SET(vehicle.id, $vehicle) > 0
+                    left join vehicle on vehicle.id IN ($vehicle)
                     left join year on year.id = vehicle.vehicle_year_id
                     left join make on make.id = vehicle.vehicle_make_id
                     left join model ON model.id = vehicle.vehicle_model_id 
@@ -189,11 +277,12 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
 
             if($coverage != "non_owner" && !empty($driver)){
 
-                $qry_policy_driver_addup = "SELECT policy_driver_amt_cal.*, driver.marital_status, driver.family_friend, spouse_detail.id as spouse_id, family_friend_detail.id as family_friend_id FROM policy_driver_amt_cal
-                    left join driver on FIND_IN_SET(driver.id, $driver) > 0
+                $qry_policy_driver_addup = "SELECT policy_driver_amt_cal.*, driver.marital_status, driver.family_friend, spouse_detail.id as spouse_id, count(family_friend_detail.driver_id) as family_friend_count FROM policy_driver_amt_cal
+                    left join driver on driver.id IN ($driver)
                     left join spouse_detail on spouse_detail.driver_id = driver.id
                     left join family_friend_detail on family_friend_detail.driver_id = driver.id
-                    WHERE policy_type = '$coverage' AND TIMESTAMPDIFF(YEAR, driver.date_of_birth, CURDATE()) BETWEEN driver_age_from AND driver_age_to";
+                    WHERE policy_type = '$coverage' AND TIMESTAMPDIFF(YEAR, driver.date_of_birth, CURDATE()) BETWEEN driver_age_from AND driver_age_to
+                    GROUP BY family_friend_detail.driver_id ";
 
                     // TIMESTAMPDIFF(YEAR, driver.date_of_birth, CURDATE()) >= policy_driver_amt_cal.driver_age_from AND TIMESTAMPDIFF(YEAR, driver.date_of_birth, CURDATE()) <= policy_driver_amt_cal.driver_age_to
 
@@ -209,7 +298,7 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
                         $marital_status = $get_policy_driver_addup["marital_status"];
                         $family_friend = $get_policy_driver_addup["family_friend"];
                         $spouse_id = $get_policy_driver_addup["spouse_id"];
-                        $family_friend_id = $get_policy_driver_addup["family_friend_id"];
+                        $family_friend_count = $get_policy_driver_addup["family_friend_count"];
                         $more_then_one_driver_increase_percent = $get_policy_driver_addup["more_then_one_driver_increase_percent"];
                         $driver_increase_percent = ($driver_count > 1) ? $more_then_one_driver_increase_percent : $driver_increase_percent;
 
@@ -234,6 +323,7 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
 
                         //Friend discount
                         if(!empty($family_friend) && $family_friend == "friend"){
+                            $friend_increase_percent = $friend_increase_percent * $family_friend_count;
                             $friend_addup_amt = ($base_policy_amt * $friend_increase_percent / 100);
                             // $base_premium += $friend_addup_amt;
                             $additional_coverage_premium += $friend_addup_amt;
@@ -294,11 +384,16 @@ switch ($mode) {
             $customer_mobile            = $get_data["mobile"];
             $customer_dob  = date("F j, Y", strtotime($get_data["date_of_birth"])); ;
         } 
+        $vehicle = [];
+        $driver = [];
     break;
 
     case "INSERT":
         $data = [];
         $error_arr = [];
+
+        $vehicle = formatIds($vehicle);
+        $driver = formatIds($driver);
         
         $policy_id = get_policy_id();
         $prefix_policy_id = "WL-" . $policy_id;
@@ -309,6 +404,14 @@ switch ($mode) {
 
         if(mysqli_num_rows($select_customer) == 0){
             $error_arr[] = "Customer does not exists.<br/>";
+        }
+        
+        if(empty($vehicle)){
+            $error_arr[] = "Select a Vehicle.<br/>";
+        }
+
+        if(empty($driver)){
+            $error_arr[] = "Select a Driver.<br/>";
         }
         
 
@@ -326,19 +429,22 @@ switch ($mode) {
         $last_inserted_id = mysqli_insert_id($conn);
 
         if($last_inserted_id > 0 ){
-            $vehicle = formatIds($vehicle);
-            $vehicle = explode(",", $vehicle);
-            foreach ($vehicle as $key => $vehiclevalue) {
-                if($vehiclevalue > 0){
-                    $insert_query = mysqli_query($conn, "INSERT INTO policy_vehicle (vehicle_policy_id , vehicle_id) VALUES ('$last_inserted_id', '$vehiclevalue')");
+            
+            if(!empty($vehicle)){
+                $vehicle = explode(",", $vehicle);
+                foreach ($vehicle as $key => $vehiclevalue) {
+                    if($vehiclevalue > 0){
+                        $insert_query = mysqli_query($conn, "INSERT INTO policy_vehicle (vehicle_policy_id , vehicle_id) VALUES ('$last_inserted_id', '$vehiclevalue')");
+                    }
                 }
             }
 
-            $driver = formatIds($driver);
-            $driver = explode(",", $driver);
-            foreach ($driver as $key => $drivervalue) {
-                if($drivervalue > 0){
-                    $insert_query = mysqli_query($conn, "INSERT INTO policy_driver (driver_policy_id , driver_id) VALUES ('$last_inserted_id', '$drivervalue')");
+            if($driver){
+                $driver = explode(",", $driver);
+                foreach ($driver as $key => $drivervalue) {
+                    if($drivervalue > 0){
+                        $insert_query = mysqli_query($conn, "INSERT INTO policy_driver (driver_policy_id , driver_id) VALUES ('$last_inserted_id', '$drivervalue')");
+                    }
                 }
             }
         }
@@ -412,16 +518,20 @@ switch ($mode) {
             $management_fee          = $get_data['management_fee']; 
             $net_total          = $get_data['net_total']; 
 
-            $veh_sql = mysqli_query($conn, 'select * from policy_vehicle where vehicle_policy_id = '.$get_data["id"]);
-            while($get_veh = mysqli_fetch_array($veh_sql)){
-                $vehicle .= ','.$get_veh['vehicle_id']; 
-            }
-            $veh_sql = mysqli_query($conn, 'select * from policy_driver where driver_policy_id = '.$get_data["id"]);
-            while($get_veh = mysqli_fetch_array($veh_sql)){
-                $driver .= ','.$get_veh['driver_id']; 
-            }
+            $vehicle_sql = mysqli_query($conn, "SELECT GROUP_CONCAT(vehicle_id) AS vehicle
+                FROM policy_vehicle
+                WHERE vehicle_policy_id = '$get_data[id]'
+                GROUP BY vehicle_policy_id");
+            $get_vehicle = mysqli_fetch_assoc($vehicle_sql);
+            $vehicle = explode(',', $get_vehicle['vehicle']);
 
-            // policy calculation is pending on edit mode
+            $driver_sql = mysqli_query($conn, "SELECT GROUP_CONCAT(driver_id) AS driver 
+            FROM policy_driver 
+            WHERE driver_policy_id = '$get_data[id]'
+            GROUP BY driver_policy_id");
+            $get_driver = mysqli_fetch_assoc($driver_sql);
+            $driver = explode(',', $get_driver['driver']);
+            
             $created              = $get_data["created"];
             $local_mode           = "UPDATE";
         }
@@ -430,6 +540,9 @@ switch ($mode) {
     case "UPDATE":
         $data = [];
         $error_arr = [];
+
+        $vehicle = formatIds($vehicle);
+        $driver = formatIds($driver);
 
         $select_policy = mysqli_query($conn, "SELECT id FROM policy WHERE id = '$id' " );
         $select_customer = mysqli_query($conn, "SELECT id FROM customer WHERE id = '$customer_id' " );
@@ -442,6 +555,14 @@ switch ($mode) {
 
         if(mysqli_num_rows($select_policy) == 0){
             $error_arr[] = "Policy Does Not Exist.<br/>";
+        }
+
+        if(empty($vehicle)){
+            $error_arr[] = "Select a Vehicle.<br/>";
+        }
+
+        if(empty($driver)){
+            $error_arr[] = "Select a Driver.<br/>";
         }
         
         // Display errors if any
@@ -490,13 +611,23 @@ switch ($mode) {
                 mysqli_query($conn, "DELETE FROM policy_vehicle WHERE vehicle_policy_id = '$id'");
                 mysqli_query($conn, "DELETE FROM policy_driver WHERE driver_policy_id = '$id'");
 
+                if(!empty($vehicle)){
+                $vehicle = explode(",", $vehicle);
                 foreach ($vehicle as $key => $vehiclevalue) {
-                    mysqli_query($conn, "INSERT INTO policy_vehicle (vehicle_policy_id, vehicle_id) VALUES ('$id', '$vehiclevalue')");
+                    if($vehiclevalue > 0){
+                        $insert_query = mysqli_query($conn, "INSERT INTO policy_vehicle (vehicle_policy_id , vehicle_id) VALUES ('$id', '$vehiclevalue')");
+                    }
                 }
+            }
 
+            if($driver){
+                $driver = explode(",", $driver);
                 foreach ($driver as $key => $drivervalue) {
-                    mysqli_query($conn, "INSERT INTO policy_driver (driver_policy_id, driver_id) VALUES ('$id', '$drivervalue')");
+                    if($drivervalue > 0){
+                        $insert_query = mysqli_query($conn, "INSERT INTO policy_driver (driver_policy_id , driver_id) VALUES ('$id', '$drivervalue')");
+                    }
                 }
+            }
             }
 
         // Commit transaction

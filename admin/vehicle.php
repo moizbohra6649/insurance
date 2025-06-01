@@ -154,7 +154,13 @@ include('partial/loader.php'); ?>
                                         <div class="card-body btn-showcase" style="text-align: center;">
                                             <button class="btn btn-primary" type="button" onclick="window.history.back();">Back</button>
                                             <!-- <button id="submit_btn_vehicle" class="btn btn-primary submit_btn" type="submit" value="vehicle" data-btn_text="Submit">Submit</button> -->
-                                            <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="policy" data-btn_text="Submit">Submit</button>
+
+                                            <?php if($mode == "NEW"){ ?>
+                                                <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="policy" data-btn_text="Submit">Submit</button>
+                                            <?php }else{ ?>
+                                                <button id="submit_btn_vehicle_list" class="btn btn-primary submit_btn" type="submit" value="vehicle_list" data-btn_text="Submit">Submit</button>
+                                            <?php } ?>
+
                                             <?php if($mode != "EDIT"){ 
                                                 $vehicle_counting++;
                                                 if($vehicle_counting < $max_customer_vehicle_insert_count){ 

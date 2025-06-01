@@ -151,10 +151,12 @@ $(".family_friend").click(function(){
 
 // Add new entry
 $('#addMoreFriend').click(function(){
-    var max_count_of_form = ($('input[name="family_friend"]:checked').val() == "family") ? <?=$max_driver_family?> : <?=$max_driver_friend?>;
+    var family_friend_check = $('input[name="family_friend"]:checked').val();
+    var max_count_of_form = (family_friend_check == "family") ? <?=$max_driver_family?> : <?=$max_driver_friend?>;
     let newEntry = $('.familyFriendEntry:first').clone();
     if($('.familyFriendEntry').length >= max_count_of_form){
-        notification("Oh Snap!", "At least one entry is required.", "danger");
+        var error_msg = (family_friend_check == "family") ? `${capitalizeFirstLetter(family_friend_check)} members` : `${capitalizeFirstLetter(family_friend_check)}s`;
+        notification("Oh Snap!", `Maximum ${max_count_of_form} ${error_msg} are Allow!! `, "danger");
     }else{
         newEntry.find('input, select').val('');
         $('#familyFriendContainer').append(newEntry);
@@ -166,7 +168,7 @@ $(document).on('click', '.removeEntry', function(){
     if($('.familyFriendEntry').length > 1){
         $(this).closest('.familyFriendEntry').remove();
     } else {
-        notification("Oh Snap!", "At least one entry is required.", "danger");
+        notification("Oh Snap!", "At least one entry is required!!", "danger");
     }
 });
 

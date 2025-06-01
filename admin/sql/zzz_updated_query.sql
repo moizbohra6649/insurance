@@ -155,3 +155,5 @@ ALTER TABLE `vendor` DROP `address`;
 ALTER TABLE `vendor` CHANGE `name` `first_name` VARCHAR(252) NOT NULL;
 ALTER TABLE `vendor` ADD `last_name` VARCHAR(252) NOT NULL AFTER `first_name`;
 ALTER TABLE `vendor` ADD `address` TEXT NULL AFTER `mobile`, ADD `apt_unit` VARCHAR(252) NULL AFTER `address`, ADD `state_id` INT(11) NULL AFTER `apt_unit`, ADD `city` VARCHAR(252) NULL AFTER `state_id`, ADD `zip_code` VARCHAR(52) NULL AFTER `city`;
+
+ALTER TABLE `driver` ADD `is_fruad_alert_family_info` int(11) DEFAULT 0 AFTER `family_friend`, ADD `is_fruad_alert` int(11) DEFAULT 0 AFTER `is_fruad_alert_family_info`;

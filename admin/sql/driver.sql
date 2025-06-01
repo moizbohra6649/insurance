@@ -50,6 +50,8 @@ CREATE TABLE `driver` (
   `place_of_issue` varchar(252) DEFAULT NULL,
   `marital_status` varchar(252) NOT NULL DEFAULT 'unmarried',
   `family_friend` varchar(252) NOT NULL DEFAULT 'none',
+  `is_fruad_alert_family_info` int(11) DEFAULT 0,
+  `is_fruad_alert` int(11) DEFAULT 0,
   `status` int(12) DEFAULT 0,
   `deleted` int(12) DEFAULT 0,
   `delete_datetime` timestamp NULL DEFAULT NULL,

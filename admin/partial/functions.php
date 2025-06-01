@@ -284,7 +284,7 @@ function formatIds($id) {
         return $id;
     } else {
         // Handle unexpected input
-        return '';
+        return 0;
     }
 }
 

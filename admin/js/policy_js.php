@@ -1,157 +1,140 @@
 <script>
+var pageRead = false;
 
-// $(document).ready(function() {
-    var vehicleids = $('#vehical_list').val().split(',');
-    var driverids = $('#driver_list').val().split(',');
-
-    $('#vehicle').val(vehicleids).trigger('select');
-    $('#driver').val(driverids).trigger('select');
-    var coverage_type = $("#coverage").val(); 
-    if(coverage_type == 'liability' || coverage_type == 'full_coverage' ){
-
-        $('#vehicle').attr('multiple' , 'multiple');
-        $("#vehicle").select2({
-            placeholder: "Please Select Vehicle's",
-            minimumResultsForSearch: Infinity,
-            allowClear: true,
-            maximumSelectionLength: 5
-        });
-
-        $('#driver').attr('multiple' , 'multiple');
-        $("#driver").select2({
-            placeholder: "Please Select driver's",
-            minimumResultsForSearch: Infinity,
-            allowClear: true,
-            maximumSelectionLength: 5
-        });
-    }else{
-        $("#vehicle").select2({
-            placeholder: "Please Select Vehicle's",
-            minimumResultsForSearch: Infinity,
-            allowClear: true,
-        });
-
-        $("#driver").select2({
-            placeholder: "Please Select driver's",
-            minimumResultsForSearch: Infinity,
-            allowClear: true,
-        });
-    }
-
-// });
-
- $(document).ready(function() {
-    
-    $("#coverage").on( 'change' , (function(e) {
-       let coverage_type = $(this).val(); 
-       var vehicleids = $('#vehical_list').val().split(',');
-       var driverids = $('#driver_list').val().split(',');
-       if(coverage_type == 'liability' || coverage_type == 'full_coverage' ){
-
-            $('#vehicle').attr('multiple' , 'multiple');
-            $("#vehicle").select2({
-                placeholder: "Please Select Vehicle's",
-                minimumResultsForSearch: Infinity,
-                allowClear: true,
-                closeOnSelect: false,
-                maximumSelectionLength: 5
-            });
-            $('#vehicle').val(vehicleids).trigger('select');
-
-            $('#driver').attr('multiple' , 'multiple');
-            $("#driver").select2({
-                placeholder: "Please Select driver's",
-                minimumResultsForSearch: Infinity,
-                allowClear: true,
-                closeOnSelect: false,
-                maximumSelectionLength: 5
-            });
-            $('#driver').val(driverids).trigger('select');
-       }else{
-
-            $('#vehicle').removeAttr('multiple');
-            $("#vehicle").select2({
-                placeholder: "Please Select Vehicle's",
-                minimumResultsForSearch: Infinity,
-                allowClear: true
-            });
-            $('#vehicle').val('').trigger('select');
-
-            $('#driver').removeAttr('multiple');
-            $("#driver").select2({
-                placeholder: "Please Select driver's",
-                minimumResultsForSearch: Infinity,
-                allowClear: true
-            });
-            $('#driver').val('').trigger('select');
-            
-       }
-        
-    }));
-
-    $('#vehicle').on('change', function () {
-         let selectedVal = $(this).val();
-         // Normalize selectedValues: convert to array if it's a single string
-        if (selectedVal && !Array.isArray(selectedVal)) {
-            selectedVal = [selectedVal];
-        }
-         $('.veh_list').hide();
-         if (selectedVal && selectedVal.length > 0) {
-            $('.veh_list').show();
-            $('#vehicleTable tbody').html('');
-            selectedVal.forEach(function(value) {
-            const option = $('#vehicle').find('option[value="' + value + '"]');
-
-            const year = option.attr('year');
-            const make = option.attr('make');
-            const model = option.attr('model');
-            const vehicalNo = option.attr('vehical_no');
-            const row = `
-                <tr>
-                <td>${year}</td>
-                <td>${make}</td>
-                <td>${model}</td>
-                <td>${vehicalNo}</td>
-                </tr>
-            `;
-            $('#vehicleTable tbody').append(row);
-            
-            });
-        }
-    });
-
-    $('#driver').on('change', function () {
-         let selectedVal = $(this).val();
-         // Normalize selectedValues: convert to array if it's a single string
-        if (selectedVal && !Array.isArray(selectedVal)) {
-            selectedVal = [selectedVal];
-        }
-         $('.driver_list').hide();
-         if (selectedVal && selectedVal.length > 0) {
-            $('.driver_list').show();
-            $('#driverTable tbody').html('');
-            selectedVal.forEach(function(value) {
-            const option = $('#driver').find('option[value="' + value + '"]');
-
-            const driver_id = option.attr('driver_id');
-            const driver_name = option.attr('driver_name');
-            const driver_dob = option.attr('driver_dob');
-            const driver_licence_no = option.attr('driver_licence_no');
-            const row = `
-                <tr>
-                <td>${driver_id}</td>
-                <td>${driver_name}</td>
-                <td>${driver_dob}</td>
-                <td>${driver_licence_no}</td>
-                </tr>
-            `;
-            $('#driverTable tbody').append(row);
-            
-            });
-        }
-    });
+$("#selectMultiVehicle").easySelect({
+    buttons: true, //
+    search: true,
+    placeholder: 'Please Select Vehicle',
+    selectColor: '#524781',
+    itemTitle: 'selected',
+    showEachItem: true,
+    dropdownMaxHeight: '300px',
+    // Pass your function here
+    onItemSelected: handleSelectionVehicle
 });
 
+$("#selectMultiDriver").easySelect({
+    buttons: true, //
+    search: true,
+    placeholder: 'Please Select Driver',
+    selectColor: '#524781',
+    itemTitle: 'selected',
+    showEachItem: true,
+    dropdownMaxHeight: '300px',
+    // Pass your function here
+    onItemSelected: handleSelectionDriver
+});
+
+function coverageCheck (){
+    var coverage_type = $("#coverage").val(); 
+    if(coverage_type == 'liability' || coverage_type == 'full_coverage'){
+        $("#selectMultiVehicle").attr("data-max", "5");
+    }else{
+        $("#selectMultiVehicle").attr("data-max", "1");
+    }
+}
+
+function handleSelectionVehicle(selectedValues) {
+    if(pageRead == true){
+        fn_policy_calculation();
+    }
+    
+    fn_vehicle_detail_get(selectedValues, '<?=base64_encode($customer_id)?>');
+}
+
+function handleSelectionDriver(selectedValues) {
+    if(pageRead == true){
+        fn_policy_calculation();
+    }
+
+    fn_driver_detail_get(selectedValues, '<?=base64_encode($customer_id)?>');
+}
+
+//Vehicle Details
+function fn_vehicle_detail_get(vehicle_ids, customer_id) {
+    $.ajax({
+        type: 'POST',
+        url: '<?=($_SERVER['PHP_SELF'])?>',
+        data: {ajax_request: 'vehicle_detail_get', customer_id: customer_id, vehicle: vehicle_ids},
+        cache: false,
+        dataType: 'json',           
+        success: function(data) {
+            if(data.status == "success"){
+                var response = data.res_data;
+                var htmlString = "";
+                $.each(response, function(index, item) {
+
+                    htmlString += `
+                        <tr>
+                        <td>${item.year}</td>
+                        <td>${item.make_name}</td>
+                        <td>${item.model_name}</td>
+                        <td>${item.vehicle_no}</td>
+                        </tr>
+                    `;
+                });
+
+                if(htmlString != ""){
+                    $('.vehicle_list').show();
+                    $('#vehicleTable tbody').html(htmlString);
+                }else{
+                    $('.vehicle_list').hide();
+                    $("#vehicleTable tbody").html('');
+                }
+          
+            }
+                
+        },
+        error: function(data) {
+            console.log('error');
+            console.log(data);
+        }      
+    });
+}
+
+//Driver Details
+function fn_driver_detail_get(driver_ids, customer_id) {
+    $.ajax({
+        type: 'POST',
+        url: '<?=($_SERVER['PHP_SELF'])?>',
+        data: {ajax_request: 'driver_detail_get', customer_id: customer_id, driver: driver_ids},
+        cache: false,
+        dataType: 'json',           
+        success: function(data) {
+            if(data.status == "success"){
+                var response = data.res_data;
+                var htmlString = "";
+                $.each(response, function(index, item) {
+
+                    htmlString += `
+                        <tr>
+                            <td>${item.driver_id}</td>
+                            <td>${item.driver_name}</td>
+                            <td>${item.driver_dob}</td>
+                            <td>${item.driver_licence_no}</td>
+                        </tr>
+                    `;
+                });
+
+                if(htmlString != ""){
+                    $('.driver_list').show();
+                    $('#driverTable tbody').html(htmlString);
+                }else{
+                    $('.driver_list').hide();
+                    $("#driverTable tbody").html('');
+                }
+          
+            }
+                
+        },
+        error: function(data) {
+            console.log('error');
+            console.log(data);
+        }      
+    });
+}
+
+//For Change Service Charge by Agent
 const priceContainer = document.querySelector('.price-container');
 let priceDiv = document.querySelector('.txt_service_price');
 let inputElement = null;
@@ -191,72 +174,68 @@ function calculateNetTotal() {
   $(".txt_net_total").html(`$${netTotal.toFixed(2)}`);
 }
 
-
+//Policy Calculation
 function fn_policy_calculation(){
 
-    var customer_id = $('#customer_id').val();
+    var customer_id = '<?=base64_encode($customer_id)?>';
     var coverage = $("#coverage").val();
-    var vehicle = $('#vehicle').val();
-    var driver = $('#driver').val();
+    var vehicle = $("#selectMultiVehicle").val();
+    var driver = $('#selectMultiDriver').val();
 
-    //if(!$.isEmptyObject(vehicle)){
-        $.ajax({
-            type: 'POST',
-            url: '<?=($_SERVER['PHP_SELF'])?>',
-            data: {ajax_request: 'policy_calculation', customer_id: customer_id, coverage: coverage, vehicle: vehicle, driver: driver},
-            cache: false,
-            dataType: 'json',           
-            success: function(data) {
-                if(data.status == "success"){
-                    var response = data.res_data;
-                    $("#base_premium").val(response.base_premium);
-                    $("#additional_coverage_premium").val(response.additional_coverage_premium);
-                    $("#custom_discount").val(response.custom_discount);
-                    $("#total_premium").val(response.total_premium);
-                    $("#management_fee").val(response.management_fee);
-                    $("#service_price").val(response.service_fee);
-                    $("#net_total").val(response.net_total);
+    $.ajax({
+        type: 'POST',
+        url: '<?=($_SERVER['PHP_SELF'])?>',
+        data: {ajax_request: 'policy_calculation', customer_id: customer_id, coverage: coverage, vehicle: vehicle, driver: driver},
+        cache: false,
+        dataType: 'json',           
+        success: function(data) {
+            if(data.status == "success"){
+                var response = data.res_data;
+                $("#base_premium").val(response.base_premium);
+                $("#additional_coverage_premium").val(response.additional_coverage_premium);
+                $("#custom_discount").val(response.custom_discount);
+                $("#total_premium").val(response.total_premium);
+                $("#management_fee").val(response.management_fee);
+                $("#service_price").val(response.service_fee);
+                $("#net_total").val(response.net_total);
 
-                    $(".txt_base_premium").html('$'+parseFloat(response.base_premium).toFixed(2));
-                    $(".txt_additional_coverage_premium").html('$'+parseFloat(response.additional_coverage_premium).toFixed(2));
-                    $(".txt_custom_discount").html('$'+parseFloat(response.custom_discount).toFixed(2));
-                    $(".txt_total_premium").html('$'+parseFloat(response.total_premium).toFixed(2));
-                    $(".txt_management_fee").html('$'+parseFloat(response.management_fee).toFixed(2));
-                    $(".txt_service_price").html('$'+parseFloat(response.service_fee).toFixed(2));
-                    $(".txt_net_total").html('$'+parseFloat(response.net_total).toFixed(2));
+                $(".txt_base_premium").html('$'+parseFloat(response.base_premium).toFixed(2));
+                $(".txt_additional_coverage_premium").html('$'+parseFloat(response.additional_coverage_premium).toFixed(2));
+                $(".txt_custom_discount").html('$'+parseFloat(response.custom_discount).toFixed(2));
+                $(".txt_total_premium").html('$'+parseFloat(response.total_premium).toFixed(2));
+                $(".txt_management_fee").html('$'+parseFloat(response.management_fee).toFixed(2));
+                $(".txt_service_price").html('$'+parseFloat(response.service_fee).toFixed(2));
+                $(".txt_net_total").html('$'+parseFloat(response.net_total).toFixed(2));
 
-                    var htmlString = "";
-                    var data = response.vehicles_premium
-                    $.each(data, function(index, item) {
-                        htmlString += '<div class="row">';
-                        htmlString += '  <div class="col-md-8 mb-3">' + item.vehicle + '</div>';
-                        htmlString += '  <div class="col-md-4 mb-3">$' + parseFloat(item.amount).toFixed(2) + '</div>';
-                        htmlString += '</div>';
-                    });
+                var htmlString = "";
+                var data = response.vehicles_premium
+                $.each(data, function(index, item) {
+                    htmlString += '<div class="row">';
+                    htmlString += '  <div class="col-md-8 mb-3">' + item.vehicle + '</div>';
+                    htmlString += '  <div class="col-md-4 mb-3">$' + parseFloat(item.amount).toFixed(2) + '</div>';
+                    htmlString += '</div>';
+                });
 
-                    if(htmlString != ""){
-                        $(".selected_vehicle_list").html(`
-                        <div class="row">
-                            <h6 class="col-md-8 mt-4 mb-2">Vehicles</h6>
-                            <h6 class="col-md-4 mt-4 mb-2">Premium</h6>
-                        </div> ${htmlString}`);
-                    }else{
-                        $(".selected_vehicle_list").html('');
-                    }
+                if(htmlString != ""){
+                    $(".selected_vehicle_list").html(`
+                    <div class="row">
+                        <h6 class="col-md-8 mt-4 mb-2">Vehicles</h6>
+                        <h6 class="col-md-4 mt-4 mb-2">Premium</h6>
+                    </div> ${htmlString}`);
+                }else{
+                    $(".selected_vehicle_list").html('');
                 }
-                // console.log(data);
-                
-            },
-            error: function(data) {
-                console.log('error');
-                console.log(data);
-            }      
-        });
-    //}
+            }
+        },
+        error: function(data) {
+            console.log('error');
+            console.log(data);
+        }      
+    });
     
 }
 <?php if($mode == "NEW"){ ?>
-fn_policy_calculation();
+    fn_policy_calculation();
 <?php } ?>
 
 $('#policy_form').on('submit', (function(e) {
@@ -340,5 +319,7 @@ $('#policy_form').on('submit', (function(e) {
    // window.location.href = window.location.protocol	+ '//' + window.location.host + '/insurance/admin/policyterms.php';    ;
 
 }));
+
+pageRead = true;
 
 </script>

@@ -49,18 +49,18 @@ $spouse_zip_code       = (isset($_REQUEST["spouse_zip_code"])) ? $_REQUEST["spou
 $spouse_apt_unit       = (isset($_REQUEST["spouse_apt_unit"])) ? $_REQUEST["spouse_apt_unit"] : "";
 $spouse_address        = (isset($_REQUEST["spouse_address"])) ? $_REQUEST["spouse_address"] : "";
 $family_friend        = (isset($_REQUEST["family_friend"])) ? $_REQUEST["family_friend"] : "none";
-$family_friend_first_name     = (isset($_REQUEST["family_friend_first_name"])) ? $_REQUEST["family_friend_first_name"] : [];
-$family_friend_last_name      = (isset($_REQUEST["family_friend_last_name"])) ? $_REQUEST["family_friend_last_name"] : [];
-$family_friend_email          = (isset($_REQUEST["family_friend_email"])) ? $_REQUEST["family_friend_email"] : [];
-$family_friend_mobile_no      = (isset($_REQUEST["family_friend_mobile_no"])) ? $_REQUEST["family_friend_mobile_no"] : [];
-$family_friend_licence_no     = (isset($_REQUEST["family_friend_licence_no"])) ? $_REQUEST["family_friend_licence_no"] : [];
-$family_friend_state          = (isset($_REQUEST["family_friend_state"])) ? $_REQUEST["family_friend_state"] : [];
-$family_friend_city           = (isset($_REQUEST["family_friend_city"])) ? $_REQUEST["family_friend_city"] : [];
-$family_friend_zip_code       = (isset($_REQUEST["family_friend_zip_code"])) ? $_REQUEST["family_friend_zip_code"] : [];
-$family_friend_apt_unit       = (isset($_REQUEST["family_friend_apt_unit"])) ? $_REQUEST["family_friend_apt_unit"] : [];
-$family_friend_address        = (isset($_REQUEST["family_friend_address"])) ? $_REQUEST["family_friend_address"] : [];
-$is_fruad_alert        = (isset($_REQUEST["is_fruad_alert"])) ? $_REQUEST["is_fruad_alert"] : "false";
-$is_fruad_alert_family_info        = (isset($_REQUEST["is_fruad_alert_family_info"])) ? $_REQUEST["is_fruad_alert_family_info"] : "false";
+$family_friend_first_name     = (isset($_REQUEST["family_friend_first_name"])) ? $_REQUEST["family_friend_first_name"] : "";
+$family_friend_last_name      = (isset($_REQUEST["family_friend_last_name"])) ? $_REQUEST["family_friend_last_name"] : "";
+$family_friend_email          = (isset($_REQUEST["family_friend_email"])) ? $_REQUEST["family_friend_email"] : "";
+$family_friend_mobile_no      = (isset($_REQUEST["family_friend_mobile_no"])) ? $_REQUEST["family_friend_mobile_no"] : "";
+$family_friend_licence_no     = (isset($_REQUEST["family_friend_licence_no"])) ? $_REQUEST["family_friend_licence_no"] : "";
+$family_friend_state          = (isset($_REQUEST["family_friend_state"])) ? $_REQUEST["family_friend_state"] : "";
+$family_friend_city           = (isset($_REQUEST["family_friend_city"])) ? $_REQUEST["family_friend_city"] : "";
+$family_friend_zip_code       = (isset($_REQUEST["family_friend_zip_code"])) ? $_REQUEST["family_friend_zip_code"] : "";
+$family_friend_apt_unit       = (isset($_REQUEST["family_friend_apt_unit"])) ? $_REQUEST["family_friend_apt_unit"] : "";
+$family_friend_address        = (isset($_REQUEST["family_friend_address"])) ? $_REQUEST["family_friend_address"] : "";
+$is_fruad_alert        = (isset($_REQUEST["is_fruad_alert"])) ? $_REQUEST["is_fruad_alert"] : 0;
+$is_fruad_alert_family_info        = (isset($_REQUEST["is_fruad_alert_family_info"])) ? $_REQUEST["is_fruad_alert_family_info"] : 0;
 
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
@@ -93,6 +93,30 @@ switch ($mode) {
         $customer_name = get_value("customer", "CONCAT(customer.first_name, ' ', customer.last_name)", "where customer_id = '$customer_id'");
         $select_driver = mysqli_query($conn, "SELECT id FROM driver WHERE customer_id = '$customer_id' " );
         $driver_counting = mysqli_num_rows($select_driver);
+
+        // Initialize arrays
+        $family_friend_first_name = [];
+        $family_friend_last_name = [];
+        $family_friend_email = [];
+        $family_friend_mobile_no = [];
+        $family_friend_licence_no = [];
+        $family_friend_state = [];
+        $family_friend_city = [];
+        $family_friend_zip_code = [];
+        $family_friend_apt_unit = [];
+        $family_friend_address = [];
+
+        $family_friend_first_name[0] = "";
+        $family_friend_last_name[0] = "";
+        $family_friend_email[0] = "";
+        $family_friend_mobile_no[0] = "";
+        $family_friend_licence_no[0] = "";
+        $family_friend_state[0] = 0;
+        $family_friend_city[0] = "";
+        $family_friend_zip_code[0] = "";
+        $family_friend_apt_unit[0] = "";
+        $family_friend_address[0] = "";
+        
     break;
 
     case "INSERT":
@@ -173,7 +197,7 @@ switch ($mode) {
             }
         }
 
-        if (empty($is_fruad_alert) || $is_fruad_alert == "false") {
+        if (empty($is_fruad_alert)) {
             $error_arr[] = "Please check the Final Declaration checkbox.<br/>";
         }
 
@@ -195,7 +219,7 @@ switch ($mode) {
 
         mysqli_autocommit($conn,FALSE);
 
-        $insert_query = mysqli_query($conn, "INSERT INTO driver (driver_id, prefix_driver_id, customer_id, first_name, middle_name, last_name, email, mobile_no, date_of_birth, state_id, city, zip_code, apt_unit, address, driver_licence_no, driver_licence_image, date_of_issue, date_of_expiry, place_of_issue, marital_status, family_friend, status) VALUES ('$driver_id', '$prefix_driver_id', '$customer_id', '$first_name', '$middle_name', '$last_name', '$email', '$mobile_no', '$date_of_birth', '$state', '$city', '$zip_code', '$apt_unit', '$address', '$driver_licence_no', '$driver_licence_image', '$date_of_issue', '$date_of_expiry', '$place_of_issue', '$marital_status', '$family_friend', 1)");
+        $insert_query = mysqli_query($conn, "INSERT INTO driver (driver_id, prefix_driver_id, customer_id, first_name, middle_name, last_name, email, mobile_no, date_of_birth, state_id, city, zip_code, apt_unit, address, driver_licence_no, driver_licence_image, date_of_issue, date_of_expiry, place_of_issue, marital_status, family_friend, is_fruad_alert_family_info, is_fruad_alert, status) VALUES ('$driver_id', '$prefix_driver_id', '$customer_id', '$first_name', '$middle_name', '$last_name', '$email', '$mobile_no', '$date_of_birth', '$state', '$city', '$zip_code', '$apt_unit', '$address', '$driver_licence_no', '$driver_licence_image', '$date_of_issue', '$date_of_expiry', '$place_of_issue', '$marital_status', '$family_friend', '$is_fruad_alert_family_info', '$is_fruad_alert', 1)");
 
         $last_inserted_id = mysqli_insert_id($conn);
         
@@ -214,11 +238,11 @@ switch ($mode) {
                 $licence_no = trim($family_friend_licence_no[$i]);
                 $state = trim($family_friend_state[$i]);
                 $city = trim($family_friend_city[$i]);
-                $zip_code = intval($family_friend_zip_code[$i]);
+                $zip_code = trim($family_friend_zip_code[$i]);
                 $apt_unit = trim($family_friend_apt_unit[$i]);
                 $address = trim($family_friend_address[$i]);
 
-                $insert_family_friend_detail_query = mysqli_query($conn, "INSERT INTO family_friend_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$last_inserted_id', '$first_name', '$last_name', '$email', '$mobile_no', '$licence_no', '$state', '$city', '$zip_code', '$apt_unit', '$address',  1)");
+                $insert_family_friend_detail_query = mysqli_query($conn, "INSERT INTO family_friend_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$last_inserted_id', '$first_name', '$last_name', '$email', '$mobile_no', '$licence_no', '$state', '$city', '$zip_code', '$apt_unit', '$address', 1)");
             }
         }
 
@@ -245,7 +269,7 @@ switch ($mode) {
         $readonly   = "readonly";
         $title      = ($mode == "EDIT") ? "Edit Driver" : "View Driver";
         
-        $select_query = mysqli_query($conn, "SELECT driver.*, CONCAT(customer.first_name, ' ', customer.last_name) AS customer_name, spouse_detail.first_name as spouse_first_name, spouse_detail.last_name as spouse_last_name, spouse_detail.email as spouse_email, spouse_detail.mobile_no as spouse_mobile_no, spouse_detail.licence_no as spouse_licence_no, spouse_detail.state_id as spouse_state, spouse_detail.city as spouse_city, spouse_detail.zip_code as spouse_zip_code, spouse_detail.apt_unit as spouse_apt_unit, spouse_detail.address as spouse_address, family_friend_detail.first_name as family_friend_first_name, family_friend_detail.last_name as family_friend_last_name, family_friend_detail.email as family_friend_email, family_friend_detail.mobile_no as family_friend_mobile_no, family_friend_detail.licence_no as family_friend_licence_no, family_friend_detail.state_id as family_friend_state, family_friend_detail.city as family_friend_city, family_friend_detail.zip_code as family_friend_zip_code, family_friend_detail.apt_unit as family_friend_apt_unit, family_friend_detail.address as family_friend_address
+        $select_query = mysqli_query($conn, "SELECT driver.*, CONCAT(customer.first_name, ' ', customer.last_name) AS customer_name, spouse_detail.first_name as spouse_first_name, spouse_detail.last_name as spouse_last_name, spouse_detail.email as spouse_email, spouse_detail.mobile_no as spouse_mobile_no, spouse_detail.licence_no as spouse_licence_no, spouse_detail.state_id as spouse_state, spouse_detail.city as spouse_city, spouse_detail.zip_code as spouse_zip_code, spouse_detail.apt_unit as spouse_apt_unit, spouse_detail.address as spouse_address
         FROM driver 
         left join customer on customer.id = driver.customer_id
         left join spouse_detail on spouse_detail.driver_id = driver.id
@@ -253,7 +277,42 @@ switch ($mode) {
         where driver.id = '$id' ");
         
         if(mysqli_num_rows($select_query) > 0){
-            $get_data = mysqli_fetch_array($select_query);
+            $get_data = mysqli_fetch_assoc($select_query);
+
+            $select_driver_family_friend_query = mysqli_query($conn, "SELECT family_friend_detail.first_name as family_friend_first_name, family_friend_detail.last_name as family_friend_last_name, family_friend_detail.email as family_friend_email, family_friend_detail.mobile_no as family_friend_mobile_no, family_friend_detail.licence_no as family_friend_licence_no, family_friend_detail.state_id as family_friend_state, family_friend_detail.city as family_friend_city, family_friend_detail.zip_code as family_friend_zip_code, family_friend_detail.apt_unit as family_friend_apt_unit, family_friend_detail.address as family_friend_address
+            FROM family_friend_detail 
+            where family_friend_detail.driver_id = '$id' ");
+
+            // $family_friend_details = [];
+
+            // Initialize arrays
+            $family_friend_first_name = [];
+            $family_friend_last_name = [];
+            $family_friend_email = [];
+            $family_friend_mobile_no = [];
+            $family_friend_licence_no = [];
+            $family_friend_state = [];
+            $family_friend_city = [];
+            $family_friend_zip_code = [];
+            $family_friend_apt_unit = [];
+            $family_friend_address = [];
+            if(mysqli_num_rows($select_driver_family_friend_query) > 0){
+                $i = 0;
+                while($get_driver_family_friend_query = mysqli_fetch_assoc($select_driver_family_friend_query)){
+                    // array_push($family_friend_details, $get_driver_family_friend_query);
+                    $family_friend_first_name[$i]    = $get_driver_family_friend_query["family_friend_first_name"];
+                    $family_friend_last_name[$i]     = $get_driver_family_friend_query["family_friend_last_name"];
+                    $family_friend_email[$i]         = $get_driver_family_friend_query["family_friend_email"];
+                    $family_friend_mobile_no[$i]     = $get_driver_family_friend_query["family_friend_mobile_no"];
+                    $family_friend_licence_no[$i]    = $get_driver_family_friend_query["family_friend_licence_no"];
+                    $family_friend_state[$i]         = $get_driver_family_friend_query["family_friend_state"];
+                    $family_friend_city[$i]          = $get_driver_family_friend_query["family_friend_city"];
+                    $family_friend_zip_code[$i]      = $get_driver_family_friend_query["family_friend_zip_code"];
+                    $family_friend_apt_unit[$i]      = $get_driver_family_friend_query["family_friend_apt_unit"];
+                    $family_friend_address[$i]       = $get_driver_family_friend_query["family_friend_address"];
+                    $i++;
+                }
+            }
 
             $driver_id            = $get_data["driver_id"];
             $prefix_driver_id     = $get_data["prefix_driver_id"];
@@ -264,7 +323,7 @@ switch ($mode) {
             $last_name            = $get_data["last_name"];
             $email                = $get_data["email"];
             $mobile_no            = $get_data["mobile_no"];
-            $date_of_birth        = convert_db_date_readable($get_data["date_of_birth"]);
+            $date_of_birth        = $get_data["date_of_birth"];
             $state                = $get_data["state_id"];
             $city                 = $get_data["city"];
             $zip_code             = $get_data["zip_code"];
@@ -272,8 +331,8 @@ switch ($mode) {
             $address              = $get_data["address"];
             $driver_licence_image = $get_data["driver_licence_image"];
             $driver_licence_no    = $get_data["driver_licence_no"];
-            $date_of_issue        = convert_db_date_readable($get_data["date_of_issue"]);
-            $date_of_expiry       = convert_db_date_readable($get_data["date_of_expiry"]);
+            $date_of_issue        = $get_data["date_of_issue"];
+            $date_of_expiry       = $get_data["date_of_expiry"];
             $place_of_issue       = $get_data["place_of_issue"];
             $marital_status       = $get_data["marital_status"];
             $family_friend       = $get_data["family_friend"];
@@ -289,16 +348,20 @@ switch ($mode) {
             $spouse_apt_unit      = $get_data["spouse_apt_unit"];
             $spouse_address       = $get_data["spouse_address"];
 
-            $family_friend_first_name    = $get_data["family_friend_first_name"];
-            $family_friend_last_name     = $get_data["family_friend_last_name"];
-            $family_friend_email         = $get_data["family_friend_email"];
-            $family_friend_mobile_no     = $get_data["family_friend_mobile_no"];
-            $family_friend_licence_no    = $get_data["family_friend_licence_no"];
-            $family_friend_state         = $get_data["family_friend_state"];
-            $family_friend_city          = $get_data["family_friend_city"];
-            $family_friend_zip_code      = $get_data["family_friend_zip_code"];
-            $family_friend_apt_unit      = $get_data["family_friend_apt_unit"];
-            $family_friend_address       = $get_data["family_friend_address"];
+            $is_fruad_alert_family_info = $get_data["is_fruad_alert_family_info"];
+            $is_fruad_alert       = $get_data["is_fruad_alert"];
+
+
+            // $family_friend_first_name    = $get_data["family_friend_first_name"];
+            // $family_friend_last_name     = $get_data["family_friend_last_name"];
+            // $family_friend_email         = $get_data["family_friend_email"];
+            // $family_friend_mobile_no     = $get_data["family_friend_mobile_no"];
+            // $family_friend_licence_no    = $get_data["family_friend_licence_no"];
+            // $family_friend_state         = $get_data["family_friend_state"];
+            // $family_friend_city          = $get_data["family_friend_city"];
+            // $family_friend_zip_code      = $get_data["family_friend_zip_code"];
+            // $family_friend_apt_unit      = $get_data["family_friend_apt_unit"];
+            // $family_friend_address       = $get_data["family_friend_address"];
 
             $created              = $get_data["created"];
             $local_mode           = "UPDATE";
@@ -347,16 +410,37 @@ switch ($mode) {
             }
         }
 
-        if($family_friend != "none"){
-            if (empty($family_friend_first_name)) {
-                $error_arr[] = "Please fill a Family or Friend First Name.<br/>";
+        if (!empty($_POST['family_friend']) && $_POST['family_friend'] !== 'none') {
+            $selectedType = $_POST['family_friend'];
+            $mainLastName = trim($_POST['last_name'] ?? '');
+
+            $firstNames = $_POST['family_friend_first_name'] ?? [];
+            $lastNames = $_POST['family_friend_last_name'] ?? [];
+
+            foreach ($firstNames as $i => $firstName) {
+                $firstName = trim($firstName);
+                $lastName = trim($lastNames[$i] ?? '');
+
+                if ($firstName === '') {
+                    $error_arr[] = "Please fill a Family or Friend First Name.<br/>";
+                }
+
+                if ($lastName === '') {
+                    $error_arr[] = "Please fill a Family or Friend Last Name.<br/>";
+                } elseif ($selectedType === 'family' && $firstName !== '') {
+                    if ($lastName !== $mainLastName) {
+                        $error_arr[] = "Driver Last name and the " . numberToOrdinal($i + 1) . " family member's last name do not match.<br/>";
+                    }
+                }
             }
-            
-            if (empty($family_friend_last_name)) {
-                $error_arr[] = "Please fill a Family or Friend Last Name.<br/>";
-            }else if ($family_friend == "family" && $last_name != $family_friend_last_name) {
-                $error_arr[] = "Driver Last name or Family member Last name are not same.<br/>";
+
+            if (empty($_POST['is_fruad_alert_family_info'])) {
+                $error_arr[] = "Please check the 'Family Member/Friend Details Verified' checkbox.<br/>";
             }
+        }
+
+        if (empty($is_fruad_alert)) {
+            $error_arr[] = "Please check the Final Declaration checkbox.<br/>";
         }
 
         if($driver_counting == 0){
@@ -396,7 +480,7 @@ switch ($mode) {
         // Turn autocommit off
         mysqli_autocommit($conn,FALSE);
             
-        $update_query = mysqli_query($conn, "UPDATE driver SET first_name = '$first_name', middle_name = '$middle_name', last_name = '$last_name', email = '$email', mobile_no = '$mobile_no', date_of_birth = '$date_of_birth', state_id = '$state', city = '$city', zip_code = '$zip_code', apt_unit = '$apt_unit', address = '$address', driver_licence_no = '$driver_licence_no', driver_licence_image = '$driver_licence_image', date_of_issue = '$date_of_issue', date_of_expiry = '$date_of_expiry', place_of_issue = '$place_of_issue', marital_status = '$marital_status', family_friend = '$family_friend', updated = now() WHERE id = $id");
+        $update_query = mysqli_query($conn, "UPDATE driver SET first_name = '$first_name', middle_name = '$middle_name', last_name = '$last_name', email = '$email', mobile_no = '$mobile_no', date_of_birth = '$date_of_birth', state_id = '$state', city = '$city', zip_code = '$zip_code', apt_unit = '$apt_unit', address = '$address', driver_licence_no = '$driver_licence_no', driver_licence_image = '$driver_licence_image', date_of_issue = '$date_of_issue', date_of_expiry = '$date_of_expiry', place_of_issue = '$place_of_issue', marital_status = '$marital_status', family_friend = '$family_friend', is_fruad_alert_family_info = '$is_fruad_alert_family_info', is_fruad_alert = '$is_fruad_alert', updated = now() WHERE id = $id");
 
         mysqli_query($conn, "DELETE FROM spouse_detail WHERE driver_id = $id");
 
@@ -406,8 +490,27 @@ switch ($mode) {
 
         mysqli_query($conn, "DELETE FROM family_friend_detail WHERE driver_id = $id");
 
+        // if($family_friend != "none"){
+        //     $insert_family_friend_detail_query = mysqli_query($conn, "INSERT INTO family_friend_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$id', '$family_friend_first_name', '$family_friend_last_name', '$family_friend_email', '$family_friend_mobile_no', '$family_friend_licence_no', '$family_friend_state', '$family_friend_city', '$family_friend_zip_code', '$family_friend_apt_unit', '$family_friend_address', 1)");
+        // }
+
         if($family_friend != "none"){
-            $insert_family_friend_detail_query = mysqli_query($conn, "INSERT INTO family_friend_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$id', '$family_friend_first_name', '$family_friend_last_name', '$family_friend_email', '$family_friend_mobile_no', '$family_friend_licence_no', '$family_friend_state', '$family_friend_city', '$family_friend_zip_code', '$family_friend_apt_unit', '$family_friend_address', 1)");
+            $count = count($family_friend_first_name);
+            for ($i = 0; $i < $count; $i++) {
+
+                $first_name = trim($family_friend_first_name[$i]);
+                $last_name = trim($family_friend_last_name[$i]);
+                $email = trim($family_friend_email[$i]);
+                $mobile_no = trim($family_friend_mobile_no[$i]);
+                $licence_no = trim($family_friend_licence_no[$i]);
+                $state = trim($family_friend_state[$i]);
+                $city = trim($family_friend_city[$i]);
+                $zip_code = trim($family_friend_zip_code[$i]);
+                $apt_unit = trim($family_friend_apt_unit[$i]);
+                $address = trim($family_friend_address[$i]);
+
+                $insert_family_friend_detail_query = mysqli_query($conn, "INSERT INTO family_friend_detail (driver_id, first_name, last_name, email, mobile_no, licence_no, state_id, city, zip_code, apt_unit, address, status) VALUES ('$id', '$first_name', '$last_name', '$email', '$mobile_no', '$licence_no', '$state', '$city', '$zip_code', '$apt_unit', '$address', 1)");
+            }
         }
 
 

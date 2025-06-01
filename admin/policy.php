@@ -68,7 +68,7 @@ include('partial/loader.php'); ?>
                               <div class="col-md-4 mb-3">
                                  <label class="form-label" for="coverage">Coverage <span class="text-danger">*</span></label>
                                  <div class="form-input">
-                                    <select class="form-select" name="coverage" id="coverage" onchange="fn_policy_calculation();">
+                                    <select class="form-select" name="coverage" id="coverage" onchange="coverageCheck(); fn_policy_calculation();">
                                           <?php
                                           foreach($coverage_dropdown as $value){ ?>
                                              <option value="<?=$value['value']?>" <?= ($coverage == $value['value'] ) ? 'selected' : '';  ?>><?=$value['label']?></option>
@@ -250,41 +250,38 @@ include('partial/loader.php'); ?>
                                  </div>
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <input type="hidden" value="<?= $vehicle?>" id="vehical_list"> 
-                                 <input type="hidden" value="<?= $driver?>"  id="driver_list"> 
                                  <label class="form-label" for="vehicle">Vehicle's <span class="text-danger">*</span></label>
-                                 <div>
-                                    <select class="form-select" name="vehicle[]" id="vehicle" onchange="fn_policy_calculation();">
-                                      <?php
-                                          $select_vehicle = mysqli_query($conn, "SELECT vehicle.id, year.year,  make.make_name, model.model_name, vehicle.vehicle_no  FROM vehicle 
-                                          INNER JOIN year ON year.id = vehicle.vehicle_year_id 
-                                          INNER JOIN make ON make.id = vehicle.vehicle_make_id 
-                                          INNER JOIN model ON model.id = vehicle.vehicle_model_id 
-                                          WHERE customer_id = $customer_id");
-                                          while($get_vehicle = fetch($select_vehicle)){
-                                          ?>
-                                          <option value="<?= $get_vehicle["id"]; ?>" year="<?= $get_vehicle["year"]; ?>"  make="<?= $get_vehicle["make_name"]; ?>" model="<?= $get_vehicle["model_name"]; ?>" vehical_no="<?= $get_vehicle["vehicle_no"]; ?>" ><?php echo $get_vehicle["make_name"].' - '.$get_vehicle["model_name"] . ' - '. $get_vehicle["vehicle_no"] ?></option>
-                                       <?php } ?>
-                                    </select>
-                                 </div>
+                                 <select class="form-select" multiple="multiple" name="vehicle" id="selectMultiVehicle">
+                                    <?php
+                                       $select_vehicle = mysqli_query($conn, "SELECT vehicle.id, year.year, make.make_name, model.model_name, vehicle.vehicle_no FROM vehicle 
+                                       INNER JOIN year ON year.id = vehicle.vehicle_year_id 
+                                       INNER JOIN make ON make.id = vehicle.vehicle_make_id 
+                                       INNER JOIN model ON model.id = vehicle.vehicle_model_id 
+                                       WHERE vehicle.customer_id = $customer_id AND vehicle.status = 1");
+                                       while($get_vehicle = fetch($select_vehicle)){
+                                       ?>
+                                       <option value="<?= $get_vehicle["id"]; ?>" <?= (in_array($get_vehicle["id"], $vehicle)) ? "selected" : ""; ?> ><?php echo $get_vehicle["make_name"].' - '.$get_vehicle["model_name"] . ' - '. $get_vehicle["vehicle_no"] ?></option>
+                                    <?php } ?>
+                                 </select>
                               </div>
                               <div class="col-md-4 mb-3">
                                  <label class="form-label" for="driver">Driver's <span class="text-danger">*</span></label>
                                  <div class="form-input">
-                                    <select class="form-select" name="driver[]" id="driver" onchange="fn_policy_calculation();">
+                                    <select class="form-select" multiple="multiple" name="driver" id="selectMultiDriver">
                                        <?php
-                                          $select_driver = select("driver","customer_id = $customer_id ") ;
+                                          $select_driver = mysqli_query($conn, "SELECT driver.id, CONCAT_WS(' ', driver.first_name, driver.middle_name, driver.last_name) AS driver_name FROM driver 
+                                          WHERE driver.customer_id = $customer_id AND driver.status = 1");
                                           while($get_driver = fetch($select_driver)){
                                           ?>
-                                          <option driver_id="<?= $get_driver["driver_id"] ?>" driver_name="<?= $get_driver["first_name"].' '.$get_driver["last_name"] ?>" driver_dob ="<?= convert_readable_date_db($get_driver["date_of_birth"]) ?>" driver_licence_no="<?= $get_driver["driver_licence_no"] ?>" value="<?= $get_driver["id"] ?>"><?php echo $get_driver["first_name"].' '.$get_driver["last_name"]; ?></option>
+                                          <option value="<?= $get_driver["id"] ?>" <?= (in_array($get_driver["id"], $driver)) ? "selected" : ""; ?> ><?php echo $get_driver["driver_name"]; ?></option>
                                        <?php } ?>
                                     </select>
                                  </div>
                               </div>
                            </div>
-                           <h6 class="mt-4 veh_list" style="display:none;">Vehicle's</h6>
-                           <hr class="mt-4 mb-4 veh_list" style="display:none;">
-                           <div class="row g-3 veh_list table-responsive signal-table" style="display:none;">
+                           <h6 class="mt-4 vehicle_list" style="display:none;">Vehicle's</h6>
+                           <hr class="mt-4 mb-4 vehicle_list" style="display:none;">
+                           <div class="row g-3 vehicle_list table-responsive signal-table" style="display:none;">
                               <table class="table table-hover" id="vehicleTable">
                                  <thead class="table-dark">
                                     <tr>
