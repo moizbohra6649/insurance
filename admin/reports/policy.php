@@ -7,6 +7,13 @@ if (file_exists('../partial/functions.php')) {
 
 $id = (isset($_REQUEST["id"]) && !empty($_REQUEST["id"])) ? base64_decode($_REQUEST["id"]) : 0;
 
+$policy_id = get_value("policy", "id", "where id = '$id'");
+if(empty($policy_id)){
+    // move($actual_link."customer_list.php");
+    echo '<div class="alert alert-info" role="alert" style="text-align:center;">No data found.</div>';
+    exit;
+}
+
 $query = "SELECT 
     policy.*, 
     coverage_collision.minimum_amount AS collision_minimum_amount, 
@@ -65,10 +72,10 @@ $query = "SELECT
 ";
 
 $result = mysqli_query($conn, $query);
-if (mysqli_num_rows($result) == 0) {
-    echo '<div class="alert alert-info" role="alert" style="text-align:center;">No data found.</div>';
-    exit;
-}
+// if (mysqli_num_rows($result) == 0) {
+//     echo '<div class="alert alert-info" role="alert" style="text-align:center;">No data found.</div>';
+//     exit;
+// }
 $data = mysqli_fetch_array($result);
 
 class PDF extends FPDF {
