@@ -27,7 +27,6 @@
     <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
     <link rel="stylesheet" type="text/css" href="assets/css/vendors/datatables.css">
     <link rel="stylesheet" type="text/css" href="assets/css/vendors/sweetalert2.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/vendors/select2.css">
     <link rel="stylesheet" href="assets/css/easySelectStyle.css">
     <style>
         /* Sidebar Logo Wrapper */
