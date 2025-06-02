@@ -37,7 +37,7 @@ $select_policy = "SELECT
     FROM policy
     LEFT JOIN customer ON customer.id = policy.customer_id
     LEFT JOIN states customer_state ON customer_state.id = customer.state_id
-    LEFT JOIN policy_driver ON policy_driver.driver_policy_id = policy.id  
+    LEFT JOIN policy_driver ON policy_driver.policy_id = policy.id  
     LEFT JOIN driver ON driver.id = policy_driver.driver_id  
     WHERE policy.id = '$id'
 ";
@@ -217,7 +217,7 @@ left join vehicle on vehicle.id=policy_vehicle.vehicle_id
 left join year on year.id=vehicle.vehicle_year_id
 left join make on make.id=vehicle.vehicle_make_id
 left join model on model.id=vehicle.vehicle_model_id
-WHERE policy_vehicle.vehicle_policy_id = " . $id;
+WHERE policy_vehicle.policy_id = " . $id;
 
 $query_result_veh = mysqli_query($conn, $select_vehicle);
 
@@ -237,4 +237,4 @@ if ($remainder > 0) {
     }
 }
 
-$pdf->Output('I', 'policy_cards.pdf');
+$pdf->Output('I', 'policy_card.pdf');

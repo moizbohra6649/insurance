@@ -29,8 +29,19 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `policy_vehicle` (
   `id` int(11) NOT NULL,
-  `vehicle_policy_id` int(11) NOT NULL,
-  `vehicle_id` int(11) NOT NULL
+  `policy_id` int(11) NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
+  `vehicle` VARCHAR(252) NULL,
+  `vehicle_year_id` int(11) NULL,
+  `vehicle_year` VARCHAR(252) NULL,
+  `vehicle_make_id` int(11) NULL,
+  `vehicle_make_name` VARCHAR(252) NULL,
+  `vehicle_make_origin` VARCHAR(252) NULL,
+  `vehicle_model_id` int(11) NULL,
+  `vehicle_model_name` VARCHAR(252) NULL,
+  `vehicle_no` VARCHAR(252) NULL,
+  `calculation_id` int(11) NULL,
+  `amount` int(11) NOT NULL DEFAULT 0,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

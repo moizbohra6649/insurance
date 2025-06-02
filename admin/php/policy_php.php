@@ -69,7 +69,8 @@ if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
     $select_query = "SELECT policy.*, CONCAT(agent.first_name, ' ', agent.last_name) AS agent_name, CONCAT(customer.first_name, ' ', customer.last_name) AS customer_name FROM policy 
     left join agent on agent.id = policy.agent_id
     left join customer on customer.id = policy.customer_id 
-    where 1 = 1 $extrawhere
+    WHERE 1 = 1 $extrawhere
+    ORDER BY id DESC
     ";
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result); 
@@ -173,25 +174,8 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
         exit();
     }
 
-    $vehicles_premium = array();
-    $base_premium = 0;
-    $additional_coverage_premium = 0;
-    $custom_discount = 0;
-    $total_premium = 0;
-    $management_fee = 0;
-    $service_fee = 0;
-    $net_total = 0;
-
     //policy calculation
     if($_REQUEST["ajax_request"] == "policy_calculation"){
-
-        $vehicle = formatIds($vehicle);
-        $driver = formatIds($driver);
-
-        $select_customer = mysqli_query($conn, "SELECT * FROM customer where id = '$customer_id'");
-        $get_customer = mysqli_fetch_assoc($select_customer);
-        $date_of_birth = $get_customer["date_of_birth"];
-        $customer_age = calculateAge($date_of_birth);
 
         $data = [];
         $error_arr = [];
@@ -209,158 +193,12 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
             exit;
         }
 
-        $select_management_fee = mysqli_query($conn, "SELECT * FROM management_charge where status = 1 ORDER BY id DESC LIMIT 1");
-        if(mysqli_num_rows($select_management_fee) > 0){
-            $get_management_fee = mysqli_fetch_assoc($select_management_fee);
-            $management_fee = $get_management_fee["management_charge"];
-        }
-
-        $select_service_charge = mysqli_query($conn, "SELECT * FROM service_charge where status = 1 ORDER BY id DESC LIMIT 1");
-        if(mysqli_num_rows($select_service_charge) > 0){
-            $get_service_charge = mysqli_fetch_assoc($select_service_charge);
-            $service_fee = $get_service_charge["service_charge"];
-        }
-
-        $qry_policy_base_amt = "SELECT * FROM policy_coverage_base_amt_cal
-            WHERE policy_type = '$coverage' AND $customer_age BETWEEN customer_age_from AND customer_age_to ";
-        $select_policy_base_amt = mysqli_query($conn, $qry_policy_base_amt);
-        if(mysqli_num_rows($select_policy_base_amt) > 0){
-            $get_policy_base_amt = mysqli_fetch_assoc($select_policy_base_amt);
-            $vehicle_count = $get_policy_base_amt["vehicle_count"];
-            $driver_count = $get_policy_base_amt["driver_count"];
-            $base_policy_amt = $get_policy_base_amt["base_policy_amt"];
-
-            if($coverage != "non_owner" && !empty($vehicle)){
-
-                $qry_policy_vehicle_addup = "SELECT policy_vehicle_amt_cal.*, vehicle.id as vehicle_id, year.year,  make.make_name, make.make_origin, model.model_name, vehicle.vehicle_no FROM policy_vehicle_amt_cal
-                    left join vehicle on vehicle.id IN ($vehicle)
-                    left join year on year.id = vehicle.vehicle_year_id
-                    left join make on make.id = vehicle.vehicle_make_id
-                    left join model ON model.id = vehicle.vehicle_model_id 
-                    WHERE policy_type = '$coverage' AND ( vehicle_year_from != 0 AND year.year BETWEEN vehicle_year_from AND vehicle_year_to )";
-
-                $select_policy_vehicle_addup = mysqli_query($conn, $qry_policy_vehicle_addup);
-                if(mysqli_num_rows($select_policy_vehicle_addup) > 0){
-                    while($get_policy_vehicle_addup = mysqli_fetch_assoc($select_policy_vehicle_addup)){
-
-                        $vehicle_amt = $base_policy_amt;
-
-                        $addup_increase_percent = $get_policy_vehicle_addup["addup_increase_percent"];
-                        $vehicle_make_origin = $get_policy_vehicle_addup["vehicle_make_origin"];
-                        $vehicle_make_origin = explode(",", $vehicle_make_origin);
-                        $origin_increase_percent = $get_policy_vehicle_addup["origin_increase_percent"];
-                        $vehicle_id = $get_policy_vehicle_addup["vehicle_id"];
-                        $make_origin = $get_policy_vehicle_addup["make_origin"];
-
-                        //vehicle add up price of base amount
-                        $vehicle_addup_amt = ($base_policy_amt * $addup_increase_percent / 100);
-                        $vehicle_amt += $vehicle_addup_amt;
-                        $base_premium += $base_policy_amt + $vehicle_addup_amt;
-                        // $additional_coverage_premium += $vehicle_addup_amt;
-
-                        //vehicle make origin
-                        if(in_array($make_origin, $vehicle_make_origin)){
-                            $origin_increase_amt = ($base_policy_amt * $origin_increase_percent / 100);
-                            $vehicle_amt += $origin_increase_amt;
-                            $base_premium += $origin_increase_amt;
-                            // $additional_coverage_premium += $origin_increase_amt;
-                        }
-
-                        array_push($vehicles_premium, array("id" => $vehicle_id, "vehicle" => $get_policy_vehicle_addup["year"].' - '.$get_policy_vehicle_addup["make_name"].' - '.$get_policy_vehicle_addup["model_name"], "amount" => $vehicle_amt));
-                    }
-                }
-            }else{
-                $base_premium = $base_policy_amt;
-                $total_premium = $base_policy_amt;
-                $net_total = $base_policy_amt;
-            }
-
-            if($coverage != "non_owner" && !empty($driver)){
-
-                $qry_policy_driver_addup = "SELECT policy_driver_amt_cal.*, driver.marital_status, driver.family_friend, spouse_detail.id as spouse_id, count(family_friend_detail.driver_id) as family_friend_count FROM policy_driver_amt_cal
-                    left join driver on driver.id IN ($driver)
-                    left join spouse_detail on spouse_detail.driver_id = driver.id
-                    left join family_friend_detail on family_friend_detail.driver_id = driver.id
-                    WHERE policy_type = '$coverage' AND TIMESTAMPDIFF(YEAR, driver.date_of_birth, CURDATE()) BETWEEN driver_age_from AND driver_age_to
-                    GROUP BY family_friend_detail.driver_id ";
-
-                    // TIMESTAMPDIFF(YEAR, driver.date_of_birth, CURDATE()) >= policy_driver_amt_cal.driver_age_from AND TIMESTAMPDIFF(YEAR, driver.date_of_birth, CURDATE()) <= policy_driver_amt_cal.driver_age_to
-
-                // echo $qry_policy_driver_addup; die;
-                $select_policy_driver_addup = mysqli_query($conn, $qry_policy_driver_addup);
-                if(mysqli_num_rows($select_policy_driver_addup) > 0){
-                    $driver_count = 1;
-                    while($get_policy_driver_addup = mysqli_fetch_assoc($select_policy_driver_addup)){
-                        $driver_increase_percent = $get_policy_driver_addup["driver_increase_percent"];
-                        $spouse_discount_percent = $get_policy_driver_addup["spouse_discount_percent"];
-                        $family_increase_percent = $get_policy_driver_addup["family_increase_percent"];
-                        $friend_increase_percent = $get_policy_driver_addup["friend_increase_percent"];
-                        $marital_status = $get_policy_driver_addup["marital_status"];
-                        $family_friend = $get_policy_driver_addup["family_friend"];
-                        $spouse_id = $get_policy_driver_addup["spouse_id"];
-                        $family_friend_count = $get_policy_driver_addup["family_friend_count"];
-                        $more_then_one_driver_increase_percent = $get_policy_driver_addup["more_then_one_driver_increase_percent"];
-                        $driver_increase_percent = ($driver_count > 1) ? $more_then_one_driver_increase_percent : $driver_increase_percent;
-
-
-                        //driver add up price of base amount
-                        $driver_addup_amt = ($base_policy_amt * $driver_increase_percent / 100);
-                        // $base_premium += $driver_addup_amt;
-                        $additional_coverage_premium += $driver_addup_amt;
-
-                        //Spouse discount
-                        if(!empty($spouse_id)){
-                            $spouse_discount_amt = ($base_policy_amt * $spouse_discount_percent / 100);
-                            $custom_discount += $spouse_discount_amt;
-                        }
-
-                        //Family discount
-                        if(!empty($family_friend) && $family_friend == "family"){
-                            $family_increase_percent = $family_increase_percent * $family_friend_count;
-                            $family_addup_amt = ($base_policy_amt * $family_increase_percent / 100);
-                            // $base_premium += $family_addup_amt;
-                            $additional_coverage_premium += $family_addup_amt;
-                        }
-
-                        //Friend discount
-                        if(!empty($family_friend) && $family_friend == "friend"){
-                            $friend_increase_percent = $friend_increase_percent * $family_friend_count;
-                            $friend_addup_amt = ($base_policy_amt * $friend_increase_percent / 100);
-                            // $base_premium += $friend_addup_amt;
-                            $additional_coverage_premium += $friend_addup_amt;
-                        }
-
-                        $driver_count++;
-                    }
-
-                }
-
-            }
-
-            $total_premium = ($base_premium + $additional_coverage_premium) - $custom_discount;
-            $charges = $management_fee + $service_fee;
-            $net_total = ($total_premium + $charges);
-            
-        }
-
-        $data_set = [
-            'vehicles_premium' => $vehicles_premium,
-            'base_premium' => $base_premium,
-            'additional_coverage_premium' => $additional_coverage_premium,
-            'custom_discount' => $custom_discount,
-            'total_premium' => $total_premium,
-            'management_fee' => $management_fee,
-            'service_fee' => $service_fee,
-            'net_total' => $net_total,
-        ];
-        
-
-        // print_r($get_data);
-        // die;
+        //Calculation Function
+        $calculation_data = policy_calculation ($vehicle, $driver, $customer_id, $coverage);
 
         $data["status"] = "success";
         $data["msg"] = "";
-        $data["res_data"] = $data_set;
+        $data["res_data"] = $calculation_data;
 
         echo $json_response = json_encode($data);
         exit();
@@ -368,6 +206,173 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
     
     echo $json_response = json_encode($data);
     exit();
+}
+
+function policy_calculation ($vehicle, $driver, $customer_id, $coverage){
+    $vehicles_premium = array();
+    $base_premium = 0;
+    $additional_coverage_premium = 0;
+    $custom_discount = 0;
+    $total_premium = 0;
+    $management_fee = 0;
+    $service_fee = 0;
+    $net_total = 0;
+    global $conn;
+
+    $vehicle = formatIds($vehicle);
+    $driver = formatIds($driver);
+
+    $select_customer = mysqli_query($conn, "SELECT * FROM customer where id = '$customer_id'");
+    $get_customer = mysqli_fetch_assoc($select_customer);
+    $date_of_birth = $get_customer["date_of_birth"];
+    $customer_age = calculateAge($date_of_birth);
+
+    $select_management_fee = mysqli_query($conn, "SELECT * FROM management_charge where status = 1 ORDER BY id DESC LIMIT 1");
+    if(mysqli_num_rows($select_management_fee) > 0){
+        $get_management_fee = mysqli_fetch_assoc($select_management_fee);
+        $management_fee = $get_management_fee["management_charge"];
+    }
+
+    $select_service_charge = mysqli_query($conn, "SELECT * FROM service_charge where status = 1 ORDER BY id DESC LIMIT 1");
+    if(mysqli_num_rows($select_service_charge) > 0){
+        $get_service_charge = mysqli_fetch_assoc($select_service_charge);
+        $service_fee = $get_service_charge["service_charge"];
+    }
+
+    $qry_policy_base_amt = "SELECT * FROM policy_coverage_base_amt_cal
+        WHERE policy_type = '$coverage' AND $customer_age BETWEEN customer_age_from AND customer_age_to ";
+    $select_policy_base_amt = mysqli_query($conn, $qry_policy_base_amt);
+    if(mysqli_num_rows($select_policy_base_amt) > 0){
+        $get_policy_base_amt = mysqli_fetch_assoc($select_policy_base_amt);
+        $vehicle_count = $get_policy_base_amt["vehicle_count"];
+        $driver_count = $get_policy_base_amt["driver_count"];
+        $base_policy_amt = $get_policy_base_amt["base_policy_amt"];
+
+        if($coverage != "non_owner" && !empty($vehicle)){
+
+            $qry_policy_vehicle_addup = "SELECT policy_vehicle_amt_cal.*, vehicle.id as vehicle_id, year.id as year_id, year.year, make.id as make_id, make.make_name, make.make_origin, model.id as model_id, model.model_name, vehicle.vehicle_no FROM policy_vehicle_amt_cal
+                left join vehicle on vehicle.id IN ($vehicle)
+                left join year on year.id = vehicle.vehicle_year_id
+                left join make on make.id = vehicle.vehicle_make_id
+                left join model ON model.id = vehicle.vehicle_model_id 
+                WHERE policy_type = '$coverage' AND ( vehicle_year_from != 0 AND year.year BETWEEN vehicle_year_from AND vehicle_year_to )";
+
+            $select_policy_vehicle_addup = mysqli_query($conn, $qry_policy_vehicle_addup);
+            if(mysqli_num_rows($select_policy_vehicle_addup) > 0){
+                while($get_policy_vehicle_addup = mysqli_fetch_assoc($select_policy_vehicle_addup)){
+
+                    $vehicle_amt = $base_policy_amt;
+
+                    $addup_increase_percent = $get_policy_vehicle_addup["addup_increase_percent"];
+                    $vehicle_make_origin = $get_policy_vehicle_addup["vehicle_make_origin"];
+                    $vehicle_make_origin = explode(",", $vehicle_make_origin);
+                    $origin_increase_percent = $get_policy_vehicle_addup["origin_increase_percent"];
+                    $vehicle_id = $get_policy_vehicle_addup["vehicle_id"];
+                    $make_origin = $get_policy_vehicle_addup["make_origin"];
+
+                    //vehicle add up price of base amount
+                    $vehicle_addup_amt = ($base_policy_amt * $addup_increase_percent / 100);
+                    $vehicle_amt += $vehicle_addup_amt;
+                    $base_premium += $base_policy_amt + $vehicle_addup_amt;
+                    // $additional_coverage_premium += $vehicle_addup_amt;
+
+                    //vehicle make origin
+                    if(in_array($make_origin, $vehicle_make_origin)){
+                        $origin_increase_amt = ($base_policy_amt * $origin_increase_percent / 100);
+                        $vehicle_amt += $origin_increase_amt;
+                        $base_premium += $origin_increase_amt;
+                        // $additional_coverage_premium += $origin_increase_amt;
+                    }
+
+                    array_push($vehicles_premium, array("id" => $vehicle_id, "vehicle" => $get_policy_vehicle_addup["year"].' - '.$get_policy_vehicle_addup["make_name"].' - '.$get_policy_vehicle_addup["model_name"], "year_id" => $get_policy_vehicle_addup["year_id"], "year" => $get_policy_vehicle_addup["year"], "make_id" => $get_policy_vehicle_addup["make_id"], "make_name" => $get_policy_vehicle_addup["make_name"], "make_origin" => $get_policy_vehicle_addup["make_origin"], "model_id" => $get_policy_vehicle_addup["model_id"], "model_name" => $get_policy_vehicle_addup["model_name"], "vehicle_no" => $get_policy_vehicle_addup["vehicle_no"], "calculation_id" => $get_policy_vehicle_addup["id"], "amount" => $vehicle_amt));
+                }
+            }
+        }else{
+            $base_premium = $base_policy_amt;
+            $total_premium = $base_policy_amt;
+            $net_total = $base_policy_amt;
+        }
+
+        if($coverage != "non_owner" && !empty($driver)){
+
+            $qry_policy_driver_addup = "SELECT policy_driver_amt_cal.*, driver.marital_status, driver.family_friend, spouse_detail.id as spouse_id, count(family_friend_detail.driver_id) as family_friend_count FROM policy_driver_amt_cal
+                left join driver on driver.id IN ($driver)
+                left join spouse_detail on spouse_detail.driver_id = driver.id
+                left join family_friend_detail on family_friend_detail.driver_id = driver.id
+                WHERE policy_type = '$coverage' AND TIMESTAMPDIFF(YEAR, driver.date_of_birth, CURDATE()) BETWEEN driver_age_from AND driver_age_to
+                GROUP BY family_friend_detail.driver_id ";
+
+                // TIMESTAMPDIFF(YEAR, driver.date_of_birth, CURDATE()) >= policy_driver_amt_cal.driver_age_from AND TIMESTAMPDIFF(YEAR, driver.date_of_birth, CURDATE()) <= policy_driver_amt_cal.driver_age_to
+
+            // echo $qry_policy_driver_addup; die;
+            $select_policy_driver_addup = mysqli_query($conn, $qry_policy_driver_addup);
+            if(mysqli_num_rows($select_policy_driver_addup) > 0){
+                $driver_count = 1;
+                while($get_policy_driver_addup = mysqli_fetch_assoc($select_policy_driver_addup)){
+                    $driver_increase_percent = $get_policy_driver_addup["driver_increase_percent"];
+                    $spouse_discount_percent = $get_policy_driver_addup["spouse_discount_percent"];
+                    $family_increase_percent = $get_policy_driver_addup["family_increase_percent"];
+                    $friend_increase_percent = $get_policy_driver_addup["friend_increase_percent"];
+                    $marital_status = $get_policy_driver_addup["marital_status"];
+                    $family_friend = $get_policy_driver_addup["family_friend"];
+                    $spouse_id = $get_policy_driver_addup["spouse_id"];
+                    $family_friend_count = $get_policy_driver_addup["family_friend_count"];
+                    $more_then_one_driver_increase_percent = $get_policy_driver_addup["more_then_one_driver_increase_percent"];
+                    $driver_increase_percent = ($driver_count > 1) ? $more_then_one_driver_increase_percent : $driver_increase_percent;
+
+
+                    //driver add up price of base amount
+                    $driver_addup_amt = ($base_policy_amt * $driver_increase_percent / 100);
+                    // $base_premium += $driver_addup_amt;
+                    $additional_coverage_premium += $driver_addup_amt;
+
+                    //Spouse discount
+                    if(!empty($spouse_id)){
+                        $spouse_discount_amt = ($base_policy_amt * $spouse_discount_percent / 100);
+                        $custom_discount += $spouse_discount_amt;
+                    }
+
+                    //Family discount
+                    if(!empty($family_friend) && $family_friend == "family"){
+                        $family_increase_percent = $family_increase_percent * $family_friend_count;
+                        $family_addup_amt = ($base_policy_amt * $family_increase_percent / 100);
+                        // $base_premium += $family_addup_amt;
+                        $additional_coverage_premium += $family_addup_amt;
+                    }
+
+                    //Friend discount
+                    if(!empty($family_friend) && $family_friend == "friend"){
+                        $friend_increase_percent = $friend_increase_percent * $family_friend_count;
+                        $friend_addup_amt = ($base_policy_amt * $friend_increase_percent / 100);
+                        // $base_premium += $friend_addup_amt;
+                        $additional_coverage_premium += $friend_addup_amt;
+                    }
+
+                    $driver_count++;
+                }
+
+            }
+
+        }
+
+        $total_premium = ($base_premium + $additional_coverage_premium) - $custom_discount;
+        $charges = $management_fee + $service_fee;
+        $net_total = ($total_premium + $charges);
+        
+    }
+
+    $data_set = [
+        'vehicles_premium' => $vehicles_premium,
+        'base_premium' => $base_premium,
+        'additional_coverage_premium' => $additional_coverage_premium,
+        'custom_discount' => $custom_discount,
+        'total_premium' => $total_premium,
+        'management_fee' => $management_fee,
+        'service_fee' => $service_fee,
+        'net_total' => $net_total,
+    ];
+
+    return $data_set;
 }
 
 switch ($mode) {
@@ -424,6 +429,20 @@ switch ($mode) {
             echo $json_response = json_encode($data);
             exit;
         }
+
+        //Calculation
+        $calculation_data = policy_calculation ($vehicle, $driver, $customer_id, $coverage);
+
+        $base_premium = $calculation_data["base_premium"];
+        $additional_coverage_premium = $calculation_data["additional_coverage_premium"];
+        $custom_discount = $calculation_data["custom_discount"];
+        $total_premium = $calculation_data["total_premium"];
+        $management_fee = $calculation_data["management_fee"];
+        
+        $charges = $management_fee + $service_price;
+        $net_total = ($total_premium + $charges);
+
+
         mysqli_autocommit($conn,FALSE);
         $insert_query = mysqli_query($conn, "INSERT INTO policy (policy_id, prefix_policy_id, agent_id,  customer_id , policy_coverage, policy_coverage_collision_id, policy_coverage_umpd_id, policy_coverage_rental_id, policy_coverage_towing_id, policy_coverage_deductible_id, is_veh_used_business, is_physical_damage, policy_bi_id, policy_umd_id, policy_medical_id, policy_pd_id, is_roadside_assistance, is_driver_res, is_vehical_listed, is_applicant_sole_registered, is_applicant_other_veh, is_veh_used_business_q, is_veh_listed_ride, is_veh_listed_application_used , is_veh_listed_garaged , policy_status	, status , service_price, base_premium, additional_coverage_premium, custom_discount, total_premium, management_fee, net_total) VALUES ('$policy_id', '$prefix_policy_id', '$login_id' , '$customer_id', '$coverage', '$coverage_collision', '$umpd', '$coverage_rental', '$towning_coverage', '$coverage_deductible', '$is_veh_used_business', '$is_physical_damage', '$policy_bi', '$policy_umd', '$policy_medical', '$policy_pd', '$roasass', '$is_driver_res', '$is_vehical_listed', '$is_applicant_sole_registered', '$is_applicant_other_veh', '$is_veh_used_business_q', '$is_veh_listed_ride', '$is_veh_listed_application_used' , '$is_veh_listed_garaged', 'pending', 0 ,$service_price, $base_premium, $additional_coverage_premium, $custom_discount, $total_premium, $management_fee, $net_total)");
 
@@ -433,10 +452,26 @@ switch ($mode) {
             
             if(!empty($vehicle)){
                 $vehicle = explode(",", $vehicle);
+                $vehicles_premium = $calculation_data["vehicles_premium"];
+                $i = 0;
                 foreach ($vehicle as $key => $vehiclevalue) {
                     if($vehiclevalue > 0){
-                        $insert_query = mysqli_query($conn, "INSERT INTO policy_vehicle (vehicle_policy_id , vehicle_id) VALUES ('$last_inserted_id', '$vehiclevalue')");
+
+                        $vehicle_name = $vehicles_premium[$i]['vehicle'];
+                        $vehicle_year_id = $vehicles_premium[$i]['year_id'];
+                        $vehicle_year = $vehicles_premium[$i]['year'];
+                        $vehicle_make_id = $vehicles_premium[$i]['make_id'];
+                        $vehicle_make_name = $vehicles_premium[$i]['make_name'];
+                        $vehicle_make_origin = $vehicles_premium[$i]['make_origin'];
+                        $vehicle_model_id = $vehicles_premium[$i]['model_id'];
+                        $vehicle_model_name = $vehicles_premium[$i]['model_name'];
+                        $vehicle_no = $vehicles_premium[$i]['vehicle_no'];
+                        $vehicle_calculation_id = $vehicles_premium[$i]['calculation_id'];
+                        $vehicle_amount = $vehicles_premium[$i]['amount'];
+
+                        $insert_query = mysqli_query($conn, "INSERT INTO policy_vehicle (policy_id, vehicle_id, vehicle, vehicle_year_id, vehicle_year, vehicle_make_id, vehicle_make_name, vehicle_make_origin, vehicle_model_id, vehicle_model_name, vehicle_no, calculation_id, amount) VALUES ('$last_inserted_id', '$vehiclevalue', '$vehicle_name', '$vehicle_year_id', '$vehicle_year', '$vehicle_make_id', '$vehicle_make_name', '$vehicle_make_origin', '$vehicle_model_id', '$vehicle_model_name', '$vehicle_no', '$vehicle_calculation_id', '$vehicle_amount')");
                     }
+                    $i++;
                 }
             }
 
@@ -444,7 +479,7 @@ switch ($mode) {
                 $driver = explode(",", $driver);
                 foreach ($driver as $key => $drivervalue) {
                     if($drivervalue > 0){
-                        $insert_query = mysqli_query($conn, "INSERT INTO policy_driver (driver_policy_id , driver_id) VALUES ('$last_inserted_id', '$drivervalue')");
+                        $insert_query = mysqli_query($conn, "INSERT INTO policy_driver (policy_id, driver_id) VALUES ('$last_inserted_id', '$drivervalue')");
                     }
                 }
             }
@@ -521,15 +556,15 @@ switch ($mode) {
 
             $vehicle_sql = mysqli_query($conn, "SELECT GROUP_CONCAT(vehicle_id) AS vehicle
                 FROM policy_vehicle
-                WHERE vehicle_policy_id = '$get_data[id]'
-                GROUP BY vehicle_policy_id");
+                WHERE policy_id = '$get_data[id]'
+                GROUP BY policy_id");
             $get_vehicle = mysqli_fetch_assoc($vehicle_sql);
             $vehicle = explode(',', $get_vehicle['vehicle']);
 
             $driver_sql = mysqli_query($conn, "SELECT GROUP_CONCAT(driver_id) AS driver 
             FROM policy_driver 
-            WHERE driver_policy_id = '$get_data[id]'
-            GROUP BY driver_policy_id");
+            WHERE policy_id = '$get_data[id]'
+            GROUP BY policy_id");
             $get_driver = mysqli_fetch_assoc($driver_sql);
             $driver = explode(',', $get_driver['driver']);
             
@@ -575,6 +610,18 @@ switch ($mode) {
             exit;
         }
 
+        //Calculation
+        $calculation_data = policy_calculation ($vehicle, $driver, $customer_id, $coverage);
+
+        $base_premium = $calculation_data["base_premium"];
+        $additional_coverage_premium = $calculation_data["additional_coverage_premium"];
+        $custom_discount = $calculation_data["custom_discount"];
+        $total_premium = $calculation_data["total_premium"];
+        $management_fee = $calculation_data["management_fee"];
+        
+        $charges = $management_fee + $service_price;
+        $net_total = ($total_premium + $charges);
+
         $update_query = mysqli_query($conn, "
             UPDATE policy SET 
                 policy_coverage = '$coverage',
@@ -609,26 +656,42 @@ switch ($mode) {
             ");
 
             if ($update_query) {
-                mysqli_query($conn, "DELETE FROM policy_vehicle WHERE vehicle_policy_id = '$id'");
-                mysqli_query($conn, "DELETE FROM policy_driver WHERE driver_policy_id = '$id'");
+                mysqli_query($conn, "DELETE FROM policy_vehicle WHERE policy_id = '$id'");
+                mysqli_query($conn, "DELETE FROM policy_driver WHERE policy_id = '$id'");
 
                 if(!empty($vehicle)){
-                $vehicle = explode(",", $vehicle);
-                foreach ($vehicle as $key => $vehiclevalue) {
-                    if($vehiclevalue > 0){
-                        $insert_query = mysqli_query($conn, "INSERT INTO policy_vehicle (vehicle_policy_id , vehicle_id) VALUES ('$id', '$vehiclevalue')");
-                    }
-                }
-            }
+                    $vehicle = explode(",", $vehicle);
+                    $vehicles_premium = $calculation_data["vehicles_premium"];
+                    $i = 0;
+                    foreach ($vehicle as $key => $vehiclevalue) {
+                        if($vehiclevalue > 0){
 
-            if($driver){
-                $driver = explode(",", $driver);
-                foreach ($driver as $key => $drivervalue) {
-                    if($drivervalue > 0){
-                        $insert_query = mysqli_query($conn, "INSERT INTO policy_driver (driver_policy_id , driver_id) VALUES ('$id', '$drivervalue')");
+                            $vehicle_name = $vehicles_premium[$i]['vehicle'];
+                            $vehicle_year_id = $vehicles_premium[$i]['year_id'];
+                            $vehicle_year = $vehicles_premium[$i]['year'];
+                            $vehicle_make_id = $vehicles_premium[$i]['make_id'];
+                            $vehicle_make_name = $vehicles_premium[$i]['make_name'];
+                            $vehicle_make_origin = $vehicles_premium[$i]['make_origin'];
+                            $vehicle_model_id = $vehicles_premium[$i]['model_id'];
+                            $vehicle_model_name = $vehicles_premium[$i]['model_name'];
+                            $vehicle_no = $vehicles_premium[$i]['vehicle_no'];
+                            $vehicle_calculation_id = $vehicles_premium[$i]['calculation_id'];
+                            $vehicle_amount = $vehicles_premium[$i]['amount'];
+
+                            $insert_query = mysqli_query($conn, "INSERT INTO policy_vehicle (policy_id, vehicle_id, vehicle, vehicle_year_id, vehicle_year, vehicle_make_id, vehicle_make_name, vehicle_make_origin, vehicle_model_id, vehicle_model_name, vehicle_no, calculation_id, amount) VALUES ('$id', '$vehiclevalue', '$vehicle_name', '$vehicle_year_id', '$vehicle_year', '$vehicle_make_id', '$vehicle_make_name', '$vehicle_make_origin', '$vehicle_model_id', '$vehicle_model_name', '$vehicle_no', '$vehicle_calculation_id', '$vehicle_amount')");
+                        }
+                        $i++;
                     }
                 }
-            }
+
+                if($driver){
+                    $driver = explode(",", $driver);
+                    foreach ($driver as $key => $drivervalue) {
+                        if($drivervalue > 0){
+                            $insert_query = mysqli_query($conn, "INSERT INTO policy_driver (policy_id , driver_id) VALUES ('$id', '$drivervalue')");
+                        }
+                    }
+                }
             }
 
         // Commit transaction

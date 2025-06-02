@@ -179,12 +179,12 @@ $pdf->SetFont('Arial', 'B', 9);
 $pdf->Cell(190, 7, 'VEHICLE(S)', 'T', 1, 'C');
 // Set up table
 $pdf->SetWidths(array(
-    30,
+    34,
     12,
     30,
     12,
-    38,
-    38,
+    36,
+    36,
     15,
     15
 ));
@@ -211,20 +211,23 @@ $pdf->Row(array(
 ) , 0);
 $pdf->SetFont('Arial', '', 8);
 
-$select_vehicle = "SELECT vehicle.*, year.year, make.make_name, model.model_name 
+$select_vehicle = "SELECT vehicle.*, year.year, make.make_name, model.model_name, policy_vehicle.amount
 FROM policy_vehicle
 left join vehicle on vehicle.id=policy_vehicle.vehicle_id
 left join year on year.id=vehicle.vehicle_year_id
 left join make on make.id=vehicle.vehicle_make_id
 left join model on model.id=vehicle.vehicle_model_id
-WHERE policy_vehicle.vehicle_policy_id = " . $data['id'];
+WHERE policy_vehicle.policy_id = " . $data['id'];
 
 $query_result_veh = mysqli_query($conn, $select_vehicle);
-
+$i = 1;
+$vehicle_amount = [];
 while ($get_vehicle = mysqli_fetch_array($query_result_veh)) {
 
+    $vehicle_amount[$i] = $get_vehicle['amount'];
+
     $pdf->Row(array(
-        '123',
+        $get_vehicle['vehicle_no'],
         $get_vehicle['vehicle_type'],
         $get_vehicle['licence_plat_no'],
         $get_vehicle['year'],
@@ -233,6 +236,8 @@ while ($get_vehicle = mysqli_fetch_array($query_result_veh)) {
         'State',
         'Value'
     ) , 0);
+
+    $i++;
 }
 
 //$pdf->Ln(1);
@@ -291,7 +296,7 @@ $select_driver = "SELECT *,
     ) AS driver_details 
     FROM policy_driver
     left join driver on driver.id=policy_driver.driver_id
-    WHERE policy_driver.driver_policy_id = " . $data['id'];
+    WHERE policy_driver.policy_id = " . $data['id'];
 
 $query_result = mysqli_query($conn, $select_driver);
 
@@ -338,11 +343,59 @@ $pdf->SetFont('Arial', 'B', 8);
 $pdf->Row(array(
     'Coverages',
     'Limits Of Liability',
-    '',
-    '',
-    '',
-    ''
+    'Veh. 1',
+    'Veh. 2',
+    'Veh. 3',
+    'Veh. 4'
 ) , 0);
+
+
+$vehicle_amount_1 = '';
+$bodily_ingury_1 = '';
+$uninsured_motorist_1 = '';
+$vehicle_amount_2 = '';
+$bodily_ingury_2 = '';
+$uninsured_motorist_2 = '';
+$vehicle_amount_3 = '';
+$bodily_ingury_3 = '';
+$uninsured_motorist_3 = '';
+$vehicle_amount_4 = '';
+$bodily_ingury_4 = '';
+$uninsured_motorist_4 = '';
+
+if(sizeof($vehicle_amount) > 0){
+
+    if(isset($vehicle_amount[1])){
+        $vehicle_amount_1 = $vehicle_amount[1];
+        $bodily_ingury_1 = 89;
+        $uninsured_motorist_1 = 75;
+        $vehicle_amount_1 - ($bodily_ingury_1 + $uninsured_motorist_1);
+    }
+    
+    if(isset($vehicle_amount[2])){
+        $vehicle_amount_2 = $vehicle_amount[2];
+        $bodily_ingury_2 = 89;
+        $uninsured_motorist_2 = 75;
+        $vehicle_amount_2 - ($bodily_ingury_2 + $uninsured_motorist_2);
+    }
+
+    if(isset($vehicle_amount[3])){
+        $vehicle_amount_3 = $vehicle_amount[3];
+        $bodily_ingury_3 = 89;
+        $uninsured_motorist_3 = 75;
+        $vehicle_amount_3 - ($bodily_ingury_3 + $uninsured_motorist_3);
+    }
+
+    if(isset($vehicle_amount[4])){
+        $vehicle_amount_4 = $vehicle_amount[4];
+        $bodily_ingury_4 = 89;
+        $uninsured_motorist_4 = 75;
+        $vehicle_amount_4 - ($bodily_ingury_4 + $uninsured_motorist_4);
+    }
+
+}
+
+
 $pdf->SetFont('Arial', '', 8);
 
 if (!empty($data['collision_minimum_amount']) && !empty($data['collision_maximum_amount'])) {
@@ -358,7 +411,7 @@ if (!empty($data['collision_minimum_amount']) && !empty($data['collision_maximum
 
 if (!empty($data['umpd_minimum_amount']) and !empty($data['umpd_maximum_amount'])) {
     $pdf->Row(array(
-        'UMPD (Unissured motorist property damage)',
+        'UMPD (Uninsured motorist property damage)',
         '$' . $data['umpd_minimum_amount'] . ' per person / $' . $data['umpd_maximum_amount'] . ' per accident',
         '',
         '',
@@ -404,10 +457,10 @@ if (!empty($data['bi_minimum_amount']) and !empty($data['bi_maximum_amount'])) {
     $pdf->Row(array(
         'BI (Bodily Injury)',
         '$' . $data['bi_minimum_amount'] . ' per person / $' . $data['bi_maximum_amount'] . ' per accident',
-        '',
-        '',
-        '',
-        ''
+        addDollarIfNotNull($bodily_ingury_1),
+        addDollarIfNotNull($bodily_ingury_2),
+        addDollarIfNotNull($bodily_ingury_3),
+        addDollarIfNotNull($bodily_ingury_4)
     ) , 0);
 }
 
@@ -426,10 +479,10 @@ if (!empty($data['umd_minimum_amount']) and !empty($data['umd_maximum_amount']))
     $pdf->Row(array(
         'UMB (Uninsured Motorist / Bodily Injury) ',
         '$' . $data['umd_minimum_amount'] . ' per person / $' . $data['umd_maximum_amount'] . ' per accident',
-        '',
-        '',
-        '',
-        ''
+        addDollarIfNotNull($uninsured_motorist_1),
+        addDollarIfNotNull($uninsured_motorist_2),
+        addDollarIfNotNull($uninsured_motorist_3),
+        addDollarIfNotNull($uninsured_motorist_4)
     ) , 0);
 }
 
@@ -441,6 +494,19 @@ if (!empty($data['medical_minimum_amount']) and !empty($data['medical_maximum_am
         '',
         '',
         ''
+    ) , 0);
+}
+
+$pdf->Ln(2);
+
+if(sizeof($vehicle_amount) > 0){
+    $pdf->Row(array(
+        '',
+        '',
+        addDollarIfNotNull($vehicle_amount_1),
+        addDollarIfNotNull($vehicle_amount_2),
+        addDollarIfNotNull($vehicle_amount_3),
+        addDollarIfNotNull($vehicle_amount_4)
     ) , 0);
 }
 
@@ -501,5 +567,5 @@ $pdf->Cell(75, 5, 'TOTAL POLICY PREMIUM:  $ ' . $data['total_premium'] + $fees, 
 //  $pdf->Cell(75,5, ' ', '', 1, 'C');
 
 
-$pdf->Output();
+$pdf->Output('I', 'policy.pdf');
 ?>

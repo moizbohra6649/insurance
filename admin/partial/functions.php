@@ -813,4 +813,13 @@ function getLabelByValue($array, $value) {
     return null; // or return 'Unknown' if preferred
 }
 
+function addDollarIfNotNull($value): string
+{
+    if (!empty($value)) {
+        return '$' . $value;
+    } else {
+        return ''; // Or you could return null, depending on desired behavior for null input
+    }
+}
+
 ?>
