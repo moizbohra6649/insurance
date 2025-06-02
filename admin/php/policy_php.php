@@ -316,6 +316,7 @@ if(isset($_REQUEST["ajax_request"]) && !empty($_REQUEST["ajax_request"])){
 
                         //Family discount
                         if(!empty($family_friend) && $family_friend == "family"){
+                            $family_increase_percent = $family_increase_percent * $family_friend_count;
                             $family_addup_amt = ($base_policy_amt * $family_increase_percent / 100);
                             // $base_premium += $family_addup_amt;
                             $additional_coverage_premium += $family_addup_amt;
