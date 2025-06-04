@@ -4,10 +4,28 @@ $(document).ready(function() {
     let selectAllPermissions = $('#select_all_permissions');
     let allPermissionCheckboxes = $('.permission-checkbox');
     let selectAllGroupCheckboxes = $('.select-all-group');
+    const currentSelectedRoles = <?php echo json_encode($permission_data); ?>;
+
+    if (typeof currentSelectedRoles !== 'undefined') {
+        initializePermissions(currentSelectedRoles);
+    }
 
     function updateGlobalSelectAll() {
         var allChecked = allPermissionCheckboxes.length === allPermissionCheckboxes.filter(':checked').length;
         selectAllPermissions.prop('checked', allChecked);
+    }
+    function initializePermissions(currentRoles) {
+        allPermissionCheckboxes.prop('checked', false);
+        if (currentRoles && Array.isArray(currentRoles) && currentRoles.length > 0) {
+            $.each(currentRoles, function(index, roleValue) {
+                const checkbox = $(`.permission-checkbox[value="${roleValue}"]`);
+                if (checkbox.length) { 
+                    checkbox.prop('checked', true);
+                } else {
+                    console.warn(`WARNING: Checkbox for permission value "${roleValue}" was NOT FOUND in the HTML form.`);
+                }
+            });
+        }
     }
 
     selectAllPermissions.on('change', function() {
