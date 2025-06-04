@@ -18,7 +18,12 @@ if(isset($_SESSION["session"]) && $_SESSION["session"]["id"] != 0){
       <div class="col-12 p-0">    
         <div class="login-card">
           <div>
-            <div><a class="logo" href="index.php"><img class="img-fluid for-light" src="assets/images/logo/logo.svg" alt="looginpage"><img class="img-fluid for-dark" src="assets/images/logo/logo_dark.png" alt="looginpage"></a></div>
+            <div class="logo-wrapper">
+              <a class="logo" href="index.php">
+                <img class="img-fluid for-light" src="assets/images/logo/logo-white.png" alt="looginpage">
+                <img class="img-fluid for-dark" src="assets/images/logo/logo-black.png" alt="looginpage">
+              </a>
+            </div>
             <div class="login-main"> 
               <form id="login_form" method="POST" class="theme-form needs-validation" novalidate>
                 <h4>Sign in to account</h4>
@@ -47,7 +52,6 @@ if(isset($_SESSION["session"]) && $_SESSION["session"]["id"] != 0){
                 </div>
               </form>
             </div>
-          </div>
         </div>
       </div>
     </div>
