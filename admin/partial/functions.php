@@ -822,10 +822,8 @@ function getLabelByValue($array, $value) {
 function page_access($page_name = '' , $login_role = ''){
 	if($login_role == 'staff' && $page_name != ''){
 
-<<<<<<< HEAD
 	}
 }
-=======
 function addDollarIfNotNull($value): string
 {
     if (!empty($value)) {
@@ -835,5 +833,4 @@ function addDollarIfNotNull($value): string
     }
 }
 
->>>>>>> e8aaafd4b893598f90afbf714313687e25bfb9c8
 ?>
