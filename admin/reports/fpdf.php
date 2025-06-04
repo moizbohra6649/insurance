@@ -1908,5 +1908,13 @@ class FPDF {
             $this->SetStyle_H('U', false);
             $this->SetTextColor(0);
         }
+
+        // Function to draw dashed line
+        function DrawDashedLine($pdf, $x1, $y1, $x2, $y2, $dash_length = 2, $gap_length = 2) {
+            $dash_count = ($x2 - $x1) / ($dash_length + $gap_length);
+            for ($i = 0; $i < $dash_count; $i++) {
+                $pdf->Line($x1 + ($i * ($dash_length + $gap_length)), $y1, $x1 + ($i * ($dash_length + $gap_length)) + $dash_length, $y2);
+            }
+        }
     }
 ?>
