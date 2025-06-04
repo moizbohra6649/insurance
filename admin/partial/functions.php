@@ -211,6 +211,7 @@ $login_role = "";
 $wallet_amount = 0 ; 
 $total_earning = 0 ;
 $login_profile_image = $upload_folder . "/profile_picture.jpg";
+$permission_data = [];
 
 if(isset($_SESSION["session"])){
 	$login_id = $_SESSION["session"]["id"];
@@ -223,7 +224,13 @@ if(isset($_SESSION["session"])){
 			$login_email = $get_user["email"];
 			$login_name = $get_user["full_name"];
 			$login_role = $get_user["role"];
-			$total_earning = $get_user['earning']; 
+			$total_earning = $get_user['earning'];
+			if($login_role == 'staff'){
+				$select_permission = mysqli_query($conn, "SELECT * FROM user_page_permissions WHERE staff_id = '$login_id' and status = 1");
+				while($get_data = mysqli_fetch_array($select_permission)){
+					$permission_data[] = $get_data['page_name'];
+				}
+			} 
 
 			if(!empty($get_user["profile_image"]) && file_exists(dirname(__DIR__) . '/' . $upload_folder . '/user_profile_picture/' . $get_user["profile_image"])){
 				$login_profile_image = $upload_folder . "/user_profile_picture/$get_user[profile_image]";
@@ -812,7 +819,13 @@ function getLabelByValue($array, $value) {
     }
     return null; // or return 'Unknown' if preferred
 }
+function page_access($page_name = '' , $login_role = ''){
+	if($login_role == 'staff' && $page_name != ''){
 
+<<<<<<< HEAD
+	}
+}
+=======
 function addDollarIfNotNull($value): string
 {
     if (!empty($value)) {
@@ -822,4 +835,5 @@ function addDollarIfNotNull($value): string
     }
 }
 
+>>>>>>> e8aaafd4b893598f90afbf714313687e25bfb9c8
 ?>

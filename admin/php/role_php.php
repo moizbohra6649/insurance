@@ -43,10 +43,15 @@ switch ($mode) {
     case "NEW":
         $local_mode = "INSERT";
         $readonly   = "";
-        $select_user = mysqli_query($conn, "SELECT name FROM users WHERE id = '$id'" );
+        $select_user = mysqli_query($conn, "SELECT first_name FROM users WHERE id = '$id'" );
         if(mysqli_num_rows($select_user) > 0){
             $get_data = mysqli_fetch_array($select_user);
-            $staff_name            = $get_data["name"];
+            $staff_name            = $get_data["first_name"];
+            $select_permission = mysqli_query($conn, "SELECT * FROM user_page_permissions WHERE staff_id = '$id' and status = 1");
+            $permission_data = [];
+            while($get_data = mysqli_fetch_array($select_permission)){
+                $permission_data[] = $get_data['page_name'];
+            }
         } 
     break;
 
