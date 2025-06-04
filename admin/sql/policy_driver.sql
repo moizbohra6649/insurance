@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `policy_driver` (
   `id` int(11) NOT NULL,
-  `driver_policy_id` int(11) NOT NULL,
+  `policy_id` int(11) NOT NULL,
   `driver_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

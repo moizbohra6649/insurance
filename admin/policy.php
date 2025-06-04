@@ -93,7 +93,7 @@ include('partial/loader.php'); ?>
                                  </div>
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <label class="form-label" for="umpd">UMPD (Unissured motorist property damage) <span class="text-danger">*</span></label>
+                                 <label class="form-label" for="umpd">UMPD (Uninsured motorist property damage) <span class="text-danger">*</span></label>
                                  <div class="form-input">
                                     <select class="form-select" name="umpd" id="umpd">
                                        <option value="0">Please Select UMPD</option>

@@ -163,7 +163,7 @@
                 e.stopPropagation();
 
                 var selectedValues = [];
-                $('.mulpitply_checkbox_style:checked').each(function () {
+                $this.closest('.easySelect').find('.mulpitply_checkbox_style:checked').each(function () {
                     selectedValues.push($(this).val());
                 });
                 $this.closest('select').val(selectedValues); // Update the original select's value
