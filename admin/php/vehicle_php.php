@@ -94,7 +94,7 @@ switch ($mode) {
         }
         
         if (empty($_POST['licence_plat_no'])) {
-            $error_arr[] = "Please fill a Licence Plat Number (LPN).<br/>";
+            $error_arr[] = "Please fill a Licence Plat Number.<br/>";
         }
         
         if (empty($_POST['vehicle_year']) || $_POST['vehicle_year'] == 0) {
@@ -214,7 +214,7 @@ switch ($mode) {
         }
         
         if (empty($_POST['licence_plat_no'])) {
-            $error_arr[] = "Please fill a Licence Plat Number (LPN).<br/>";
+            $error_arr[] = "Please fill a Licence Plat Number.<br/>";
         }
         
         if (empty($_POST['vehicle_year']) || $_POST['vehicle_year'] == 0) {

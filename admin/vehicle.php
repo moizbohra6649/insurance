@@ -39,12 +39,12 @@ include('partial/loader.php'); ?>
                                 <input type="hidden" name="customer_id" value="<?=base64_encode($customer_id)?>" />
                                 <input type="hidden" name="mode" value="<?=$local_mode?>" />
                                     <div class="row">
-                                        <div class="col-md-4 mb-3">
+                                        <!-- <div class="col-md-4 mb-3">
                                             <label class="form-label" for="customer_name">Customer Name <span class="text-danger">*</span></label>
                                             <div class="form-input">
                                                 <input class="form-control" id="customer_name" name="customer_name" type="text" value="<?=$customer_name?>" placeholder="Customer Name" readonly>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="vehicle_no">Vehicle No. (VIN) <span class="text-danger">*</span></label>
                                             <div class="form-input">
@@ -64,15 +64,15 @@ include('partial/loader.php'); ?>
                                                 <div class="invalid-feedback">Please select Vehicle Type.</div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-4 mb-3">
-                                            <label class="form-label" for="licence_plat_no">LPN <span class="text-danger">*</span></label>
+                                            <label class="form-label" for="licence_plat_no">Licence Plat Number <span class="text-danger">*</span></label>
                                             <div class="form-input">
-                                                <input class="form-control" id="licence_plat_no" name="licence_plat_no" type="text" value="<?=$licence_plat_no?>" placeholder="LPN" required="" oninput="alphaNumLimit(event, 12);">
-                                                <div class="invalid-feedback">Please fill a LPN.</div>
+                                                <input class="form-control" id="licence_plat_no" name="licence_plat_no" type="text" value="<?=$licence_plat_no?>" placeholder="Licence Plat Number" required="" oninput="alphaNumLimit(event, 12);">
+                                                <div class="invalid-feedback">Please fill a Licence Plat Number.</div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="vehicle_year">Vehicle Year <span class="text-danger">*</span></label>
                                             <div class="form-input">
@@ -104,8 +104,6 @@ include('partial/loader.php'); ?>
                                                 <div class="invalid-feedback">Please select Vehicle Make.</div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="vehicle_model">Vehicle Model <span class="text-danger">*</span></label>
                                             <div class="form-input">
@@ -115,6 +113,8 @@ include('partial/loader.php'); ?>
                                                 <div class="invalid-feedback">Please select Vehicle Model.</div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="reg_state_vehicle">Registration State Vehicle <span class="text-danger">*</span></label>
                                             <div class="form-input">
@@ -167,7 +167,7 @@ include('partial/loader.php'); ?>
                                                     $vehicle_counting++;
                                                     $get_vehicle_button_num = numberToOrdinal($vehicle_counting);
                                                 ?>
-                                                    <button id="submit_btn_vehicle_add" class="btn btn-primary submit_btn" type="submit" value="vehicle_add" data-btn_text="Submit & Add <?=$get_vehicle_button_num;?> Vehicle">Submit & Add <?=$get_vehicle_button_num;?> Vehicle</button>
+                                                    <button id="submit_btn_vehicle_add" class="btn btn-primary submit_btn" type="submit" value="vehicle_add" data-btn_text="Submit & Add Vehicle">Submit & Add Vehicle</button>
                                                 <?php } ?>
                                                 <!-- <button id="submit_btn_driver" class="btn btn-primary submit_btn" type="submit" value="driver" data-btn_text="Submit & Add Driver">Submit & Add Driver</button>
                                                 <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="policy" data-btn_text="Submit & Add Policy">Submit & Add Policy</button> -->

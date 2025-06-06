@@ -39,12 +39,12 @@ include('partial/loader.php'); ?>
                                 <input type="hidden" name="customer_id" value="<?=base64_encode($customer_id)?>" />
                                 <input type="hidden" name="mode" value="<?=$local_mode?>" />
                                     <div class="row">
-                                        <div class="col-md-4 mb-3">
+                                        <!-- <div class="col-md-4 mb-3">
                                             <label class="form-label" for="customer_name">Customer Name <span class="text-danger">*</span></label>
                                             <div class="form-input">
                                                 <input class="form-control" id="customer_name" name="customer_name" type="text" value="<?=$customer_name?>" placeholder="Customer Name" readonly>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="first_name">First Name <span class="text-danger">*</span></label>
                                             <div class="form-input">
@@ -58,8 +58,6 @@ include('partial/loader.php'); ?>
                                                 <input class="form-control" id="middle_name" name="middle_name" type="text" value="<?=$middle_name?>" placeholder="Middle Name">
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="last_name">Last Name <span class="text-danger">*</span></label>
                                             <div class="form-input">
@@ -67,6 +65,8 @@ include('partial/loader.php'); ?>
                                                 <div class="invalid-feedback">Please fill a Last Name.</div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="email">Email</label>
                                             <div class="input-group">
@@ -79,8 +79,6 @@ include('partial/loader.php'); ?>
                                             <label class="form-label" for="mobile_no">Mobile No.</label>
                                             <input class="form-control allownumber" minlength="12" maxlength="12" id="mobile_no" name="mobile_no" type="text" value="<?=$mobile_no?>" placeholder="Mobile No." onkeypress="applyPhoneInputRestriction('mobile_no')">
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-4 mb-3"> 
                                             <label class="form-label" for="date_of_birth">DOB <span class="text-danger">*</span></label>
                                             <div class="ui calendar datepicker_div">
@@ -91,6 +89,8 @@ include('partial/loader.php'); ?>
                                                 <div class="invalid-feedback">Please provide a valid DOB.</div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="address">Address</label>
                                             <input class="form-control" id="address" name="address" type="text" value="<?=$address?>" placeholder="Address">
@@ -99,8 +99,6 @@ include('partial/loader.php'); ?>
                                             <label class="form-label" for="apt_unit">APT/Unit</label>
                                             <input class="form-control" id="apt_unit" name="apt_unit" type="text" value="<?=$apt_unit?>" placeholder="APT/Unit">
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="state">State</label>
                                             <div class="form-input">
@@ -115,6 +113,8 @@ include('partial/loader.php'); ?>
                                                 </select>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="city">City</label>
                                             <input class="form-control" id="city" name="city" type="text" value="<?=$city?>" placeholder="City">
@@ -123,13 +123,13 @@ include('partial/loader.php'); ?>
                                             <label class="form-label" for="zip_code">Zip Code</label>
                                             <input class="form-control allownumber" id="zip_code" minlength="6" maxlength="8" name="zip_code" type="text" value="<?=$zip_code?>" placeholder="Zip Code">
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="driver_licence_no">Driver Licence Number <span class="text-danger">*</span></label>
                                             <input class="form-control" id="driver_licence_no" name="driver_licence_no" type="text" value="<?=$driver_licence_no?>" placeholder="Driver Licence Number" required="" oninput="alphaNumLimit(event, 17);" >
                                             <div class="invalid-feedback">Please fill a Driver Licence Number.</div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" id="tooltip-container">Upload Driving Licence <i class="dripicons-information" data-bs-container="#tooltip-container" data-bs-html="true" data-bs-toggle="tooltip" title="1. File size of more than 2M is not allowed.<br/>2. Only 1 attachment is allowed.<br/>3. File types allowed are- jpeg, jpg, png, gif, bmp"></i></label>
                                             <div id="image_input_div" style="display:<?= ($local_mode == 'NEW') ? 'block': 'none';?>;">
@@ -159,8 +159,6 @@ include('partial/loader.php'); ?>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="date_of_expiry">Date of Expiry</label>
                                             <div class="ui calendar datepicker">
@@ -170,6 +168,8 @@ include('partial/loader.php'); ?>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label class="form-label" for="place_of_issue">Place of Issue</label>
                                             <input class="form-control" id="place_of_issue" name="place_of_issue" type="text" value="<?=$place_of_issue?>" placeholder="Place of Issue">
@@ -413,7 +413,7 @@ include('partial/loader.php'); ?>
                                                     $driver_counting++;
                                                     $get_driver_button_num = numberToOrdinal($driver_counting);
                                                 ?>
-                                                    <button id="submit_btn_driver_add" class="btn btn-primary submit_btn" type="submit" value="driver_add" data-btn_text="Submit & Add <?=$get_driver_button_num;?> Driver">Submit & Add <?=$get_driver_button_num;?> Driver</button>
+                                                    <button id="submit_btn_driver_add" class="btn btn-primary submit_btn" type="submit" value="driver_add" data-btn_text="Submit & Add Driver">Submit & Add Driver</button>
                                                 <?php } ?>
                                                 <!-- <button id="submit_btn_vehicle" class="btn btn-primary submit_btn" type="submit" value="vehicle" data-btn_text="Submit & Add Vehicle">Submit & Add Vehicle</button>
                                                 <button id="submit_btn_policy" class="btn btn-primary submit_btn" type="submit" value="policy" data-btn_text="Submit & Add Policy">Submit & Add Policy</button> -->
