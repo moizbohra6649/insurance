@@ -38,7 +38,8 @@ $('#payment_schedule').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-
+                var url = `policy_list.php`;
+                location.replace(`<?=$actual_link?>${url}`);
             }else{
                 $("#submit_btn").html('Submit');
                 $("#submit_btn").removeAttr('disabled');

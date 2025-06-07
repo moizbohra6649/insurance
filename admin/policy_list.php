@@ -74,17 +74,22 @@ include('partial/loader.php'); ?>
                                                     
                                                     <td align="center">
                                                         <a href="<?=$actual_link?>reports/policy_card.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
-                                                        <?php if($get_data["policy_status"] == "success"){ ?>
-                                                        <!-- <div class="dropdown">
+                                                        <?php
+                                                            $policy_payment_count = get_value('policy_payment', 'count(*)', 'where policy_id = '.$id); 
+                                                        ?>
+                                                       <div class="dropdown">
                                                             <a href="javascript:;" class="dropbtn">
                                                                 <i class="icofont icofont-sub-listing m-2"></i>
                                                             </a>
                                                             <div class="dropdown-menu dropdown-menu-end">
+                                                                <?php if( $policy_payment_count  > 0){ ?>
                                                                 <a href="<?=$actual_link?>payment_schedule.php?policy_id=<?=base64_encode($id)?>" class="dropdown-item">Payment Schedule</a>
-                                                                
+                                                                <?php }else{ ?>
+                                                                <a href="<?=$actual_link?>policyterms.php?policy_id=<?=base64_encode($id)?>" class="dropdown-item">Policy Payment</a>
+
+                                                                <?php } ?>
                                                             </div>
-                                                        </div> -->
-                                                        <?php } ?>
+                                                        </div> 
                                                         <a href="<?=$actual_link?>reports/policy.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
                                                         <a href="<?=$actual_link?>policy.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
                                                         <?php if($get_data["policy_status"] == "peding"){ ?>

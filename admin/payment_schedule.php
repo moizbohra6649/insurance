@@ -37,16 +37,26 @@ include('partial/loader.php'); ?>
                                     INNER JOIN policy_payment ON policy.id = policy_payment.policy_id 
                                     
                                     WHERE policy.id = $policy_id");
+                                    $policy_effectivedate = date('Y-m-d');
                                     while($get_policy_schedule = fetch($policy_schedule)){ 
                                         $prim =  round($get_policy_schedule['premium'] , 2 );
-                                        $fees = ($get_policy_schedule['policy_installment']== 1) ? $get_policy_schedule['management_fee'] + $get_policy_schedule['service_price'] : $get_policy_schedule['management_fee'] ;
-                                        $policy_effectivedate = date('Y-m-d', strtotime($get_policy_schedule['due_date'])) ;   
+                                        $fees = ($get_policy_schedule['policy_installment'] == 1) ? $get_policy_schedule['management_fee'] + $get_policy_schedule['service_price'] : $get_policy_schedule['management_fee'] ;
+                                        if($get_policy_schedule['due_date'] == '0000-00-00 00:00:00'){
+                                            
+                                            $date_calculate =  ($get_policy_schedule['payment_type'] == 'single_time') ? '+6 months' : '+1 month' ;  
+                                            
+                                            $policy_effectivedate = date('Y-m-d', strtotime($policy_effectivedate .$date_calculate));
+                                         
+                                        }else{
+                                            $policy_effectivedate = date('Y-m-d', strtotime($get_policy_schedule['due_date'])) ; 
+                                        }
+                                        
                                         ?>
                                     <div class="row">
                                             <div class="col-md-1 mb-3">
                                                  <?php if($get_policy_schedule['payment_status'] == 'pending' && $checkbox_show  == 0 ){ ?>
                                                     <input type="checkbox" id="schedule_payment" name="schedule_payment" value="<?= $get_policy_schedule['id'] ?>">
-                                                    <input type="hidden" id="policy_installment" name="policy_installment" value="">
+                                                    <input type="hidden" id="policy_installment" name="policy_installment" value="<?= $get_policy_schedule['policy_installment']  ?>">
                                                     <input type="hidden" id="policy_premium" name="policy_premium"  value="<?php echo $prim ; ?>">
                                                     <input type="hidden" id="policy_management_fee" name="policy_management_fee"  value="<?= $get_policy_schedule['management_fee']  ?>">
 

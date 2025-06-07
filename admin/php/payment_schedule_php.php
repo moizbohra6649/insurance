@@ -29,7 +29,7 @@ $schedule_payment = (isset($_REQUEST["schedule_payment"])) ? $_REQUEST["schedule
 
 $net_tot             = (isset($_REQUEST["net_tot"])) ? $_REQUEST["net_tot"] : 0;
 
-
+$currentDate = date('Y-m-d'); 
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -65,7 +65,7 @@ switch ($mode) {
         $error_arr = [];
       
         $select_policy = mysqli_query($conn, "SELECT id FROM policy WHERE id  = '$policy_id' " );
-
+        $policy_pay = mysqli_query($conn, "SELECT * FROM policy_payment WHERE id  = '$schedule_payment' " );
         if($schedule_payment <= 0){
             $error_arr[] = 'No Checkbox Checked.';
         }
@@ -80,14 +80,12 @@ switch ($mode) {
             $error_arr[] = 'Insufficient wallet amount';
         }
         if($schedule_payment > 0){
-            $policy_pay = mysqli_query($conn, "SELECT * FROM policy_payment WHERE id  = '$schedule_payment' " );
             if(mysqli_num_rows($policy_pay) == 0){
                 $error_arr[] = "Payment entry does not exist.<br/>";
             }
             
         }
         
-
          // Display errors if any
         if (!empty($error_arr)) {
             $error_txt = implode('', $error_arr);
@@ -96,25 +94,97 @@ switch ($mode) {
             echo $json_response = json_encode($data);
             exit;
         }
+        $get_policy_detail = mysqli_fetch_assoc($policy_pay);
+        if($get_policy_detail){
+            $policy_payment_type = $get_policy_detail['payment_type'] ; 
+            $policy_installment = $get_policy_detail['policy_installment'] ;
+            $policy_premium  = $get_policy_detail['premium'] ;
+            $policy_management_fee  =  $get_policy_detail['management_fee'] ;
+            $policy_service_price  =  $get_policy_detail['service_price'] ;
 
-        $update_query = mysqli_query($conn, "UPDATE policy_payment 
-        SET payment_status = 'success'WHERE id = '$schedule_payment'");
-
-        $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = 'success', effective_to = '$policy_due_date'   WHERE id = $policy_id");
-
-        $amount_deduct = $policy_premium  + $policy_management_fee ;
-
-        $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
-            ) VALUES (
-                $login_id, 'Policy Payment', 'debit', $amount_deduct, $policy_id
-            )");
-
-        $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct WHERE id = $login_id");
-
-         // Update earning in super admin 
-         $update_query = mysqli_query($conn, "UPDATE users SET earning = earning + $policy_management_fee WHERE id = 1 and role = 'superadmin'");
+            $amount_deduct = $policy_premium  + $policy_management_fee ;
 
 
+            $effective_from_date = $currentDate;
+            $effective_from_time = '00:01'; // 12:01 AM in 24-hour format
+
+            $effective_from_datetime = new DateTime("$effective_from_date $effective_from_time");
+            $effective_from = $effective_from_datetime->format('Y-m-d H:i');
+
+            $effective_to_date = date('Y-m-d', strtotime($currentDate . '+6 months'));
+            $effective_to_time = '23:59'; // 11:59 PM in 24-hour format
+
+            $effective_to_datetime = new DateTime("$effective_to_date $effective_to_time");
+            $effective_to = $effective_to_datetime->format('Y-m-d H:i');
+            $status = 'success' ; 
+
+            if($policy_payment_type == 'single_time'){
+                
+
+                //Policy table update
+                $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = '$status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$effective_to' WHERE id = $policy_id");
+
+                 //policy payment 
+                 $update_query = mysqli_query($conn, "UPDATE policy_payment 
+                    SET payment_status = '$status' , due_date = '$effective_to' WHERE id = '$schedule_payment'");
+                
+
+            }else{
+                $days = 30 * $policy_installment;
+                $effective_to_date = date('Y-m-d', strtotime($currentDate . "+$days days"));
+                $effective_to_time = '23:59'; // 11:59 PM in 24-hour format
+
+                $effective_to_datetime = new DateTime("$effective_to_date $effective_to_time");
+                $effective_to = $effective_to_datetime->format('Y-m-d H:i');
+
+                $effective_from_date = $currentDate;
+                $effective_from_time = '00:01'; // 12:01 AM in 24-hour format
+
+                $effective_from_datetime = new DateTime("$effective_from_date $effective_from_time");
+                $effective_from = $effective_from_datetime->format('Y-m-d H:i');
+
+                $policy_due_date = date('Y-m-d', strtotime($currentDate . '+6 months'));
+                $policy_due_time = '23:59'; // 11:59 PM in 24-hour format
+
+                $policy_due_datetime = new DateTime("$policy_due_date $policy_due_time");
+                $policy_due_date = $policy_due_datetime->format('Y-m-d H:i');
+
+                //Policy table update
+                $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = 'success', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$policy_due_date' WHERE id = $policy_id");
+
+                 //policy payment 
+                 $update_query = mysqli_query($conn, "UPDATE policy_payment SET payment_status = '$status' , due_date = '$effective_to' WHERE id = '$schedule_payment'");
+
+
+            }
+
+            $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
+                ) VALUES (
+                    $login_id, 'Policy Payment', 'debit', $amount_deduct, $policy_id
+                )");
+
+            if($policy_installment == 1 || $policy_payment_type == 'single_time'){
+                 //policy service price deduct from own wallet 
+                $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
+                ) VALUES (
+                    $login_id, 'Policy Service Charge', 'debit', $policy_service_price, $policy_id 
+                )");
+            
+                //policy service price credited to own wallet
+                $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
+                ) VALUES (
+                    $login_id, 'Policy Service Charge Return', 'credit', $policy_service_price, $policy_id 
+                )");
+
+            }
+
+
+            $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct WHERE id = $login_id");
+
+            // Update earning in super admin 
+            $update_query = mysqli_query($conn, "UPDATE users SET earning = earning + $policy_management_fee WHERE id = 1 and role = 'superadmin'");
+
+        }
         // Commit transaction
         if (!mysqli_commit($conn)) {
             $data["msg"] = "Commit transaction failed";

@@ -22,9 +22,9 @@ $('.submit_btn').on('click', (function(e) {
         var alter_text = 'Are you sure you want to proceed with the payment?' ;
         var danger_mode = false ; 
     }else{
-        var alter_title = 'Cancel Payment?' ;
-        var alter_text = 'This will cancel the current payment process. Do you want to continue?' ;
-        var danger_mode = true ; 
+        var alter_title = 'Submit Without Payment?';
+        var alter_text = 'This will save the policy payment in pending status without completing the payment. Do you want to continue?';
+        var danger_mode = false;
     }
     
     swal({
@@ -70,7 +70,7 @@ $('.submit_btn').on('click', (function(e) {
                         if(payment_type == 'pay'){
                             $(input_btn).html('Pay now');
                         }else{
-                            $(input_btn).html('Cancel');
+                            $(input_btn).html('Submit');
                         }
                         
                         $(button).removeAttr('disabled');
@@ -80,7 +80,7 @@ $('.submit_btn').on('click', (function(e) {
                     if(payment_type == 'pay'){
                         $(input_btn).html('Pay now');
                     }else{
-                        $(input_btn).html('Cancel');
+                        $(input_btn).html('Submit');
                     }
                     
                     $(button).removeAttr('disabled');
