@@ -10,7 +10,6 @@
     <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="assets/js/notify/bootstrap-notify.min.js"></script>
-    <script src="assets/js/notify/notify-script.js"></script>
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
 
@@ -142,8 +141,7 @@
     function notification(title, msg, type){
         
         $.notify({
-            title: title,
-            message: msg
+            message: `<b>${title}</b></br>${msg}`
         },
         {
             type: type,

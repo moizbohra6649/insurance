@@ -49,7 +49,7 @@
                 <use href="assets/svg/icon-sprite.svg#fill-user"> </use>
               </svg><span>Users</span></a>
             <ul class="sidebar-submenu">
-              <?php if($login_role == 'superadmin' || $login_role == 'vendor'){ ?>
+              <?php if($login_role == 'superadmin' || $login_role == 'staff' || $login_role == 'admin'){ ?>
               <li><a class="submenu-title" href="#">Staff<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                 <ul class="nav-sub-childmenu submenu-content">
                   <li><a href="staff_list.php">Staff List</a></li>
@@ -69,7 +69,7 @@
                 </ul>
               </li>
               <?php } ?>
-              <?php if($login_role == 'superadmin' || $login_role == 'agent' ){ ?>
+              <?php if($login_role == 'superadmin' || $login_role == 'agent'){ ?>
               <li><a class="submenu-title" href="#">Customer<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                 <ul class="nav-sub-childmenu submenu-content">
                   <li><a href="customer_list.php">Customer List</a></li>
@@ -81,7 +81,7 @@
               <?php } ?>
             </ul>
           </li>
-          <?php if($login_role == 'superadmin' || $login_role == 'vendor'){ ?>            
+          <?php if($login_role == 'superadmin' || $login_role == 'staff' || $login_role == 'admin'){ ?>            
           <li class="sidebar-main-title">
             <div>
               <h6 class="">Vehicle</h6>
@@ -118,7 +118,7 @@
           </li>
           <?php } ?>
           
-          <?php if($login_role == 'superadmin' || $login_role == 'vendor'){ ?>           
+          <?php if($login_role == 'superadmin' || $login_role == 'staff' || $login_role == 'admin'){ ?>           
           <li class="sidebar-main-title">
             <div>
               <h6 class="">Policy Coverages</h6>
@@ -179,7 +179,7 @@
 
          
           
-          <?php if($login_role == 'superadmin' || $login_role == 'vendor'){ ?>       
+          <?php if($login_role == 'superadmin' || $login_role == 'staff' || $login_role == 'admin'){ ?>       
           <li class="sidebar-main-title">
             <div>
               <h6 class="">Coverages</h6>
@@ -243,10 +243,10 @@
               <use href="assets/svg/icon-sprite.svg#fill-others"></use>
             </svg><span>Charges</span></a>
           <ul class="sidebar-submenu">
-          <?php if($login_role != 'vendor'){ ?>
+          <?php if($login_role == 'agent'){ ?>
             <li><a href="service_charges.php">Service Charges</a></li>
             <?php } 
-             if($login_role != 'agent'){ ?>
+             if($login_role == 'superadmin'){ ?>
             <li><a href="management_charges.php">Management Charges</a></li>
             <?php } ?> 
           </ul>

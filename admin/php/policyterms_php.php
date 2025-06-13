@@ -141,6 +141,10 @@ switch ($mode) {
             $error_arr[] = "I cannot make payment for the same policy again.<br/>";
         }
 
+        if($login_role != "agent"){
+            $error_arr[] = "You can't authorize for any action.<br/>";
+        }
+
         if($payment_type == 'pay'){
             $wallet_amount = get_value('agent', 'wallet_amount', 'where status = 1 and deleted = 0 and id='.$login_id);
         
@@ -188,10 +192,10 @@ switch ($mode) {
             }
 
             //policy payment 
-            $insert_query = mysqli_query($conn, "INSERT INTO policy_payment (policy_id, payment_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date) VALUES ('$policy_id', 'single_time', '$status', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$policy_management_fee' ,  '$policy_service_price' , '$policy_roadside', '$policy_due_amt', '$effective_to')");
+            $insert_query = mysqli_query($conn, "INSERT INTO policy_payment (policy_id, pay_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date) VALUES ('$policy_id', '$pay_type', '$status', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$policy_management_fee' ,  '$policy_service_price' , '$policy_roadside', '$policy_due_amt', '$effective_to')");
 
             //Policy table update
-            $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = '$status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$effective_to' WHERE id = $policy_id");
+            $update_policy = mysqli_query($conn, "UPDATE policy SET pay_type = '$pay_type', status = 1, policy_status = '$status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$effective_to' WHERE id = $policy_id");
 
             if($payment_type == 'pay'){ 
                 $amount_deduct = $policy_premium  + $policy_management_fee ;
@@ -273,7 +277,7 @@ switch ($mode) {
                     
 
                     //Policy table update
-                    $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = 'success', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$policy_due_date' WHERE id = $policy_id");
+                    $update_policy = mysqli_query($conn, "UPDATE policy SET pay_type = '$pay_type', status = 1, policy_status = 'success', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$policy_due_date' WHERE id = $policy_id");
 
                     if($payment_type == 'pay'){
                         $amount_deduct = $policy_premium  + $policy_management_fee ;
@@ -306,9 +310,9 @@ switch ($mode) {
 
                 //policy payment
                 $insert_query = mysqli_query($conn, "INSERT INTO policy_payment 
-                    (policy_id, payment_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date)
+                    (policy_id, pay_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date)
                     VALUES 
-                    ('$policy_id', 'emi', '$status', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$policy_management_fee' ,  '$policy_service_price' , '$policy_roadside', '$policy_due_amt', '$effective_to')
+                    ('$policy_id', '$pay_type', '$status', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$policy_management_fee' ,  '$policy_service_price' , '$policy_roadside', '$policy_due_amt', '$effective_to')
                 ");
             }
         }

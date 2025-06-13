@@ -43,7 +43,7 @@ include('partial/loader.php'); ?>
                                         $fees = ($get_policy_schedule['policy_installment'] == 1) ? $get_policy_schedule['management_fee'] + $get_policy_schedule['service_price'] : $get_policy_schedule['management_fee'] ;
                                         if($get_policy_schedule['due_date'] == '0000-00-00 00:00:00'){
                                             
-                                            $date_calculate =  ($get_policy_schedule['payment_type'] == 'single_time') ? '+6 months' : '+1 month' ;  
+                                            $date_calculate =  ($get_policy_schedule['pay_type'] == 'one_time') ? '+6 months' : '+1 month' ;  
                                             
                                             $policy_effectivedate = date('Y-m-d', strtotime($policy_effectivedate .$date_calculate));
                                          

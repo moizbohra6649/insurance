@@ -73,7 +73,7 @@ $('.submit_btn').on('click', (function(e) {
                             $(input_btn).html('Submit');
                         }
                         
-                        $(button).removeAttr('disabled');
+                        $('button').removeAttr('disabled');
                     }
                 },
                 error: function(data) {
@@ -83,7 +83,7 @@ $('.submit_btn').on('click', (function(e) {
                         $(input_btn).html('Submit');
                     }
                     
-                    $(button).removeAttr('disabled');
+                    $('button').removeAttr('disabled');
                     console.log("error");
                     console.log(data);
                 }

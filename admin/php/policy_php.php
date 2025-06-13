@@ -494,6 +494,7 @@ switch ($mode) {
             $data["msg"] = "Policy inserted successfully.";
             $data["status"] = "success";
             $data["policy_id"] = base64_encode($last_inserted_id);
+            $data["encoded_customer_id"] = base64_encode($customer_id);
             $data["mode"] = $mode;
         } else {
             $data["msg"] = "Query error please try again later.";
@@ -703,6 +704,7 @@ switch ($mode) {
             $data["msg"] = "Policy updated successfully.";
             $data["status"] = "success";
             $data["policy_id"] = base64_encode($id);
+            $data["encoded_customer_id"] = base64_encode($customer_id);
             $data["mode"] = $mode;
         } else {
             $data["msg"] = "Query error please try again later.";

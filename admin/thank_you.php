@@ -26,7 +26,7 @@ include('partial/loader.php'); ?>
             <p>
                 You can download or view your policy document here:
                 <br>
-                <a href="<?=$actual_link?>reports/policy.php?id=<?=base64_encode($policy_id)?>">
+                <a href="<?=$actual_link?>policy_declaration_pdf.php?id=<?=base64_encode($policy_id)?>">
                 📄 View/Download Your Policy PDF
                 </a>
             </p>

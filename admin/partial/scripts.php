@@ -25,7 +25,6 @@
 <script src="assets/js/editor/ckeditor/styles.js"></script>
 <script src="assets/js/moment.js"></script>
 <script src="assets/js/notify/bootstrap-notify.min.js"></script>
-<script src="assets/js/notify/notify-script.js"></script>
 <script src="assets/js/form-validation-custom.js"></script>
 <script src="assets/js/tooltip-init.js"></script>
 <script src="assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
@@ -322,7 +321,7 @@
     function notification(title, msg, type){
         
         $.notify({
-            title: title,
+            title:`<b>${title}</b>`,
             message: msg
         },
         {

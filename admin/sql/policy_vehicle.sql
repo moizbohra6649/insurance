@@ -41,7 +41,7 @@ CREATE TABLE `policy_vehicle` (
   `vehicle_model_name` VARCHAR(252) NULL,
   `vehicle_no` VARCHAR(252) NULL,
   `calculation_id` int(11) NULL,
-  `amount` int(11) NOT NULL DEFAULT 0,
+  `amount` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

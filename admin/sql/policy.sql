@@ -67,6 +67,7 @@ CREATE TABLE `policy` (
   `effective_to` datetime DEFAULT NULL,
   `policy_purchase_date` datetime DEFAULT NULL,
   `policy_due_date` datetime DEFAULT NULL,
+  `pay_type` enum('one_time','part_payment') DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT 0,
   `deleted` int(11) NOT NULL DEFAULT 0,
   `delete_datetime` datetime DEFAULT NULL,

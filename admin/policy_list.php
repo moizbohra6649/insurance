@@ -61,10 +61,11 @@ include('partial/loader.php'); ?>
                                                     while($get_data = mysqli_fetch_array($query_result)){
 
                                                         $id = $get_data["id"];
+                                                        $policy_payment_count = get_value('policy_payment', 'count(*)', 'where policy_id = '.$id); 
                                                 ?>
                                                 <tr>
                                                     <td align="center"> <?=$i++?> </td>
-                                                    <td align="center"> <?=$get_data["policy_id"]?> </td>
+                                                    <td align="center"> <?=$get_data["prefix_policy_id"]?> </td>
                                                     <?php if($login_role != 'agent'){ ?>
                                                     <th> <?= $get_data["agent_name"] ?> </th> 
                                                     <?php } ?>
@@ -73,16 +74,13 @@ include('partial/loader.php'); ?>
                                                     <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
                                                     
                                                     <td align="center">
-                                                        <a href="<?=$actual_link?>reports/policy_card.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
-                                                        <?php
-                                                            $policy_payment_count = get_value('policy_payment', 'count(*)', 'where policy_id = '.$id); 
-                                                        ?>
-                                                       <div class="dropdown">
+                                                        <?php if($login_role == "agent"){ ?>
+                                                        <div class="dropdown">
                                                             <a href="javascript:;" class="dropbtn">
                                                                 <i class="icofont icofont-sub-listing m-2"></i>
                                                             </a>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <?php if( $policy_payment_count  > 0){ ?>
+                                                                <?php if($policy_payment_count  > 0){ ?>
                                                                 <a href="<?=$actual_link?>payment_schedule.php?policy_id=<?=base64_encode($id)?>" class="dropdown-item">Payment Schedule</a>
                                                                 <?php }else{ ?>
                                                                 <a href="<?=$actual_link?>policyterms.php?policy_id=<?=base64_encode($id)?>" class="dropdown-item">Policy Payment</a>
@@ -90,9 +88,17 @@ include('partial/loader.php'); ?>
                                                                 <?php } ?>
                                                             </div>
                                                         </div> 
-                                                        <a href="<?=$actual_link?>reports/policy.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                                                        <?php } ?>
+                                                        <!-- <a href="<?=$actual_link?>reports/policy_card.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                                                        <a href="<?=$actual_link?>reports/policy.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a> -->
+
+                                                        <?php if($get_data["policy_status"] != "peding" && $policy_payment_count  > 0){ ?>
+                                                        <a href="<?=$actual_link?>policy_card_pdf.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                                                        <a href="<?=$actual_link?>policy_declaration_pdf.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                                                        <?php } ?>
+
                                                         <a href="<?=$actual_link?>policy.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
-                                                        <?php if($get_data["policy_status"] == "peding"){ ?>
+                                                        <?php if($get_data["policy_status"] == "peding" && $policy_payment_count == 0){ ?>
                                                         <a href="<?=$actual_link?>policy.php?id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
                                                         <?php } ?>
                                                         <!-- <a href="javascript:void(0);" class="action-icon  m-2"> <i class="mdi mdi-delete"></i></a> -->
@@ -120,8 +126,8 @@ include('partial/loader.php'); ?>
 
 <?php include('partial/scripts.php');
     /* Include JS File */
-    if (file_exists(dirname(__FILE__) . '/js/driver_js.php')) {
-        require_once(dirname(__FILE__) . '/js/driver_js.php');
+    if (file_exists(dirname(__FILE__) . '/js/policy_js.php')) {
+        require_once(dirname(__FILE__) . '/js/policy_js.php');
     }
 ?>
 </body>

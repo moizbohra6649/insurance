@@ -362,6 +362,17 @@ function convert_readable_date_db($date){
 	return $formattedDate; 
 }
 
+function convert_date($date){
+	$formattedDate = "";
+	if(!empty($date)){
+		// Create a DateTime object
+		$datetime = new DateTime($date);
+		$formattedDate = $datetime->format('m/d/Y');
+	}
+
+	return $formattedDate; 
+}
+
 function numberToOrdinal($number) {
     if (!is_numeric($number)) {
         return $number; // return original input if it's not a number

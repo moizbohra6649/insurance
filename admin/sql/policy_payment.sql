@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `policy_payment` (
   `id` int(11) NOT NULL,
   `policy_id` int(11) NOT NULL,
-  `payment_type` enum('single_time','emi') NOT NULL,
+  `pay_type` enum('one_time','part_payment') NOT NULL,
   `payment_status` enum('pending','success','failed','reject') NOT NULL,
   `policy_installment` varchar(50) NOT NULL,
   `premium` int(11) NOT NULL,
