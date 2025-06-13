@@ -59,6 +59,7 @@ CREATE TABLE `policy` (
   `additional_coverage_premium` int(11) NOT NULL DEFAULT 0,
   `custom_discount` int(11) NOT NULL DEFAULT 0,
   `additional_discount` int(11) NOT NULL DEFAULT 0,
+  `additional_discount` int(11) NOT NULL DEFAULT 0,
   `total_premium` int(11) NOT NULL DEFAULT 0,
   `management_fee` int(11) NOT NULL DEFAULT 0,
   `service_price` int(11) NOT NULL DEFAULT 0,
