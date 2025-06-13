@@ -184,3 +184,6 @@ ALTER TABLE `policy_driver` CHANGE `driver_policy_id` `policy_id` INT(11) NOT NU
 ALTER TABLE `policy_payment` CHANGE `payment_type` `pay_type` ENUM('one_time','part_payment') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
 
 ALTER TABLE `policy` ADD `pay_type` ENUM('one_time','part_payment') NULL AFTER `policy_due_date`;
+
+
+ALTER TABLE `policy` ADD `additional_discount` INT NOT NULL DEFAULT '0' AFTER `custom_discount`;

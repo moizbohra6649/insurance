@@ -68,7 +68,7 @@ include('partial/loader.php'); ?>
                               <div class="col-md-4 mb-3">
                                  <label class="form-label" for="coverage">Coverage <span class="text-danger">*</span></label>
                                  <div class="form-input">
-                                    <select class="form-select" name="coverage" id="coverage" onchange="coverageCheck(); fn_policy_calculation();">
+                                    <select class="form-select" <?= $field_status ?> name="coverage" id="coverage" onchange="coverageCheck(); fn_policy_calculation();">
                                           <?php
                                           foreach($coverage_dropdown as $value){ ?>
                                              <option value="<?=$value['value']?>" <?= ($coverage == $value['value'] ) ? 'selected' : '';  ?>><?=$value['label']?></option>
@@ -79,7 +79,7 @@ include('partial/loader.php'); ?>
                               <div class="col-md-4 mb-3">
                                  <label class="form-label" for="coverage_collision">Copresnsive / Collision <span class="text-danger">*</span></label>
                                  <div class="form-input">
-                                    <select class="form-select" name="coverage_collision" id="coverage_collision">
+                                    <select class="form-select" <?= $field_status ?> name="coverage_collision" id="coverage_collision">
                                        <option value="0">Please Select Copresnsive / Collision</option>
                                        <?php
                                           $selcoverage_collision = select("coverage_collision","status=1") ;
@@ -95,7 +95,7 @@ include('partial/loader.php'); ?>
                               <div class="col-md-4 mb-3">
                                  <label class="form-label" for="umpd">UMPD (Uninsured motorist property damage) <span class="text-danger">*</span></label>
                                  <div class="form-input">
-                                    <select class="form-select" name="umpd" id="umpd">
+                                    <select class="form-select" <?= $field_status ?> name="umpd" id="umpd">
                                        <option value="0">Please Select UMPD</option>
                                        <?php
                                           $coverage_umpd = select("coverage_umpd","status=1") ;
@@ -113,7 +113,7 @@ include('partial/loader.php'); ?>
                               <div class="col-md-4 mb-3">
                                  <label class="form-label" for="towning_coverage">Towning coverage <span class="text-danger">*</span></label>
                                  <div class="form-input">
-                                    <select class="form-select" name="towning_coverage" id="towning_coverage">
+                                    <select class="form-select" <?= $field_status ?> name="towning_coverage" id="towning_coverage">
                                        <option value="0">Please Select Towning coverage</option>
                                        <?php
                                           $seltowning_coverage = select("coverage_towing","status=1") ;
@@ -129,7 +129,7 @@ include('partial/loader.php'); ?>
                               <div class="col-md-4 mb-3">
                                  <label class="form-label" for="coverage_rental">Rental Reimbursment <span class="text-danger">*</span></label>
                                  <div class="form-input">
-                                    <select class="form-select" name="coverage_rental" id="coverage_rental">
+                                    <select class="form-select" <?= $field_status ?> name="coverage_rental" id="coverage_rental">
                                        <option value="0">Please Select Rental Reimbursment</option>
                                        <?php
                                           $selcoverage_rental = select("coverage_rental","status=1");
@@ -143,7 +143,7 @@ include('partial/loader.php'); ?>
                               <div class="col-md-4 mb-3">
                                  <label class="form-label" for="coverage_deductible">Coverage Deductible <span class="text-danger">*</span></label>
                                  <div class="form-input">
-                                    <select class="form-select" name="coverage_deductible" id="coverage_deductible">
+                                    <select class="form-select" <?= $field_status ?> name="coverage_deductible" id="coverage_deductible">
                                        <option value="0">Please Select Coverage Deductible</option>
                                        <?php 
                                           $selcoverage_deductible = select("coverage_deductible","status=1") ;
@@ -183,10 +183,11 @@ include('partial/loader.php'); ?>
                                  <div class="policy-labels" style="display: flex;justify-content: space-between;">
                                     <label class="form-label" for="policy_bi">BI (Bodily Injury) <span class="text-danger">*</span>
                                     </label>
-                                    <label class="form-check-label" for="is_physical_damage"><input class="form-check-input" id="is_physical_damage" name="is_physical_damage" type="checkbox" <?= ($is_physical_damage == 1 ) ? 'checked' : '';  ?> >  Physical Damage Only<span class="digits"></span></label>
+                                    <label class="form-check-label" for="is_physical_damage">
+                                       <input class="form-check-input" <?= $field_status ?>  id="is_physical_damage" name="is_physical_damage" type="checkbox" <?= ($is_physical_damage == 1 ) ? 'checked' : '';  ?> >  Physical Damage Only<span class="digits"></span></label>
                                  </div>
                                  <div class="form-input">
-                                    <select class="form-select" name="policy_bi" id="policy_bi">
+                                    <select class="form-select" <?= $field_status ?> name="policy_bi" id="policy_bi">
                                        <option value="0">Please Select BI</option>
                                        <?php
                                           $selpolicy_bi = select("policy_bi","status=1") ;
@@ -202,7 +203,7 @@ include('partial/loader.php'); ?>
                               <div class="col-md-4 mb-3">
                                  <label class="form-label" for="policy_pd">PD (Property Damage) <span class="text-danger">*</span></label>
                                  <div class="form-input">
-                                    <select class="form-select" name="policy_pd" id="policy_pd">
+                                    <select class="form-select" <?= $field_status ?> name="policy_pd" id="policy_pd">
                                        <option value="0">Please Select PD</option>
                                        <?php
                                           $selpolicy_pd = select("policy_pd","status=1") ;
@@ -218,7 +219,7 @@ include('partial/loader.php'); ?>
                               <div class="col-md-4 mb-3">
                                  <label class="form-label" for="policy_umd">UMB (Uninsured Motorist / Bodily Injury) <span class="text-danger">*</span></label>
                                  <div class="form-input">
-                                    <select class="form-select" name="policy_umd" id="policy_umd">
+                                    <select class="form-select" <?= $field_status ?> name="policy_umd" id="policy_umd">
                                        <option value="0">Please Select UMB</option>
                                        <?php
                                           $selpolicy_umd = select("policy_umd","status=1") ;
@@ -236,7 +237,7 @@ include('partial/loader.php'); ?>
                               <div class="col-md-4 mb-3">
                                  <label class="form-label" for="policy_medical">Medical <span class="text-danger">*</span></label>
                                  <div class="form-input">
-                                    <select class="form-select" name="policy_medical" id="policy_medical">
+                                    <select class="form-select" <?= $field_status ?> name="policy_medical" id="policy_medical">
                                        <option value="0">Please Select Medical</option>
                                        <?php
                                           $selpolicy_medical = select("policy_medical","status=1") ;
@@ -251,7 +252,7 @@ include('partial/loader.php'); ?>
                               </div>
                               <div class="col-md-4 mb-3">
                                  <label class="form-label" for="vehicle">Vehicle's <span class="text-danger">*</span></label>
-                                 <select class="form-select" multiple="multiple" name="vehicle" id="selectMultiVehicle">
+                                 <select class="form-select" <?= $field_status ?> multiple="multiple" name="vehicle" id="selectMultiVehicle">
                                     <?php
                                        $select_vehicle = mysqli_query($conn, "SELECT vehicle.id, year.year, make.make_name, model.model_name, vehicle.vehicle_no FROM vehicle 
                                        INNER JOIN year ON year.id = vehicle.vehicle_year_id 
@@ -267,7 +268,7 @@ include('partial/loader.php'); ?>
                               <div class="col-md-4 mb-3">
                                  <label class="form-label" for="driver">Driver's <span class="text-danger">*</span></label>
                                  <div class="form-input">
-                                    <select class="form-select" multiple="multiple" name="driver" id="selectMultiDriver">
+                                    <select class="form-select" <?= $field_status ?> multiple="multiple" name="driver" id="selectMultiDriver">
                                        <?php
                                           $select_driver = mysqli_query($conn, "SELECT driver.id, CONCAT_WS(' ', driver.first_name, driver.middle_name, driver.last_name) AS driver_name FROM driver 
                                           WHERE driver.customer_id = $customer_id AND driver.status = 1");
@@ -319,9 +320,9 @@ include('partial/loader.php'); ?>
                               </div>
                               <div class="col">
                                  <div class="mb-3 m-t-15 custom-radio-ml">
-                                    <input class="form-check-input roasass" <?= ($roasass == 1 ) ? 'checked' : '';  ?>   type="radio" name="roasass" value="1">
+                                    <input <?= $field_status ?> class="form-check-input roasass" <?= ($roasass == 1 ) ? 'checked' : '';  ?>   type="radio" name="roasass" value="1">
                                     <label class="form-check-label">Yes</label>
-                                    <input class="form-check-input roasass" <?= ($roasass == 0 ) ? 'checked' : '';  ?>  type="radio" name="roasass" value="0">
+                                    <input <?= $field_status ?> class="form-check-input roasass" <?= ($roasass == 0 ) ? 'checked' : '';  ?>  type="radio" name="roasass" value="0">
                                     <label class="form-check-label">No</label>
                                  </div>
                               </div>
@@ -333,9 +334,9 @@ include('partial/loader.php'); ?>
                                  1. Does any driver have any driving restrictions?
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <input class="form-check-input q1" type="radio" <?= ($is_driver_res == 1) ? 'checked' : '';  ?> name="is_driver_res" value="1">
+                                 <input <?= $field_status ?> class="form-check-input q1" type="radio" <?= ($is_driver_res == 1) ? 'checked' : '';  ?> name="is_driver_res" value="1">
                                  <label class="form-check-label">Yes</label>
-                                 <input class="form-check-input q1" type="radio" name="is_driver_res" value="0" <?= ($is_driver_res == 0) ? 'checked' : '';  ?>>
+                                 <input <?= $field_status ?> class="form-check-input q1" type="radio" name="is_driver_res" value="0" <?= ($is_driver_res == 0) ? 'checked' : '';  ?>>
                                  <label class="form-check-label">No</label>
                               </div>
                            </div>
@@ -344,9 +345,9 @@ include('partial/loader.php'); ?>
                                  2. Are any vehicles listed on this application titled under salvage or flood?
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <input class="form-check-input q2" <?= ($is_vehical_listed == 1) ? 'checked' : '';  ?> type="radio" name="is_vehical_listed" value="1">
+                                 <input <?= $field_status ?> class="form-check-input q2" <?= ($is_vehical_listed == 1) ? 'checked' : '';  ?> type="radio" name="is_vehical_listed" value="1">
                                  <label class="form-check-label">Yes</label>
-                                 <input class="form-check-input q2" type="radio" name="is_vehical_listed" value="0" <?= ($is_vehical_listed == 0) ? 'checked' : '';  ?>>
+                                 <input <?= $field_status ?> class="form-check-input q2" type="radio" name="is_vehical_listed" value="0" <?= ($is_vehical_listed == 0) ? 'checked' : '';  ?>>
                                  <label class="form-check-label">No</label>
                               </div>
                            </div>
@@ -355,9 +356,9 @@ include('partial/loader.php'); ?>
                                  3. Does the applicant own any other vehicles not listed on application?
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <input class="form-check-input roasass" type="radio" <?= ($is_applicant_other_veh == 1) ? 'checked' : '';  ?> name="is_applicant_other_veh" value="1">
+                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" <?= ($is_applicant_other_veh == 1) ? 'checked' : '';  ?> name="is_applicant_other_veh" value="1">
                                  <label class="form-check-label">Yes</label>
-                                 <input class="form-check-input roasass" type="radio" name="is_applicant_other_veh" value="0" <?= ($is_applicant_other_veh == 0) ? 'checked' : '';  ?>>
+                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_applicant_other_veh" value="0" <?= ($is_applicant_other_veh == 0) ? 'checked' : '';  ?>>
                                  <label class="form-check-label">No</label>
                               </div>
                            </div>
@@ -366,9 +367,9 @@ include('partial/loader.php'); ?>
                                  4. Is the applicant the sole registered owner of the vehicle?
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <input class="form-check-input roasass" type="radio" name="is_applicant_sole_registered" value="1" <?= ($is_applicant_sole_registered == 1) ? 'checked' : '';  ?>>
+                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_applicant_sole_registered" value="1" <?= ($is_applicant_sole_registered == 1) ? 'checked' : '';  ?>>
                                  <label class="form-check-label">Yes</label>
-                                 <input class="form-check-input roasass" type="radio" name="is_applicant_sole_registered" value="0" <?= ($is_applicant_sole_registered == 0) ? 'checked' : '';  ?>>
+                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_applicant_sole_registered" value="0" <?= ($is_applicant_sole_registered == 0) ? 'checked' : '';  ?>>
                                  <label class="form-check-label">No</label>
                               </div>
                            </div>
@@ -377,9 +378,9 @@ include('partial/loader.php'); ?>
                                  5. Are any vehicles operated by any for commercial business use?
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <input class="form-check-input roasass" type="radio" name="is_veh_used_business_q " value="1" <?= ($is_veh_used_business_q == 1) ? 'checked' : '';  ?>>
+                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_used_business_q " value="1" <?= ($is_veh_used_business_q == 1) ? 'checked' : '';  ?>>
                                  <label class="form-check-label">Yes</label>
-                                 <input class="form-check-input roasass" type="radio" name="is_veh_used_business_q " value="0" <?= ($is_veh_used_business_q == 0) ? 'checked' : '';  ?>>
+                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_used_business_q " value="0" <?= ($is_veh_used_business_q == 0) ? 'checked' : '';  ?>>
                                  <label class="form-check-label">No</label>
                               </div>
                            </div>
@@ -388,9 +389,9 @@ include('partial/loader.php'); ?>
                                  6. Are any vehicles listed used for ride share at any time?
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <input class="form-check-input roasass" type="radio" name="is_veh_listed_ride" value="1" <?= ($is_veh_listed_ride == 1) ? 'checked' : '';  ?>>
+                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_listed_ride" value="1" <?= ($is_veh_listed_ride == 1) ? 'checked' : '';  ?>>
                                  <label class="form-check-label">Yes</label>
-                                 <input class="form-check-input roasass" type="radio" name="is_veh_listed_ride" value="0" <?= ($is_veh_listed_ride == 0) ? 'checked' : '';  ?>>
+                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_listed_ride" value="0" <?= ($is_veh_listed_ride == 0) ? 'checked' : '';  ?>>
                                  <label class="form-check-label">No</label>
                               </div>
                            </div>
@@ -399,9 +400,9 @@ include('partial/loader.php'); ?>
                                  7. Are any vehicles listed on this application used for regular frequent trips beyond 50 miles radius of the given address?
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <input class="form-check-input roasass" type="radio" name="is_veh_listed_application_used" value="1"  <?= ($is_veh_listed_application_used == 1) ? 'checked' : '';  ?>>
+                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_listed_application_used" value="1"  <?= ($is_veh_listed_application_used == 1) ? 'checked' : '';  ?>>
                                  <label class="form-check-label">Yes</label>
-                                 <input class="form-check-input roasass" type="radio" name="is_veh_listed_application_used" value="0"  <?= ($is_veh_listed_application_used == 0) ? 'checked' : '';  ?>>
+                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_listed_application_used" value="0"  <?= ($is_veh_listed_application_used == 0) ? 'checked' : '';  ?>>
                                  <label class="form-check-label">No</label>
                               </div>
                            </div>
@@ -410,9 +411,9 @@ include('partial/loader.php'); ?>
                                  8. Are any vehicle listed on this application garaged outside of IL for more than 2 months of the year?
                               </div>
                               <div class="col-md-4 mb-3">
-                                 <input class="form-check-input roasass" type="radio" name="is_veh_listed_garaged" value="1"  <?= ($is_veh_listed_garaged == 1) ? 'checked' : '';  ?> >
+                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_listed_garaged" value="1"  <?= ($is_veh_listed_garaged == 1) ? 'checked' : '';  ?> >
                                  <label class="form-check-label">Yes</label>
-                                 <input class="form-check-input roasass" type="radio" name="is_veh_listed_garaged" value="0"  <?= ($is_veh_listed_garaged == 0) ? 'checked' : '';  ?> >
+                                 <input  <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_listed_garaged" value="0"  <?= ($is_veh_listed_garaged == 0) ? 'checked' : '';  ?> >
                                  <label class="form-check-label">No</label>
                               </div>
                            </div>
@@ -475,6 +476,14 @@ include('partial/loader.php'); ?>
                                  $<?=$custom_discount;?>
                               </div>
                            </div>
+                           <div class="row">
+                              <div class="col-md-8 mb-3">
+                                 Additional Discount	
+                              </div>
+                              <div class="col-md-4 mb-3 <?= ($login_role == 'superadmin') ? 'additional_discount_container' : '' ?>">
+                                 <div class="txt_additional_discount">$<?=$additional_discount;?></div>
+                              </div>
+                           </div>
                            <hr class="mt-1 mb-1">
                            <div class="row">
                               <div class="col-md-8 mb-3 fw-bold">
@@ -499,7 +508,7 @@ include('partial/loader.php'); ?>
                               <!-- <div class="col-md-4 mb-3">
                                 <input class="form-control" type="text" name="" id="txt_service_price" value="0">
                               </div> -->
-                              <div class="col-md-4 mb-3 price-container">
+                              <div class="col-md-4 mb-3 <?= ($login_role == 'agent') ? 'price-container' : '' ?> ">
                                  <div class="txt_service_price">$<?=$service_price;?></div>
                               </div>
                               </div>
@@ -514,6 +523,7 @@ include('partial/loader.php'); ?>
                            <input type="hidden" name="base_premium" id="base_premium" value="<?=$base_premium?>">
                            <input type="hidden" name="additional_coverage_premium" id="additional_coverage_premium" value="<?=$additional_coverage_premium?>">
                            <input type="hidden" name="custom_discount" id="custom_discount" value="<?=$custom_discount?>">
+                           <input type="hidden" name="additional_discount" id="additional_discount" value="<?=$additional_discount?>">
                            <input type="hidden" name="total_premium" id="total_premium" value="<?=$total_premium?>">
                            <input type="hidden" name="management_fee" id="management_fee" value="<?=$management_fee?>">
                            <input type="hidden" name="service_price" id="service_price" value="<?=$service_price?>">
