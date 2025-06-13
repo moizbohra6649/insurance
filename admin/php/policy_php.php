@@ -47,9 +47,14 @@ $service_price          = (isset($_REQUEST["service_price"])) ? $_REQUEST["servi
 $base_premium          = (isset($_REQUEST["base_premium"])) ? $_REQUEST["base_premium"] : '0.00';  
 $additional_coverage_premium          = (isset($_REQUEST["additional_coverage_premium"])) ? $_REQUEST["additional_coverage_premium"] : '0.00'; 
 $custom_discount          = (isset($_REQUEST["custom_discount"])) ? $_REQUEST["custom_discount"] : '0.00'; 
+$additional_discount          = (isset($_REQUEST["additional_discount"])) ? $_REQUEST["additional_discount"] : '0.00'; 
 $total_premium          = (isset($_REQUEST["total_premium"])) ? $_REQUEST["total_premium"] : '0.00'; 
 $management_fee          = (isset($_REQUEST["management_fee"])) ? $_REQUEST["management_fee"] : '0.00'; 
 $net_total          = (isset($_REQUEST["net_total"])) ? $_REQUEST["net_total"] : '0.00'; 
+$field_status = '';
+
+$policy_status          = (isset($_REQUEST["policy_status"])) ? $_REQUEST["policy_status"] : 'pending'; 
+
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -550,9 +555,11 @@ switch ($mode) {
             $base_premium          = $get_data['base_premium']; 
             $additional_coverage_premium          = $get_data['additional_coverage_premium']; 
             $custom_discount          = $get_data['custom_discount']; 
+            $additional_discount          = $get_data['additional_discount']; 
             $total_premium          = $get_data['total_premium']; 
             $management_fee          = $get_data['management_fee']; 
             $net_total          = $get_data['net_total']; 
+            $policy_status = $get_data['policy_status']; 
 
             $vehicle_sql = mysqli_query($conn, "SELECT GROUP_CONCAT(vehicle_id) AS vehicle
                 FROM policy_vehicle
@@ -570,6 +577,12 @@ switch ($mode) {
             
             $created              = $get_data["created"];
             $local_mode           = "UPDATE";
+
+            if($policy_status == 'success'){
+                $field_status = 'disabled';
+            }
+           
+
         }
     break;
 

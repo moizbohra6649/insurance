@@ -139,30 +139,64 @@ const priceContainer = document.querySelector('.price-container');
 let priceDiv = document.querySelector('.txt_service_price');
 let inputElement = null;
 
-priceContainer.addEventListener('click', () => {
-  if (!inputElement) {
-    const currentValue = priceDiv.innerText.replace('$', '');
-    priceContainer.innerHTML = `<input type="text" class="price-input" value="${currentValue}">`;
-    inputElement = priceContainer.querySelector('.price-input');
-    inputElement.focus();
+if(priceContainer){
+    priceContainer.addEventListener('click', () => {
+        if (!inputElement) {
+            const currentValue = priceDiv.innerText.replace('$', '');
+            priceContainer.innerHTML = `<input type="text" class="price-input" value="${currentValue}">`;
+            inputElement = priceContainer.querySelector('.price-input');
+            inputElement.focus();
 
-    inputElement.addEventListener('input', () => {
-      inputElement.value = inputElement.value.replace(/[^0-9.]/g, '');
-      const sanitizedValue = parseFloat(inputElement.value).toFixed(2);
-      $("#service_price").val(sanitizedValue);
-      calculateNetTotal();
-    });
+            inputElement.addEventListener('input', () => {
+            inputElement.value = inputElement.value.replace(/[^0-9.]/g, '');
+            const sanitizedValue = parseFloat(inputElement.value).toFixed(2);
+            $("#service_price").val(sanitizedValue);
+            calculateNetTotal();
+            });
 
-    inputElement.addEventListener('blur', () => {
-      const value = parseFloat(inputElement.value);
-      $("#service_price").val(isNaN(value) ? '0.00' : value.toFixed(2));
-      priceContainer.innerHTML = `<div class="txt_service_price">$${isNaN(value) ? '0.00' : value.toFixed(2)}</div>`;
-      priceDiv = document.querySelector('.txt_service_price');
-      inputElement = null;
-      calculateNetTotal();
+            inputElement.addEventListener('blur', () => {
+            const value = parseFloat(inputElement.value);
+            $("#service_price").val(isNaN(value) ? '0.00' : value.toFixed(2));
+            priceContainer.innerHTML = `<div class="txt_service_price">$${isNaN(value) ? '0.00' : value.toFixed(2)}</div>`;
+            priceDiv = document.querySelector('.txt_service_price');
+            inputElement = null;
+            calculateNetTotal();
+            });
+        }
     });
-  }
-});
+}
+
+// For Super admin 
+const additional_discount_container = document.querySelector('.additional_discount_container');
+let txt_additional_discount = document.querySelector('.txt_additional_discount');
+let inputElement_add = null;
+
+if(additional_discount_container){
+    additional_discount_container.addEventListener('click', () => {
+        if (!inputElement_add) {
+            const currentValue = txt_additional_discount.innerText.replace('$', '');
+            additional_discount_container.innerHTML = `<input type="text" class="price-input_add_d" value="${currentValue}">`;
+            inputElement_add = additional_discount_container.querySelector('.price-input_add_d');
+            inputElement_add.focus();
+
+            inputElement_add.addEventListener('input', () => {
+            inputElement_add.value = inputElement_add.value.replace(/[^0-9.]/g, '');
+            const sanitizedValue = parseFloat(inputElement_add.value).toFixed(2);
+            $("#additional_discount").val(sanitizedValue);
+            //calculateNetTotal();
+            });
+
+            inputElement_add.addEventListener('blur', () => {
+            const value = parseFloat(inputElement_add.value);
+            $("#additional_discount").val(isNaN(value) ? '0.00' : value.toFixed(2));
+            additional_discount_container.innerHTML = `<div class="txt_additional_discount">$${isNaN(value) ? '0.00' : value.toFixed(2)}</div>`;
+            txt_additional_discount = document.querySelector('.txt_additional_discount');
+            inputElement_add = null;
+            //calculateNetTotal();
+            });
+        }
+    });
+}
 
 function calculateNetTotal() {
   const premium = parseFloat($("#total_premium").val()) || 0;

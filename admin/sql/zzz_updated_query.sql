@@ -178,3 +178,6 @@ ADD COLUMN `amount` INT(11) NOT NULL DEFAULT 0 AFTER `calculation_id`;
 
 
 ALTER TABLE `policy_driver` CHANGE `driver_policy_id` `policy_id` INT(11) NOT NULL;
+
+
+ALTER TABLE `policy` ADD `additional_discount` INT NOT NULL DEFAULT '0' AFTER `custom_discount`;
