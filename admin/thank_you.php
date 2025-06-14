@@ -10,7 +10,8 @@ include('partial/loader.php'); ?>
     <!-- Page Body Start-->
     <div class="container-fluid p-0">
         <div class="comingsoon">
-            <div class="comingsoon-inner text-center"><img src="assets/images/logo/logo.svg" alt="">
+            <div class="comingsoon-inner text-center">
+                <img src="assets/images/logo/logo-white.png" alt="" style="max-height: 60px;width: auto; margin: 10px 10px 10px 10px;">
             <h2>Thank You for Your Purchase!</h2>
             <p>We appreciate your trust in us.</p>
 
@@ -21,7 +22,7 @@ include('partial/loader.php'); ?>
                 <li><strong>Policy Number: </strong> <?= $prefix_policy_id ?></li>
                 <li><strong>EFFECTIVE: </strong><?= $effective_from ?> </li>
                 <li><strong>EXPIRATION: </strong><?= $effective_to ?> </li>
-                <li><strong>Policy Coverage: </strong> <?= $policy_coverage ?> </li>
+                <li><strong>Policy Coverage: </strong> <?= getLabelByValue($coverage_dropdown, $policy_coverage) ?> </li>
             </ul>
             <p>
                 You can download or view your policy document here:

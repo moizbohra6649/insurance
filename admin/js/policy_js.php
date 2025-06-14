@@ -316,6 +316,12 @@ $('#policy_form').on('submit', (function(e) {
     }
 
     var formData = new FormData(this);
+
+    var vehicle = $("#selectMultiVehicle").val();
+    var driver = $('#selectMultiDriver').val();
+
+    formData.append('vehicle', vehicle);
+    formData.append('driver', driver);
     formData.append('form_request', 'true');
     $.ajax({
         type: 'POST',

@@ -60,7 +60,7 @@
                     <table style="width: 650px; margin: 0 auto; margin-bottom: 30px">
                       <tbody>
                         <tr>
-                          <td><img src="assets/images/logo/logo.svg" alt=""></td>
+                          <td><img src="assets/images/logo/logo-white.png" alt="" style="max-height: 60px;width: auto; margin: 10px 10px 10px 10px;"></td>
                           <td style="text-align: right; color:#999"><span></span></td>
                         </tr>
                       </tbody>

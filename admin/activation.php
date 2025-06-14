@@ -12,7 +12,8 @@ include('partial/loader.php'); ?>
     <!-- Page Body Start-->
     <div class="container-fluid p-0">
         <div class="comingsoon">
-            <div class="comingsoon-inner text-center"><img src="assets/images/logo/logo.svg" alt="">
+            <div class="comingsoon-inner text-center">
+                <img src="assets/images/logo/logo-white.png" alt="" style="max-height: 60px;width: auto; margin: 10px 10px 10px 10px;">
                 <h5><?= $message ?></h5>
             </div>
         </div>
