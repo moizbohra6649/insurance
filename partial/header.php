@@ -32,7 +32,7 @@
                     <a href="about-us.html">About us</a>
                   </li>
                   <li>
-                    <a href="claim.html">Claim</a>
+                    <a href="claim.php">Claim</a>
                   </li>
                   <li>
                     <a href="contact.html">Contact us</a>
