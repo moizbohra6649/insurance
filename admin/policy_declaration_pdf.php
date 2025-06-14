@@ -49,10 +49,10 @@ $policy_query = "SELECT
         NULLIF(customer.apt_unit, ''),
         NULLIF(customer_state.name, ''),
         CASE 
-            WHEN COALESCE(customer.zip_code, '') <> '' OR COALESCE(customer.city, '') <> '' THEN 
+            WHEN COALESCE(customer.city, '') <> '' OR COALESCE(customer.zip_code, '') <> '' THEN 
                 CONCAT_WS(' - ', 
-                    NULLIF(customer.zip_code, ''), 
-                    NULLIF(customer.city, '')
+                    NULLIF(customer.city, ''),
+                    NULLIF(customer.zip_code, '')
                 )
             ELSE NULL
         END
@@ -65,10 +65,10 @@ $policy_query = "SELECT
         NULLIF(agent.apt_unit, ''),
         NULLIF(agent_state.name, ''),
         CASE 
-            WHEN COALESCE(agent.zip_code, '') <> '' OR COALESCE(agent.city, '') <> '' THEN 
-                CONCAT_WS(' - ', 
-                    NULLIF(agent.zip_code, ''), 
-                    NULLIF(agent.city, '')
+            WHEN COALESCE(agent.city, '') <> '' OR COALESCE(agent.zip_code, '') <> '' THEN 
+                CONCAT_WS(' - ',  
+                    NULLIF(agent.city, ''),
+                    NULLIF(agent.zip_code, '')
                 )
             ELSE NULL
         END
@@ -634,9 +634,9 @@ function get_policy_declaration_pdf($policy_data, $result_driver, $result_vehicl
                 $property_demage_1 = $vehicle_amount_1 - ($bodily_ingury_1 + $uninsured_motorist_1);
             }
             
-            if(isset($vehicle_amount[2])){
-                $vehicles_total_amount += $vehicle_amount[2];
-                $vehicle_amount_2 = $vehicle_amount[2];
+            if(isset($vehicle_amount[1])){
+                $vehicles_total_amount += $vehicle_amount[1];
+                $vehicle_amount_2 = $vehicle_amount[1];
                 $bodily_ingury_2 = 89;
                 $uninsured_motorist_2 = 75;
                 $property_demage_2 = $vehicle_amount_2 - ($bodily_ingury_2 + $uninsured_motorist_2);

@@ -20,10 +20,10 @@ $select_policy = "SELECT
         NULLIF(customer.apt_unit, ''),
         NULLIF(customer_state.name, ''),
         CASE 
-            WHEN COALESCE(customer.zip_code, '') <> '' OR COALESCE(customer.city, '') <> '' THEN 
+            WHEN COALESCE(customer.city, '') <> '' OR COALESCE(customer.zip_code, '') <> '' THEN 
                 CONCAT_WS(' - ', 
-                    NULLIF(customer.zip_code, ''), 
-                    NULLIF(customer.city, '')
+                    NULLIF(customer.city, ''),
+                    NULLIF(customer.zip_code, '')
                 )
             ELSE NULL
         END
@@ -272,7 +272,7 @@ $html_body = '<!DOCTYPE html>
         }
 
         li {
-          font-size: 12px;
+          font-size: 11px;
           color: #6a6a6a;
         }
       }
@@ -372,8 +372,8 @@ function get_policy_card_pdf($policy_data, $get_vehicle, $logoPath){
                                                           </div>
                                                            <div style="display: inline-flex;width: 100%; margin-top: 8px;">
                                                             <div class="col-50">
-                                                               <p style="margin:0;font-size: 11px;"><strong> Name : </strong>  '.$policy_data['customer_name'].'</p>
-                                                              <p style="margin:0;font-size: 11px;"> <strong>Address: </strong> '.$policy_data['customer_details'].'</p>
+                                                               <p style="margin:0;font-size: 11px;">'.$policy_data['customer_name'].'</p>
+                                                              <p style="margin:0;font-size: 11px;">'.$policy_data['customer_details'].'</p>
                                                             </div>
                                                             <div class="col-50">
                                                             <p style="margin: 0;font-size: 11px;"> <strong> Policy No: </strong>'.$policy_data['prefix_policy_id'].'  </p>
@@ -415,10 +415,6 @@ function get_policy_card_pdf($policy_data, $get_vehicle, $logoPath){
                                                              <p style="margin:0;margin-bottom: 0px; font-size: 12px;"><strong>Model: </strong>  '.$get_vehicle['model_name'].'</p>
                                                             </div>
                                                           </div>
-
-                                                            <p style="margin:0;margin-bottom: 0px; font-size: 12px;font-style: italic; margin-top: 10px;">
-                                                              This card must be carried in the vehicle at all times as evidence of insurance.
-                                                            </p>
                                                             <p style="margin:0;margin-bottom: 0px; font-size: 12px;font-style: italic; margin-top: 10px;">
                                                               Your insurance card is valid until '.convert_db_date_readable($policy_data["effective_to"]).' as you\'ve opted for the '.$payment_mode.' payment mode.
                                                             </p>
@@ -448,9 +444,10 @@ function get_policy_card_pdf($policy_data, $get_vehicle, $logoPath){
                                                               <li>Determine injuries/damage. Get medical help if needed.</li>
                                                               <li>Notify the police immediately. Obtain police report number.</li>
                                                               <li>Do not admit fault.</li>
-                                                              
                                                               <li>+1 (877) 898-0788 so your vehicle can be towed to a safe,storage-free facility to avoid excessive costs you may be responsible for.</li>
                                                               <li>Report accident to Westland Mutual Insurance as soon as possible by calling contact@wlins.com</li>
+                                                              <li>The coverage provided by this policy meets the Minimum financial responsibility requirement Prescribed by law.</li>
+                                                              <li>This card must be carried in the vehicle at all times as evidence of insurance.</li>
                                                             </ul>
                                                         </td>
                                                       </tr>
