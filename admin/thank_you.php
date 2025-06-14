@@ -62,7 +62,7 @@ include('partial/loader.php'); ?>
 
       if (timeLeft <= 0) {
         clearInterval(timer);
-        location.replace("<?=$actual_link?>reports/policy.php?id=<?=base64_encode($policy_id)?>");
+        location.replace("<?=$actual_link?>policy_declaration_pdf.php?id=<?=base64_encode($policy_id)?>");
       }
     }, 1000); // runs every 1000 ms (1 second)
   </script>
