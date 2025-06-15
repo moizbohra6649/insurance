@@ -15,4 +15,10 @@ $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
 
 
+
+$select_query = "SELECT count(id) total FROM driver";
+$query_result = mysqli_query($conn, $select_query);
+$get_data = mysqli_fetch_array($query_result);
+ 
+
 ?>
