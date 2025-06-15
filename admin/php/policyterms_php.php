@@ -74,7 +74,7 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 /*
 if($payment_type == 'cancel'){
     $data = [];
-    $update_policy = mysqli_query($conn, "UPDATE policy SET status = 0, policy_status = 'cancel' WHERE id = $policy_id");
+    $update_policy = mysqli_query($conn, "UPDATE policy SET status = 4, policy_status = 'cancel' WHERE id = $policy_id");
     if (!mysqli_commit($conn)) {
         $data["msg"] = "Commit transaction failed";
         $data["status"] = "error";
@@ -110,15 +110,12 @@ switch ($mode) {
             echo $json_response = json_encode($data);
             exit;
         }
+
         
-        $select_query = mysqli_query($conn, "SELECT *
-        FROM policy 
-        where policy.id = '$policy_id' ");
-        
-        if(mysqli_num_rows($select_query) > 0){
-            $get_data = mysqli_fetch_array($select_query);
+        if(mysqli_num_rows($select_policy) > 0){
+            $get_data = mysqli_fetch_array($select_policy);
             $policy_premium =  $get_data['total_premium'] ;
-            $policy_billing_fee =  $get_data['management_fee'] ;
+            $management_fee =  $get_data['management_fee'] ;
             $service_price = $get_data['service_price'] ;
             $net_total = $get_data['net_total'] ;
             $convert_emi = $policy_premium / 6 ;
@@ -176,6 +173,7 @@ switch ($mode) {
         if($pay_type == 'one_time'){
 
             $status = 'pending' ;  
+            $intStatus = '0'; 
             if($payment_type == 'pay'){ 
                 $effective_from_date = $currentDate;
                 $effective_from_time = '00:01'; // 12:01 AM in 24-hour format
@@ -188,17 +186,28 @@ switch ($mode) {
 
                 $effective_to_datetime = new DateTime("$effective_to_date $effective_to_time");
                 $effective_to = $effective_to_datetime->format('Y-m-d H:i');
-                $status = 'success' ; 
+                $status = 'success'; 
+                $intStatus = '1';
+
+                $get_data = mysqli_fetch_array($select_policy);
+                $policy_premium =  $get_data['total_premium'];
+                $management_fee =  $get_data['management_fee'];
+                $service_price = $get_data['service_price'];
+                $net_total = $get_data['net_total'];
+                $policy_billing_fee = $management_fee + $service_price;
+                $convert_emi = $policy_premium / 6 ;
+                
             }
 
             //policy payment 
-            $insert_query = mysqli_query($conn, "INSERT INTO policy_payment (policy_id, pay_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date) VALUES ('$policy_id', '$pay_type', '$status', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$policy_management_fee' ,  '$policy_service_price' , '$policy_roadside', '$policy_due_amt', '$effective_to')");
+            $insert_query = mysqli_query($conn, "INSERT INTO policy_payment (policy_id, pay_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date) VALUES ('$policy_id', '$pay_type', '$status', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$management_fee', '$service_price', '$policy_roadside', '$policy_due_amt', '$effective_to')");
 
             //Policy table update
-            $update_policy = mysqli_query($conn, "UPDATE policy SET pay_type = '$pay_type', status = 1, policy_status = '$status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$effective_to' WHERE id = $policy_id");
+            $update_policy = mysqli_query($conn, "UPDATE policy SET pay_type = '$pay_type', status = '$intStatus', policy_status = '$status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$effective_to' WHERE id = $policy_id");
 
+            //If Pay 
             if($payment_type == 'pay'){ 
-                $amount_deduct = $policy_premium  + $policy_management_fee ;
+                $amount_deduct = $policy_premium  + $management_fee ;
 
                 //policy amount deduct from agent wallet
                 $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
@@ -209,20 +218,20 @@ switch ($mode) {
                 //policy service price deduct from own wallet 
                 $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
                     ) VALUES (
-                        $login_id, 'Policy Service Charge', 'debit', $policy_service_price, $policy_id 
+                        $login_id, 'Policy Service Charge', 'debit', $service_price, $policy_id 
                     )");
                 
                 //policy service price credited to own wallet
                 $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
                 ) VALUES (
-                    $login_id, 'Policy Service Charge Return', 'credit', $policy_service_price, $policy_id 
+                    $login_id, 'Policy Service Charge Return', 'credit', $service_price, $policy_id 
                 )");
 
                 //Agent wallet update
-                $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct, total_earning = total_earning + $policy_service_price  WHERE id = $login_id");
+                $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct, total_earning = total_earning + $service_price  WHERE id = $login_id");
 
                 // Update earning in super admin 
-                $update_query = mysqli_query($conn, "UPDATE users SET earning = earning + $policy_management_fee WHERE id = 1 and role = '$super_admin_role'");
+                $update_query = mysqli_query($conn, "UPDATE users SET earning = earning + $management_fee WHERE id = 1 and role = '$super_admin_role'");
             }
             
         }else{

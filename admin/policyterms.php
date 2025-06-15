@@ -65,10 +65,10 @@ include('partial/loader.php');
                                         <div class="col-md-2 mb-3">Premium: <span class="f-w-600">$<?= $policy_premium ?></span>
                                             <input type="hidden" id="policy_premium" name="policy_premium" value="<?= $policy_premium ?>">
                                         </div>
-                                        <div class="col-md-2 mb-3">Admin Fee: <span class="f-w-600"><?= $policy_billing_fee + $service_price ?></span>
+                                        <div class="col-md-2 mb-3">Admin Fee: <span class="f-w-600"><?= $management_fee + $service_price ?></span>
                                             <input type="hidden" id="policy_service_price" name="policy_service_price" value="<?= $service_price ?>">
-                                            <input type="hidden" id="policy_management_fee" name="policy_management_fee" value="<?= $policy_billing_fee ?>">
-                                            <input type="hidden" id="policy_billing_fee" name="policy_billing_fee" value="<?= $policy_billing_fee + $service_price ?>">
+                                            <input type="hidden" id="policy_management_fee" name="policy_management_fee" value="<?= $management_fee ?>">
+                                            <input type="hidden" id="policy_billing_fee" name="policy_billing_fee" value="<?= $management_fee + $service_price ?>">
                                         </div>
                                         <div class="col-md-2 mb-3">Roadside Assistance: <span class="f-w-600">$0.00</span>
                                             <input type="hidden" id="policy_roadside" name="policy_roadside" value="0">
@@ -77,7 +77,7 @@ include('partial/loader.php');
                                             <input type="hidden" id="policy_due_amt" name="policy_due_amt" value="<?= $net_total ?>">
                                         </div>
                                         <div class="col-md-2 mb-3">Due Date: 
-                                            <span class="f-w-600"><?php echo $full_paymentdue_date = date('Y-m-d', strtotime($currentDate . '+6 months')); ?></span>
+                                            <span class="f-w-600"><?php echo $full_paymentdue_date = date('Y-m-d', strtotime($currentDate)); ?></span>
                                             <input type="hidden" id="policy_due_date" name="policy_due_date" value="<?= $full_paymentdue_date ?>">
                                         </div>
                                     </div>
@@ -101,36 +101,37 @@ include('partial/loader.php');
                                     <?php
                                     $emi_total = 0;
                                     for ($i = 1; $i <= $installment; $i++) {
-                                        $prim = round($convert_emi, 2);
-                                        $fees = ($i == 1) ? $policy_billing_fee + $service_price : $policy_billing_fee;
-                                        $currentDate = date('Y-m-d', strtotime($currentDate . '+30 days'));
+                                        $premium = round($convert_emi, 2);
+                                        $fees = ($i == 1) ? $management_fee + $service_price : $management_fee;
+                                        $daysToAdd = ($i - 1) * 30;
+                                        $currentDate = date('Y-m-d', strtotime($currentDate . "+{$daysToAdd} days"));
                                         ?>
                                         <div class="row">
                                             <div class="col-md-2 mb-3">Payment: <span class="f-w-600"><?= $i ?></span>
                                                 <input type="hidden" name="policy_installment<?= $i ?>" value="<?= $i ?>">
                                             </div>
-                                            <div class="col-md-2 mb-3">Premium: <span class="f-w-600">$<?= $prim ?></span>
-                                                <input type="hidden" name="policy_premium<?= $i ?>" value="<?= $prim ?>">
+                                            <div class="col-md-2 mb-3">Premium: <span class="f-w-600">$<?= $premium ?></span>
+                                                <input type="hidden" name="policy_premium<?= $i ?>" value="<?= $premium ?>">
                                             </div>
                                             <div class="col-md-2 mb-3">
                                                 <?= ($i == 1) ? 'Admin Fee:' : 'Billing Fee:' ?>
                                                 <span class="f-w-600"><?= $fees ?></span>
-                                                <input type="hidden" name="policy_management_fee<?= $i ?>" value="<?= $policy_billing_fee ?>">
+                                                <input type="hidden" name="policy_management_fee<?= $i ?>" value="<?= $management_fee ?>">
                                                 <input type="hidden" name="policy_billing_fee<?= $i ?>" value="<?= $fees ?>">
                                                 <input type="hidden" name="policy_service_price<?= $i ?>" value="<?= $service_price ?>">
                                             </div>
                                             <div class="col-md-2 mb-3">Roadside Assistance: <span class="f-w-600">$0.00</span>
                                                 <input type="hidden" name="policy_roadside<?= $i ?>" value="0">
                                             </div>
-                                            <div class="col-md-2 mb-3">Due: <span class="f-w-600">$<?= $prim + $fees ?></span>
-                                                <input type="hidden" name="policy_due_amt<?= $i ?>" value="<?= $prim + $fees ?>">
+                                            <div class="col-md-2 mb-3">Due: <span class="f-w-600">$<?= $premium + $fees ?></span>
+                                                <input type="hidden" name="policy_due_amt<?= $i ?>" value="<?= $premium + $fees ?>">
                                             </div>
                                             <div class="col-md-2 mb-3">Due Date: <span class="f-w-600"><?= $currentDate ?></span>
                                                 <input type="hidden" name="policy_due_date<?= $i ?>" value="<?= $currentDate ?>">
                                             </div>
                                         </div>
                                         <?php
-                                        $emi_total += $prim + $fees;
+                                        $emi_total += $premium + $fees;
                                     }
                                     ?>
 

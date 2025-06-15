@@ -18,11 +18,11 @@ $select_policy = "SELECT
     CONCAT_WS(', ',
         NULLIF(customer.address, ''),
         NULLIF(customer.apt_unit, ''),
-        NULLIF(customer_state.name, ''),
+        NULLIF(customer.city, ''),
         CASE 
             WHEN COALESCE(customer.city, '') <> '' OR COALESCE(customer.zip_code, '') <> '' THEN 
                 CONCAT_WS(' - ', 
-                    NULLIF(customer.city, ''),
+                    NULLIF(customer_state.name, ''),
                     NULLIF(customer.zip_code, '')
                 )
             ELSE NULL

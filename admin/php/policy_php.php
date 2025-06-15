@@ -232,6 +232,22 @@ function policy_calculation ($vehicle, $driver, $customer_id, $coverage){
     $date_of_birth = $get_customer["date_of_birth"];
     $customer_age = calculateAge($date_of_birth);
 
+    $qry_vehicle = "SELECT vehicle.id as vehicle_id, year.id as year_id, year.year, make.id as make_id, make.make_name, make.make_origin, model.id as model_id, model.model_name, vehicle.vehicle_no FROM vehicle
+        left join year on year.id = vehicle.vehicle_year_id
+        left join make on make.id = vehicle.vehicle_make_id
+        left join model ON model.id = vehicle.vehicle_model_id 
+        WHERE vehicle.id IN ($vehicle)";
+
+    $select_vehicle = mysqli_query($conn, $qry_vehicle);
+    if(mysqli_num_rows($select_vehicle) > 0){
+        $vehicles_premium = array();
+        while($get_vehicle = mysqli_fetch_assoc($select_vehicle)){
+            $vehicle_id = $get_vehicle["vehicle_id"];
+
+            array_push($vehicles_premium, array("id" => $vehicle_id, "vehicle" => $get_vehicle["year"].' - '.$get_vehicle["make_name"].' - '.$get_vehicle["model_name"], "year_id" => $get_vehicle["year_id"], "year" => $get_vehicle["year"], "make_id" => $get_vehicle["make_id"], "make_name" => $get_vehicle["make_name"], "make_origin" => $get_vehicle["make_origin"], "model_id" => $get_vehicle["model_id"], "model_name" => $get_vehicle["model_name"], "vehicle_no" => $get_vehicle["vehicle_no"], "calculation_id" => 0, "amount" => 0));
+        }
+    }
+
     $select_management_fee = mysqli_query($conn, "SELECT * FROM management_charge where status = 1 ORDER BY id DESC LIMIT 1");
     if(mysqli_num_rows($select_management_fee) > 0){
         $get_management_fee = mysqli_fetch_assoc($select_management_fee);
@@ -264,6 +280,7 @@ function policy_calculation ($vehicle, $driver, $customer_id, $coverage){
 
             $select_policy_vehicle_addup = mysqli_query($conn, $qry_policy_vehicle_addup);
             if(mysqli_num_rows($select_policy_vehicle_addup) > 0){
+                $vehicles_premium = array();
                 while($get_policy_vehicle_addup = mysqli_fetch_assoc($select_policy_vehicle_addup)){
 
                     $vehicle_amt = $base_policy_amt;
@@ -424,7 +441,13 @@ switch ($mode) {
         if(empty($driver)){
             $error_arr[] = "Select a Driver.<br/>";
         }
-        
+
+        //Calculation
+        $calculation_data = policy_calculation ($vehicle, $driver, $customer_id, $coverage);
+
+        if(empty($calculation_data["base_premium"]) || empty($calculation_data["total_premium"])){
+            $error_arr[] = "Policy are not being generated because the amount is zero.<br/>";
+        }
 
         // Display errors if any
         if (!empty($error_arr)) {
@@ -434,9 +457,6 @@ switch ($mode) {
             echo $json_response = json_encode($data);
             exit;
         }
-
-        //Calculation
-        $calculation_data = policy_calculation ($vehicle, $driver, $customer_id, $coverage);
 
         $base_premium = $calculation_data["base_premium"];
         $additional_coverage_premium = $calculation_data["additional_coverage_premium"];
@@ -462,17 +482,17 @@ switch ($mode) {
                 foreach ($vehicle as $key => $vehiclevalue) {
                     if($vehiclevalue > 0){
 
-                        $vehicle_name = $vehicles_premium[$i]['vehicle'];
-                        $vehicle_year_id = $vehicles_premium[$i]['year_id'];
-                        $vehicle_year = $vehicles_premium[$i]['year'];
-                        $vehicle_make_id = $vehicles_premium[$i]['make_id'];
-                        $vehicle_make_name = $vehicles_premium[$i]['make_name'];
-                        $vehicle_make_origin = $vehicles_premium[$i]['make_origin'];
-                        $vehicle_model_id = $vehicles_premium[$i]['model_id'];
-                        $vehicle_model_name = $vehicles_premium[$i]['model_name'];
-                        $vehicle_no = $vehicles_premium[$i]['vehicle_no'];
-                        $vehicle_calculation_id = $vehicles_premium[$i]['calculation_id'];
-                        $vehicle_amount = $vehicles_premium[$i]['amount'];
+                        $vehicle_name = (isset($vehicles_premium[$i]['vehicle']) ? $vehicles_premium[$i]['vehicle'] : "");
+                        $vehicle_year_id = (isset($vehicles_premium[$i]['year_id']) ? $vehicles_premium[$i]['year_id'] : 0);
+                        $vehicle_year = (isset($vehicles_premium[$i]['year']) ? $vehicles_premium[$i]['year'] : "");
+                        $vehicle_make_id = (isset($vehicles_premium[$i]['make_id']) ? $vehicles_premium[$i]['make_id'] : 0);
+                        $vehicle_make_name = (isset($vehicles_premium[$i]['make_name']) ? $vehicles_premium[$i]['make_name'] : "");
+                        $vehicle_make_origin = (isset($vehicles_premium[$i]['make_origin']) ? $vehicles_premium[$i]['make_origin'] : "");
+                        $vehicle_model_id = (isset($vehicles_premium[$i]['model_id']) ? $vehicles_premium[$i]['model_id'] : 0);
+                        $vehicle_model_name = (isset($vehicles_premium[$i]['model_name']) ? $vehicles_premium[$i]['model_name'] : "");
+                        $vehicle_no = (isset($vehicles_premium[$i]['vehicle_no']) ? $vehicles_premium[$i]['vehicle_no'] : "");
+                        $vehicle_calculation_id = (isset($vehicles_premium[$i]['calculation_id']) ? $vehicles_premium[$i]['calculation_id'] : 0);
+                        $vehicle_amount = (isset($vehicles_premium[$i]['amount']) ? $vehicles_premium[$i]['amount'] : 0);
 
                         $insert_query = mysqli_query($conn, "INSERT INTO policy_vehicle (policy_id, vehicle_id, vehicle, vehicle_year_id, vehicle_year, vehicle_make_id, vehicle_make_name, vehicle_make_origin, vehicle_model_id, vehicle_model_name, vehicle_no, calculation_id, amount) VALUES ('$last_inserted_id', '$vehiclevalue', '$vehicle_name', '$vehicle_year_id', '$vehicle_year', '$vehicle_make_id', '$vehicle_make_name', '$vehicle_make_origin', '$vehicle_model_id', '$vehicle_model_name', '$vehicle_no', '$vehicle_calculation_id', '$vehicle_amount')");
                     }
@@ -614,6 +634,13 @@ switch ($mode) {
         if(empty($driver)){
             $error_arr[] = "Select a Driver.<br/>";
         }
+
+        //Calculation
+        $calculation_data = policy_calculation ($vehicle, $driver, $customer_id, $coverage);
+
+        if(empty($calculation_data["base_premium"]) || empty($calculation_data["total_premium"])){
+            $error_arr[] = "Policy are not being generated because the amount is zero.<br/>";
+        }
         
         // Display errors if any
         if (!empty($error_arr)) {
@@ -623,9 +650,6 @@ switch ($mode) {
             echo $json_response = json_encode($data);
             exit;
         }
-
-        //Calculation
-        $calculation_data = policy_calculation ($vehicle, $driver, $customer_id, $coverage);
 
         $base_premium = $calculation_data["base_premium"];
         $additional_coverage_premium = $calculation_data["additional_coverage_premium"];
@@ -680,17 +704,17 @@ switch ($mode) {
                     foreach ($vehicle as $key => $vehiclevalue) {
                         if($vehiclevalue > 0){
 
-                            $vehicle_name = $vehicles_premium[$i]['vehicle'];
-                            $vehicle_year_id = $vehicles_premium[$i]['year_id'];
-                            $vehicle_year = $vehicles_premium[$i]['year'];
-                            $vehicle_make_id = $vehicles_premium[$i]['make_id'];
-                            $vehicle_make_name = $vehicles_premium[$i]['make_name'];
-                            $vehicle_make_origin = $vehicles_premium[$i]['make_origin'];
-                            $vehicle_model_id = $vehicles_premium[$i]['model_id'];
-                            $vehicle_model_name = $vehicles_premium[$i]['model_name'];
-                            $vehicle_no = $vehicles_premium[$i]['vehicle_no'];
-                            $vehicle_calculation_id = $vehicles_premium[$i]['calculation_id'];
-                            $vehicle_amount = $vehicles_premium[$i]['amount'];
+                            $vehicle_name = (isset($vehicles_premium[$i]['vehicle']) ? $vehicles_premium[$i]['vehicle'] : "");
+                            $vehicle_year_id = (isset($vehicles_premium[$i]['year_id']) ? $vehicles_premium[$i]['year_id'] : 0);
+                            $vehicle_year = (isset($vehicles_premium[$i]['year']) ? $vehicles_premium[$i]['year'] : "");
+                            $vehicle_make_id = (isset($vehicles_premium[$i]['make_id']) ? $vehicles_premium[$i]['make_id'] : 0);
+                            $vehicle_make_name = (isset($vehicles_premium[$i]['make_name']) ? $vehicles_premium[$i]['make_name'] : "");
+                            $vehicle_make_origin = (isset($vehicles_premium[$i]['make_origin']) ? $vehicles_premium[$i]['make_origin'] : "");
+                            $vehicle_model_id = (isset($vehicles_premium[$i]['model_id']) ? $vehicles_premium[$i]['model_id'] : 0);
+                            $vehicle_model_name = (isset($vehicles_premium[$i]['model_name']) ? $vehicles_premium[$i]['model_name'] : "");
+                            $vehicle_no = (isset($vehicles_premium[$i]['vehicle_no']) ? $vehicles_premium[$i]['vehicle_no'] : "");
+                            $vehicle_calculation_id = (isset($vehicles_premium[$i]['calculation_id']) ? $vehicles_premium[$i]['calculation_id'] : 0);
+                            $vehicle_amount = (isset($vehicles_premium[$i]['amount']) ? $vehicles_premium[$i]['amount'] : 0);
 
                             $insert_query = mysqli_query($conn, "INSERT INTO policy_vehicle (policy_id, vehicle_id, vehicle, vehicle_year_id, vehicle_year, vehicle_make_id, vehicle_make_name, vehicle_make_origin, vehicle_model_id, vehicle_model_name, vehicle_no, calculation_id, amount) VALUES ('$id', '$vehiclevalue', '$vehicle_name', '$vehicle_year_id', '$vehicle_year', '$vehicle_make_id', '$vehicle_make_name', '$vehicle_make_origin', '$vehicle_model_id', '$vehicle_model_name', '$vehicle_no', '$vehicle_calculation_id', '$vehicle_amount')");
                         }

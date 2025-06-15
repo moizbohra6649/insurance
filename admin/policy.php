@@ -476,7 +476,7 @@ include('partial/loader.php'); ?>
                                  $<?=$custom_discount;?>
                               </div>
                            </div>
-                           <div class="row">
+                           <div class="row" style="display: none;">
                               <div class="col-md-8 mb-3">
                                  Additional Discount	
                               </div>

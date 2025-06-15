@@ -47,11 +47,11 @@ $policy_query = "SELECT
     CONCAT_WS(', ',
         NULLIF(customer.address, ''),
         NULLIF(customer.apt_unit, ''),
-        NULLIF(customer_state.name, ''),
+        NULLIF(customer.city, ''),
         CASE 
             WHEN COALESCE(customer.city, '') <> '' OR COALESCE(customer.zip_code, '') <> '' THEN 
                 CONCAT_WS(' - ', 
-                    NULLIF(customer.city, ''),
+                    NULLIF(customer_state.name, ''),
                     NULLIF(customer.zip_code, '')
                 )
             ELSE NULL
@@ -63,11 +63,11 @@ $policy_query = "SELECT
     CONCAT_WS(', ',
         NULLIF(agent.address, ''),
         NULLIF(agent.apt_unit, ''),
-        NULLIF(agent_state.name, ''),
+        NULLIF(agent.city, ''),
         CASE 
             WHEN COALESCE(agent.city, '') <> '' OR COALESCE(agent.zip_code, '') <> '' THEN 
                 CONCAT_WS(' - ',  
-                    NULLIF(agent.city, ''),
+                    NULLIF(agent_state.name, ''),
                     NULLIF(agent.zip_code, '')
                 )
             ELSE NULL
