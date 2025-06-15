@@ -107,8 +107,7 @@ switch ($mode) {
             $error_txt = implode('', $error_arr);
             $data["msg"] = $error_txt;
             $data["status"] = "error";
-            echo $json_response = json_encode($data);
-            exit;
+            $json_response = json_encode($data);
         }
 
         
@@ -127,7 +126,7 @@ switch ($mode) {
         $data = [];
         $error_arr = [];
       
-        $select_policy = mysqli_query($conn, "SELECT id FROM policy WHERE id  = '$policy_id' " );
+        $select_policy = mysqli_query($conn, "SELECT * FROM policy WHERE id  = '$policy_id' " );
         $select_policy_payment = mysqli_query($conn, "SELECT id FROM policy_payment WHERE policy_id  = '$policy_id' " );
 
         if(mysqli_num_rows($select_policy) == 0){
@@ -170,10 +169,21 @@ switch ($mode) {
             exit;
         }
 
+        $get_data = mysqli_fetch_array($select_policy);
+        $policy_premium =  $get_data['total_premium'];
+        $management_fee =  $get_data['management_fee'];
+        $service_price = $get_data['service_price'];
+        $net_total = $get_data['net_total'];
+        $policy_billing_fee = $management_fee + $service_price;
+
         if($pay_type == 'one_time'){
 
-            $status = 'pending' ;  
-            $intStatus = '0'; 
+            $policy_status = 'process';  
+            $policy_payment_status = 'pending';  
+            $int_policy_status = 2; 
+            $effective_from = "0000-00-00 00:00:00";
+            $effective_to = "0000-00-00 00:00:00";
+
             if($payment_type == 'pay'){ 
                 $effective_from_date = $currentDate;
                 $effective_from_time = '00:01'; // 12:01 AM in 24-hour format
@@ -186,24 +196,17 @@ switch ($mode) {
 
                 $effective_to_datetime = new DateTime("$effective_to_date $effective_to_time");
                 $effective_to = $effective_to_datetime->format('Y-m-d H:i');
-                $status = 'success'; 
-                $intStatus = '1';
 
-                $get_data = mysqli_fetch_array($select_policy);
-                $policy_premium =  $get_data['total_premium'];
-                $management_fee =  $get_data['management_fee'];
-                $service_price = $get_data['service_price'];
-                $net_total = $get_data['net_total'];
-                $policy_billing_fee = $management_fee + $service_price;
-                $convert_emi = $policy_premium / 6 ;
-                
+                $policy_status = 'success';  
+                $policy_payment_status = 'success';  
+                $int_policy_status = 1; 
             }
 
             //policy payment 
-            $insert_query = mysqli_query($conn, "INSERT INTO policy_payment (policy_id, pay_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date) VALUES ('$policy_id', '$pay_type', '$status', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$management_fee', '$service_price', '$policy_roadside', '$policy_due_amt', '$effective_to')");
+            $insert_query = mysqli_query($conn, "INSERT INTO policy_payment (policy_id, pay_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date) VALUES ('$policy_id', '$pay_type', '$policy_payment_status', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$management_fee', '$service_price', '$policy_roadside', '$net_total', '$effective_from')");
 
             //Policy table update
-            $update_policy = mysqli_query($conn, "UPDATE policy SET pay_type = '$pay_type', status = '$intStatus', policy_status = '$status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$effective_to' WHERE id = $policy_id");
+            $update_policy = mysqli_query($conn, "UPDATE policy SET pay_type = '$pay_type', status = $int_policy_status, policy_status = '$policy_status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$effective_to', updated = now() WHERE id = $policy_id");
 
             //If Pay 
             if($payment_type == 'pay'){ 
@@ -231,11 +234,15 @@ switch ($mode) {
                 $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct, total_earning = total_earning + $service_price  WHERE id = $login_id");
 
                 // Update earning in super admin 
-                $update_query = mysqli_query($conn, "UPDATE users SET earning = earning + $management_fee WHERE id = 1 and role = '$super_admin_role'");
+                $update_query = mysqli_query($conn, "UPDATE users SET earning = earning + $management_fee WHERE id = $super_admin_id and role = '$super_admin_role'");
             }
             
         }else{
-            for($i = 1 ; $i <= $installment_count ; $i++){
+            $emi_count = 6;
+            $policy_premium = $policy_premium  / $emi_count;
+            $policy_premium = round($policy_premium, 2);
+
+            for($i = 1 ; $i <= $emi_count ; $i++){
                 $installment_key = "policy_installment" . $i;
                 $premium_key = "policy_premium" . $i;
                 $roadside_key = "policy_roadside" . $i;
@@ -254,42 +261,45 @@ switch ($mode) {
                 $policy_service_price = (isset($_REQUEST[$policy_service_price])) ? $_REQUEST[$policy_service_price] : 0;
                 $policy_management_fee = (isset($_REQUEST[$policy_management_fee])) ? $_REQUEST[$policy_management_fee] : 0 ;
 
-                $days = 30 * 1;
+                
+
+                $policy_status = 'process';  
+                $policy_payment_status = 'pending';  
+                $int_policy_status = 2; 
+                $effective_from = "0000-00-00 00:00:00";
+                $effective_to = "0000-00-00 00:00:00";
 
                 if($payment_type == 'pay'){
-                    $effective_to_date = date('Y-m-d', strtotime($currentDate . "+$days days"));
+
+                    $from_days = 30 * ($i - 1);
+                    $effective_from_date = date('Y-m-d', strtotime($currentDate . "+$from_days days"));
+                    $effective_from_time = '00:01'; // 12:01 AM in 24-hour format
+
+                    $effective_from_datetime = new DateTime("$effective_from_date $effective_from_time");
+                    $effective_from = $effective_from_datetime->format('Y-m-d H:i');
+
+                    $to_days = 30 * $i;
+
+                    $effective_to_date = date('Y-m-d', strtotime($currentDate . "+$to_days days"));
                     $effective_to_time = '23:59'; // 11:59 PM in 24-hour format
 
                     $effective_to_datetime = new DateTime("$effective_to_date $effective_to_time");
                     $effective_to = $effective_to_datetime->format('Y-m-d H:i');
-                }
-                $status = 'pending' ; 
-                if($i == 1 ){
-                    if($payment_type == 'pay'){
 
-                        $effective_from_date = $currentDate;
-                        $effective_from_time = '00:01'; // 12:01 AM in 24-hour format
-
-                        $effective_from_datetime = new DateTime("$effective_from_date $effective_from_time");
-                        $effective_from = $effective_from_datetime->format('Y-m-d H:i');
-
-                        $policy_due_date = date('Y-m-d', strtotime($currentDate . '+6 months'));
-                        $policy_due_time = '23:59'; // 11:59 PM in 24-hour format
-
-                        $policy_due_datetime = new DateTime("$policy_due_date $policy_due_time");
-                        $policy_due_date = $policy_due_datetime->format('Y-m-d H:i');
-                        $status = 'success' ; 
-                    }else{
-                        $policy_due_date = '' ; 
+                    if($i == 1){
+                        $policy_status = 'success';  
+                        $policy_payment_status = 'success';  
+                        $int_policy_status = 1; 
                     }
-
+                }
+                
+                if($i == 1){
                     
-
                     //Policy table update
-                    $update_policy = mysqli_query($conn, "UPDATE policy SET pay_type = '$pay_type', status = 1, policy_status = 'success', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$policy_due_date' WHERE id = $policy_id");
+                    $update_policy = mysqli_query($conn, "UPDATE policy SET pay_type = '$pay_type', status = $int_policy_status, policy_status = '$policy_status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$effective_to', updated = now() WHERE id = $policy_id");
 
                     if($payment_type == 'pay'){
-                        $amount_deduct = $policy_premium  + $policy_management_fee ;
+                        $amount_deduct = $policy_premium  + $management_fee ;
 
                         //policy amount deduct from agent wallet
                         $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
@@ -300,28 +310,33 @@ switch ($mode) {
                         //policy service price deduct from own wallet 
                         $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
                             ) VALUES (
-                                $login_id, 'Policy Service Charge', 'debit', $policy_service_price, $policy_id 
+                                $login_id, 'Policy Service Charge', 'debit', $service_price, $policy_id 
                             )");
                         
                         //policy service price credited to own wallet
                         $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id,  transaction_type, payment_type, transaction_amount,agent_policy_id
                         ) VALUES (
-                            $login_id, 'Policy Service Charge Return', 'credit', $policy_service_price, $policy_id 
+                            $login_id, 'Policy Service Charge Return', 'credit', $service_price, $policy_id 
                         )");
             
                         //Agent wallet update
-                        $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct, total_earning = total_earning + $policy_service_price  WHERE id = $login_id");
+                        $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct, total_earning = total_earning + $service_price  WHERE id = $login_id");
 
                         // Update earning in super admin 
-                        $update_query = mysqli_query($conn, "UPDATE users SET earning = earning + $policy_management_fee WHERE id = 1 and role = '$super_admin_role'");
+                        $update_query = mysqli_query($conn, "UPDATE users SET earning = earning + $management_fee WHERE id = $super_admin_id and role = '$super_admin_role'");
                     }
+                }else{
+                    $policy_billing_fee = $management_fee;
+                    $service_price = '0';
                 }
+
+                $policy_due_amt = $policy_premium + $policy_billing_fee;
 
                 //policy payment
                 $insert_query = mysqli_query($conn, "INSERT INTO policy_payment 
                     (policy_id, pay_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date)
                     VALUES 
-                    ('$policy_id', '$pay_type', '$status', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$policy_management_fee' ,  '$policy_service_price' , '$policy_roadside', '$policy_due_amt', '$effective_to')
+                    ('$policy_id', '$pay_type', '$policy_payment_status', '$i', '$policy_premium', '$policy_billing_fee', '$management_fee',  '$service_price', '$policy_roadside', '$policy_due_amt', '$effective_from')
                 ");
             }
         }

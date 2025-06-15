@@ -187,3 +187,8 @@ ALTER TABLE `policy` ADD `pay_type` ENUM('one_time','part_payment') NULL AFTER `
 
 
 ALTER TABLE `policy` ADD `additional_discount` INT NOT NULL DEFAULT '0' AFTER `custom_discount`;
+
+
+ALTER TABLE `policy` CHANGE `status` `status` INT(11) NOT NULL DEFAULT '0' COMMENT '0 => \'pending\',\r\n1 => \'success\',\r\n2 => \'process\',\r\n3 => \'failed\',\r\n4 => \'reject\',\r\n5 => \'cancel\'';
+
+ALTER TABLE `policy` CHANGE `policy_status` `policy_status` ENUM('pending','success','process','failed','reject','cancel') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;

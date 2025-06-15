@@ -49,7 +49,7 @@ $policy_query = "SELECT
         NULLIF(customer.apt_unit, ''),
         NULLIF(customer.city, ''),
         CASE 
-            WHEN COALESCE(customer.city, '') <> '' OR COALESCE(customer.zip_code, '') <> '' THEN 
+            WHEN COALESCE(customer_state.name, '') <> '' OR COALESCE(customer.zip_code, '') <> '' THEN 
                 CONCAT_WS(' - ', 
                     NULLIF(customer_state.name, ''),
                     NULLIF(customer.zip_code, '')
@@ -65,7 +65,7 @@ $policy_query = "SELECT
         NULLIF(agent.apt_unit, ''),
         NULLIF(agent.city, ''),
         CASE 
-            WHEN COALESCE(agent.city, '') <> '' OR COALESCE(agent.zip_code, '') <> '' THEN 
+            WHEN COALESCE(agent_state.name, '') <> '' OR COALESCE(agent.zip_code, '') <> '' THEN 
                 CONCAT_WS(' - ',  
                     NULLIF(agent_state.name, ''),
                     NULLIF(agent.zip_code, '')

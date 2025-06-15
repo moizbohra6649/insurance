@@ -20,7 +20,7 @@ $select_policy = "SELECT
         NULLIF(customer.apt_unit, ''),
         NULLIF(customer.city, ''),
         CASE 
-            WHEN COALESCE(customer.city, '') <> '' OR COALESCE(customer.zip_code, '') <> '' THEN 
+            WHEN COALESCE(customer_state.name, '') <> '' OR COALESCE(customer.zip_code, '') <> '' THEN 
                 CONCAT_WS(' - ', 
                     NULLIF(customer_state.name, ''),
                     NULLIF(customer.zip_code, '')

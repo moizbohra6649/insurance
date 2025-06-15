@@ -82,6 +82,7 @@ $pdf_page = "pdf";
 $dashboard = "index.php";
 
 $super_admin_role = "superadmin";
+$super_admin_id = "1";
 $agent_role = "agent";
 
 if (isset($_SERVER['HTTPS']) &&
@@ -358,6 +359,17 @@ function convert_readable_date_db($date){
 
 	// Format to "yyyy-mm-dd"
 	$formattedDate = $datetime->format('Y-m-d');
+
+	return $formattedDate; 
+}
+
+function convert_date($date){
+	$formattedDate = "";
+	if(!empty($date)){
+		// Create a DateTime object
+		$datetime = new DateTime($date);
+		$formattedDate = $datetime->format('m/d/Y');
+	}
 
 	return $formattedDate; 
 }
@@ -835,6 +847,7 @@ function addDollarIfNotNull($value): string
 
 function check_page_access($current_page) {
 
+	global $login_role, $conn;
     if($login_role == 'staff'){
 		$query = "SELECT 1 FROM user_page_permissions WHERE page_name = '$current_page' LIMIT 1";
 		$result = mysqli_query($conn, $query);

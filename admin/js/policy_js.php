@@ -340,6 +340,11 @@ $('#policy_form').on('submit', (function(e) {
     }
 
     var formData = new FormData(this);
+    var vehicle = $("#selectMultiVehicle").val();
+    var driver = $('#selectMultiDriver').val();
+
+    formData.append('vehicle', vehicle);
+    formData.append('driver', driver);
     formData.append('form_request', 'true');
     $.ajax({
         type: 'POST',
@@ -362,8 +367,14 @@ $('#policy_form').on('submit', (function(e) {
                 var url = `policyterms.php?policy_id=${data.policy_id}`;
                 location.replace(`<?=$actual_link?>${url}`);
             }else if(data.status == "success" && data.mode == 'UPDATE'){
-                var url = `policyterms.php?policy_id=${data.policy_id}`;
-                location.replace(`<?=$actual_link?>${url}`);
+                 
+                if('<?=$login_role?>' == "agent"){
+                    var url = `policyterms.php?policy_id=${data.policy_id}`;
+                    location.replace(`<?=$actual_link?>${url}`);
+                }else{
+                    var url = `policy_list.php?customer_id=${data.encoded_customer_id}`;
+                    move(`<?=$actual_link?>${url}`);
+                }
             }
             else{
                 $("#submit_btn").html('Submit');

@@ -51,6 +51,7 @@ include('partial/loader.php'); ?>
                                                     <?php } ?>
                                                     <th>Customer Name</th> 
                                                     <th>Policy Coverage</th> 
+                                                    <th style="text-align:center;">Policy Status</th> 
                                                     <th style="text-align:center;">Create Date</th> 
                                                     <th style="text-align:center;">Action</th>
                                                 </tr>
@@ -61,7 +62,7 @@ include('partial/loader.php'); ?>
                                                     while($get_data = mysqli_fetch_array($query_result)){
 
                                                         $id = $get_data["id"];
-                                                        $policy_payment_count = get_value('policy_payment', 'count(*)', 'where policy_id = '.$id); 
+                                                        $policy_payment_count = get_value('policy_payment', 'count(*)', 'WHERE policy_id = '.$id); 
                                                 ?>
                                                 <tr>
                                                     <td align="center"> <?=$i++?> </td>
@@ -71,6 +72,7 @@ include('partial/loader.php'); ?>
                                                     <?php } ?>
                                                     <td> <?= $get_data["customer_name"] ?> </td>
                                                     <td> <?= getLabelByValue($coverage_dropdown, $get_data["policy_coverage"]) ?> </td>
+                                                    <td align="center"> <?=ucfirst($get_data["policy_status"])?> </td>
                                                     <td align="center"> <?=convert_db_date_readable($get_data["created"])?> </td>
                                                     
                                                     <td align="center">
@@ -92,13 +94,13 @@ include('partial/loader.php'); ?>
                                                         <!-- <a href="<?=$actual_link?>reports/policy_card.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
                                                         <a href="<?=$actual_link?>reports/policy.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a> -->
 
-                                                        <?php if($get_data["policy_status"] != "peding" && $policy_payment_count  > 0){ ?>
+                                                        <?php if($get_data["policy_status"] == "success" && $policy_payment_count  > 0){ ?>
                                                         <a href="<?=$actual_link?>policy_card_pdf.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
                                                         <a href="<?=$actual_link?>policy_declaration_pdf.php?id=<?=base64_encode($id)?>" target="_blank" class="action-icon m-2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
                                                         <?php } ?>
 
                                                         <a href="<?=$actual_link?>policy.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
-                                                        <?php if($get_data["policy_status"] == "peding" && $policy_payment_count == 0){ ?>
+                                                        <?php if($login_role == "superadmin" && $get_data["policy_status"] != "success"){ // && $policy_payment_count == 0 ?>
                                                         <a href="<?=$actual_link?>policy.php?id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
                                                         <?php } ?>
                                                         <!-- <a href="javascript:void(0);" class="action-icon  m-2"> <i class="mdi mdi-delete"></i></a> -->

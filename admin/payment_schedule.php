@@ -4,6 +4,10 @@ if (file_exists(dirname(__FILE__) . '/php/payment_schedule_php.php')) {
     require_once(dirname(__FILE__) . '/php/payment_schedule_php.php');
 }
 
+if(isset($data) && $data["status"] == "error"){
+    move($actual_link."customer_list.php");
+}
+
 include('partial/header.php'); 
 include('partial/loader.php'); ?>
 <!-- page-wrapper Start-->
@@ -38,33 +42,37 @@ include('partial/loader.php'); ?>
                                     
                                     WHERE policy.id = $policy_id");
                                     $policy_effectivedate = date('Y-m-d');
+                                    $i = 1;
                                     while($get_policy_schedule = fetch($policy_schedule)){ 
-                                        $prim =  round($get_policy_schedule['premium'] , 2 );
+                                        $premium =  round($get_policy_schedule['premium'] , 2 );
                                         $fees = ($get_policy_schedule['policy_installment'] == 1) ? $get_policy_schedule['management_fee'] + $get_policy_schedule['service_price'] : $get_policy_schedule['management_fee'] ;
                                         if($get_policy_schedule['due_date'] == '0000-00-00 00:00:00'){
                                             
-                                            $date_calculate =  ($get_policy_schedule['pay_type'] == 'one_time') ? '+6 months' : '+1 month' ;  
-                                            
-                                            $policy_effectivedate = date('Y-m-d', strtotime($policy_effectivedate .$date_calculate));
+                                            if($get_policy_schedule['pay_type'] == 'one_time'){
+                                                $policy_due_date = date('m/d/Y', strtotime($policy_effectivedate . "+6 months"));
+                                            }else{
+                                                $date_calculate = 30 * $i;
+                                                $policy_due_date = date('m/d/Y', strtotime($policy_effectivedate . "+{$date_calculate} days"));
+                                            }
                                          
                                         }else{
-                                            $policy_effectivedate = date('Y-m-d', strtotime($get_policy_schedule['due_date'])) ; 
+                                            $policy_due_date = date('m/d/Y', strtotime($get_policy_schedule['due_date'])) ; 
                                         }
-                                        
+                                        $i++;
                                         ?>
                                     <div class="row">
                                             <div class="col-md-1 mb-3">
                                                  <?php if($get_policy_schedule['payment_status'] == 'pending' && $checkbox_show  == 0 ){ ?>
                                                     <input type="checkbox" id="schedule_payment" name="schedule_payment" value="<?= $get_policy_schedule['id'] ?>">
                                                     <input type="hidden" id="policy_installment" name="policy_installment" value="<?= $get_policy_schedule['policy_installment']  ?>">
-                                                    <input type="hidden" id="policy_premium" name="policy_premium"  value="<?php echo $prim ; ?>">
+                                                    <input type="hidden" id="policy_premium" name="policy_premium"  value="<?php echo $premium ; ?>">
                                                     <input type="hidden" id="policy_management_fee" name="policy_management_fee"  value="<?= $get_policy_schedule['management_fee']  ?>">
 
-                                                    <input type="hidden" id="policy_billing_fee" name="policy_billing_fee"  value="<?php echo $fees ; ?>">
+                                                    <input type="hidden" id="policy_billing_fee" name="policy_billing_fee"  value="<?php echo $fees;?>">
                                                     <input type="hidden" id="policy_service_price" name="policy_service_price"  value="<?= $get_policy_schedule['service_price'] ?>">
                                                     <input type="hidden" id="policy_roadside" name="policy_roadside"  value="<?= $get_policy_schedule['roadside_assistance'] ?>">
-                                                    <input type="hidden" id="policy_due_amt" name="policy_due_amt"  value="<?= $get_policy_schedule['due_amount']  ?>">
-                                                    <input type="hidden" id="policy_due_date" name="policy_due_date"  value="<?= $policy_effectivedate  ?>">
+                                                    <input type="hidden" id="policy_due_amt" name="policy_due_amt"  value="<?= $get_policy_schedule['due_amount'];?>">
+                                                    <input type="hidden" id="policy_due_date" name="policy_due_date"  value="<?= $policy_due_date; ?>">
                                                  <?php   
                                                  $checkbox_show = 1 ;
                                                 }else if($get_policy_schedule['payment_status'] == 'success'){
@@ -75,32 +83,24 @@ include('partial/loader.php'); ?>
                                                 
                                             </div> 
                                              <div class="col-md-1 mb-3">
-                                             Payment: <span class="f-w-600"><?= $get_policy_schedule['policy_installment'] ?></span>
-                                           
+                                                Payment: <span class="f-w-600"><?= $get_policy_schedule['policy_installment'] ?></span>
                                             </div> 
                                             <div class="col-md-2 mb-3">
-                                            Premium: <span class="f-w-600">$<?php echo $prim ?></span>
-                                            
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
+                                                Premium: <span class="f-w-600">$<?php echo $premium ?></span>
+                                            </div> 
+                                            <div class="col-md-2 mb-3">
                                                 <?php echo ($get_policy_schedule['policy_installment'] == 1) ? 'Admin Fee:' : 'Billing Fee:' ;  ?>  <span class="f-w-600"><?php echo $fees ; ?> </span>
-                                                </div> 
+                                            </div> 
 
-                                                <div class="col-md-2 mb-3">
+                                            <div class="col-md-2 mb-3">
                                                 Roadside Assistance: <span class="f-w-600">$0.00</span>
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
+                                            </div> 
+                                            <div class="col-md-2 mb-3">
                                                 Due: <span class="f-w-600">$<?= $get_policy_schedule['due_amount']  ; ?></span>
-                        
-
-                                                </div> 
-                                                <div class="col-md-2 mb-3">
-                                                Due Date: <span class="f-w-600"><?php  
-                                                    echo $policy_effectivedate ;   
-                                                ?> </span>
-                                               
-
-                                                </div> 
+                                            </div> 
+                                            <div class="col-md-2 mb-3">
+                                                Due Date: <span class="f-w-600"><?php echo $policy_due_date; ?> </span>
+                                            </div> 
                                     </div> 
                                     <?php 
                                 $emi_total = $get_policy_schedule['due_amount'] + $emi_total  ;
