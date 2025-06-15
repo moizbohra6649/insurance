@@ -362,17 +362,6 @@ function convert_readable_date_db($date){
 	return $formattedDate; 
 }
 
-function convert_date($date){
-	$formattedDate = "";
-	if(!empty($date)){
-		// Create a DateTime object
-		$datetime = new DateTime($date);
-		$formattedDate = $datetime->format('m/d/Y');
-	}
-
-	return $formattedDate; 
-}
-
 function numberToOrdinal($number) {
     if (!is_numeric($number)) {
         return $number; // return original input if it's not a number
@@ -842,6 +831,20 @@ function addDollarIfNotNull($value): string
     } else {
         return ''; // Or you could return null, depending on desired behavior for null input
     }
+}
+
+function check_page_access($current_page) {
+
+    if($login_role == 'staff'){
+		$query = "SELECT 1 FROM user_page_permissions WHERE page_name = '$current_page' LIMIT 1";
+		$result = mysqli_query($conn, $query);
+
+		if (!$result || mysqli_num_rows($result) == 0) {
+			
+			header("Location: access-denied.php");
+			exit;
+		}
+	}
 }
 
 ?>

@@ -1,4 +1,8 @@
-<?php include('partial/header.php');?>
+<?php 
+/* Include PHP File */
+
+include('partial/header.php'); 
+include('partial/loader.php'); ?>
 
 <div class="page-wrapper compact-wrapper" id="pageWrapper">
     <!-- error-503 start-->
@@ -16,6 +20,8 @@
     </div>
     <!-- error-503 end-->
 </div>
-
-<?php include('partial/scripts.php'); ?>
-<?php include('partial/footer-end.php'); ?>
+<?php include('partial/scripts.php');
+   
+?>
+</body>
+</html>

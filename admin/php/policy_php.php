@@ -54,7 +54,7 @@ $net_total          = (isset($_REQUEST["net_total"])) ? $_REQUEST["net_total"] :
 $field_status = '';
 
 $policy_status          = (isset($_REQUEST["policy_status"])) ? $_REQUEST["policy_status"] : 'pending'; 
-
+$payment_success_check = 0 ;
 
 if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
     $data = [];
@@ -598,10 +598,12 @@ switch ($mode) {
             
             $created              = $get_data["created"];
             $local_mode           = "UPDATE";
-
-            if($policy_status == 'success'){
-                $field_status = 'disabled';
+            $payment_entrycheck = get_value('policy_payment' , 'count(*)' ,  "where policy_id = '$id'");
+            if($payment_entrycheck > 0 ){
+                $field_status = 'readonly';
             }
+
+            $payment_success_check = get_value('policy_payment' , 'count(*)' ,  "where policy_id = '$id' and payment_status = 'success' ");
            
 
         }
@@ -627,6 +629,12 @@ switch ($mode) {
             $error_arr[] = "Policy Does Not Exist.<br/>";
         }
 
+        $payment_entrycheck = get_value('policy_payment' , 'count(*)' ,  "where policy_id = '$id'");
+        $payment_success_check = get_value('policy_payment' , 'count(*)' ,  "where policy_id = '$id' and payment_status = 'success' ");
+        // echo $payment_entrycheck . ' tc '; 
+        // echo ' <br> '; 
+        // echo $payment_success_check . ' sc' ; 
+        // die;
         if(empty($vehicle)){
             $error_arr[] = "Select a Vehicle.<br/>";
         }
@@ -641,6 +649,9 @@ switch ($mode) {
         if(empty($calculation_data["base_premium"]) || empty($calculation_data["total_premium"])){
             $error_arr[] = "Policy are not being generated because the amount is zero.<br/>";
         }
+        if($login_role != 'super_admin' && $payment_success_check > 0 && $payment_entrycheck > 0){
+            $error_arr[] = "Cannot update policy because this is use in next process.<br/>";
+        }
         
         // Display errors if any
         if (!empty($error_arr)) {
@@ -654,11 +665,34 @@ switch ($mode) {
         $base_premium = $calculation_data["base_premium"];
         $additional_coverage_premium = $calculation_data["additional_coverage_premium"];
         $custom_discount = $calculation_data["custom_discount"];
-        $total_premium = $calculation_data["total_premium"];
+        $total_premium = $calculation_data["total_premium"] - $additional_discount ;
         $management_fee = $calculation_data["management_fee"];
         
         $charges = $management_fee + $service_price;
         $net_total = ($total_premium + $charges);
+
+        
+        if($login_role == 'superadmin' && $payment_success_check == '' && $payment_entrycheck > 0){
+            mysqli_query($conn, "DELETE FROM policy_payment WHERE policy_id = '$id'");
+            $pay_type = get_value('policy' , 'pay_type' ,  "where id = '$id'");
+            $effective_to = '';
+           
+
+            if($pay_type == 'one_time'){
+                $insert_query = mysqli_query($conn, "INSERT INTO policy_payment (policy_id, pay_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date) VALUES ('$id', '$pay_type', 'pending', '1', '$total_premium', '$charges', '$management_fee' ,  '$service_price' , '0', '$net_total', '$effective_to')");
+
+            }elseif ($pay_type == 'part_payment') {
+                
+                $convert_emi = $total_premium / 6 ;
+                for($i = 1 ; $i <= 6 ; $i++){
+                    $prim = round($convert_emi, 2);
+                    $fees = ($i == 1) ? $charges : $management_fee;
+                    $due_amt = $prim + $fees ; 
+                    $insert_query = mysqli_query($conn, "INSERT INTO policy_payment (policy_id, pay_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date) VALUES ('$id', '$pay_type', 'pending', '$i', '$prim', '$fees', '$management_fee' ,  '$service_price' , '0', '$due_amt', '$effective_to')");
+                }
+               
+            }
+        }
 
         $update_query = mysqli_query($conn, "
             UPDATE policy SET 
@@ -687,6 +721,7 @@ switch ($mode) {
                 base_premium = $base_premium,
                 additional_coverage_premium = $additional_coverage_premium,
                 custom_discount = $custom_discount,
+                additional_discount = $additional_discount,
                 total_premium = $total_premium,
                 management_fee = $management_fee,
                 net_total = $net_total
