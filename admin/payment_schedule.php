@@ -49,9 +49,9 @@ include('partial/loader.php'); ?>
                                         if($get_policy_schedule['due_date'] == '0000-00-00 00:00:00'){
                                             
                                             if($get_policy_schedule['pay_type'] == 'one_time'){
-                                                $policy_due_date = date('m/d/Y', strtotime($policy_effectivedate . "+6 months"));
+                                                $policy_due_date = date('m/d/Y', strtotime($policy_effectivedate));
                                             }else{
-                                                $date_calculate = 30 * $i;
+                                                $date_calculate = ($i - 1) * 30;
                                                 $policy_due_date = date('m/d/Y', strtotime($policy_effectivedate . "+{$date_calculate} days"));
                                             }
                                          

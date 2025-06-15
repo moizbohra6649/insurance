@@ -285,9 +285,17 @@ function calculateAge($birthDate) {
 function formatIds($id) {
     // Check if $id is an array
     if (is_array($id)) {
+        // Return 0 if array is empty
+        if (empty($id)) {
+            return 0;
+        }
         // Convert array to comma-separated string
         return implode(',', $id);
     } elseif (is_string($id)) {
+		// Return 0 if array is empty
+        if (empty($id)) {
+            return 0;
+        }
         // Return the string as-is
         return $id;
     } else {
@@ -295,6 +303,8 @@ function formatIds($id) {
         return 0;
     }
 }
+
+
 
 function convertToYMD($date) {
     // Convert from mm/dd/yyyy to yyyy-mm-dd

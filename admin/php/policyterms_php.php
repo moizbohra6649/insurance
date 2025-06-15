@@ -271,7 +271,7 @@ switch ($mode) {
 
                 if($payment_type == 'pay'){
 
-                    $from_days = 30 * ($i - 1);
+                    $from_days = ($i - 1) * 30;
                     $effective_from_date = date('Y-m-d', strtotime($currentDate . "+$from_days days"));
                     $effective_from_time = '00:01'; // 12:01 AM in 24-hour format
 
