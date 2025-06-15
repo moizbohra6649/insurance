@@ -10,6 +10,26 @@ if($is_customer_exits == false && $mode == 'NEW'){
 
 include('partial/header.php'); 
 include('partial/loader.php'); ?>
+<style>
+select[readonly],
+input[type="checkbox"][readonly],
+input[type="radio"][readonly] {
+  pointer-events: none;        /* Prevent interaction */
+  background-color: #f5f5f5;   /* Light grey to indicate read-only */
+  color: #555;                 /* Dim text slightly */
+  opacity: 1;                  /* Keep text readable */
+}
+
+select[readonly] {
+  border: 1px solid #ccc;
+}
+
+input[type="checkbox"][readonly] + lable, 
+input[type="radio"][readonly] + lable {
+  cursor: default;
+}
+
+</style>
 <!-- page-wrapper Start-->
 <div class="page-wrapper compact-wrapper" id="pageWrapper">
    <!-- Page Header Start-->
@@ -166,11 +186,11 @@ include('partial/loader.php'); ?>
                               <div class="col">
                                  <div class="mb-3 m-t-15 custom-radio-ml">
                                     <div class="radio-primary">
-                                       <input class="form-check-input vehUsed" type="radio" name="is_veh_used_business"  <?= ($is_veh_used_business == 1 ) ? 'checked' : '';  ?>  value="1">
+                                       <input class="form-check-input vehUsed" <?= $field_status ?> type="radio" name="is_veh_used_business"  <?= ($is_veh_used_business == 1 ) ? 'checked' : '';  ?>  value="1">
                                        <label class="form-check-label">Yes</label>
                                     </div>
                                     <div class="radio-primary">
-                                       <input class="form-check-input vehUsed" type="radio" name="is_veh_used_business" value="0" <?= ($is_veh_used_business == 0 ) ? 'checked' : '';  ?> >
+                                       <input class="form-check-input vehUsed" <?= $field_status ?> type="radio" name="is_veh_used_business" value="0" <?= ($is_veh_used_business == 0 ) ? 'checked' : '';  ?> >
                                        <label class="form-check-label">No</label>
                                     </div>
                                  </div>
@@ -480,7 +500,7 @@ include('partial/loader.php'); ?>
                               <div class="col-md-8 mb-3">
                                  Additional Discount	
                               </div>
-                              <div class="col-md-4 mb-3 <?= ($login_role == 'superadmin') ? 'additional_discount_container' : '' ?>">
+                              <div class="col-md-4 mb-3 <?= ($login_role == 'superadmin' && $payment_success_check == '') ? 'additional_discount_container' : '' ?>">
                                  <div class="txt_additional_discount">$<?=$additional_discount;?></div>
                               </div>
                            </div>

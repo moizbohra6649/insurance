@@ -25,6 +25,16 @@ $("#selectMultiDriver").easySelect({
     onItemSelected: handleSelectionDriver
 });
 
+<?php 
+
+if($field_status == 'readonly'){ ?>
+$('#selectMultiVehicle').closest('.easySelect')
+    .addClass('easyselect-disabled')
+    $('#selectMultiDriver').closest('.easySelect')
+    .addClass('easyselect-disabled')
+
+<?php  } ?>
+
 function coverageCheck (){
     var coverage_type = $("#coverage").val(); 
     if(coverage_type == 'liability' || coverage_type == 'full_coverage'){
@@ -180,25 +190,42 @@ if(additional_discount_container){
             inputElement_add.focus();
 
             inputElement_add.addEventListener('input', () => {
-            inputElement_add.value = inputElement_add.value.replace(/[^0-9.]/g, '');
-            const sanitizedValue = parseFloat(inputElement_add.value).toFixed(2);
-            $("#additional_discount").val(sanitizedValue);
-            //calculateNetTotal();
+                inputElement_add.value = inputElement_add.value.replace(/[^0-9.]/g, '');
+                const sanitizedValue = parseFloat(inputElement_add.value).toFixed(2);
+                $("#additional_discount").val(sanitizedValue);
+                var basePremium = parseFloat($('#base_premium').val()) || 0;
+                if (basePremium > 0) {
+                    var maxAllowed = basePremium * 0.5;
+                    
+                    if (sanitizedValue > maxAllowed) {
+                        alert('Additional discount cannot exceed 50% of base premium (' + maxAllowed + ')');
+                        $('#additional_discount').val('0.00'); // Clear invalid discount
+                        $('.txt_additional_discount').html('$0.00');
+                    }
+                }
+                calculateNetTotal();
             });
 
             inputElement_add.addEventListener('blur', () => {
-            const value = parseFloat(inputElement_add.value);
-            $("#additional_discount").val(isNaN(value) ? '0.00' : value.toFixed(2));
-            additional_discount_container.innerHTML = `<div class="txt_additional_discount">$${isNaN(value) ? '0.00' : value.toFixed(2)}</div>`;
-            txt_additional_discount = document.querySelector('.txt_additional_discount');
-            inputElement_add = null;
-            //calculateNetTotal();
+                const value = parseFloat($("#additional_discount").val());
+                $("#additional_discount").val(isNaN(value) ? '0.00' : value.toFixed(2));
+                additional_discount_container.innerHTML = `<div class="txt_additional_discount">$${isNaN(value) ? '0.00' : value.toFixed(2)}</div>`;
+                txt_additional_discount = document.querySelector('.txt_additional_discount');
+                inputElement_add = null;
+                calculateNetTotal();
             });
         }
     });
 }
 
 function calculateNetTotal() {
+  const base_premium = parseFloat($("#base_premium").val()) || 0; 
+  const additional_coverage_premium = parseFloat($("#additional_coverage_premium").val()) || 0;
+  const custom_discount = parseFloat($("#custom_discount").val()) || 0;
+  const additional_discount = parseFloat($("#additional_discount").val()) || 0;
+  const total_premium = parseFloat((base_premium + additional_coverage_premium) - (custom_discount + additional_discount)) || 0;
+  $("#total_premium").val(total_premium)
+  $('.txt_total_premium').html('$'+total_premium);
   const premium = parseFloat($("#total_premium").val()) || 0;
   const managementFee = parseFloat($("#management_fee").val()) || 0;
   const serviceCharge = parseFloat($("#service_price").val()) || 0;
@@ -280,9 +307,6 @@ $('#policy_form').on('submit', (function(e) {
     if($("#coverage").val() == "" ){
         error_arr.push("Please select coverage type.<br/>");
     }
-
-    //Add Validation for Vehicle and Other's
-
     // if($("#coverage_collision").val() == ""){
     //     error_arr.push("Please select Copresnsive / Collision.<br/>");
     // }  
@@ -316,12 +340,6 @@ $('#policy_form').on('submit', (function(e) {
     }
 
     var formData = new FormData(this);
-
-    var vehicle = $("#selectMultiVehicle").val();
-    var driver = $('#selectMultiDriver').val();
-
-    formData.append('vehicle', vehicle);
-    formData.append('driver', driver);
     formData.append('form_request', 'true');
     $.ajax({
         type: 'POST',
@@ -344,14 +362,8 @@ $('#policy_form').on('submit', (function(e) {
                 var url = `policyterms.php?policy_id=${data.policy_id}`;
                 location.replace(`<?=$actual_link?>${url}`);
             }else if(data.status == "success" && data.mode == 'UPDATE'){
-                
-                if('<?=$login_role?>' == "agent"){
-                    var url = `policyterms.php?policy_id=${data.policy_id}`;
-                    location.replace(`<?=$actual_link?>${url}`);
-                }else{
-                    var url = `policy_list.php?customer_id=${data.encoded_customer_id}`;
-                    move(`<?=$actual_link?>${url}`);
-                }
+                var url = `policyterms.php?policy_id=${data.policy_id}`;
+                location.replace(`<?=$actual_link?>${url}`);
             }
             else{
                 $("#submit_btn").html('Submit');

@@ -251,3 +251,7 @@ li.no_results {
      font-size: 12px!important;
     font-weight: 600
 }
+.easyselect-disabled{
+    pointer-events: none;
+    opacity: 0.6;
+}
