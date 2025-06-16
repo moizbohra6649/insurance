@@ -108,10 +108,10 @@ switch ($mode) {
         if($get_policy_detail){
             $policy_pay_type = $get_policy_detail['pay_type']; 
             $policy_installment = $get_policy_detail['policy_installment'];
-            $policy_premium  = $get_policy_detail['premium'] ;
-            $policy_management_fee  =  $get_policy_detail['management_fee'];
-            $policy_service_price  =  $get_policy_detail['service_price'];
-            $due_date  =  $get_policy_detail['due_date'];
+            $policy_premium = $get_policy_detail['premium'] ;
+            $policy_management_fee = $get_policy_detail['management_fee'];
+            $policy_service_price = $get_policy_detail['service_price'];
+            $due_date =  $get_policy_detail['due_date'];
 
             $amount_deduct = $policy_premium  + $policy_management_fee;
 
@@ -178,9 +178,11 @@ switch ($mode) {
                 ) VALUES (
                     $login_id, 'Policy Service Charge Return', 'credit', $policy_service_price, $policy_id 
                 )");
+            }else{
+                $policy_service_price = 0;
             }
 
-            $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct WHERE id = $login_id");
+            $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct, total_earning = total_earning + $policy_service_price WHERE id = $login_id");
 
             // Update earning in super admin 
             $update_query = mysqli_query($conn, "UPDATE users SET earning = earning + $policy_management_fee WHERE id = $super_admin_id and role = '$super_admin_role'");
