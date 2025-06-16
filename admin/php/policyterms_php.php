@@ -184,26 +184,28 @@ switch ($mode) {
             $effective_from = "0000-00-00 00:00:00";
             $effective_to = "0000-00-00 00:00:00";
 
+            $effective_from_date = $currentDate;
+            $effective_from_time = '00:01'; // 12:01 AM in 24-hour format
+
+            $effective_from_datetime = new DateTime("$effective_from_date $effective_from_time");
+            $get_effective_from = $effective_from_datetime->format('Y-m-d H:i');
+
+            $effective_to_date = date('Y-m-d', strtotime($currentDate . '+6 months'));
+            $effective_to_time = '23:59'; // 11:59 PM in 24-hour format
+
+            $effective_to_datetime = new DateTime("$effective_to_date $effective_to_time");
+            $get_effective_to = $effective_to_datetime->format('Y-m-d H:i');
+
             if($payment_type == 'pay'){ 
-                $effective_from_date = $currentDate;
-                $effective_from_time = '00:01'; // 12:01 AM in 24-hour format
-
-                $effective_from_datetime = new DateTime("$effective_from_date $effective_from_time");
-                $effective_from = $effective_from_datetime->format('Y-m-d H:i');
-
-                $effective_to_date = date('Y-m-d', strtotime($currentDate . '+6 months'));
-                $effective_to_time = '23:59'; // 11:59 PM in 24-hour format
-
-                $effective_to_datetime = new DateTime("$effective_to_date $effective_to_time");
-                $effective_to = $effective_to_datetime->format('Y-m-d H:i');
-
+                $effective_from = $get_effective_from;
+                $effective_to = $get_effective_to;
                 $policy_status = 'success';  
                 $policy_payment_status = 'success';  
                 $int_policy_status = 1; 
             }
 
             //policy payment 
-            $insert_query = mysqli_query($conn, "INSERT INTO policy_payment (policy_id, pay_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date) VALUES ('$policy_id', '$pay_type', '$policy_payment_status', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$management_fee', '$service_price', '$policy_roadside', '$net_total', '$effective_from')");
+            $insert_query = mysqli_query($conn, "INSERT INTO policy_payment (policy_id, pay_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date) VALUES ('$policy_id', '$pay_type', '$policy_payment_status', '$policy_installment', '$policy_premium', '$policy_billing_fee', '$management_fee', '$service_price', '$policy_roadside', '$net_total', '$get_effective_from')");
 
             //Policy table update
             $update_policy = mysqli_query($conn, "UPDATE policy SET pay_type = '$pay_type', status = $int_policy_status, policy_status = '$policy_status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$effective_to', updated = now() WHERE id = $policy_id");
@@ -262,42 +264,41 @@ switch ($mode) {
                 $policy_management_fee = (isset($_REQUEST[$policy_management_fee])) ? $_REQUEST[$policy_management_fee] : 0 ;
 
                 
-
                 $policy_status = 'process';  
                 $policy_payment_status = 'pending';  
                 $int_policy_status = 2; 
                 $effective_from = "0000-00-00 00:00:00";
                 $effective_to = "0000-00-00 00:00:00";
 
-                if($payment_type == 'pay'){
+                $from_days = ($i - 1) * 30;
+                $effective_from_date = date('Y-m-d', strtotime($currentDate . "+$from_days days"));
+                $effective_from_time = '00:01'; // 12:01 AM in 24-hour format
 
-                    $from_days = ($i - 1) * 30;
-                    $effective_from_date = date('Y-m-d', strtotime($currentDate . "+$from_days days"));
-                    $effective_from_time = '00:01'; // 12:01 AM in 24-hour format
+                $effective_from_datetime = new DateTime("$effective_from_date $effective_from_time");
+                $get_effective_from = $effective_from_datetime->format('Y-m-d H:i');
 
-                    $effective_from_datetime = new DateTime("$effective_from_date $effective_from_time");
-                    $effective_from = $effective_from_datetime->format('Y-m-d H:i');
+                $to_days = 30 * $i;
 
-                    $to_days = 30 * $i;
+                $effective_to_date = date('Y-m-d', strtotime($currentDate . "+$to_days days"));
+                $effective_to_time = '23:59'; // 11:59 PM in 24-hour format
 
-                    $effective_to_date = date('Y-m-d', strtotime($currentDate . "+$to_days days"));
-                    $effective_to_time = '23:59'; // 11:59 PM in 24-hour format
+                $effective_to_datetime = new DateTime("$effective_to_date $effective_to_time");
+                $get_effective_to = $effective_to_datetime->format('Y-m-d H:i');
 
-                    $effective_to_datetime = new DateTime("$effective_to_date $effective_to_time");
-                    $effective_to = $effective_to_datetime->format('Y-m-d H:i');
+                if($i == 1){
 
-                    if($i == 1){
+                    if($payment_type == 'pay'){
+                        $effective_from = $get_effective_from;
+                        $effective_to = $get_effective_to;
                         $policy_status = 'success';  
                         $policy_payment_status = 'success';  
                         $int_policy_status = 1; 
                     }
-                }
-                
-                if($i == 1){
                     
                     //Policy table update
                     $update_policy = mysqli_query($conn, "UPDATE policy SET pay_type = '$pay_type', status = $int_policy_status, policy_status = '$policy_status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$effective_to', updated = now() WHERE id = $policy_id");
 
+                    //If Pay
                     if($payment_type == 'pay'){
                         $amount_deduct = $policy_premium  + $management_fee ;
 
@@ -336,7 +337,7 @@ switch ($mode) {
                 $insert_query = mysqli_query($conn, "INSERT INTO policy_payment 
                     (policy_id, pay_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date)
                     VALUES 
-                    ('$policy_id', '$pay_type', '$policy_payment_status', '$i', '$policy_premium', '$policy_billing_fee', '$management_fee',  '$service_price', '$policy_roadside', '$policy_due_amt', '$effective_from')
+                    ('$policy_id', '$pay_type', '$policy_payment_status', '$i', '$policy_premium', '$policy_billing_fee', '$management_fee',  '$service_price', '$policy_roadside', '$policy_due_amt', '$get_effective_from')
                 ");
             }
         }

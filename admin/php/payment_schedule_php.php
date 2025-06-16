@@ -67,6 +67,7 @@ switch ($mode) {
       
         $select_policy = mysqli_query($conn, "SELECT * FROM policy WHERE id  = '$policy_id' " );
         $policy_payment = mysqli_query($conn, "SELECT * FROM policy_payment WHERE id  = '$schedule_payment' " );
+
         if($schedule_payment <= 0){
             $error_arr[] = 'No Checkbox Checked.';
         }
@@ -114,8 +115,7 @@ switch ($mode) {
 
             $amount_deduct = $policy_premium  + $policy_management_fee;
 
-
-            $effective_from_date = $currentDate;
+            $effective_from_date = date('Y-m-d', strtotime($due_date));
             $effective_from_time = '00:01'; // 12:01 AM in 24-hour format
 
             $effective_from_datetime = new DateTime("$effective_from_date $effective_from_time");
@@ -134,11 +134,17 @@ switch ($mode) {
                 //Policy table update
                 $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = '$status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$effective_to', updated = now() WHERE id = $policy_id");
 
-                 //policy payment 
-                 $update_query = mysqli_query($conn, "UPDATE policy_payment SET payment_status = '$status', due_date = '$effective_to', updated = now() WHERE id = '$schedule_payment'");
+                //policy payment 
+                $update_query = mysqli_query($conn, "UPDATE policy_payment SET payment_status = '$status', updated = now() WHERE id = '$schedule_payment'");
                 
-
             }else{
+
+                $effective_from_date = date('Y-m-d', strtotime($due_date));
+                $effective_from_time = '00:01'; // 12:01 AM in 24-hour format
+
+                $effective_from_datetime = new DateTime("$effective_from_date $effective_from_time");
+                $effective_from = $effective_from_datetime->format('Y-m-d H:i');
+
                 $days = 30;
                 $effective_to_date = date('Y-m-d', strtotime($due_date . "+$days days"));
                 $effective_to_time = '23:59'; // 11:59 PM in 24-hour format
@@ -146,11 +152,16 @@ switch ($mode) {
                 $effective_to_datetime = new DateTime("$effective_to_date $effective_to_time");
                 $effective_to = $effective_to_datetime->format('Y-m-d H:i');
 
-                //Policy table update
-                $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = '$status', effective_to = '$effective_to', policy_due_date = '$effective_to', updated = now() WHERE id = $policy_id");
+                if($policy_installment == 1){
+                    //Policy table update
+                    $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = '$status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$effective_to', updated = now() WHERE id = $policy_id");
+                }else{
+                    //Policy table update
+                    $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = '$status', effective_to = '$effective_to', policy_due_date = '$effective_to', updated = now() WHERE id = $policy_id");
+                }
 
-                 //policy payment 
-                 $update_query = mysqli_query($conn, "UPDATE policy_payment SET payment_status = '$status', updated = now() WHERE id = '$schedule_payment'");
+                //policy payment 
+                $update_query = mysqli_query($conn, "UPDATE policy_payment SET payment_status = '$status', updated = now() WHERE id = '$schedule_payment'");
             }
 
             $insert_query = mysqli_query($conn, "INSERT INTO transaction_history ( agent_id, transaction_type, payment_type, transaction_amount,agent_policy_id) VALUES ($login_id, 'Policy Payment', 'debit', $amount_deduct, $policy_id)");
@@ -168,7 +179,6 @@ switch ($mode) {
                     $login_id, 'Policy Service Charge Return', 'credit', $policy_service_price, $policy_id 
                 )");
             }
-
 
             $update_query = mysqli_query($conn, "UPDATE agent SET wallet_amount = wallet_amount - $amount_deduct WHERE id = $login_id");
 
