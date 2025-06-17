@@ -31,7 +31,7 @@ include('partial/loader.php'); ?>
                                 <div class="row align-items-center justify-content-center">
                                     <div class="col-sm-12 col-auto">
                                         <div class="text-sm-end">
-                                        <?php if($is_customer_exits != false && $login_role != 'superadmin'){ ?>
+                                        <?php if($is_customer_exits != false && $login_role != $super_admin_role){ ?>
                                             <a href="<?=$actual_link?>policy.php?customer_id=<?=base64_encode($customer_id);?>" class="btn btn-primary mb-2"><i class="icofont icofont-plus"></i> Add New Policy</a>
                                             <?php } ?> 
                                         </div>
@@ -100,7 +100,7 @@ include('partial/loader.php'); ?>
                                                         <?php } ?>
 
                                                         <a href="<?=$actual_link?>policy.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
-                                                        <?php if($login_role == "superadmin" && $get_data["policy_status"] != "success"){ // && $policy_payment_count == 0 ?>
+                                                        <?php if($login_role == $super_admin_role && $get_data["policy_status"] != "success"){ // && $policy_payment_count == 0 ?>
                                                         <a href="<?=$actual_link?>policy.php?id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
                                                         <?php } ?>
                                                         <!-- <a href="javascript:void(0);" class="action-icon  m-2"> <i class="mdi mdi-delete"></i></a> -->

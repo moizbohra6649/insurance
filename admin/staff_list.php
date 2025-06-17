@@ -145,7 +145,7 @@ include('partial/loader.php'); ?>
                                                         <!-- <a href="javascript:void(0);" class="action-icon m-2"> <i class="mdi mdi-delete"></i></a> -->
                                                     </td>
                                                     <td align="center">
-                                                        <?php if($get_data["role"] != 'superadmin'){ ?>
+                                                        <?php if($get_data["role"] != $super_admin_role){ ?>
                                                         <a href="<?=$actual_link?>role.php?id=<?=base64_encode($id)?>" target="_blank" class="btn btn-outline-primary">Role</a>
                                                         <?php } ?>
                                                     </td>

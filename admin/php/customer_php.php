@@ -79,7 +79,7 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
 }
 
 if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
-    if($login_role != "superadmin"){
+    if($login_role != $super_admin_role){
         $filter_qry .= " AND agent_id = '$login_id' ";
     }
 

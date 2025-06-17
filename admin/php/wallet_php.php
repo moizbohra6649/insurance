@@ -14,7 +14,7 @@ $mode       = (isset($_REQUEST["mode"])) ? $_REQUEST["mode"] : "NEW";
 $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] : "false";
 $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
 
-if($login_role == 'superadmin'){
+if($login_role == $super_admin_role){
     $user_id         = (isset($_REQUEST["user_id"]) && !empty($_REQUEST["user_id"])) ? base64_decode($_REQUEST["user_id"]) : 0;
 }else{
     $user_id         = $login_id ;

@@ -82,6 +82,8 @@ $pdf_page = "pdf";
 $dashboard = "index.php";
 
 $super_admin_role = "superadmin";
+$admin_role = "admi";
+$staff_role = "staff";
 $super_admin_id = "1";
 $agent_role = "agent";
 
@@ -216,7 +218,7 @@ $permission_data = [];
 
 if(isset($_SESSION["session"])){
 	$login_id = $_SESSION["session"]["id"];
-	$admin_level_role = array('superadmin', 'admin', 'staff');
+	$admin_level_role = array($super_admin_role, 'admin', 'staff');
 	$agent_vendor_role = array('agent', 'vendor');
 	if(in_array($_SESSION["session"]["role"], $admin_level_role)){
 		$select_user = mysqli_query($conn, "SELECT users.*, CONCAT(users.first_name, ' ', users.last_name) AS full_name FROM users WHERE id = '$login_id' ");

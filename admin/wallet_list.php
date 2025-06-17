@@ -35,7 +35,7 @@ include('partial/loader.php'); ?>
                                     </div>
                                     <div class="col-sm-6 col-auto">
                                         <div class="text-sm-end">
-                                            <?php if($login_role == 'superadmin'){ ?>
+                                            <?php if($login_role == $super_admin_role){ ?>
                                             <a href="<?=$actual_link?>wallet_deposit.php?user_id=<?= base64_encode($user_id) ?>" class="btn btn-primary mb-2"><i class="icofont icofont-plus"></i> Add Wallet Balance</a>
                                             <?php } ?>
                                         </div>

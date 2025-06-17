@@ -647,7 +647,7 @@ switch ($mode) {
         $payment_entrycheck = get_value('policy_payment' , 'count(*)' ,  "where policy_id = '$id'");
         $payment_success_check = get_value('policy_payment' , 'count(*)' ,  "where policy_id = '$id' and payment_status = 'success' ");
 
-        if($login_role != 'super_admin' && $payment_success_check > 0 && $payment_entrycheck > 0){
+        if($login_role != $super_admin_role && $payment_success_check > 0 && $payment_entrycheck > 0){
             $error_arr[] = "Cannot update policy because this is use in next process.<br/>";
         }
         
@@ -741,7 +741,7 @@ switch ($mode) {
                 }
 
                 //Update policy payment if payment is pending
-                if($login_role == 'superadmin' && $payment_success_check == '' && $payment_entrycheck > 0){
+                if($login_role == $super_admin_role && $payment_success_check == '' && $payment_entrycheck > 0){
 
                     $select_policy_payment = mysqli_query($conn, "SELECT * FROM policy_payment WHERE policy_id = '$id' AND payment_status = 'pending'");
                     $entry_count = mysqli_num_rows($select_policy_payment);

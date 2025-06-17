@@ -500,7 +500,7 @@ input[type="radio"][readonly] + lable {
                               <div class="col-md-8 mb-3">
                                  Additional Discount	
                               </div>
-                              <div class="col-md-4 mb-3 <?= ($login_role == 'superadmin' && $payment_success_check == '') ? 'additional_discount_container' : '' ?>">
+                              <div class="col-md-4 mb-3 <?= ($login_role == $super_admin_role && $payment_success_check == '') ? 'additional_discount_container' : '' ?>">
                                  <div class="txt_additional_discount">$<?=$additional_discount;?></div>
                               </div>
                            </div>
