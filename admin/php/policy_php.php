@@ -665,36 +665,7 @@ switch ($mode) {
         $custom_discount = $calculation_data["custom_discount"];
         $total_premium = $calculation_data["total_premium"] - $additional_discount;
         $management_fee = $calculation_data["management_fee"];
-        
-        $charges = $management_fee + $service_price;
-        $net_total = ($total_premium + $charges);
-
-        
-        if($login_role == 'superadmin' && $payment_success_check == '' && $payment_entrycheck > 0){
-            mysqli_query($conn, "DELETE FROM policy_payment WHERE policy_id = '$id'");
-            $pay_type = get_value('policy' , 'pay_type' ,  "where id = '$id'");
-            
-            $policy_payment_status = 'pending';
-            $effective_from = "0000-00-00 00:00:00";
-            $effective_to = "0000-00-00 00:00:00";
-           
-
-            if($pay_type == 'one_time'){
-                $insert_query = mysqli_query($conn, "INSERT INTO policy_payment (policy_id, pay_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date) VALUES ('$id', '$pay_type', '$policy_payment_status', '1', '$total_premium', '$charges', '$management_fee', '$service_price', '0', '$net_total', '$effective_from')");
-
-            }elseif ($pay_type == 'part_payment') {
-                
-                $emi_count = 6;
-                $policy_premium = $total_premium  / $emi_count;
-                $policy_premium = round($policy_premium, 2);
-                for($i = 1 ; $i <= $emi_count ; $i++){
-                    $fees = ($i == 1) ? $charges : $management_fee;
-                    $due_amt = $premium + $fees; 
-                    $insert_query = mysqli_query($conn, "INSERT INTO policy_payment (policy_id, pay_type, payment_status, policy_installment, premium, billing_fee, management_fee, service_price, roadside_assistance, due_amount, due_date) VALUES ('$id', '$pay_type', '$policy_payment_status', '$i', '$policy_premium', '$fees', '$management_fee', '$service_price' , '0', '$due_amt', '$effective_from')");
-                }
-               
-            }
-        }
+        $net_total = ($total_premium + $management_fee + $service_price);
 
         $update_query = mysqli_query($conn, "
             UPDATE policy SET 
@@ -726,7 +697,8 @@ switch ($mode) {
                 additional_discount = $additional_discount,
                 total_premium = $total_premium,
                 management_fee = $management_fee,
-                net_total = $net_total
+                net_total = $net_total,
+                updated = NOW()
             WHERE id = '$id'
             ");
 
@@ -764,6 +736,39 @@ switch ($mode) {
                     foreach ($driver as $key => $drivervalue) {
                         if($drivervalue > 0){
                             $insert_query = mysqli_query($conn, "INSERT INTO policy_driver (policy_id , driver_id) VALUES ('$id', '$drivervalue')");
+                        }
+                    }
+                }
+
+                //Update policy payment if payment is pending
+                if($login_role == 'superadmin' && $payment_success_check == '' && $payment_entrycheck > 0){
+
+                    $select_policy_payment = mysqli_query($conn, "SELECT * FROM policy_payment WHERE policy_id = '$id' AND payment_status = 'pending'");
+                    $entry_count = mysqli_num_rows($select_policy_payment);
+
+                    $total_premium = $total_premium / $entry_count;
+                    $total_premium = round($total_premium, 2);
+                    if($entry_count > 0 && ($entry_count == 1 || $entry_count == 6)){
+                        $i = 1;
+                        while($get_policy_payment = mysqli_fetch_assoc($select_policy_payment)){
+
+                            if($i == 1){
+                                $charges = $management_fee + $service_price;
+                            }else{
+                                $charges = $management_fee;
+                                $service_price = 0;
+                            }
+
+                            $net_total = ($total_premium + $charges);
+
+                            mysqli_query($conn, "UPDATE policy_payment SET 
+                                premium = '$total_premium',
+                                billing_fee = '$charges',
+                                management_fee = '$management_fee',
+                                service_price = '$service_price',
+                                due_amount = '$net_total'
+                            WHERE policy_id = '$id'");
+                            $i++;
                         }
                     }
                 }
