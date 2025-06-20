@@ -1,7 +1,7 @@
 <?php 
 /* Include PHP File */
-if (file_exists(dirname(__FILE__) . '/php/management_charges_php.php')) {
-    require_once(dirname(__FILE__) . '/php/management_charges_php.php');
+if (file_exists(dirname(__FILE__) . '/php/management_fee_php.php')) {
+    require_once(dirname(__FILE__) . '/php/management_fee_php.php');
 }
 
 include('partial/header.php'); 
@@ -51,8 +51,8 @@ include('partial/loader.php'); ?>
 <?php include('partial/footer.php'); ?>
 <?php include('partial/scripts.php');
     /* Include JS File */
-    if (file_exists(dirname(__FILE__) . '/js/management_charges_js.php')) {
-        require_once(dirname(__FILE__) . '/js/management_charges_js.php');
+    if (file_exists(dirname(__FILE__) . '/js/management_fee_js.php')) {
+        require_once(dirname(__FILE__) . '/js/management_fee_js.php');
     }
     ?>
 </body>

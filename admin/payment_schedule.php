@@ -49,14 +49,14 @@ include('partial/loader.php'); ?>
                                         if($get_policy_schedule['due_date'] == '0000-00-00 00:00:00'){
                                             
                                             if($get_policy_schedule['pay_type'] == 'one_time'){
-                                                $policy_due_date = date('m/d/Y', strtotime($policy_effectivedate));
+                                                $due_date = date('m/d/Y', strtotime($policy_effectivedate));
                                             }else{
                                                 $date_calculate = ($i - 1) * 30;
-                                                $policy_due_date = date('m/d/Y', strtotime($policy_effectivedate . "+{$date_calculate} days"));
+                                                $due_date = date('m/d/Y', strtotime($policy_effectivedate . "+{$date_calculate} days"));
                                             }
                                          
                                         }else{
-                                            $policy_due_date = date('m/d/Y', strtotime($get_policy_schedule['due_date'])) ; 
+                                            $due_date = date('m/d/Y', strtotime($get_policy_schedule['due_date'])) ; 
                                         }
                                         $i++;
                                         ?>
@@ -72,7 +72,7 @@ include('partial/loader.php'); ?>
                                                     <input type="hidden" id="policy_service_price" name="policy_service_price"  value="<?= $get_policy_schedule['service_price'] ?>">
                                                     <input type="hidden" id="policy_roadside" name="policy_roadside"  value="<?= $get_policy_schedule['roadside_assistance'] ?>">
                                                     <input type="hidden" id="policy_due_amt" name="policy_due_amt"  value="<?= $get_policy_schedule['due_amount'];?>">
-                                                    <input type="hidden" id="policy_due_date" name="policy_due_date"  value="<?= $policy_due_date; ?>">
+                                                    <input type="hidden" id="due_date" name="due_date"  value="<?= $due_date; ?>">
                                                  <?php   
                                                  $checkbox_show = 1 ;
                                                 }else if($get_policy_schedule['payment_status'] == 'success'){
@@ -99,7 +99,7 @@ include('partial/loader.php'); ?>
                                                 Due: <span class="f-w-600">$<?= $get_policy_schedule['due_amount']  ; ?></span>
                                             </div> 
                                             <div class="col-md-2 mb-3">
-                                                Due Date: <span class="f-w-600"><?php echo $policy_due_date; ?> </span>
+                                                Due Date: <span class="f-w-600"><?php echo $due_date; ?> </span>
                                             </div> 
                                     </div> 
                                     <?php 

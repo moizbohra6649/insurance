@@ -378,7 +378,7 @@ function get_policy_card_pdf($policy_data, $get_vehicle, $logoPath){
                                                             <div class="col-50">
                                                             <p style="margin: 0;font-size: 11px;"> <strong> Policy No: </strong>'.$policy_data['prefix_policy_id'].'  </p>
                                                                <p style="margin:0;font-size: 12px;"> <strong>Effective Date :  </strong> '.convert_date($policy_data['effective_from']).'</p>
-                                                            <p style="margin:0;font-size: 12px;"> <strong>Expiration Date: </strong> '.convert_date($policy_data['effective_to']).'</p>
+                                                            <p style="margin:0;font-size: 12px;"> <strong>Expiration Date: </strong> '.convert_date($policy_data['policy_due_date']).'</p>
                                                             </div>
                                                           </div>
 

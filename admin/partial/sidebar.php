@@ -247,7 +247,7 @@
             <li><a href="service_charges.php">Service Charges</a></li>
             <?php } 
              if($login_role == $super_admin_role){ ?>
-            <li><a href="management_charges.php">Management Charges</a></li>
+            <li><a href="management_fee.php">Management Fee</a></li>
             <?php } ?> 
           </ul>
         </li>          

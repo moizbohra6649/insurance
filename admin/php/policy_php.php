@@ -743,7 +743,7 @@ switch ($mode) {
                 //Update policy payment if payment is pending
                 if($login_role == $super_admin_role && $payment_success_check == '' && $payment_entrycheck > 0){
 
-                    $select_policy_payment = mysqli_query($conn, "SELECT * FROM policy_payment WHERE policy_id = '$id' AND payment_status = 'pending' ORDER BY id DESC");
+                    $select_policy_payment = mysqli_query($conn, "SELECT * FROM policy_payment WHERE policy_id = '$id' AND payment_status = 'pending' ORDER BY id ASC");
                     $entry_count = mysqli_num_rows($select_policy_payment);
 
                     $total_premium = $total_premium / $entry_count;

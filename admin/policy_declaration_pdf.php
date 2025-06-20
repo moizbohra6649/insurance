@@ -478,7 +478,7 @@ function get_policy_declaration_pdf($policy_data, $result_driver, $result_vehicl
                      <div class = "invoice-head-top-right text-end">
                         <p  style="font-size:15px;"> <strong>Policy Number: </strong>'.$policy_data["prefix_policy_id"].'</p>
                         <p  style="font-size:15px;"><strong>Policy Period: </strong>'.convertDatetimeFormat($policy_data["effective_from"]).'</p>
-                        <p  style="font-size:15px;"> to '.convertDatetimeFormat($policy_data["effective_to"]).'</p>
+                        <p  style="font-size:15px;"> to '.convertDatetimeFormat($policy_data["policy_due_date"]).'</p>
                         <p  style="font-size:12px;padding-top: 3px;">standard time at principal garaging address as shown </p>
                      </div>
                   </div>

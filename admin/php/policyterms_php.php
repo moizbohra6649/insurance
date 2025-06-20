@@ -23,7 +23,7 @@ $policy_premium             = (isset($_REQUEST["policy_premium"])) ? $_REQUEST["
 $policy_roadside             = (isset($_REQUEST["policy_roadside"])) ? $_REQUEST["policy_roadside"] : 0;
 $policy_billing_fee             = (isset($_REQUEST["policy_billing_fee"])) ? $_REQUEST["policy_billing_fee"] : 0;
 $policy_due_amt             = (isset($_REQUEST["policy_due_amt"])) ? $_REQUEST["policy_due_amt"] : 0;
-$policy_due_date             = (isset($_REQUEST["policy_due_date"])) ? convert_readable_date_db($_REQUEST["policy_due_date"]) : '0000-00-00' ;
+$due_date             = (isset($_REQUEST["due_date"])) ? convert_readable_date_db($_REQUEST["due_date"]) : '0000-00-00' ;
 $policy_management_fee             = (isset($_REQUEST["policy_management_fee"])) ? $_REQUEST["policy_management_fee"] : 0;
 $policy_service_price      = (isset($_REQUEST["policy_service_price"])) ? $_REQUEST["policy_service_price"] : 0 ;
 $payment_type      = (isset($_REQUEST["payment_type"])) ? $_REQUEST["payment_type"] : '' ;
@@ -156,9 +156,6 @@ switch ($mode) {
                 }
             }
         }
-        if($policy_due_date == "0000-00-00"){
-            $error_arr[] = 'Error on policy due date. please try again later.';
-        }
        
         // Display errors if any
         if (!empty($error_arr)) {
@@ -190,7 +187,8 @@ switch ($mode) {
             $effective_from_datetime = new DateTime("$effective_from_date $effective_from_time");
             $get_effective_from = $effective_from_datetime->format('Y-m-d H:i');
 
-            $effective_to_date = date('Y-m-d', strtotime($currentDate . '+6 months'));
+            $days = 30 * 6;
+            $effective_to_date = date('Y-m-d', strtotime($currentDate . "+$days days"));
             $effective_to_time = '23:59'; // 11:59 PM in 24-hour format
 
             $effective_to_datetime = new DateTime("$effective_to_date $effective_to_time");
@@ -245,30 +243,15 @@ switch ($mode) {
             $policy_premium = round($policy_premium, 2);
 
             for($i = 1 ; $i <= $emi_count ; $i++){
-                $installment_key = "policy_installment" . $i;
-                $premium_key = "policy_premium" . $i;
                 $roadside_key = "policy_roadside" . $i;
-                $billing_fee_key = "policy_billing_fee" . $i;
-                $due_amt_key = "policy_due_amt" . $i;
-                $due_date_key = "policy_due_date" . $i;
-                $policy_service_price = "policy_service_price" . $i;
-                $policy_management_fee = "policy_management_fee" . $i;
-        
-                $policy_installment = isset($_REQUEST[$installment_key]) ? $_REQUEST[$installment_key] : 1;
-                $policy_premium = isset($_REQUEST[$premium_key]) ? $_REQUEST[$premium_key] : 0;
                 $policy_roadside = isset($_REQUEST[$roadside_key]) ? $_REQUEST[$roadside_key] : 0;
-                $policy_billing_fee = isset($_REQUEST[$billing_fee_key]) ? $_REQUEST[$billing_fee_key] : 0;
-                $policy_due_amt = isset($_REQUEST[$due_amt_key]) ? $_REQUEST[$due_amt_key] : 0;
-                $policy_due_date = isset($_REQUEST[$due_date_key]) ? convert_readable_date_db($_REQUEST[$due_date_key]) : '0000-00-00';
-                $policy_service_price = (isset($_REQUEST[$policy_service_price])) ? $_REQUEST[$policy_service_price] : 0;
-                $policy_management_fee = (isset($_REQUEST[$policy_management_fee])) ? $_REQUEST[$policy_management_fee] : 0 ;
-
                 
                 $policy_status = 'process';  
                 $policy_payment_status = 'pending';  
                 $int_policy_status = 2; 
                 $effective_from = "0000-00-00 00:00:00";
                 $effective_to = "0000-00-00 00:00:00";
+                $policy_due_date = "0000-00-00 00:00:00";
 
                 $from_days = ($i - 1) * 30;
                 $effective_from_date = date('Y-m-d', strtotime($currentDate . "+$from_days days"));
@@ -285,18 +268,27 @@ switch ($mode) {
                 $effective_to_datetime = new DateTime("$effective_to_date $effective_to_time");
                 $get_effective_to = $effective_to_datetime->format('Y-m-d H:i');
 
+                //Policy Due Date
+                $days = 30 * 6;
+                $var_policy_due_date = date('Y-m-d', strtotime($currentDate . "+$days days"));
+                $var_policy_due_time = '23:59'; // 11:59 PM in 24-hour format
+
+                $var_policy_due_datetime = new DateTime("$var_policy_due_date $var_policy_due_time");
+                $get_policy_due = $var_policy_due_datetime->format('Y-m-d H:i');
+
                 if($i == 1){
 
                     if($payment_type == 'pay'){
                         $effective_from = $get_effective_from;
                         $effective_to = $get_effective_to;
+                        $policy_due_date = $get_policy_due;
                         $policy_status = 'success';  
                         $policy_payment_status = 'success';  
                         $int_policy_status = 1; 
                     }
                     
                     //Policy table update
-                    $update_policy = mysqli_query($conn, "UPDATE policy SET pay_type = '$pay_type', status = $int_policy_status, policy_status = '$policy_status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$effective_to', updated = now() WHERE id = $policy_id");
+                    $update_policy = mysqli_query($conn, "UPDATE policy SET pay_type = '$pay_type', status = $int_policy_status, policy_status = '$policy_status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$policy_due_date', updated = now() WHERE id = $policy_id");
 
                     //If Pay
                     if($payment_type == 'pay'){

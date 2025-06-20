@@ -19,12 +19,10 @@ $policy_premium             = (isset($_REQUEST["policy_premium"])) ? $_REQUEST["
 $policy_roadside             = (isset($_REQUEST["policy_roadside"])) ? $_REQUEST["policy_roadside"] : 0;
 $policy_billing_fee             = (isset($_REQUEST["policy_billing_fee"])) ? $_REQUEST["policy_billing_fee"] : 0;
 $policy_due_amt             = (isset($_REQUEST["policy_due_amt"])) ? $_REQUEST["policy_due_amt"] : 0;
-$policy_due_date             = (isset($_REQUEST["policy_due_date"])) ? convert_readable_date_db($_REQUEST["policy_due_date"]) : '0000:00:00' ;
+$due_date             = (isset($_REQUEST["due_date"])) ? convert_readable_date_db($_REQUEST["due_date"]) : '0000:00:00' ;
 $policy_management_fee             = (isset($_REQUEST["policy_management_fee"])) ? $_REQUEST["policy_management_fee"] : 0;
 $policy_service_price      = (isset($_REQUEST["policy_service_price"])) ? $_REQUEST["policy_service_price"] : 0 ;
 $schedule_payment = (isset($_REQUEST["schedule_payment"])) ? $_REQUEST["schedule_payment"] : 0 ;
-
-$net_tot             = (isset($_REQUEST["net_tot"])) ? $_REQUEST["net_tot"] : 0;
 
 $currentDate = date('Y-m-d'); 
 
@@ -121,7 +119,8 @@ switch ($mode) {
             $effective_from_datetime = new DateTime("$effective_from_date $effective_from_time");
             $effective_from = $effective_from_datetime->format('Y-m-d H:i');
 
-            $effective_to_date = date('Y-m-d', strtotime($currentDate . '+6 months'));
+            $days = 30 * 6;
+            $effective_to_date = date('Y-m-d', strtotime($currentDate . "+$days days"));
             $effective_to_time = '23:59'; // 11:59 PM in 24-hour format
 
             $effective_to_datetime = new DateTime("$effective_to_date $effective_to_time");
@@ -152,12 +151,20 @@ switch ($mode) {
                 $effective_to_datetime = new DateTime("$effective_to_date $effective_to_time");
                 $effective_to = $effective_to_datetime->format('Y-m-d H:i');
 
+                //Policy Due Date
+                $days = 30 * 6;
+                $var_policy_due_date = date('Y-m-d', strtotime($due_date . "+$days days"));
+                $var_policy_due_time = '23:59'; // 11:59 PM in 24-hour format
+
+                $var_policy_due_datetime = new DateTime("$var_policy_due_date $var_policy_due_time");
+                $policy_due_date = $var_policy_due_datetime->format('Y-m-d H:i');
+
                 if($policy_installment == 1){
                     //Policy table update
-                    $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = '$status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$effective_to', updated = now() WHERE id = $policy_id");
+                    $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = '$status', effective_from = '$effective_from', effective_to = '$effective_to', policy_purchase_date = '$effective_from', policy_due_date = '$policy_due_date', updated = now() WHERE id = $policy_id");
                 }else{
                     //Policy table update
-                    $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = '$status', effective_to = '$effective_to', policy_due_date = '$effective_to', updated = now() WHERE id = $policy_id");
+                    $update_policy = mysqli_query($conn, "UPDATE policy SET status = 1, policy_status = '$status', effective_to = '$effective_to', updated = now() WHERE id = $policy_id");
                 }
 
                 //policy payment 

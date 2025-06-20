@@ -82,7 +82,7 @@ include('partial/loader.php');
                                         </div>
                                         <div class="col-md-2 mb-3">Due Date: 
                                             <span class="f-w-600"><?php echo $full_paymentdue_date = date('m/d/Y', strtotime($currentDate)); ?></span>
-                                            <input type="hidden" id="policy_due_date" name="policy_due_date" value="<?= $full_paymentdue_date ?>">
+                                            <input type="hidden" id="due_date" name="due_date" value="<?= $full_paymentdue_date ?>">
                                         </div>
                                     </div>
 
@@ -108,7 +108,7 @@ include('partial/loader.php');
                                         $premium = round($convert_emi, 2);
                                         $fees = ($i == 1) ? $management_fee + $service_price : $management_fee;
                                         $daysToAdd = ($i - 1) * 30;
-                                        $policy_due_date = date('m/d/Y', strtotime($currentDate . "+{$daysToAdd} days"));
+                                        $due_date = date('m/d/Y', strtotime($currentDate . "+{$daysToAdd} days"));
                                         ?>
                                         <div class="row">
                                             <div class="col-md-2 mb-3">Payment: <span class="f-w-600"><?= $i ?></span>
@@ -130,8 +130,8 @@ include('partial/loader.php');
                                             <div class="col-md-2 mb-3">Due: <span class="f-w-600">$<?= $premium + $fees ?></span>
                                                 <input type="hidden" name="policy_due_amt<?= $i ?>" value="<?= $premium + $fees ?>">
                                             </div>
-                                            <div class="col-md-2 mb-3">Due Date: <span class="f-w-600"><?= $policy_due_date ?></span>
-                                                <input type="hidden" name="policy_due_date<?= $i ?>" value="<?= $policy_due_date ?>">
+                                            <div class="col-md-2 mb-3">Due Date: <span class="f-w-600"><?= $due_date ?></span>
+                                                <input type="hidden" name="due_date<?= $i ?>" value="<?= $due_date ?>">
                                             </div>
                                         </div>
                                         <?php
