@@ -11,6 +11,7 @@ $prefix_policy_id = '';
 $policy_coverage = '';
 $effective_from = '';
 $effective_to = '';
+$policy_due_date = '';
 
 if($policy_id > 0){
     $policy_status = get_value('policy', 'policy_status', 'where status = 1 and id = '.$policy_id);
@@ -27,8 +28,9 @@ where policy.id = '$policy_id' ");
 
 if(mysqli_num_rows($select_query) > 0){
     $get_data = mysqli_fetch_array($select_query);
-    $prefix_policy_id =  $get_data['prefix_policy_id'] ;
-    $policy_coverage =  $get_data['policy_coverage'] ;
-    $effective_from = $get_data['effective_from'] ;
-    $effective_to = $get_data['effective_to'] ;
+    $prefix_policy_id =  $get_data['prefix_policy_id'];
+    $policy_coverage =  $get_data['policy_coverage'];
+    $effective_from = $get_data['effective_from'];
+    $effective_to = $get_data['effective_to'];
+    $policy_due_date = $get_data['policy_due_date'];
 }

@@ -20,8 +20,8 @@ include('partial/loader.php'); ?>
             </p>
             <ul>
                 <li><strong>Policy Number: </strong> <?= $prefix_policy_id ?></li>
-                <li><strong>EFFECTIVE: </strong><?= $effective_from ?> </li>
-                <li><strong>EXPIRATION: </strong><?= $effective_to ?> </li>
+                <li><strong>EFFECTIVE: </strong> <?= $effective_from ?> </li>
+                <li><strong>EXPIRATION: </strong> <?= $policy_due_date ?> </li>
                 <li><strong>Policy Coverage: </strong> <?= getLabelByValue($coverage_dropdown, $policy_coverage) ?> </li>
             </ul>
             <p>

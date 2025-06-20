@@ -31,7 +31,7 @@ function clean($string) {
 	return preg_replace('/[^A-Za-z0-9\-\_]/', '', $string); // Removes special chars.
 }
 
-if(trim($_SERVER["HTTP_HOST"]) == "localhost" || trim($_SERVER["HTTP_HOST"]) == "192.168.224.227"){
+if(trim($_SERVER["HTTP_HOST"]) == "localhost" || trim($_SERVER["HTTP_HOST"]) == "localhost:3000" || trim($_SERVER["HTTP_HOST"]) == "192.168.224.227"){
     $host = "localhost";
     $dbuser = "root";
     $dbpass = "";
