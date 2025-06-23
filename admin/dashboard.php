@@ -97,7 +97,7 @@ include('partial/loader.php');
                             <div class="card-body success">
                                 <span class="f-light">Due Payments Customers</span>
                                 <div class="d-flex align-items-end gap-1">
-                                    <h4><?="$".$due_payment_data['total_due']?></h4>
+                                    <h4><?=$due_payment_customer_data['due_payment_customers']?></h4>
                                     <span class="font-success f-12 f-w-500"></span>
                                 </div>
                                 <div class="bg-gradient" style="right:0px !important;">

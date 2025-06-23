@@ -76,4 +76,16 @@ $due_payment_result = mysqli_query($conn, $due_payment_query);
 $due_payment_data = mysqli_fetch_array($due_payment_result);
 $due_payment_data['total_due'] = isset($due_payment_data['total_due']) ? $due_payment_data['total_due'] : 0;
 
+// Query to get due payment customer count (unique customers with due payments)
+if ($login_role === $agent_role) {
+    $due_payment_customer_query = "SELECT COUNT(DISTINCT p.customer_id) AS due_payment_customers FROM policy_payment pp INNER JOIN policy p ON pp.policy_id = p.id WHERE pp.due_date < '" . mysqli_real_escape_string($conn, $today) . "' AND pp.payment_status = 'pending' AND p.agent_id = '" . mysqli_real_escape_string($conn, $login_id) . "'";
+} else if ($login_role === $super_admin_role) {
+    $due_payment_customer_query = "SELECT COUNT(DISTINCT p.customer_id) AS due_payment_customers FROM policy_payment pp INNER JOIN policy p ON pp.policy_id = p.id WHERE pp.due_date < '" . mysqli_real_escape_string($conn, $today) . "' AND pp.payment_status = 'pending'";
+} else {
+    $due_payment_customer_query = "SELECT 0 AS due_payment_customers";
+}
+$due_payment_customer_result = mysqli_query($conn, $due_payment_customer_query);
+$due_payment_customer_data = mysqli_fetch_array($due_payment_customer_result);
+$due_payment_customer_data['due_payment_customers'] = isset($due_payment_customer_data['due_payment_customers']) ? $due_payment_customer_data['due_payment_customers'] : 0;
+
 ?>

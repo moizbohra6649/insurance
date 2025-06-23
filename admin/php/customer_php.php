@@ -38,7 +38,7 @@ if($form_request == "false" && ($mode == "INSERT" || $mode == "UPDATE")){
 /* Search Filter */
 $from_date         = (isset($_REQUEST["from_date"])) ? convertToYMD($_REQUEST["from_date"]) : date('Y-m-d', strtotime('-30 day'));
 $to_date           = (isset($_REQUEST["to_date"])) ? convertToYMD($_REQUEST["to_date"]) : date('Y-m-d');
-$filter_customer_id    = (isset($_REQUEST["filter_customer_id"])) ? $_REQUEST["filter_customer_id"] : "";
+$filter_policy_id    = (isset($_REQUEST["filter_policy_id"])) ? $_REQUEST["filter_policy_id"] : "";
 $filter_customer_name    = (isset($_REQUEST["filter_customer_name"])) ? $_REQUEST["filter_customer_name"] : "";
 
 $query_count = 0;
@@ -61,8 +61,10 @@ if(isset($_REQUEST["search_list"]) && !empty($_REQUEST["search_list"]) && $_REQU
         $filter_qry .= " AND CAST(created AS DATE) BETWEEN '$from_date' AND '$to_date' ";
     }
 
-    if(!empty($filter_customer_id)){
-        $filter_qry .= " AND customer_id = $filter_customer_id ";
+    if(!empty($filter_policy_id)){
+        // Filter customers by prefix_policy_id (policy table) with LIKE, status success, and effective_to > now (datetime)
+        $now = date('Y-m-d H:i:s');
+        $filter_qry .= " AND id IN (SELECT customer_id FROM policy WHERE prefix_policy_id LIKE '%" . mysqli_real_escape_string($conn, $filter_policy_id) . "%' AND policy_status = 'success' AND effective_to > '" . mysqli_real_escape_string($conn, $now) . "') ";
     }
 
     if(!empty($filter_customer_name)){
@@ -82,8 +84,14 @@ if(isListInPageName(pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME))){
     if($login_role != $super_admin_role){
         $filter_qry .= " AND agent_id = '$login_id' ";
     }
-
-    $select_query = "SELECT customer.*, CONCAT(customer.first_name, ' ', customer.last_name) AS full_name FROM customer WHERE 1=1 ".$filter_qry;
+    $select_query = "SELECT customer.*, CONCAT(customer.first_name, ' ', customer.last_name) AS full_name, (
+        SELECT GROUP_CONCAT(prefix_policy_id SEPARATOR ', ')
+        FROM policy
+        WHERE customer_id = customer.id
+          AND policy_status = 'success'
+          AND effective_to > NOW()
+    ) AS policy_ids
+    FROM customer WHERE 1=1 ".$filter_qry;
     $query_result = mysqli_query($conn, $select_query);
     $query_count = mysqli_num_rows($query_result);
 }

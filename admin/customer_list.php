@@ -61,8 +61,8 @@ include('partial/loader.php'); ?>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="filter_customer_id" class="form-label">Customer ID</label>
-                                                    <input type="text" class="form-control allownumber" id="filter_customer_id" name="filter_customer_id" placeholder="Customer ID" maxlength="8" value="<?=$filter_customer_id?>">
+                                                    <label for="filter_policy_id" class="form-label">Policy ID</label>
+                                                    <input type="text" class="form-control allownumber" id="filter_policy_id" name="filter_policy_id" placeholder="Policy ID" maxlength="8" value="<?=$filter_policy_id?>">
                                                 </div>
                                             </div>
 
@@ -103,7 +103,7 @@ include('partial/loader.php'); ?>
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="text-align: center;">S.No.</th>
-                                                    <th style="text-align: center;">Customer ID</th>
+                                                    <th style="text-align: center;">Policy ID</th>
                                                     <th>Customer Name</th>
                                                     <th>Email</th>
                                                     <th>Mobile No.</th>
@@ -123,7 +123,7 @@ include('partial/loader.php'); ?>
                                                 ?>
                                                 <tr>
                                                     <td align="center"> <?=$i++?> </td>
-                                                    <td align="center"> <?=$get_data["customer_id"]?> </td>
+                                                    <td align="center"> <?=$get_data["policy_ids"]?> </td>
                                                     <td class="table-user">
                                                         <a href="javascript:void(0);" class="text-body fw-semibold"><?=$get_data["full_name"]?></a>
                                                     </td>
