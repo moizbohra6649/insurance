@@ -328,7 +328,7 @@ include('partial/loader.php'); ?>
                                                             </div>
                                                             <div class="col-md-4 mb-3">
                                                                 <label class="form-label" for="family_friend_licence_no">Licence Number</label>
-                                                                <input class="form-control allownumber" name="family_friend_licence_no[]" type="text" value="<?=$family_friend_licence_no[$i]?>" placeholder="Licence Number">
+                                                                <input class="form-control allownumber" name="family_friend_licence_no[]" type="text" value="<?=$family_friend_licence_no[$i]?>" placeholder="Licence Number" oninput="alphaNumLimit(event, 17);" >
                                                             </div>
                                                             <div class="col-md-4 mb-3">
                                                                 <label class="form-label" for="family_friend_address">Address</label>

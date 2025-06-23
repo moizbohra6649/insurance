@@ -58,8 +58,8 @@ include('partial/loader.php'); ?>
                                                 <select class="form-select" name="vehicle_type" id="vehicle_type" required="">
                                                     <option value="">Select Vehicle Type</option>
                                                     <option <?= $vehicle_type == 'Car' ? 'selected' : '' ?> value="Car">Car</option>
-                                                    <option <?= $vehicle_type == 'Bike' ? 'selected' : '' ?> value="Bike">Bike</option>
-                                                    <option <?= $vehicle_type == 'Truck' ? 'selected' : '' ?> value="Truck">Truck</option>
+                                                    <!-- <option <?= $vehicle_type == 'Bike' ? 'selected' : '' ?> value="Bike">Bike</option>
+                                                    <option <?= $vehicle_type == 'Truck' ? 'selected' : '' ?> value="Truck">Truck</option> -->
                                                 </select>
                                                 <div class="invalid-feedback">Please select Vehicle Type.</div>
                                             </div>

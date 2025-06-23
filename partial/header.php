@@ -18,7 +18,7 @@
             <div class="col-4 text-center">
               <a href="index.php" class="logo">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
-                <img src="assets/img/logo.png" alt="" class="img-fluid mt-1">
+                <img src="assets/img/logo-white.png" alt="" class="img-fluid mt-1">
                 <!-- <h1 class="sitename">Westland</h1> -->
               </a>
             </div>
@@ -29,13 +29,13 @@
                     <a href="index.php" class="active">Home</a>
                   </li>
                   <li>
-                    <a href="about-us.html">About us</a>
+                    <a href="about-us.php">About us</a>
                   </li>
                   <li>
                     <a href="claim.php">Claim</a>
                   </li>
                   <li>
-                    <a href="contact.html">Contact us</a>
+                    <a href="contact.php">Contact us</a>
                   </li>
                   <li>
                     <a href="agent-login.php">Login</a>

@@ -51,7 +51,7 @@ include('partial/loader.php');
                                 </div>
                                 <div class="bg-gradient" style="right:0px !important;">
                                     <svg class="stroke-icon svg-fill">
-                                        <use href="assets/svg/icon-sprite.svg#customers"></use>
+                                        <use href="assets/svg/icon-sprite.svg#new-order"></use>
                                     </svg>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@ include('partial/loader.php');
                                 </div>
                                 <div class="bg-gradient" style="right:0px !important;">
                                     <svg class="stroke-icon svg-fill">
-                                        <use href="assets/svg/icon-sprite.svg#sale"></use>
+                                        <use href="assets/svg/icon-sprite.svg#customers"></use>
                                     </svg>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@ include('partial/loader.php');
                                 </div>
                                 <div class="bg-gradient" style="right:0px !important;">
                                     <svg class="stroke-icon svg-fill">
-                                        <use href="assets/svg/icon-sprite.svg#profit"></use>
+                                        <use href="assets/svg/icon-sprite.svg#sale"></use>
                                     </svg>
                                 </div>
                             </div>

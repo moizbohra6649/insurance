@@ -5,10 +5,10 @@
       <div class="row gy-4 position-relative">
         <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="zoom-out">
           <h1>Your Trusted Insurance Partner</h1>
-          <p class="pad-lft">Westland Incorporation Insurance offers trusted, independent coverage at the best rates—backed by expert agents. </p>
+          <p class="pad-lft">Westland Mutual Insurance offers trusted, independent coverage at the best rates—backed by expert agents. </p>
           <div class="input-group input-group-lg mb-3 getS">
             <input type="text" class="form-control" placeholder="Your Email" aria-label="Username" aria-describedby="basic-addon1">
-            <button class="btn btn-primary" type="button" id="button-addon2">Get a Qoute</button>
+            <button class="btn btn-primary" type="button" id="button-addon2">Get a Quote</button>
           </div>
         </div>
         <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="zoom-out">

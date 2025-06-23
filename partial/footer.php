@@ -27,8 +27,10 @@
         <div class="container footer-top">
           <div class="row gy-4">
             <div class="col-lg-4 col-md-3 footer-links">
-              <h4 class="mb-0">Logo</h4>
-              <p> At WESTLAND COOPERATIVE INSURANCE qoutes best deal in minutes. </p>
+              <a href="index.php" class="logo">
+                <img src="assets/img/logo-black.png" alt="" class="img-fluid mt-1" style="width: 250px;">
+              </a>
+              <p> At WESTLAND MUTUAL INSURANCE qoutes best deal in minutes. </p>
             </div>
             <div class="col-lg-4 col-md-12 address">
               <h4>Follow us</h4>
@@ -51,13 +53,13 @@
               <h4>Useful Links</h4>
               <ul>
                 <li>
-                  <a href="privacy-policy.html">Privacy Policy</a>
+                  <a href="privacy-policy.php">Privacy Policy</a>
                 </li>
                 <li>
-                  <a href="terms-condition.html">Terms & Condition</a>
+                  <a href="terms-condition.php">Terms & Condition</a>
                 </li>
                 <li>
-                  <a href="faqs.html">FAQ'S</a>
+                  <a href="faqs.php">FAQ'S</a>
                 </li>
               </ul>
             </div>
