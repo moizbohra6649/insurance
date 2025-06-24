@@ -66,9 +66,9 @@ $vehicle_count_data['total_vehicles'] = isset($vehicle_count_data['total_vehicle
 // Query to get sum of premium and management fee for due payments (policy_payment.due_date < today and payment_status = 'pending')
 $today = date('Y-m-d');
 if ($login_role === $agent_role) {
-    $due_payment_query = "SELECT SUM(premium) + SUM(management_fee) AS total_due FROM policy_payment pp INNER JOIN policy p ON pp.policy_id = p.id WHERE pp.due_date < '" . mysqli_real_escape_string($conn, $today) . "' AND pp.payment_status = 'pending' AND p.agent_id = '" . mysqli_real_escape_string($conn, $login_id) . "'";
+    $due_payment_query = "SELECT SUM(pp.premium) + SUM(pp.management_fee) AS total_due FROM policy_payment pp INNER JOIN policy p ON pp.policy_id = p.id WHERE pp.due_date < '" . mysqli_real_escape_string($conn, $today) . "' AND pp.payment_status = 'pending' AND p.agent_id = '" . mysqli_real_escape_string($conn, $login_id) . "'";
 } else if ($login_role === $super_admin_role) {
-    $due_payment_query = "SELECT SUM(premium) + SUM(management_fee) AS total_due FROM policy_payment WHERE due_date < '" . mysqli_real_escape_string($conn, $today) . "' AND payment_status = 'pending'";
+    $due_payment_query = "SELECT SUM(pp.premium) + SUM(pp.management_fee) AS total_due FROM policy_payment WHERE due_date < '" . mysqli_real_escape_string($conn, $today) . "' AND payment_status = 'pending'";
 } else {
     $due_payment_query = "SELECT 0 AS total_due";
 }

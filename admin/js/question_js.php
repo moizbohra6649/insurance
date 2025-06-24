@@ -1,13 +1,13 @@
 <script>
 
-/* ==================================================START Make FORM JS CODE================================================== */
-$('#make_form').on('submit', (function(e) {
+/* ==================================================START Question FORM JS CODE================================================== */
+$('#question_form').on('submit', (function(e) {
     e.preventDefault();
 
     var error_arr = []; 
 
-    if($("#make_name").val() == ""){
-        error_arr.push("Please fill a Make.<br/>");
+    if($("#question").val() == ""){
+        error_arr.push("Please fill a Question.<br/>");
     } 
  
     var error_txt = error_arr.join('');
@@ -37,7 +37,7 @@ $('#make_form').on('submit', (function(e) {
             notification(title, data.msg, data.status);
             
             if(data.status == "success"){
-                var url = `make_list.php`;
+                var url = `question_list.php`;
                 setTimeout(function() { move(`<?=$actual_link?>${url}`); }, 1000);
             }else{
                 $("#submit_btn").html('Submit');
@@ -53,6 +53,6 @@ $('#make_form').on('submit', (function(e) {
     });
 }));
 
-/* ==================================================END Make FORM JS CODE================================================== */
+/* ==================================================END Question FORM JS CODE================================================== */
 
 </script>
