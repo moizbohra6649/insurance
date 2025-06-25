@@ -349,94 +349,30 @@ input[type="radio"][readonly] + lable {
                            </div>
                            <h6 class="mt-4">Questionnaire</h6>
                            <hr class="mt-4 mb-4">
-                           <div class="row">
-                              <div class="col-md-8 mb-3">
-                                 1. Does any driver have any driving restrictions?
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                 <input <?= $field_status ?> class="form-check-input q1" type="radio" <?= ($is_driver_res == 1) ? 'checked' : '';  ?> name="is_driver_res" value="1">
-                                 <label class="form-check-label">Yes</label>
-                                 <input <?= $field_status ?> class="form-check-input q1" type="radio" name="is_driver_res" value="0" <?= ($is_driver_res == 0) ? 'checked' : '';  ?>>
-                                 <label class="form-check-label">No</label>
-                              </div>
-                           </div>
-                           <div class="row">
-                              <div class="col-md-8 mb-3">
-                                 2. Are any vehicles listed on this application titled under salvage or flood?
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                 <input <?= $field_status ?> class="form-check-input q2" <?= ($is_vehical_listed == 1) ? 'checked' : '';  ?> type="radio" name="is_vehical_listed" value="1">
-                                 <label class="form-check-label">Yes</label>
-                                 <input <?= $field_status ?> class="form-check-input q2" type="radio" name="is_vehical_listed" value="0" <?= ($is_vehical_listed == 0) ? 'checked' : '';  ?>>
-                                 <label class="form-check-label">No</label>
-                              </div>
-                           </div>
-                           <div class="row">
-                              <div class="col-md-8 mb-3">
-                                 3. Does the applicant own any other vehicles not listed on application?
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" <?= ($is_applicant_other_veh == 1) ? 'checked' : '';  ?> name="is_applicant_other_veh" value="1">
-                                 <label class="form-check-label">Yes</label>
-                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_applicant_other_veh" value="0" <?= ($is_applicant_other_veh == 0) ? 'checked' : '';  ?>>
-                                 <label class="form-check-label">No</label>
-                              </div>
-                           </div>
-                           <div class="row">
-                              <div class="col-md-8 mb-3">
-                                 4. Is the applicant the sole registered owner of the vehicle?
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_applicant_sole_registered" value="1" <?= ($is_applicant_sole_registered == 1) ? 'checked' : '';  ?>>
-                                 <label class="form-check-label">Yes</label>
-                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_applicant_sole_registered" value="0" <?= ($is_applicant_sole_registered == 0) ? 'checked' : '';  ?>>
-                                 <label class="form-check-label">No</label>
-                              </div>
-                           </div>
-                           <div class="row">
-                              <div class="col-md-8 mb-3">
-                                 5. Are any vehicles operated by any for commercial business use?
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_used_business_q " value="1" <?= ($is_veh_used_business_q == 1) ? 'checked' : '';  ?>>
-                                 <label class="form-check-label">Yes</label>
-                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_used_business_q " value="0" <?= ($is_veh_used_business_q == 0) ? 'checked' : '';  ?>>
-                                 <label class="form-check-label">No</label>
-                              </div>
-                           </div>
-                           <div class="row">
-                              <div class="col-md-8 mb-3">
-                                 6. Are any vehicles listed used for ride share at any time?
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_listed_ride" value="1" <?= ($is_veh_listed_ride == 1) ? 'checked' : '';  ?>>
-                                 <label class="form-check-label">Yes</label>
-                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_listed_ride" value="0" <?= ($is_veh_listed_ride == 0) ? 'checked' : '';  ?>>
-                                 <label class="form-check-label">No</label>
-                              </div>
-                           </div>
-                           <div class="row">
-                              <div class="col-md-8 mb-3">
-                                 7. Are any vehicles listed on this application used for regular frequent trips beyond 50 miles radius of the given address?
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_listed_application_used" value="1"  <?= ($is_veh_listed_application_used == 1) ? 'checked' : '';  ?>>
-                                 <label class="form-check-label">Yes</label>
-                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_listed_application_used" value="0"  <?= ($is_veh_listed_application_used == 0) ? 'checked' : '';  ?>>
-                                 <label class="form-check-label">No</label>
-                              </div>
-                           </div>
-                           <div class="row">
-                              <div class="col-md-8 mb-3">
-                                 8. Are any vehicle listed on this application garaged outside of IL for more than 2 months of the year?
-                              </div>
-                              <div class="col-md-4 mb-3">
-                                 <input <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_listed_garaged" value="1"  <?= ($is_veh_listed_garaged == 1) ? 'checked' : '';  ?> >
-                                 <label class="form-check-label">Yes</label>
-                                 <input  <?= $field_status ?> class="form-check-input roasass" type="radio" name="is_veh_listed_garaged" value="0"  <?= ($is_veh_listed_garaged == 0) ? 'checked' : '';  ?> >
-                                 <label class="form-check-label">No</label>
-                              </div>
-                           </div>
+                           <?php
+                              $index = 0;
+                              $question_query = mysqli_query($conn, "SELECT id, question FROM question WHERE status = 1 ORDER BY id ASC");
+                              if (mysqli_num_rows($question_query) > 0) {
+                                 while ($get_question = mysqli_fetch_assoc($question_query)) {
+                                    $index++;
+                                    $field = 'question_' . $questions['id'];
+                                    $checked_yes = (isset($questions[$get_question['id']]) && $_POST['questions'][$get_question['id']] == '1') ? 'checked' : '';
+                                    $checked_no = (isset($questions[$get_question['id']]) && $_POST['questions'][$get_question['id']] == '0') ? 'checked' : '';
+                                    ?>
+                                    <div class="row">
+                                          <div class="col-md-8 mb-3">
+                                             <?= ($index) . '. ' . htmlspecialchars($get_question['question']) ?>
+                                          </div>
+                                          <div class="col-md-4 mb-3">
+                                             <input class="form-check-input q<?= $index ?>" type="radio" name="questions[<?= $get_question['id'] ?>]" value="1" <?= $checked_yes ?> required>
+                                             <label class="form-check-label">Yes</label>
+                                             <input class="form-check-input q<?= $index ?>" type="radio" name="questions[<?= $get_question['id'] ?>]" value="0" <?= $checked_no ?> required>
+                                             <label class="form-check-label">No</label>
+                                          </div>
+                                    </div>
+                                 <?php }
+                              }
+                              ?>
                            <h6 class="mt-4">Applicant’s Statement – Please Read Before Signing</h6>
                            <hr class="mt-4 mb-4">
                            <div class="row">

@@ -49,11 +49,21 @@ ALTER TABLE `question`
 -- AUTO_INCREMENT for dumped tables
 --
 
+Insert into `question` (`id`, `question_id`, `prefix_question_id`, `question`, `status`) VALUES
+(1, 1, 'QUESTION_1', 'Does any driver have any driving restrictions?', 1),
+(2, 2, 'QUESTION_2', 'Are any vehicles listed on this application titled under salvage or flood?', 1),
+(3, 3, 'QUESTION_3', 'Does the applicant own any other vehicles not listed on application?', 1),
+(4, 4, 'QUESTION_4', 'Is the applicant the sole registered owner of the vehicle?', 1),
+(5, 5, 'QUESTION_5', 'Are any vehicles operated by any for commercial business use?', 1),
+(6, 6, 'QUESTION_6', 'Are any vehicles listed used for ride share at any time?', 1),
+(7, 7, 'QUESTION_7', 'Are any vehicles listed on this application used for regular frequent trips beyond 50 miles radius of the given address?', 1),
+(8, 8, 'QUESTION_8', 'Are any vehicle listed on this application garaged outside of IL for more than 2 months of the year?', 1);
+
 --
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -33,15 +33,8 @@ $policy_umd          = (isset($_REQUEST["policy_umd"])) ? $_REQUEST["policy_umd"
 $policy_medical          = (isset($_REQUEST["policy_medical"])) ? $_REQUEST["policy_medical"] : 0; 
 $vehicle          = (isset($_REQUEST["vehicle"])) ? $_REQUEST["vehicle"] : 0;
 $driver          = (isset($_REQUEST["driver"])) ? $_REQUEST["driver"] : 0; 
-$roasass          = (isset($_REQUEST["roasass"])) ? $_REQUEST["roasass"] : 0; 
-$is_vehical_listed          = (isset($_REQUEST["is_vehical_listed"])) ? $_REQUEST["is_vehical_listed"] : 0; 
-$is_applicant_sole_registered          = (isset($_REQUEST["is_applicant_sole_registered"])) ? $_REQUEST["is_applicant_sole_registered"] : 0; 
-$is_veh_used_business_q	          = (isset($_REQUEST["is_veh_used_business_q"])) ? $_REQUEST["is_veh_used_business_q"] : 0; 
-$is_veh_listed_ride          = (isset($_REQUEST["is_veh_listed_ride"])) ? $_REQUEST["is_veh_listed_ride"] : 0; 
-$is_veh_listed_application_used          = (isset($_REQUEST["is_veh_listed_application_used"])) ? $_REQUEST["is_veh_listed_application_used"] : 0; 
-$is_veh_listed_garaged          = (isset($_REQUEST["is_veh_listed_garaged"])) ? $_REQUEST["is_veh_listed_garaged"] : 0; 
-$is_driver_res          = (isset($_REQUEST["is_driver_res"])) ? $_REQUEST["is_driver_res"] : 0; 
-$is_applicant_other_veh          = (isset($_REQUEST["is_applicant_other_veh"])) ? $_REQUEST["is_applicant_other_veh"] : 0; 
+$roasass          = (isset($_REQUEST["roasass"])) ? $_REQUEST["roasass"] : 0;
+$questions          = (isset($_REQUEST["questions"])) ? $_REQUEST["questions"] : [];
 $is_physical_damage          = (isset($_REQUEST["is_physical_damage"])) ? ($_REQUEST["is_physical_damage"] == 'on') ? 1 : 0 : 0; 
 $service_price          = (isset($_REQUEST["service_price"])) ? $_REQUEST["service_price"] : '0.00'; 
 $base_premium          = (isset($_REQUEST["base_premium"])) ? $_REQUEST["base_premium"] : '0.00';  
@@ -467,9 +460,8 @@ switch ($mode) {
         $charges = $management_fee + $service_price;
         $net_total = ($total_premium + $charges);
 
-
         mysqli_autocommit($conn,FALSE);
-        $insert_query = mysqli_query($conn, "INSERT INTO policy (policy_id, prefix_policy_id, agent_id,  customer_id , policy_coverage, policy_coverage_collision_id, policy_coverage_umpd_id, policy_coverage_rental_id, policy_coverage_towing_id, policy_coverage_deductible_id, is_veh_used_business, is_physical_damage, policy_bi_id, policy_umd_id, policy_medical_id, policy_pd_id, is_roadside_assistance, is_driver_res, is_vehical_listed, is_applicant_sole_registered, is_applicant_other_veh, is_veh_used_business_q, is_veh_listed_ride, is_veh_listed_application_used , is_veh_listed_garaged , policy_status	, status , service_price, base_premium, additional_coverage_premium, custom_discount, total_premium, management_fee, net_total) VALUES ('$policy_id', '$prefix_policy_id', '$login_id' , '$customer_id', '$coverage', '$coverage_collision', '$umpd', '$coverage_rental', '$towning_coverage', '$coverage_deductible', '$is_veh_used_business', '$is_physical_damage', '$policy_bi', '$policy_umd', '$policy_medical', '$policy_pd', '$roasass', '$is_driver_res', '$is_vehical_listed', '$is_applicant_sole_registered', '$is_applicant_other_veh', '$is_veh_used_business_q', '$is_veh_listed_ride', '$is_veh_listed_application_used' , '$is_veh_listed_garaged', 'pending', 0 ,$service_price, $base_premium, $additional_coverage_premium, $custom_discount, $total_premium, $management_fee, $net_total)");
+        $insert_query = mysqli_query($conn, "INSERT INTO policy (policy_id, prefix_policy_id, agent_id,  customer_id , policy_coverage, policy_coverage_collision_id, policy_coverage_umpd_id, policy_coverage_rental_id, policy_coverage_towing_id, policy_coverage_deductible_id, is_veh_used_business, is_physical_damage, policy_bi_id, policy_umd_id, policy_medical_id, policy_pd_id, is_roadside_assistance, policy_status, status, service_price, base_premium, additional_coverage_premium, custom_discount, total_premium, management_fee, net_total) VALUES ('$policy_id', '$prefix_policy_id', '$login_id' , '$customer_id', '$coverage', '$coverage_collision', '$umpd', '$coverage_rental', '$towning_coverage', '$coverage_deductible', '$is_veh_used_business', '$is_physical_damage', '$policy_bi', '$policy_umd', '$policy_medical', '$policy_pd', '$roasass', 'pending', 0 ,$service_price, $base_premium, $additional_coverage_premium, $custom_discount, $total_premium, $management_fee, $net_total)");
 
         $last_inserted_id = mysqli_insert_id($conn);
 
@@ -506,6 +498,35 @@ switch ($mode) {
                     if($drivervalue > 0){
                         $insert_query = mysqli_query($conn, "INSERT INTO policy_driver (policy_id, driver_id) VALUES ('$last_inserted_id', '$drivervalue')");
                     }
+                }
+            }
+
+            // Upsert policy_question: insert if not exists, update if exists
+            if (isset($_POST['questions']) && is_array($_POST['questions'])) {
+                foreach ($_POST['questions'] as $question_id => $question_value) {
+                    $question_id = intval($question_id);
+                    $question_value = intval($question_value);
+                    // Fetch the question text for this question_id
+                    $qres = mysqli_query($conn, "SELECT question FROM question WHERE id = $question_id LIMIT 1");
+                    $policy_question = '';
+                    if ($qres && mysqli_num_rows($qres) > 0) {
+                        $qrow = mysqli_fetch_assoc($qres);
+                        $policy_question = mysqli_real_escape_string($conn, $qrow['question']);
+                    }
+                    // Check if entry exists
+                    $exists = false;
+                    $check = mysqli_query($conn, "SELECT id FROM policy_question WHERE policy_id = '$last_inserted_id' AND policy_question_id = '$question_id' LIMIT 1");
+                    if ($check && mysqli_num_rows($check) > 0) {
+                        $exists = true;
+                    }
+                    if ($exists) {
+                        // Update
+                        $sql = "UPDATE policy_question SET policy_question = '$policy_question', question_value = $question_value WHERE policy_id = '$last_inserted_id' AND policy_question_id = '$question_id'";
+                    } else {
+                        // Insert
+                        $sql = "INSERT INTO policy_question (policy_id, policy_question_id, policy_question, question_value) VALUES ($last_inserted_id, $question_id, '$policy_question', $question_value)";
+                    }
+                    mysqli_query($conn, $sql);
                 }
             }
         }
@@ -562,14 +583,17 @@ switch ($mode) {
             $policy_umd          = $get_data['policy_umd_id'];
             $policy_medical          = $get_data['policy_medical_id'];
             $roasass          = $get_data['is_roadside_assistance'];
-            $is_vehical_listed          = $get_data['is_vehical_listed']; 
-            $is_applicant_sole_registered          = $get_data['is_applicant_sole_registered']; 
-            $is_veh_used_business_q	          = $get_data['is_veh_used_business_q']; 
-            $is_veh_listed_ride          = $get_data['is_veh_listed_ride']; 
-            $is_veh_listed_application_used          =  $get_data['is_veh_listed_application_used']; 
-            $is_veh_listed_garaged          = $get_data['is_veh_listed_garaged']; 
-            $is_driver_res          = $get_data['is_driver_res']; 
-            $is_applicant_other_veh          = $get_data['is_applicant_other_veh']; 
+
+            $questions = [];
+            
+            $get_question = mysqli_query($conn, "SELECT policy_question_id, question_value FROM policy_question WHERE policy_id = '$id'");
+
+            if(mysqli_num_rows($get_question) > 0){
+                while($get_policy_question = mysqli_fetch_assoc($get_question)){
+                    $questions[$get_policy_question['policy_question_id']] = $get_policy_question['question_value'];
+                }   
+            }
+
             $is_physical_damage          = $get_data['is_physical_damage']; 
 
             $service_price          = $get_data['service_price']; 
@@ -682,14 +706,6 @@ switch ($mode) {
                 policy_medical_id = '$policy_medical',
                 policy_pd_id = '$policy_pd',
                 is_roadside_assistance = '$roasass',
-                is_driver_res = '$is_driver_res',
-                is_vehical_listed = '$is_vehical_listed',
-                is_applicant_sole_registered = '$is_applicant_sole_registered',
-                is_applicant_other_veh = '$is_applicant_other_veh',
-                is_veh_used_business_q = '$is_veh_used_business_q',
-                is_veh_listed_ride = '$is_veh_listed_ride',
-                is_veh_listed_application_used = '$is_veh_listed_application_used',
-                is_veh_listed_garaged = '$is_veh_listed_garaged',
                 service_price = $service_price,
                 base_premium = $base_premium,
                 additional_coverage_premium = $additional_coverage_premium,
@@ -737,6 +753,35 @@ switch ($mode) {
                         if($drivervalue > 0){
                             $insert_query = mysqli_query($conn, "INSERT INTO policy_driver (policy_id , driver_id) VALUES ('$id', '$drivervalue')");
                         }
+                    }
+                }
+
+                // Upsert policy_question: insert if not exists, update if exists
+                if (isset($_POST['questions']) && is_array($_POST['questions'])) {
+                    foreach ($_POST['questions'] as $question_id => $question_value) {
+                        $question_id = intval($question_id);
+                        $question_value = intval($question_value);
+                        // Fetch the question text for this question_id
+                        $qres = mysqli_query($conn, "SELECT question FROM question WHERE id = $question_id LIMIT 1");
+                        $policy_question = '';
+                        if ($qres && mysqli_num_rows($qres) > 0) {
+                            $qrow = mysqli_fetch_assoc($qres);
+                            $policy_question = mysqli_real_escape_string($conn, $qrow['question']);
+                        }
+                        // Check if entry exists
+                        $exists = false;
+                        $check = mysqli_query($conn, "SELECT id FROM policy_question WHERE policy_id = '$id' AND policy_question_id = '$question_id' LIMIT 1");
+                        if ($check && mysqli_num_rows($check) > 0) {
+                            $exists = true;
+                        }
+                        if ($exists) {
+                            // Update
+                            $sql = "UPDATE policy_question SET policy_question = '$policy_question', question_value = $question_value WHERE policy_id = '$id' AND policy_question_id = '$question_id'";
+                        } else {
+                            // Insert
+                            $sql = "INSERT INTO policy_question (policy_id, policy_question_id, policy_question, question_value) VALUES ($id, $question_id, '$policy_question', $question_value)";
+                        }
+                        mysqli_query($conn, $sql);
                     }
                 }
 
