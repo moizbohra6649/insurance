@@ -192,3 +192,17 @@ ALTER TABLE `policy` ADD `additional_discount` INT NOT NULL DEFAULT '0' AFTER `c
 ALTER TABLE `policy` CHANGE `status` `status` INT(11) NOT NULL DEFAULT '0' COMMENT '0 => \'pending\',\r\n1 => \'success\',\r\n2 => \'process\',\r\n3 => \'failed\',\r\n4 => \'reject\',\r\n5 => \'cancel\'';
 
 ALTER TABLE `policy` CHANGE `policy_status` `policy_status` ENUM('pending','success','process','failed','reject','cancel') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+
+
+------Latest 26/06/2025
+
+ALTER TABLE `policy`
+  DROP `is_driver_res`,
+  DROP `is_vehical_listed`,
+  DROP `is_applicant_other_veh`,
+  DROP `is_applicant_sole_registered`,
+  DROP `is_veh_used_business_q`,
+  DROP `is_veh_listed_ride`,
+  DROP `is_veh_listed_application_used`,
+  DROP `is_veh_listed_garaged`,
+  DROP `is_premium_payment_type`;
