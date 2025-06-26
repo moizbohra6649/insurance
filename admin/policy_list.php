@@ -100,7 +100,7 @@ include('partial/loader.php'); ?>
                                                         <?php } ?>
 
                                                         <a href="<?=$actual_link?>policy.php?id=<?=base64_encode($id)?>&mode=VIEW" target="_blank" class="action-icon m-2"> <i class="icofont icofont-eye-alt"></i></a>
-                                                        <?php if($login_role == $super_admin_role && $get_data["policy_status"] != "success"){ // && $policy_payment_count == 0 ?>
+                                                        <?php if($get_data["policy_status"] != "success" && empty($policy_payment_count)){ ?>
                                                         <a href="<?=$actual_link?>policy.php?id=<?=base64_encode($id)?>&mode=EDIT" target="_blank" class="action-icon m-2"> <i class="icofont icofont-ui-edit"></i></a>
                                                         <?php } ?>
                                                         <!-- <a href="javascript:void(0);" class="action-icon  m-2"> <i class="mdi mdi-delete"></i></a> -->

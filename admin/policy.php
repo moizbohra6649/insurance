@@ -355,18 +355,18 @@ input[type="radio"][readonly] + lable {
                               if (mysqli_num_rows($question_query) > 0) {
                                  while ($get_question = mysqli_fetch_assoc($question_query)) {
                                     $index++;
-                                    $field = 'question_' . $questions['id'];
-                                    $checked_yes = (isset($questions[$get_question['id']]) && $_POST['questions'][$get_question['id']] == '1') ? 'checked' : '';
-                                    $checked_no = (isset($questions[$get_question['id']]) && $_POST['questions'][$get_question['id']] == '0') ? 'checked' : '';
+                                    $field = 'question_' . $get_question['id'];
+                                    $checked_yes = (isset($questions[$get_question['id']]) && $questions[$get_question['id']] == '1') ? 'checked' : '';
+                                    $checked_no = (isset($questions[$get_question['id']]) && $questions[$get_question['id']] == '0') ? 'checked' : '';
                                     ?>
                                     <div class="row">
                                           <div class="col-md-8 mb-3">
                                              <?= ($index) . '. ' . htmlspecialchars($get_question['question']) ?>
                                           </div>
                                           <div class="col-md-4 mb-3">
-                                             <input class="form-check-input q<?= $index ?>" type="radio" name="questions[<?= $get_question['id'] ?>]" value="1" <?= $checked_yes ?> required>
+                                             <input <?= $field_status ?> class="form-check-input q<?= $index ?>" type="radio" name="questions[<?= $get_question['id'] ?>]" value="1" <?= $checked_yes ?> required>
                                              <label class="form-check-label">Yes</label>
-                                             <input class="form-check-input q<?= $index ?>" type="radio" name="questions[<?= $get_question['id'] ?>]" value="0" <?= $checked_no ?> required>
+                                             <input <?= $field_status ?> class="form-check-input q<?= $index ?>" type="radio" name="questions[<?= $get_question['id'] ?>]" value="0" <?= $checked_no ?> required>
                                              <label class="form-check-label">No</label>
                                           </div>
                                     </div>

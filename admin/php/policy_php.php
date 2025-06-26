@@ -622,14 +622,13 @@ switch ($mode) {
             
             $created              = $get_data["created"];
             $local_mode           = "UPDATE";
-            $payment_entrycheck = get_value('policy_payment' , 'count(*)' ,  "where policy_id = '$id'");
-            if($payment_entrycheck > 0 ){
-                $field_status = 'readonly';
+            
+            $payment_entrycheck = get_value('policy_payment', 'count(*)', "where policy_id = '$id' AND payment_status != 'pending'");
+            if(!empty($payment_entrycheck) && $payment_entrycheck > 0){
+                $field_status = "readonly";
             }
 
             $payment_success_check = get_value('policy_payment' , 'count(*)' ,  "where policy_id = '$id' and payment_status = 'success' ");
-           
-
         }
     break;
 
