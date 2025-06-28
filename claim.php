@@ -23,7 +23,7 @@
      <div class="container">
       <div class="row">
         <div class="col-md-12">
-        <form id="signUpForm" name="signUpForm" method="POST" class="needs-validation" enctype="multipart/form-data">
+<form id="signUpForm" name="signUpForm" method="POST" class="needs-validation" enctype="multipart/form-data">
     <!-- start step indicators -->
     <div class="form-header d-flex mb-4">
         <span class="stepIndicator">General</span>
@@ -92,15 +92,12 @@
                         <div class="form-group">
                             <select class="form-control" id="policyholder_state" name="policyholder_state">
                                 <option value="">Select State</option>
-                                <option value="Andra Pradesh">Andra Pradesh</option>
-                                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                                <option value="Assam">Assam</option>
-                                <!-- ... other states ... -->
-                                <option value="West Bengal">West Bengal</option>
-                                <option disabled style="background-color:#aaa; color:#fff">UNION Territories</option>
-                                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                                <!-- ... other territories ... -->
-                                <option value="Pondicherry">Pondicherry</option>
+                                <?php
+                                    $select_state = select("states","country_id=231");
+                                    while($get_state = fetch($select_state)){
+                                ?>
+                                    <option value="<?=$get_state["id"];?>"><?=$get_state["name"];?></option>
+                                <?php }?>
                             </select>
                         </div>
                     </div>
@@ -129,17 +126,47 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="vehicle_year" class="form-label">Year</label>
-                <input type="text" class="form-control" id="vehicle_year" name="vehicle_year" value="">
+                <div class="form-group">
+                            <select class="form-control" id="vehicle_year" name="vehicle_year">
+                                <option value="">Select Year</option>
+                                <?php
+                                    $vehicle_year = select("year") ;
+                                    while($get_year = fetch($vehicle_year)){
+                                ?>
+                                    <option value="<?=$get_year["id"];?>"> <?= $get_year["year"]; ?> </option>
+                                <?php }?>
+                            </select>
+                        </div>
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="vehicle_make" class="form-label">Make</label>
-                <input type="text" class="form-control" id="vehicle_make" name="vehicle_make" value="">
+                <div class="form-group">
+                    <select class="form-control" id="vehicle_make" name="vehicle_make">
+                        <option value="">Select Make</option>
+                        <?php
+                            $vehicle_make = select("make","");
+                            while($get_make = fetch($vehicle_make)){
+                        ?>
+                            <option value="<?=$get_make["id"];?>"><?=$get_make["make_name"];?></option>
+                        <?php }?>
+                    </select>
+                </div>
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="vehicle_model" class="form-label">Model</label>
-                <input type="text" class="form-control" id="vehicle_model" name="vehicle_model" value="">
+                <div class="form-group">
+                    <select class="form-control" id="vehicle_model" name="vehicle_model">
+                        <option value="">Select Model</option>
+                        <?php
+                            $vehicle_model = select("model","");
+                            while($get_model = fetch($vehicle_model)){
+                        ?>
+                            <option value="<?=$get_model["id"];?>"><?=$get_model["model_name"];?></option>
+                        <?php }?>
+                    </select>
+                </div>
             </div>
 
             <hr>
@@ -163,10 +190,12 @@
                 <label for="driver_state" class="form-label">State</label>
                 <div class="form-group">
                     <select class="form-control" id="driver_state" name="driver_state">
-                        <option value="">Select State</option>
-                        <option value="Andra Pradesh">Andra Pradesh</option>
-                        <!-- ... other states ... -->
-                        <option value="Pondicherry">Pondicherry</option>
+                    <?php
+                            $select_state = select("states","country_id=231");
+                            while($get_state = fetch($select_state)){
+                        ?>
+                            <option  value="<?=$get_state["id"];?>"><?=$get_state["name"];?></option>
+                        <?php }?>
                     </select>
                 </div>
             </div>
@@ -347,9 +376,12 @@
                 <div class="form-group">
                     <select class="form-control" id="property1_state" name="property1_state">
                         <option value="">Select State</option>
-                        <option value="Andra Pradesh">Andra Pradesh</option>
-                        <!-- ... other states ... -->
-                        <option value="Pondicherry">Pondicherry</option>
+                        <?php
+                            $select_state = select("states","country_id=231");
+                            while($get_state = fetch($select_state)){
+                        ?>
+                            <option value="<?=$get_state["id"];?>"><?=$get_state["name"];?></option>
+                        <?php }?>
                     </select>
                 </div>
             </div>
@@ -439,9 +471,12 @@
                 <div class="form-group">
                     <select class="form-control" id="injured1_state" name="injured1_state">
                         <option value="">Select State</option>
-                        <option value="Andra Pradesh">Andra Pradesh</option>
-                        <!-- ... other states ... -->
-                        <option value="Pondicherry">Pondicherry</option>
+                        <?php
+                        $select_state = select("states","country_id=231");
+                        while($get_state = fetch($select_state)){
+                    ?>
+                        <option value="<?=$get_state["id"];?>"><?=$get_state["name"];?></option>
+                    <?php }?>
                     </select>
                 </div>
             </div>
@@ -509,9 +544,12 @@
                 <div class="form-group">
                     <select class="form-control" id="witness1_state" name="witness1_state">
                         <option value="">Select State</option>
-                        <option value="Andra Pradesh">Andra Pradesh</option>
-                        <!-- ... other states ... -->
-                        <option value="Pondicherry">Pondicherry</option>
+                        <?php
+                            $select_state = select("states","country_id=231");
+                            while($get_state = fetch($select_state)){
+                        ?>
+                            <option  value="<?=$get_state["id"];?>"><?=$get_state["name"];?></option>
+                        <?php }?>
                     </select>
                 </div>
             </div>
@@ -572,11 +610,13 @@
             <div class="col-md-6 mb-3">
                 <label for="occupant1_state" class="form-label">State</label>
                 <div class="form-group">
-                    <select class="form-control" id="occupant1_state" name="occupant1_state">
-                        <option value="">Select State</option>
-                        <option value="Andra Pradesh">Andra Pradesh</option>
-                        <!-- ... other states ... -->
-                        <option value="Pondicherry">Pondicherry</option>
+                    <select class="form-control" id="driver_state" name="driver_state">
+                    <?php
+                            $select_state = select("states","country_id=231");
+                            while($get_state = fetch($select_state)){
+                        ?>
+                            <option  value="<?=$get_state["id"];?>"><?=$get_state["name"];?></option>
+                        <?php }?>
                     </select>
                 </div>
             </div>

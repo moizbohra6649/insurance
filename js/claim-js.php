@@ -1,6 +1,6 @@
 <script>
-
 $('#signUpForm').on('submit', (function(e) {
+    
     e.preventDefault();
     var error_arr = [];
 
