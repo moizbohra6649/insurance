@@ -342,3 +342,9 @@
     }
     
 </script>
+ <?php    
+    /* Include JS File */
+    if (file_exists(dirname(__DIR__) . '/js/inquiry_js.php')) {
+        require_once(dirname(__DIR__) . '/js/inquiry_js.php');
+    }
+  ?> 

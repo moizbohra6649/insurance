@@ -270,7 +270,7 @@ function userSecure() {
 }
 
 if(basename($_SERVER['PHP_SELF']) != "login.php" && basename($_SERVER['PHP_SELF']) != "agent-login.php" && basename($_SERVER['PHP_SELF']) != "service-provider-login.php" && basename($_SERVER['PHP_SELF']) != "join-with-us.php"){
-	userSecure();
+	//userSecure();
 }
 
 function isListInPageName($pageName) {

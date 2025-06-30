@@ -1,24 +1,24 @@
-      <div class="container mt-3 contactForm">
-        <form>
+  <div class="container mt-3 contactForm">
+         <form id="inquiry_form" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
           <div class="row jumbotron">
             <div class="col-sm-12 mx-t3 mb-4">
               <h2 class="text-center textSet mt-3">Get A Free Qoute Now</h2>
               <p class="text-center">Start your Journey towards the ideal insurance coverage now quick, simple and hassle free.</p>
             </div>
             <div class="col-sm-6 mb-3 form-group">
-              <label for="name-f">Name</label>
-              <input type="text" class="form-control" name="fname" id="name-f" placeholder="Enter your first name." required>
+              <label for="inquiry_username">Name</label>
+              <input type="text" class="form-control" name="inquiry_username" id="inquiry_username" placeholder="Enter your first name." required>
             </div>
             <div class="col-sm-6 mb-3 form-group">
-              <label for="email">Email</label>
-              <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email." required>
+              <label for="inquiry_email">Email</label>
+              <input type="email" class="form-control" name="inquiry_email" id="inquiry_email" placeholder="Enter your email." required>
             </div>
             <div class="col-sm-6 mb-3 form-group">
-              <label for="zip">Contact Number</label>
-              <input type="zip" class="form-control" name="Zip" id="zip" placeholder="Enter Number" required>
+              <label for="inquiry_mobile_no">Contact Number</label>
+              <input type="text" class="form-control allownumber" maxlength="12" minlength="12" name="inquiry_mobile_no" id="inquiry_mobile_no" placeholder="Enter your Contact Number" required>
             </div>
-            <div class="col-sm-6 mb-3 form-group mb-0">
-              <button class="btn btn-Submit float-right">Submit</button>
+            <div class="col-sm-6 mb-3 form-group mb-0"> 
+               <button id="inquiry_submit_btn" class="btn btn-primary float-right submit_btn" type="submit">Submit</button>
             </div>
           </div>
         </form>

@@ -1,3 +1,9 @@
+<?php  
+/* Include PHP File */
+if (file_exists(dirname(__DIR__) . '/php/inquiry_php.php')) {
+    require_once(dirname(__DIR__) . '/php/inquiry_php.php');
+} 
+?>   
 <!DOCTYPE html>
 <html lang="en">
   <head>

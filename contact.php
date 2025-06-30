@@ -1,4 +1,11 @@
-<?php include('partial/header.php'); ?> 
+<?php 
+
+/* Include PHP File */
+if (file_exists(dirname(__FILE__) . '/php/contact_php.php')) {
+    require_once(dirname(__FILE__) . '/php/contact_php.php');
+}  
+include('partial/header.php'); 
+?> 
   <main class="main">
     <section class="container mt-5">
       <!--Contact heading-->
@@ -19,35 +26,58 @@
                 <h1>Let’s Talk...</h1>
               </div>
             </div>
+
+               <form id="contact_form" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
+
             <div class="card-body p-3">
+   
+
               <div class="form-group">
                 <div class="input-group">
-                  <input value="" type="text" name="data[name]" class="form-control input-set" id="inlineFormInputGroupUsername" placeholder="Your name">
+                  <input value="" type="text" name="username" id="username" class="form-control input-set" placeholder="Your Name">
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="input-group mb-2 mb-sm-0">
-                  <input type="email" value="" name="data[email]" class="form-control input-set" id="inlineFormInputGroupUsername" placeholder="Email">
+                  <input type="email" value=""  id="email" name="email" class="form-control input-set" placeholder="Email">
                 </div>
               </div>
+
+
               <div class="form-group">
                 <div class="input-group mb-2 mb-sm-0">
-                  <textarea type="text" class="form-control textarea-set" placeholder="Enter Your Massage" name="mesg"></textarea>
+                  <textarea type="text" class="form-control textarea-set" placeholder="Enter Your Message" name="usermessage" id="usermessage"></textarea>
                 </div>
               </div>
+
+
               <div>
-                <input type="submit" name="Send Message" value="Send Message" class="submit_btn">
+               
+
+                <button id="submit_btn" class="btn btn-primary submit_btn" type="submit">Submit</button>
               </div>
+       
+
             </div>
+
+             </form>
           </div>
         </div>
       </div>
     </section>
   </main>
+ 
   <!-- footer start--> 
   <?php 
     include('partial/footer.php');
     include('partial/scripts.php');
+ 
+     /* Include JS File */
+    if (file_exists(dirname(__FILE__) . '/js/contact_js.php')) {
+        require_once(dirname(__FILE__) . '/js/contact_js.php');
+    }
+
   ?> 
 </body>
 </html>
