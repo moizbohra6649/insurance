@@ -46,11 +46,11 @@
             </div>
             <div class="col-md-6">
                 <label for="submitter_home_phone" class="form-label">Home Phone</label>
-                <input type="text" class="form-control" id="submitter_home_phone" name="submitter_home_phone" value="">
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" id="submitter_home_phone" name="submitter_home_phone" value="">
             </div>
             <div class="col-md-6">
                 <label for="submitter_cell_phone" class="form-label">Cell Phone</label>
-                <input type="text" class="form-control" id="submitter_cell_phone" name="submitter_cell_phone" value="">
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" id="submitter_cell_phone" name="submitter_cell_phone" value="">
             </div>
 
             <div class="col-12">
@@ -104,16 +104,16 @@
 
                     <div class="col-md-6 mb-3">
                         <label for="policyholder_zip" class="form-label">ZIP Code</label>
-                        <input type="text" class="form-control" id="policyholder_zip" name="policyholder_zip" value="">
+                        <input type="text" class="form-control allownumber"  minlength="6" maxlength="8" id="policyholder_zip" name="policyholder_zip" value="">
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <label for="policyholder_home_phone" class="form-label">Home Phone</label>
-                        <input type="text" class="form-control" id="policyholder_home_phone" name="policyholder_home_phone" value="">
+                        <input type="text" class="form-control allownumber" onkeypress="applyPhoneInputRestriction('mobile_no')" id="policyholder_home_phone" name="policyholder_home_phone" value="">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="policyholder_cell_phone" class="form-label">Cell Phone</label>
-                        <input type="text" class="form-control" id="policyholder_cell_phone" name="policyholder_cell_phone" value="">
+                        <input type="text" class="form-control allownumber" onkeypress="applyPhoneInputRestriction('mobile_no')" minlength="12" maxlength="12"  id="policyholder_cell_phone" name="policyholder_cell_phone" value="">
                     </div>
                 </div>
             </div>
@@ -202,21 +202,21 @@
 
             <div class="col-md-6 mb-3">
                 <label for="driver_zip" class="form-label">ZIP Code</label>
-                <input type="text" class="form-control" id="driver_zip" name="driver_zip" value="">
+                <input type="text" class="form-control allownumber"  minlength="6" maxlength="8"  id="driver_zip" name="driver_zip" value="">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="driver_home_phone" class="form-label">Home Phone</label>
-                <input type="text" class="form-control" id="driver_home_phone" name="driver_home_phone" value="">
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" id="driver_home_phone" name="driver_home_phone" value="">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="driver_business_phone" class="form-label">Business Phone</label>
-                <input type="text" class="form-control" id="driver_business_phone" name="driver_business_phone" value="">
+                <input type="text" class="form-control allownumber" onkeypress="applyPhoneInputRestriction('mobile_no')" id="driver_business_phone" name="driver_business_phone" value="">
             </div>
 
             <div class="col-md-6 mb-3">
-                <label for="driver_cell_phone" class="form-label">Cell Phone</label>
+                <label for="driver_cell_phone allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" class="form-label">Cell Phone</label>
                 <input type="text" class="form-control" id="driver_cell_phone" name="driver_cell_phone" value="">
             </div>
         </div>
@@ -358,7 +358,7 @@
 
             <div class="col-md-6 mb-3">
                 <label for="property_owner_cell_phone" class="form-label">Cell Phone</label>
-                <input type="text" class="form-control" id="property_owner_cell_phone" name="property_owner_cell_phone" value="">
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" id="property_owner_cell_phone" name="property_owner_cell_phone" value="">
             </div>
 
             <hr>
@@ -388,22 +388,22 @@
 
             <div class="col-md-6 mb-3">
                 <label for="property1_zip" class="form-label">ZIP Code</label>
-                <input type="text" class="form-control" id="property1_zip" name="property1_zip" value="">
+                <input type="text" class="form-control allownumber"  minlength="6" maxlength="8" id="property1_zip" name="property1_zip" value="">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="property1_home_phone" class="form-label">Home Phone</label>
-                <input type="text" class="form-control" id="property1_home_phone" name="property1_home_phone" value="">
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" id="property1_home_phone" name="property1_home_phone" value="">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="property1_business_phone" class="form-label">Business Phone</label>
-                <input type="text" class="form-control" id="property1_business_phone" name="property1_business_phone" value="">
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" id="property1_business_phone" name="property1_business_phone" value="">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="property1_cell_phone_owner" class="form-label">Cell Phone (of Property Owner)</label> <!-- Clarified label -->
-                <input type="text" class="form-control" id="property1_cell_phone_owner" name="property1_cell_phone_owner" value="">
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" id="property1_cell_phone_owner" name="property1_cell_phone_owner" value="">
             </div>
 
             <div class="col-md-6 mb-3">
@@ -483,22 +483,22 @@
 
             <div class="col-md-6 mb-3">
                 <label for="injured1_zip" class="form-label">ZIP Code</label>
-                <input type="text" class="form-control" id="injured1_zip" name="injured1_zip" value="">
+                <input type="text" class="form-control allownumber"  minlength="6" maxlength="8" id="injured1_zip" name="injured1_zip" value="">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="injured1_home_phone" class="form-label">Home Phone</label>
-                <input type="text" class="form-control" id="injured1_home_phone" name="injured1_home_phone" value="">
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" id="injured1_home_phone" name="injured1_home_phone" value="">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="injured1_business_phone" class="form-label">Business Phone</label>
-                <input type="text" class="form-control" id="injured1_business_phone" name="injured1_business_phone" value="">
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" id="injured1_business_phone" name="injured1_business_phone" value="">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="injured1_cell_phone" class="form-label">Cell Phone</label>
-                <input type="text" class="form-control" id="injured1_cell_phone" name="injured1_cell_phone" value="">
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" id="injured1_cell_phone" name="injured1_cell_phone" value="">
             </div>
 
             <div class="col-md-6 mb-3">
@@ -556,22 +556,22 @@
 
             <div class="col-md-6 mb-3">
                 <label for="witness1_zip" class="form-label">ZIP Code</label>
-                <input type="text" class="form-control" id="witness1_zip" name="witness1_zip" value="">
+                <input type="text" class="form-control allownumber"  minlength="6" maxlength="8" id="witness1_zip" name="witness1_zip" value="">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="witness1_home_phone" class="form-label">Home Phone</label>
-                <input type="text" class="form-control" id="witness1_home_phone" name="witness1_home_phone" value="">
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" id="witness1_home_phone" name="witness1_home_phone" value="">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="witness1_business_phone" class="form-label">Business Phone</label>
-                <input type="text" class="form-control" id="witness1_business_phone" name="witness1_business_phone" value="">
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" id="witness1_business_phone" name="witness1_business_phone" value="">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="witness1_cell_phone" class="form-label">Cell Phone</label>
-                <input type="text" class="form-control" id="witness1_cell_phone" name="witness1_cell_phone" value="">
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" id="witness1_cell_phone" name="witness1_cell_phone" value="">
             </div>
         </div>
     </div>
@@ -623,22 +623,22 @@
 
             <div class="col-md-6 mb-3">
                 <label for="occupant1_zip" class="form-label">ZIP Code</label>
-                <input type="text" class="form-control" id="occupant1_zip" name="occupant1_zip" value="">
+                <input type="text" class="form-control allownumber"  minlength="6" maxlength="8"  id="occupant1_zip" name="occupant1_zip" value="">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="occupant1_home_phone" class="form-label">Home Phone</label>
-                <input type="text" class="form-control" id="occupant1_home_phone" name="occupant1_home_phone" value="">
+                <input type="text" class="form-control allownumber" onkeypress="applyPhoneInputRestriction('mobile_no')" minlength="12" maxlength="12" id="occupant1_home_phone" name="occupant1_home_phone" value="">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="occupant1_business_phone" class="form-label">Business Phone</label>
-                <input type="text" class="form-control" id="occupant1_business_phone" name="occupant1_business_phone" value="">
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" id="occupant1_business_phone" name="occupant1_business_phone" value="">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="occupant1_cell_phone" class="form-label">Cell Phone</label>
-                <input type="text" class="form-control" id="occupant1_cell_phone" name="occupant1_cell_phone" value="">
+                <input type="text" class="form-control allownumber" minlength="12" maxlength="12" onkeypress="applyPhoneInputRestriction('mobile_no')" id="occupant1_cell_phone" name="occupant1_cell_phone" value="">
             </div>
         </div>
     </div>
