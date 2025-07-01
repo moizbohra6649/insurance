@@ -5,9 +5,15 @@ if (file_exists(dirname(__DIR__) . '/'.$admin_folder.'/partial/functions.php')) 
     require_once(dirname(__DIR__) . '/'.$admin_folder.'/partial/functions.php');
 }
 
+    
     $form_request = (isset($_REQUEST["form_request"])) ? $_REQUEST["form_request"] : "false";
     $error_msg  = (isset($_REQUEST["error_msg"])) ? $_REQUEST["error_msg"] : "";
-
+    // if($_REQUEST){
+    //     print_r($_REQUEST);
+    //     die;
+    // }
+    
+    $data = array();
     // --- Step 1: General ---
     $submitter_name          = isset($_REQUEST["submitter_name"]) ? trim($_REQUEST["submitter_name"]) : "";
     $submitter_home_phone    = isset($_REQUEST["submitter_home_phone"]) ? trim($_REQUEST["submitter_home_phone"]) : "";
@@ -179,8 +185,6 @@ if (file_exists(dirname(__DIR__) . '/'.$admin_folder.'/partial/functions.php')) 
         // --- Step 2: Vehicle & Driver - Vehicle ---
         if (empty($vehicle_year)) {
             $error_arr[] = "Vehicle Year is required.<br/>";
-        } elseif (!ctype_digit($vehicle_year) || (int)$vehicle_year < 1900 || (int)$vehicle_year > (int)date("Y") + 1) {
-            $error_arr[] = "Vehicle Year must be a valid year (e.g., 1990-" . (date("Y") + 1) . ").<br/>";
         }
         if (empty($vehicle_make)) {
             $error_arr[] = "Vehicle Make is required.<br/>";
@@ -313,7 +317,7 @@ if (file_exists(dirname(__DIR__) . '/'.$admin_folder.'/partial/functions.php')) 
             }
         }
 
-
+       
         // --- Step 6: Witnesses ---
         // Your variable is $witnesses_any, maps to DB witnesses_exist
         if ($witnesses_any === 'yes') {
@@ -329,7 +333,7 @@ if (file_exists(dirname(__DIR__) . '/'.$admin_folder.'/partial/functions.php')) 
             }
         }
 
-
+        
         // --- Step 7: Occupants ---
         // Your variable is $occupants_any, maps to DB other_occupants_exist
         if ($occupants_any === 'yes') {
@@ -345,6 +349,17 @@ if (file_exists(dirname(__DIR__) . '/'.$admin_folder.'/partial/functions.php')) 
             }
         }
 
+        if(isset($_FILES['accident_images']['name'][0]) && $_FILES['accident_images']['name'][0] == ''){
+            $error_arr[] = "Please add accident images.<br/>";
+        }
+        if(isset($_FILES['accident_videos']['name'][0]) && $_FILES['accident_videos']['name'][0] == ''){
+            $error_arr[] = "Please add Accident videos.<br/>";
+        }
+        if(isset($_FILES['property1_images']['name'][0]) && $_FILES['property1_images']['name'][0] == ''){
+            $error_arr[] = "Please add property imagess.<br/>";
+        }
+        
+       
             // Display errors if any
         if (!empty($error_arr)) {
             $error_txt = implode('', $error_arr);
@@ -353,35 +368,57 @@ if (file_exists(dirname(__DIR__) . '/'.$admin_folder.'/partial/functions.php')) 
             echo $json_response = json_encode($data);
             exit;
         }
-    
+       
         if($accident_images > 0 ){
+            $target_dir = dirname(__DIR__) . '/' . $upload_folder . '/accident_images/';
+
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir, 0755, true); 
+            }
             for ($i = 0; $i < $accident_images; $i++) {
                 list($txt, $ext) = explode(".", $_FILES['accident_images']['name'][$i]);
                 $accident_images_name = 'accident_images_' .$i. "_" . time() . "." . $ext;
                 $tmp = $_FILES['accident_images']['tmp_name'][$i] ;
-                move_uploaded_file($tmp, dirname(__DIR__) . '/' . $upload_folder . '/accident_images/' . $accident_images_name);
+                move_uploaded_file($tmp, $target_dir . $accident_images_name);
             }
         }
+       
         if($accident_videos > 0 ){
+            $target_dir = dirname(__DIR__) . '/' . $upload_folder . '/accident_videos/';
+
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir, 0755, true); 
+            }
             for ($i = 0; $i < $accident_videos; $i++) {
                 list($txt, $ext) = explode(".", $_FILES['accident_videos']['name'][$i]);
                 $accident_videos_name = 'accident_videos_' .$i. "_" . time() . "." . $ext;
                 $tmp = $_FILES['accident_videos']['tmp_name'][$i] ;
-                move_uploaded_file($tmp, dirname(__DIR__) . '/' . $upload_folder . '/accident_videos/' . $accident_videos_name);
+                move_uploaded_file($tmp, $target_dir . $accident_videos_name);
             }
         }
         if(!empty($fir_copy)){
+            $target_dir = dirname(__DIR__) . '/' . $upload_folder . '/fir_copy/';
+
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir, 0755, true); 
+            }
             list($txt, $ext) = explode(".", $fir_copy);
             $fir_copy = 'fir_copy' . "_" . time() . "." . $ext;
             $tmp = $_FILES['fir_copy']['tmp_name'];
-            move_uploaded_file($tmp, dirname(__DIR__) . '/' . $upload_folder . '/fir_copy/' . $fir_copy);
+            move_uploaded_file($tmp, $target_dir . $fir_copy);
         }
         if($property1_images > 0 ){
+            $target_dir = dirname(__DIR__) . '/' . $upload_folder . '/property1_images/';
+
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir, 0755, true); 
+            }
+
             for ($i = 0; $i < $property1_images; $i++) {
                 list($txt, $ext) = explode(".", $_FILES['property1_images']['name'][$i]);
                 $property1_images_name = 'property1_images_' .$i. "_" . time() . "." . $ext;
                 $tmp = $_FILES['property1_images']['tmp_name'][$i] ;
-                move_uploaded_file($tmp, dirname(__DIR__) . '/' . $upload_folder . '/property1_images/' . $property1_images_name);
+                move_uploaded_file($tmp, $target_dir . $property1_images_name);
             }
         }
         $sql = mysqli_query($conn,  "INSERT INTO auto_claim (
@@ -405,5 +442,20 @@ if (file_exists(dirname(__DIR__) . '/'.$admin_folder.'/partial/functions.php')) 
             " . $witnesses_exist_val . ", '" . $witness1_name . "', '" . $witness1_address . "', '" . $witness1_city . "', '" . $witness1_state . "', '" . $witness1_zip . "', '" . $witness1_home_phone . "', '" . $witness1_business_phone . "', '" . $witness1_cell_phone . "',
             " . $other_occupants_exist_val . ", '" . $occupant1_name . "', '" . $occupant1_address . "', '" . $occupant1_city . "', '" . $occupant1_state . "', '" . $occupant1_zip . "', '" . $occupant1_home_phone . "', '" . $occupant1_business_phone . "', '" . $occupant1_cell_phone . "'
         )");
+
+        // Commit transaction
+        if (!mysqli_commit($conn)) {
+            $data["msg"] = "Commit transaction failed";
+            $data["status"] = "error";
+        }else if (!empty($sql)) {
+            $data["msg"] = "Auto Claim Request submited successfully.";
+            $data["status"] = "success";
+        } else {
+            $data["msg"] = "Query error please try again later.";
+            $data["status"] = "error";
+        } 
+
+        echo $json_response = json_encode($data);
+        exit();
     }
 

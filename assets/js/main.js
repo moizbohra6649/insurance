@@ -229,10 +229,13 @@ var currentTab = 0; // Current tab is set to be the first tab (0)
           } else {
             document.getElementById("prevBtn").style.display = "inline";
           }
-          if (n == (x.length - 1)) {
-            document.getElementById("nextBtn").innerHTML = "Submit";
+          if (n == (x.length - 1)) { 
+            document.getElementById("nextBtn").style.display = "none";
+            document.getElementById("submitBtn").style.display = "block";
+            
           } else {
-            document.getElementById("nextBtn").innerHTML = "Next";
+            document.getElementById("nextBtn").style.display = "block";
+            document.getElementById("submitBtn").style.display = "none";
           }
           //... and run a function that will display the correct step indicator:
           fixStepIndicator(n)
