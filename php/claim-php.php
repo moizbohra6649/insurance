@@ -92,16 +92,16 @@ if (file_exists(dirname(__DIR__) . '/'.$admin_folder.'/partial/functions.php')) 
 
     // --- Step 5: Injuries ---
     // Assuming one injured person section. If multiple, you'd need array naming like injury_name[]
-    $injuries_any               = isset($_REQUEST["injuries_any"]) ? $_REQUEST["injuries_any"] : "no";
-    $injury1_name               = isset($_REQUEST["injury1_name"]) ? trim($_REQUEST["injury1_name"]) : "";
-    $injury1_address            = isset($_REQUEST["injury1_address"]) ? trim($_REQUEST["injury1_address"]) : "";
-    $injury1_city               = isset($_REQUEST["injury1_city"]) ? trim($_REQUEST["injury1_city"]) : "";
-    $injury1_state              = isset($_REQUEST["injury1_state"]) ? $_REQUEST["injury1_state"] : "";
-    $injury1_zip                = isset($_REQUEST["injury1_zip"]) ? trim($_REQUEST["injury1_zip"]) : "";
-    $injury1_home_phone         = isset($_REQUEST["injury1_home_phone"]) ? trim($_REQUEST["injury1_home_phone"]) : "";
-    $injury1_business_phone     = isset($_REQUEST["injury1_business_phone"]) ? trim($_REQUEST["injury1_business_phone"]) : "";
-    $injury1_cell_phone         = isset($_REQUEST["injury1_cell_phone"]) ? trim($_REQUEST["injury1_cell_phone"]) : "";
-    $injury1_location_desc      = isset($_REQUEST["injury1_location_description"]) ? trim($_REQUEST["injury1_location_description"]) : "";
+    $injuries_any               = isset($_REQUEST["injuries_exist"]) ? $_REQUEST["injuries_exist"] : "no";
+    $injury1_name               = isset($_REQUEST["injured1_name"]) ? trim($_REQUEST["injured1_name"]) : "";
+    $injury1_address            = isset($_REQUEST["injured1_address"]) ? trim($_REQUEST["injured1_address"]) : "";
+    $injury1_city               = isset($_REQUEST["injured1_city"]) ? trim($_REQUEST["injured1_city"]) : "";
+    $injury1_state              = isset($_REQUEST["injured1_state"]) ? $_REQUEST["injured1_state"] : "";
+    $injury1_zip                = isset($_REQUEST["injured1_zip"]) ? trim($_REQUEST["injured1_zip"]) : "";
+    $injury1_home_phone         = isset($_REQUEST["injured1_home_phone"]) ? trim($_REQUEST["injured1_home_phone"]) : "";
+    $injury1_business_phone     = isset($_REQUEST["injured1_business_phone"]) ? trim($_REQUEST["injured1_business_phone"]) : "";
+    $injury1_cell_phone         = isset($_REQUEST["injured1_cell_phone"]) ? trim($_REQUEST["injured1_cell_phone"]) : "";
+    $injury1_location_desc      = isset($_REQUEST["injured1_injury_details"]) ? trim($_REQUEST["injured1_injury_details"]) : "";
 
     // --- Step 6: Witnesses ---
     // Assuming one witness section.
@@ -369,33 +369,9 @@ if (file_exists(dirname(__DIR__) . '/'.$admin_folder.'/partial/functions.php')) 
             exit;
         }
        
-        if($accident_images > 0 ){
-            $target_dir = dirname(__DIR__) . '/' . $upload_folder . '/accident_images/';
-
-            if (!is_dir($target_dir)) {
-                mkdir($target_dir, 0755, true); 
-            }
-            for ($i = 0; $i < $accident_images; $i++) {
-                list($txt, $ext) = explode(".", $_FILES['accident_images']['name'][$i]);
-                $accident_images_name = 'accident_images_' .$i. "_" . time() . "." . $ext;
-                $tmp = $_FILES['accident_images']['tmp_name'][$i] ;
-                move_uploaded_file($tmp, $target_dir . $accident_images_name);
-            }
-        }
+        
        
-        if($accident_videos > 0 ){
-            $target_dir = dirname(__DIR__) . '/' . $upload_folder . '/accident_videos/';
-
-            if (!is_dir($target_dir)) {
-                mkdir($target_dir, 0755, true); 
-            }
-            for ($i = 0; $i < $accident_videos; $i++) {
-                list($txt, $ext) = explode(".", $_FILES['accident_videos']['name'][$i]);
-                $accident_videos_name = 'accident_videos_' .$i. "_" . time() . "." . $ext;
-                $tmp = $_FILES['accident_videos']['tmp_name'][$i] ;
-                move_uploaded_file($tmp, $target_dir . $accident_videos_name);
-            }
-        }
+       
         if(!empty($fir_copy)){
             $target_dir = dirname(__DIR__) . '/' . $upload_folder . '/fir_copy/';
 
@@ -407,20 +383,7 @@ if (file_exists(dirname(__DIR__) . '/'.$admin_folder.'/partial/functions.php')) 
             $tmp = $_FILES['fir_copy']['tmp_name'];
             move_uploaded_file($tmp, $target_dir . $fir_copy);
         }
-        if($property1_images > 0 ){
-            $target_dir = dirname(__DIR__) . '/' . $upload_folder . '/property1_images/';
-
-            if (!is_dir($target_dir)) {
-                mkdir($target_dir, 0755, true); 
-            }
-
-            for ($i = 0; $i < $property1_images; $i++) {
-                list($txt, $ext) = explode(".", $_FILES['property1_images']['name'][$i]);
-                $property1_images_name = 'property1_images_' .$i. "_" . time() . "." . $ext;
-                $tmp = $_FILES['property1_images']['tmp_name'][$i] ;
-                move_uploaded_file($tmp, $target_dir . $property1_images_name);
-            }
-        }
+        
         $sql = mysqli_query($conn,  "INSERT INTO auto_claim (
             submitter_name, submitter_home_phone, submitter_cell_phone, sms_consent,
             policyholder_number, policyholder_name, policyholder_address, policyholder_city, policyholder_state, policyholder_zip, policyholder_home_phone, policyholder_cell_phone,
@@ -442,6 +405,71 @@ if (file_exists(dirname(__DIR__) . '/'.$admin_folder.'/partial/functions.php')) 
             " . $witnesses_exist_val . ", '" . $witness1_name . "', '" . $witness1_address . "', '" . $witness1_city . "', '" . $witness1_state . "', '" . $witness1_zip . "', '" . $witness1_home_phone . "', '" . $witness1_business_phone . "', '" . $witness1_cell_phone . "',
             " . $other_occupants_exist_val . ", '" . $occupant1_name . "', '" . $occupant1_address . "', '" . $occupant1_city . "', '" . $occupant1_state . "', '" . $occupant1_zip . "', '" . $occupant1_home_phone . "', '" . $occupant1_business_phone . "', '" . $occupant1_cell_phone . "'
         )");
+        $last_inserted_id = mysqli_insert_id($conn);
+       
+
+        if($property1_images > 0 ){
+            $target_dir = dirname(__DIR__) . '/' . $upload_folder . '/property1_images/';
+
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir, 0755, true); 
+            }
+
+            for ($i = 0; $i < $property1_images; $i++) {
+                list($txt, $ext) = explode(".", $_FILES['property1_images']['name'][$i]);
+                $property1_images_name = 'property1_images_' .$i. "_" . time() . "." . $ext;
+                $tmp = $_FILES['property1_images']['tmp_name'][$i] ;
+                move_uploaded_file($tmp, $target_dir . $property1_images_name);
+
+
+                $sql = mysqli_query($conn,  "INSERT INTO multi_file (
+                    voucher_id, voucher_type, file_name
+                ) VALUES (
+                    $last_inserted_id , 'property1_images' , '".$property1_images_name."'
+                )");
+            }
+        }
+
+
+        if($accident_videos > 0 ){
+            $target_dir = dirname(__DIR__) . '/' . $upload_folder . '/accident_videos/';
+
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir, 0755, true); 
+            }
+            for ($i = 0; $i < $accident_videos; $i++) {
+                list($txt, $ext) = explode(".", $_FILES['accident_videos']['name'][$i]);
+                $accident_videos_name = 'accident_videos_' .$i. "_" . time() . "." . $ext;
+                $tmp = $_FILES['accident_videos']['tmp_name'][$i] ;
+                move_uploaded_file($tmp, $target_dir . $accident_videos_name);
+
+                $sql = mysqli_query($conn,  "INSERT INTO multi_file (
+                    voucher_id, voucher_type, file_name
+                ) VALUES (
+                    $last_inserted_id , 'accident_videos' , '".$accident_videos_name."'
+                )");
+            }
+        }
+
+        if($accident_images > 0 ){
+            $target_dir = dirname(__DIR__) . '/' . $upload_folder . '/accident_images/';
+
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir, 0755, true); 
+            }
+            for ($i = 0; $i < $accident_images; $i++) {
+                list($txt, $ext) = explode(".", $_FILES['accident_images']['name'][$i]);
+                $accident_images_name = 'accident_images_' .$i. "_" . time() . "." . $ext;
+                $tmp = $_FILES['accident_images']['tmp_name'][$i] ;
+                move_uploaded_file($tmp, $target_dir . $accident_images_name);
+
+                $sql = mysqli_query($conn,  "INSERT INTO multi_file (
+                    voucher_id, voucher_type, file_name
+                ) VALUES (
+                    $last_inserted_id , 'accident_images' , '".$accident_images_name."'
+                )");
+            }
+        }
 
         // Commit transaction
         if (!mysqli_commit($conn)) {

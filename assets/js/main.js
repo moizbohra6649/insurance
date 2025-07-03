@@ -266,14 +266,25 @@ var currentTab = 0; // Current tab is set to be the first tab (0)
           x = document.getElementsByClassName("step");
           y = x[currentTab].getElementsByTagName("input");
           // A loop that checks every input field in the current tab:
+          var error_arr = [];
           for (i = 0; i < y.length; i++) {
             // If a field is empty...
             if (y[i].value == "") {
               // add an "invalid" class to the field:
+             
+              let label = document.querySelector('label[for="' + y[i].id + '"]');
+              if (label) {
+                error_arr.push('Please Fill ' + label.innerHTML+" <br/>");
+              }
               y[i].className += " invalid";
               // and set the current valid status to false
               valid = false;
             }
+          }
+          var error_txt = error_arr.join('');
+          if(error_txt != ""){
+              notification("Oh Snap!", error_txt, "danger");
+              return false;
           }
           // If the valid status is true, mark the step as finished and valid:
           if (valid) {
